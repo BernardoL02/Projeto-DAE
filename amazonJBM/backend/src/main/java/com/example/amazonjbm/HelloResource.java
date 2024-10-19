@@ -12,3 +12,7 @@ public class HelloResource {
         return "Hello, World! Bernardo123";
     }
 }
+
+
+
+
