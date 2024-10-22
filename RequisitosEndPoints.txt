@@ -1,0 +1,35 @@
+Sistema de Apoio ao Cliente:
+
+- O utilizador vai conseguir fazer login
+- Primeira pagina seria aparecer as encomendas por entregar e em processamento
+- Depois seria possivel trocar de tabela onde ia fazer outro get pedindo todas as encomendas
+- As encomendas que ainda nao foram processadas é possivel cancelar
+- Vai ser possivel ver os detalhes de uma ecomenda que depois mostra os volumos e posicionamento + (Sensores)
+- Na primeira pagina vai ser possivel ver os alertas de encomendas
+
+
+Sistema Operacional:
+
+- O utilizador vai conseguir fazer login
+- Primeira pagina seria aparecer as encomendas por entregar e em processamento de toda gente com informaçao de quem Encomendou
+- Depois seria possivel trocar de tabela onde iamos consultar o historico de encomendas de uma determinado periodo (DataInicio-DataFim)
+- As encomendas que ainda nao foram processadas é possivel cancelar
+- Vai ser possivel ver os detalhes de uma ecomenda que depois mostra os volumos e posicionamento + (Sensores) + ver historio de alterdas dos sensores
+- Vai ter uma pagina de acompanhamento onde aparece os alerta de todas as encomendas
+
+
+Sensores:
+
+- Vai ter uma tabela de todos os sensores ativos
+- Vai ser possivel alterar os valores dos senores
+
+
+Logistica:
+
+- O utilizador vai conseguir fazer login
+- Primeira pagina seria mostrar todas encomendas por processar
+- Vai ser possivel ver os detalhes(NovaPagina) dessa encomenda onde aparece todos os Volumes/Produtos
+- O logista vai poder associar um sensor a um volume de uma encomenda
+- Vai ser possivel criar uma encomenda (Onde tem de ter Volumes/Produtos)
+- Vai ser possivel ver todas as encomendas por entregar(NovaPagina)
+- Vai ser possivel alterar os estados das encomendas
