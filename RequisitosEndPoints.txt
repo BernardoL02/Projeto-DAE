@@ -1,11 +1,11 @@
 Sistema de Apoio ao Cliente:
 
-- O utilizador vai conseguir fazer login
-- Primeira pagina seria aparecer as encomendas por entregar e em processamento
-- Depois seria possivel trocar de tabela onde ia fazer outro get pedindo todas as encomendas
-- As encomendas que ainda nao foram processadas é possivel cancelar
-- Vai ser possivel ver os detalhes de uma ecomenda que depois mostra os volumos e posicionamento + (Sensores)
-- Na primeira pagina vai ser possivel ver os alertas de encomendas
+[x] - O utilizador vai conseguir fazer login 
+[x] - Primeira pagina seria aparecer as encomendas por entregar e em processamento
+[x] - Depois seria possivel trocar de tabela onde ia fazer outro get pedindo todas as encomendas
+[x] As encomendas que ainda nao foram processadas é possivel cancelar
+[x] - Vai ser possivel ver os detalhes de uma ecomenda que depois mostra os volumos e posicionamento + (Sensores)
+[x] - Na primeira pagina vai ser possivel ver os alertas de encomendas
 
 
 Sistema Operacional:
