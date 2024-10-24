@@ -33,3 +33,63 @@ Logistica:
 - Vai ser possivel criar uma encomenda (Onde tem de ter Volumes/Produtos)
 - Vai ser possivel ver todas as encomendas por entregar(NovaPagina)
 - Vai ser possivel alterar os estados das encomendas
+
+
+
+TABELAS
+
+ - Sensore
+ 	-> Id
+	-> valor
+	-> time_stamp
+	-> tipo  
+	-> estado
+	-> Val_Max
+	-> Val_Min
+	
+
+ - Produto
+	-> Id
+	-> Nome
+	-> Categoria
+
+
+ - Utilizador
+	-> Id
+	-> username
+	-> password
+	-> email
+	-> Nome
+	-> Morada
+	-> Tipo
+
+ - Encomenda
+	-> Id
+	-> id_user
+	-> data_expedição
+	-> data_entrega
+	-> estado
+
+ - Volume
+	-> Id
+	-> id_produto
+	-> quantidade
+	-> tipo_embalagem
+
+ - Volume_Sensor
+	-> id_volume
+	-> id_sensor
+
+
+ - Encomenda_Volume
+	-> id_encomenda
+	-> id_volume
+
+ - Alertas 
+	-> Id
+	-> Mensagem
+	-> id_sensor
+	-> time_stamp
+	-> id_user
+	-> id_encomenda
+	
