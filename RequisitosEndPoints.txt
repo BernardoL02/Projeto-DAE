@@ -26,13 +26,13 @@ Sensores:
 
 Logistica:
 
-- O utilizador vai conseguir fazer login
-- Primeira pagina seria mostrar todas encomendas por processar
-- Vai ser possivel ver os detalhes(NovaPagina) dessa encomenda onde aparece todos os Volumes/Produtos
-- O logista vai poder associar um sensor a um volume de uma encomenda
+[x] - O utilizador vai conseguir fazer login
+[x] - Primeira pagina seria mostrar todas encomendas por processar
+[x] - Vai ser possivel ver os detalhes(NovaPagina) dessa encomenda onde aparece todos os Volumes/Produtos
+[x] - O logista vai poder associar um sensor a um volume de uma encomenda
 - Vai ser possivel criar uma encomenda (Onde tem de ter Volumes/Produtos)
-- Vai ser possivel ver todas as encomendas por entregar(NovaPagina)
-- Vai ser possivel alterar os estados das encomendas
+[x] - Vai ser possivel ver todas as encomendas por entregar(NovaPagina)
+[x] - Vai ser possivel alterar os estados das encomendas
 
 
 
@@ -70,6 +70,7 @@ TABELAS
 	-> data_entrega
 	-> estado
 
+
  - Volume
 	-> Id
 	-> id_produto
@@ -93,3 +94,9 @@ TABELAS
 	-> id_user
 	-> id_encomenda
 	
+Estados das encomendas
+
+-> Por entregar
+-> Entregue
+-> Em processamento
+-> Cancelada
