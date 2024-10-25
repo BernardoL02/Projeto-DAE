@@ -14,9 +14,18 @@ const icon = '/Images/IconJBM.png';
   
         <!-- Páginas de navegação -->
         <div class="space-x-16 hidden md:flex">
-          <a href="page1" class="text-white font-semibold text-base hover:text-SecundaryColor hover:text-xl hover:font-extrabold transition-all transform hover:scale-110 duration-250 ease-in-out">Pagina1</a>
-          <a href="#" class="text-white font-semibold text-base hover:text-SecundaryColor hover:text-xl hover:font-extrabold transition-all transform hover:scale-110 duration-250 ease-in-out">Pagina2</a>
-          <a href="#" class="text-white font-semibold text-base hover:text-SecundaryColor hover:text-xl hover:font-extrabold transition-all transform hover:scale-110 duration-250 ease-in-out">Pagina3</a>
+          <a href="page1" class="text-white font-semibold text-base relative  hover:font-bold transition duration-150 ease-in-out group">
+              Pagina1
+              <span class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"></span>
+          </a>
+          <a href="#" class="text-white font-semibold text-base relative  hover:font-bold transition duration-150 ease-in-out group">
+              Pagina2
+              <span class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"></span>
+          </a>
+          <a href="#" class="text-white font-semibold text-base relative  hover:font-bold transition duration-150 ease-in-out group">
+              Pagina3
+              <span class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"></span>
+          </a>
         </div>
   
         <!-- Nome do sistema -->
