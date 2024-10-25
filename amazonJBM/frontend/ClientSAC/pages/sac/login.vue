@@ -26,7 +26,7 @@ const title = "Sistema de Apoio ao Cliente"
 
           <a href="#" class="text-gray-800 underline hover:no-underline focus:no-underline focus:outline-none">Track Order</a>
         
-          <nuxt-link to="./main">
+          <nuxt-link to="./page1">
             <button type="submit" class="bg-PrimaryColor hover:bg-SecundaryColor text-white font-semibold py-2 px-8 rounded-full transition duration-300 ease-in-out shadow-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor">
               Login
             </button>
@@ -45,7 +45,7 @@ const title = "Sistema de Apoio ao Cliente"
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(40deg, #202c38 10%, #66c981 120%);
+  background: linear-gradient(40deg, #202c38 10%, #66c981 130%);
 }
 
 </style>
