@@ -38,7 +38,7 @@ Logistica:
 
 TABELAS
 
- - Sensore
+ - Sensor
  	-> Id
 	-> valor
 	-> time_stamp
@@ -56,14 +56,14 @@ TABELAS
 	-> Nome
 	-> Categoria
 
-- Embalagem
+- Caixa
 	-> id
 	-> tipo
 	-> sensor
 
 - Categoria
 	-> Id
-	-> tipo_embalagem
+	-> tipo_caixa
 	-> nome
 
 
