@@ -30,7 +30,7 @@ Logistica:
 [x] - Primeira pagina seria mostrar todas encomendas por processar
 [x] - Vai ser possivel ver os detalhes(NovaPagina) dessa encomenda onde aparece todos os Volumes/Produtos
 [x] - O logista vai poder associar um sensor a um volume de uma encomenda
-- Vai ser possivel criar uma encomenda (Onde tem de ter Volumes/Produtos)
+[x] - Vai ser possivel criar uma encomenda (Onde tem de ter Volumes/Produtos)
 [x] - Vai ser possivel ver todas as encomendas por entregar(NovaPagina)
 [x] - Vai ser possivel alterar os estados das encomendas
 
@@ -42,16 +42,29 @@ TABELAS
  	-> Id
 	-> valor
 	-> time_stamp
-	-> tipo  
+	-> id_tipo
 	-> estado
 	-> Val_Max
 	-> Val_Min
-	
+
+ - Tipo_Sensores
+	-> id
+	-> tipo
 
  - Produto
 	-> Id
 	-> Nome
 	-> Categoria
+
+- Embalagem
+	-> id
+	-> tipo
+	-> sensor
+
+- Categoria
+	-> Id
+	-> tipo_embalagem
+	-> nome
 
 
  - Utilizador
@@ -93,6 +106,7 @@ TABELAS
 	-> time_stamp
 	-> id_user
 	-> id_encomenda
+
 	
 Estados das encomendas
 
@@ -100,3 +114,9 @@ Estados das encomendas
 -> Entregue
 -> Em processamento
 -> Cancelada
+
+
+
+Com esta informação na Aplicação de Monitorização deverá
+ser possível, por exemplo, que o Gestor inquira qual “a última temperatura registada por
+todos os sensores de temperatura ativos"
