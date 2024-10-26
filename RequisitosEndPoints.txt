@@ -115,8 +115,16 @@ Estados das encomendas
 -> Em processamento
 -> Cancelada
 
+Tipo de caixa:
 
+-> Original
+-> Isotermica
+-> Reforçada
 
-Com esta informação na Aplicação de Monitorização deverá
-ser possível, por exemplo, que o Gestor inquira qual “a última temperatura registada por
-todos os sensores de temperatura ativos"
+Tipos de Sensores:
+
+-> Temperatura
+-> Acelaraçao
+-> Pressao Atmosferia
+-> GPS
+
