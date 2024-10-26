@@ -47,19 +47,18 @@ TABELAS
 	-> Val_Max
 	-> Val_Min
 
+
  - Tipo_Sensores
 	-> id
 	-> tipo
 
- - Produto
+
+ - Produto 
 	-> Id
 	-> Nome
 	-> Categoria
+	-> Quantida_Por_Volume 
 
-- Caixa
-	-> id
-	-> tipo
-	-> sensor
 
 - Categoria
 	-> Id
@@ -76,6 +75,7 @@ TABELAS
 	-> Morada
 	-> Tipo
 
+
  - Encomenda
 	-> Id
 	-> id_user
@@ -88,7 +88,7 @@ TABELAS
 	-> Id
 	-> id_produto
 	-> quantidade
-	-> tipo_embalagem
+
 
  - Volume_Sensor
 	-> id_volume
@@ -98,6 +98,7 @@ TABELAS
  - Encomenda_Volume
 	-> id_encomenda
 	-> id_volume
+
 
  - Alertas 
 	-> Id
