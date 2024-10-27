@@ -21,7 +21,7 @@ Sistema Operacional:
 Sensores:
 
 - Vai ter uma tabela de todos os sensores ativos
-- Vai ser possivel alterar os valores dos senores
+- Vai ser possivel alterar os valores dos sensores
 
 
 Logistica:
@@ -115,12 +115,7 @@ Estados das encomendas
 -> Entregue
 -> Em processamento
 -> Cancelada
-
-Tipo de caixa:
-
--> Original
--> Isotermica
--> Reforçada
+ 
 
 Tipos de Sensores:
 
@@ -128,4 +123,5 @@ Tipos de Sensores:
 -> Acelaraçao
 -> Pressao Atmosferia
 -> GPS
+
 
