@@ -12,6 +12,13 @@ const icon = '/Images/IconJBM.png';
           </div>
         </div>
   
+        <div class="space-x-16 hidden md:flex mr-28">
+          <a href="sensores" class="text-white font-semibold text-base relative  hover:font-bold transition duration-150 ease-in-out group">
+              Sensores
+              <span class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"></span>
+          </a>
+        </div>
+
         <!-- Nome do sistema -->
         <div class="text-right">
           <div class="text-white font-bold">Amazon JBM</div>

@@ -13,7 +13,7 @@ const icon = '/Images/IconJBM.png';
         </div>
   
         <!-- Páginas de navegação -->
-        <div class="space-x-16 hidden md:flex">
+        <div class="space-x-16 hidden md:flex mr-10">
           <a href="page1" class="text-white font-semibold text-base relative  hover:font-bold transition duration-150 ease-in-out group">
               Pagina1
               <span class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"></span>
