@@ -1,4 +1,4 @@
-package com.example.amazonjbm;
+package pt.ipleiria.estg.dei.ei.dea.backend;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -9,10 +9,6 @@ public class HelloResource {
     @GET
     @Produces("text/plain")
     public String hello() {
-        return "Hello, World! Bernardo123";
+        return "Hello, World!";
     }
 }
-
-
-
-
