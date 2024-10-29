@@ -1,11 +1,11 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -25,11 +25,15 @@ public class Volume {
 
     private int quantidade;
 
+    @OneToMany(mappedBy = "volume")
+    private List<Sensor> sensores = new ArrayList<>();
+
     public Volume(int id, Produto produto, int quantidade, Encomenda encomenda) {
         this.id = id;
         this.produto = produto;
         this.quantidade = quantidade;
         this.encomenda = encomenda;
+
     }
 
     public Volume(){
@@ -66,5 +70,10 @@ public class Volume {
 
     public void setEncomenda(@NotNull Encomenda encomenda) {
         this.encomenda = encomenda;
+    }
+
+    public void addSensor(Sensor sensor) {
+        sensores.add(sensor);
+
     }
 }

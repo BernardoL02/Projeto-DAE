@@ -31,8 +31,16 @@ public class ConfigBean {
     private SensorBean sensorBean;
 
     @EJB
-
     private VolumeBean volumeBean;
+
+    @EJB
+    private AlertaBean alertaBean;
+
+    @EJB
+    private GestorBean gestorBean;
+
+    @EJB
+    private LogistaBean logistaBean;
 
     @PostConstruct
     public void populateDB() {
@@ -40,6 +48,11 @@ public class ConfigBean {
 
         //Users
         clienteBean.create("Bernardo", "12#45", "bernas@gmail.com", "Bernardo1", "Leira");
+        logistaBean.create("Miguel", "123", "miguel@gmail.com", "Smigueli");
+        gestorBean.create("Delgado", "123", "delgado@gmail.com", "José");
+        clienteBean.create("Tendeiro", "12#45", "tendeiro@gmail.com", "ten", "Leira");
+
+
 
         //Categorias dos Produtos
         categoriaBean.create(1, "Alimentos", "Isotérmica");
@@ -66,7 +79,10 @@ public class ConfigBean {
         tipoSensoresBean.create(4, "GPS");
 
         //Sensores
-        sensorBean.create(1, 30,1,"ativo",40,10);
-        sensorBean.create(2, 30,4,"ativo");
+        sensorBean.create(1, 30,1,"ativo",40,10,1);
+        sensorBean.create(2, 30,4,"ativo",1);
+
+        //Alertas
+        alertaBean.create("A comida está a descongelarrr",1, "Bernardo", 1 );
     }
 }

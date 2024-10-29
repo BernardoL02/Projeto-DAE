@@ -95,10 +95,6 @@ TABELAS
 	-> id_sensor
 
 
- - Encomenda_Volume
-	-> id_encomenda
-	-> id_volume
-
 
  - Alertas 
 	-> Id

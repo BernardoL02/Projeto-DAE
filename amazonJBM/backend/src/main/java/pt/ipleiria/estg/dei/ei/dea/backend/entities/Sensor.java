@@ -30,7 +30,11 @@ public class Sensor {
     @Column(name="time_stamp")
     private LocalDateTime timeStamp;
 
-    public Sensor(long id, int valor, Tipo_Sensores tipo, String estado, int valMax, int valMin) {
+    @ManyToOne
+    @JoinColumn(name = "id_sensor", nullable = false)
+    private Volume volume;
+
+    public Sensor(long id, int valor, Tipo_Sensores tipo, String estado, int valMax, int valMin, Volume volume) {
         this.id = id;
         this.valor = valor;
         this.tipo = tipo;
@@ -38,8 +42,9 @@ public class Sensor {
         this.valMax = valMax;
         this.valMin = valMin;
         timeStamp = LocalDateTime.now();
+        this.volume = volume;
     }
-    public Sensor(long id, int valor, Tipo_Sensores tipo, String estado) {
+    public Sensor(long id, int valor, Tipo_Sensores tipo, String estado, Volume volume) {
         this.id = id;
         this.valor = valor;
         this.tipo = tipo;
@@ -47,6 +52,7 @@ public class Sensor {
         this.valMin = null;
         this.estado = estado;
         timeStamp = LocalDateTime.now();
+        this.volume = volume;
     }
 
     public Sensor() {
