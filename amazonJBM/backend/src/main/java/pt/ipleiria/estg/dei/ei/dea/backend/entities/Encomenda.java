@@ -3,7 +3,9 @@ package pt.ipleiria.estg.dei.ei.dea.backend.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(
@@ -32,12 +34,19 @@ public class Encomenda extends Versionable{
 
     private LocalDateTime data_entrega;
 
+    @OneToMany(mappedBy="encomenda")
+    private List<Volume> volumes = new ArrayList<>();
+
     public Encomenda(long id, Cliente cliente, String estado, LocalDateTime data_expedicao, LocalDateTime data_entrega) {
         this.id = id;
         this.cliente = cliente;
         this.estado = estado;
         this.data_expedicao = data_expedicao;
         this.data_entrega = data_entrega;
+
+        if(volumes == null) {
+            volumes = new ArrayList<>();
+        }
     }
 
     public Encomenda(){
@@ -83,4 +92,18 @@ public class Encomenda extends Versionable{
     public void setData_entrega(LocalDateTime data_entrega) {
         this.data_entrega = data_entrega;
     }
+
+    public List<Volume> getVolumes() {
+        return volumes;
+    }
+
+    public void setVolumes(List<Volume> volumes) {
+        this.volumes = volumes;
+    }
+
+    public void addVolume(Volume volume) {
+        volumes.add(volume);
+
+    }
+
 }
