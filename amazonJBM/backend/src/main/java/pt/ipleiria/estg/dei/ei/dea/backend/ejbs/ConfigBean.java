@@ -44,15 +44,12 @@ public class ConfigBean {
 
     @PostConstruct
     public void populateDB() {
-        System.out.println("Hello Java EE!");
 
         //Users
         clienteBean.create("Bernardo", "12#45", "bernas@gmail.com", "Bernardo1", "Leira");
         logistaBean.create("Miguel", "123", "miguel@gmail.com", "Smigueli");
         gestorBean.create("Delgado", "123", "delgado@gmail.com", "José");
         clienteBean.create("Tendeiro", "12#45", "tendeiro@gmail.com", "ten", "Leira");
-
-
 
         //Categorias dos Produtos
         categoriaBean.create(1, "Alimentos", "Isotérmica");
@@ -70,7 +67,6 @@ public class ConfigBean {
         //Volumes
         volumeBean.create(1, 1, 10, 1);
         volumeBean.create(2, 2, 1, 1);
-
 
         //Tipos de Sensores
         tipoSensoresBean.create(1, "Temperatura");
