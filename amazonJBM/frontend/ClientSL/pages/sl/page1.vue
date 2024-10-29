@@ -11,10 +11,12 @@ const tableData = [
   ['4', 'user4', '2024-10-12', '2024-10-18', 'Em Processamento'],
   ['5', 'user1', '2024-10-15', '2024-10-20', 'Em Processamento'],
 ];
+
+const currentPage = 'Home';
 </script>
 
 <template>
-  <Template></Template> <!-- Importar o Template -->
+  <Template :currentPage="currentPage"></Template> <!-- Importar o Template -->
 
   <div class="flex justify-center mr-24 mt-20">
     <h1>Logistica</h1>

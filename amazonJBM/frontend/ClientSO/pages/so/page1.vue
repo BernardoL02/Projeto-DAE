@@ -22,10 +22,12 @@ const alertasTableData = [
   ['2', 'Pressão atmosférica baixa', '3', '2024-10-25 15:10:00', 'user2', '4'],
   ['3', 'Aceleração excessiva detectada', '1', '2024-10-25 16:00:00', 'user3', '5'],
 ];
+
+const currentPage = 'Home';
 </script>
 
 <template>
-  <Template></Template> <!-- Importar o Template -->
+  <Template :currentPage="currentPage"></Template> <!-- Importar o Template -->
 
   <div class="flex justify-center mr-24 mt-20">
     <h1>Sistema de Gestão</h1>

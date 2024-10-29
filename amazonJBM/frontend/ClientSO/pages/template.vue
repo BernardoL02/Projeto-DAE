@@ -1,5 +1,14 @@
 <script setup>
+import { defineProps } from 'vue';
+
 const icon = '/Images/IconJBM.png';
+
+const props = defineProps({
+  currentPage: {
+    type: String,
+    required: true
+  }
+});
 </script>
 
 <template>
@@ -13,20 +22,29 @@ const icon = '/Images/IconJBM.png';
         </div>
   
         <!-- Páginas de navegação -->
-        <div class="space-x-16 hidden md:flex mr-10">
-          <a href="page1" class="text-white font-semibold text-base relative  hover:font-bold transition duration-150 ease-in-out group">
-              Pagina1
-              <span class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"></span>
-          </a>
-          <a href="#" class="text-white font-semibold text-base relative  hover:font-bold transition duration-150 ease-in-out group">
-              Pagina2
-              <span class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"></span>
-          </a>
-          <a href="#" class="text-white font-semibold text-base relative  hover:font-bold transition duration-150 ease-in-out group">
-              Pagina3
-              <span class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"></span>
-          </a>
-        </div>
+      <div class="space-x-16 hidden md:flex">
+        <a href="page1" 
+           :class="currentPage === 'Home' ? 'highlighted' : ''" 
+           class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
+            Home
+            <span class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full" 
+                  :class="currentPage === 'Home' ? 'w-full' : ''"></span>
+        </a>
+        <a href="#" 
+           :class="currentPage === 'Pagina2' ? 'highlighted' : ''" 
+           class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
+            Pagina2
+            <span class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full" 
+                  :class="currentPage === 'Pagina2' ? 'w-full' : ''"></span>
+        </a>
+        <a href="#" 
+           :class="currentPage === 'Pagina3' ? 'highlighted' : ''" 
+           class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
+            Pagina3
+            <span class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full" 
+                  :class="currentPage === 'Pagina3' ? 'w-full' : ''"></span>
+        </a>
+      </div>
   
         <!-- Nome do sistema -->
         <div class="text-right">

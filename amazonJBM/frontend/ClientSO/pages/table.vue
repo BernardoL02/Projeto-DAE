@@ -35,7 +35,7 @@ const props = defineProps({
               {{ cell }}
             </td>
             <td class="py-4 px-6 text-center border border-gray-300">
-              <div v-if="row.includes('Processamento')">
+              <div v-if="row.includes('Em Processamento')">
                 <button class="bg-blue-500 text-white py-1 px-3 rounded mr-2 hover:bg-blue-700 transition">Ver Detalhes</button>
                 <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-700 transition">Cancelar</button>
               </div>
