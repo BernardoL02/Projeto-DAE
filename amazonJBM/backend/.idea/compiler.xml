@@ -9,5 +9,8 @@
         <module name="backend" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="amazonJBM" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
