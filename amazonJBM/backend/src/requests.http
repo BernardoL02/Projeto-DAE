@@ -1,26 +1,113 @@
 ################## End Points Sistema de Logistica ##################
 
-### Get All Logistas
-GET http://localhost:8080/backend/api/sl/encomendas/em-processamento
+### Get All Encomendas em processamento
+GET http://localhost:8080/backend/api/sl/encomendas/estado/Em Processamento
 Accept: application/json
 
+### Get Encomendas Por Id
+GET http://localhost:8080/backend/api/sl/encomendas/1
+Accept: application/json
+
+### Get Encomendas por entregar
+GET http://localhost:8080/backend/api/sl/encomendas/pro-entregar
+Accept: application/json
+
+
+
 ################## End Points Sistema de Apoio ao Cliente ############
-### Get All Clientes
+### Get All Encomendas By Cliente
 GET http://localhost:8080/backend/api/sac/encomendas/Bernardo
 Accept: application/json
+
+### Get All Encomendas By Clinete + id_encomenda
+GET http://localhost:8080/backend/api/sac/encomendas/1/Bernardo
+Accept: application/json
+
+--------- Get encomandas por estado ---------
+### Get All Encomendas Por Entregar
+GET http://localhost:8080/backend/api/sac/encomendas/estado/Por Entregar/Bernardo
+Accept: application/json
+
+### Get All Encomendas com estado Em Processamento
+GET http://localhost:8080/backend/api/sac/encomendas/estado/Em Processamento/Bernardo
+Accept: application/json
+
+### Get All Encomendas com estado Entregue
+GET http://localhost:8080/backend/api/sac/encomendas/estado/Entregue/Tendeiro
+Accept: application/json
+
+### Get All Encomendas com estado Cancelada
+GET http://localhost:8080/backend/api/sac/encomendas/estado/Cancelada/Bernardo
+Accept: application/json
+
+------------------------------------
+
+### Cancelar Encomenda
+PATCH http://localhost:8080/backend/api/sac/encomendas/2/Bernardo
+Accept: application/json
+Content-Type: application/json
+
+{
+  "estado": "Cancelada"
+}
+
+
 
 
 
 
 ################## End Points Sistema Operacional ####################
 
-### Get All
-GET http://localhost:8080/backend/api/
+### Get Encomendas Pendentes
+GET http://localhost:8080/backend/api/so/encomendas/pendentes
 Accept: application/json
+
+### Get Encomendas Por entregar
+GET http://localhost:8080/backend/api/so/encomendas/Por Entregar
+Accept: application/json
+
+### Get Encomendas Entregues
+GET http://localhost:8080/backend/api/so/encomendas/Entregue
+Accept: application/json
+
+### Patch Alterar Estado para Cancelado
+PATCH http://localhost:8080/backend/api/so/encomendas/1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "estado": "Cancelada"
+}
+
+### GET Ver detalhes de uma encomenda
+GET http://localhost:8080/backend/api/so/encomendas/1
+Accept: application/json
+
+
+
 
 ####################### End Points Sensores ###########################
 
 ### Get All sensores
 GET http://localhost:8080/backend/api/sensor/
 Accept: application/json
+
+### Patch Sensor Estado
+PATCH http://localhost:8080/backend/api/sensor/2/desativar
+Accept: application/json
+Content-Type: application/json
+
+{
+  "estado": "inativo"
+}
+
+### Patch Sensor Valor
+PATCH http://localhost:8080/backend/api/sensor/1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "valor": "26.5",
+  "bateria": 72
+}
 

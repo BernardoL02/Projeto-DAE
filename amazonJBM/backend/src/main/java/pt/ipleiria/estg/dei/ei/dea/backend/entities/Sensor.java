@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @NamedQueries({
         @NamedQuery(
                 name = "getAllSensores",
-                query = "SELECT s FROM Sensor s"
+                query = "SELECT s FROM Sensor s ORDER BY s.id"
         ),
 })
 public class Sensor {
@@ -18,7 +18,7 @@ public class Sensor {
     private int id;
 
     @Column(name="valor")
-    private int valor;
+    private String valor;
 
     @ManyToOne
     @JoinColumn(name = "id_tipo", nullable = false)
@@ -26,6 +26,9 @@ public class Sensor {
 
     @Column(name="estado")
     private String estado;
+
+    @Column(name = "bateria")
+    private int bateria;
 
     @Column(name="Val_Max", nullable = true)
     private Integer valMax;
@@ -40,23 +43,25 @@ public class Sensor {
     @JoinColumn(name = "id_sensor", nullable = false)
     private Volume volume;
 
-    public Sensor(int id, int valor, Tipo_Sensores tipo, String estado, int valMax, int valMin, Volume volume) {
+    public Sensor(int id, String valor, Tipo_Sensores tipo, String estado, int bateria, int valMax, int valMin,Volume volume) {
         this.id = id;
         this.valor = valor;
         this.tipo = tipo;
         this.estado = estado;
+        this.bateria = bateria;
         this.valMax = valMax;
         this.valMin = valMin;
         timeStamp = LocalDateTime.now();
         this.volume = volume;
     }
-    public Sensor(int id, int valor, Tipo_Sensores tipo, String estado, Volume volume) {
+    public Sensor(int id, String valor, Tipo_Sensores tipo, String estado, int bateria, Volume volume) {
         this.id = id;
         this.valor = valor;
         this.tipo = tipo;
         this.valMax = null;
         this.valMin = null;
         this.estado = estado;
+        this.bateria = bateria;
         timeStamp = LocalDateTime.now();
         this.volume = volume;
     }
@@ -73,11 +78,11 @@ public class Sensor {
         this.id = id;
     }
 
-    public int getValor() {
+    public String getValor() {
         return valor;
     }
 
-    public void setValor(int valor) {
+    public void setValor(String valor) {
         this.valor = valor;
         timeStamp = LocalDateTime.now();
     }
@@ -97,6 +102,14 @@ public class Sensor {
     public void setEstado(String estado) {
         this.estado = estado;
         timeStamp = LocalDateTime.now();
+    }
+
+    public int getBateria() {
+        return bateria;
+    }
+
+    public void setBateria(int bateria) {
+        this.bateria = bateria;
     }
 
     public Integer getValMax() {

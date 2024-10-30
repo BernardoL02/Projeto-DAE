@@ -43,11 +43,26 @@ public class Cliente extends Utilizador{
         this.morada = morada;
     }
 
+    public Encomenda getEncomenda(int id) {
+
+        for (Encomenda encomenda : this.encomendas) {
+            if (encomenda.getId() == id) {
+                return encomenda;
+            }
+        }
+
+        return null;
+    }
+
     public List<Encomenda> getEncomendas(){
         return  encomendas;
     }
 
     public void setEncomendas(List<Encomenda> encomendas) {
         this.encomendas = encomendas;
+    }
+
+    public void addEncomenda(Encomenda encomenda){
+        this.encomendas.add(encomenda);
     }
 }

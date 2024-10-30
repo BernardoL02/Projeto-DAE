@@ -9,10 +9,11 @@ import java.util.stream.Collectors;
 
 public class SensorDTO implements Serializable {
     private int id;
-    private int valor;
+    private String valor;
     private int tipoId;
     private String tipoNome;
     private String estado;
+    private int bateria;
     private Integer valMax;
     private Integer valMin;
     private LocalDateTime timeStamp;
@@ -20,24 +21,26 @@ public class SensorDTO implements Serializable {
 
     public SensorDTO() {}
 
-    public SensorDTO(int id, int valor, int tipoId, String tipoNome, String estado, Integer valMax, Integer valMin, int volumeId) {
+    public SensorDTO(int id, String valor, int tipoId, String tipoNome, String estado, int bateria, Integer valMax, Integer valMin, int volumeId) {
         this.id = id;
         this.valor = valor;
         this.tipoId = tipoId;
         this.tipoNome = tipoNome;
         this.estado = estado;
+        this.bateria = bateria;
         this.valMax = valMax;
         this.valMin = valMin;
         this.timeStamp = LocalDateTime.now();
         this.volumeId = volumeId;
     }
 
-    public SensorDTO(int id, int valor, int tipoId, String tipoNome, String estado, int volumeId) {
+    public SensorDTO(int id, String valor, int tipoId, String tipoNome, String estado, int bateria, int volumeId) {
         this.id = id;
         this.valor = valor;
         this.tipoId = tipoId;
         this.tipoNome = tipoNome;
         this.estado = estado;
+        this.bateria = bateria;
         this.valMax = null;
         this.valMin = null;
         this.timeStamp = LocalDateTime.now();
@@ -61,11 +64,11 @@ public class SensorDTO implements Serializable {
         this.id = id;
     }
 
-    public int getValor() {
+    public String getValor() {
         return valor;
     }
 
-    public void setValor(int valor) {
+    public void setValor(String valor) {
         this.valor = valor;
     }
 
@@ -83,6 +86,14 @@ public class SensorDTO implements Serializable {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public int getBateria() {
+        return bateria;
+    }
+
+    public void setBateria(int bateria) {
+        this.bateria = bateria;
     }
 
     public Integer getValMax() {
@@ -124,6 +135,7 @@ public class SensorDTO implements Serializable {
                 sensor.getTipo().getId(),
                 sensor.getTipo().getTipo(),
                 sensor.getEstado(),
+                sensor.getBateria(),
                 sensor.getValMax(),
                 sensor.getValMin(),
                 sensor.getVolume().getId()

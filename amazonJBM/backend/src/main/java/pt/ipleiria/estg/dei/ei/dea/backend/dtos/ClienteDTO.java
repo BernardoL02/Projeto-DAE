@@ -37,6 +37,9 @@ public class ClienteDTO implements Serializable {
         }
     }
 
+    public ClienteDTO(){
+
+    }
     public String getUsername() {
         return username;
     }

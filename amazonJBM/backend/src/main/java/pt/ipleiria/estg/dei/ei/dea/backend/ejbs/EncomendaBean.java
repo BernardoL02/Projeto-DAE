@@ -2,9 +2,12 @@ package pt.ipleiria.estg.dei.ei.dea.backend.ejbs;
 
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
+import org.hibernate.Hibernate;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.EncomendasDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -34,11 +37,32 @@ public class EncomendaBean {
         if (encomenda == null) {
             throw new NoSuchElementException("Encomenda com ID " + id + " não encontrado.");
         }
+        Hibernate.initialize(encomenda);
         return encomenda;
     }
 
-    public List<Encomenda> findAllEncomendasEmProcessamento() {
-        return em.createNamedQuery("getAllEncomendasEmProcessamento", Encomenda.class).getResultList();
+    public List<Encomenda> findEncomendasByEstado(String estado) {
+        List<Encomenda> encomendasFiltradas = new ArrayList<>();
+        List<Encomenda> todasEncomendas = em.createNamedQuery("getAllEncomendas", Encomenda.class).getResultList();
+        for (Encomenda encomenda : todasEncomendas) {
+            if (encomenda.getEstado().equals(estado)){
+                Hibernate.initialize(encomenda.getVolumes());
+                encomendasFiltradas.add(encomenda);
+            }
+        }
+        return encomendasFiltradas;
+    }
+
+    public List<Encomenda> findePendentes(){
+        List<Encomenda> encomendasFiltradas = new ArrayList<>();
+        List<Encomenda> todasEncomendas = em.createNamedQuery("getAllEncomendas", Encomenda.class).getResultList();
+        for (Encomenda encomenda : todasEncomendas) {
+            if (encomenda.getEstado().equals("Em Processamento") || encomenda.getEstado().equals("Por Entregar")) {
+                Hibernate.initialize(encomenda.getVolumes());
+                encomendasFiltradas.add(encomenda);
+            }
+        }
+        return encomendasFiltradas;
     }
 
 }

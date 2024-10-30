@@ -7,6 +7,9 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.EncomendasDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.ClienteBean;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
+
+import java.util.List;
 
 @Path("sac") // relative url web path for this service
 @Produces({MediaType.APPLICATION_JSON}) // injects header “Content-Type: application/json”
@@ -23,7 +26,25 @@ public class ClienteService {
         return Response.ok(EncomendasDTO.from(cliente.getEncomendas())).build();
     }
 
+    @GET
+    @Path("encomendas/{id}/{username}")
+    public Response getEncomendasClienteById(@PathParam("id") int id, @PathParam("username") String username) {
+        var encomenda = clienteBean.findEncomendaById(username, id);
+        return Response.ok(EncomendasDTO.from(encomenda)).build();
+    }
 
+    @GET
+    @Path("encomendas/estado/{estado}/{username}")
+    public Response getEncomendasClienteByEstado(@PathParam("estado") String estado, @PathParam("username") String username) {
+        List<Encomenda> encomendas = clienteBean.findEncomendaByEstado(username, estado);
+        return Response.ok( EncomendasDTO.from(encomendas)).build();
+    }
 
+    @PATCH
+    @Path("encomendas/{id}/{username}")
+    public Response cancelarEncomenda(@PathParam("id") int id, @PathParam("username") String username) {
+        clienteBean.cancelarEncomenda(id,username);
+        return Response.ok("Encomenda " + id + " cancelada com sucesso.").build();
+    }
 
 }

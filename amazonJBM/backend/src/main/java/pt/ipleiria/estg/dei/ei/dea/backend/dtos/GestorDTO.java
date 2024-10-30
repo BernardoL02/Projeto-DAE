@@ -1,28 +1,28 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.dtos;
 
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Cliente;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Gestor;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Logista;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class LogistaDTO implements Serializable {
+public class GestorDTO implements Serializable {
 
     private String username;
     private String password;
     private String email;
     private String nome;
 
-    public LogistaDTO(String username, String password, String email, String nome){
+    public GestorDTO(String username, String password, String email, String nome) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.nome = nome;
     }
 
-    public LogistaDTO(){
-
-    }
+    public GestorDTO(){}
 
     public String getUsername() {
         return username;
@@ -56,16 +56,18 @@ public class LogistaDTO implements Serializable {
         this.nome = nome;
     }
 
-    public static LogistaDTO from(Logista logista) {
-        return new LogistaDTO(
-                logista.getUsername(),
-                logista.getPassword(),
-                logista.getEmail(),
-                logista.getNome()
+    public static GestorDTO from(Gestor gestor) {
+        return new GestorDTO(
+                gestor.getUsername(),
+                gestor.getPassword(),
+                gestor.getEmail(),
+                gestor.getNome()
         );
     }
 
-    public static List<LogistaDTO> from(List<Logista> logista) {
-        return logista.stream().map(LogistaDTO::from).collect(Collectors.toList());
+    public static List<GestorDTO> from(List<Gestor> gestor) {
+        return gestor.stream().map(GestorDTO::from).collect(Collectors.toList());
     }
+
+
 }

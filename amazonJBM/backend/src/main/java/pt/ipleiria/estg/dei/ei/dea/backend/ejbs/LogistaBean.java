@@ -4,9 +4,12 @@ package pt.ipleiria.estg.dei.ei.dea.backend.ejbs;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.EncomendasDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Logista;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Stateless

@@ -1,6 +1,7 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.entities;
 
 import jakarta.persistence.*;
+import org.glassfish.jaxb.core.v2.TODO;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,13 +17,10 @@ import java.util.List;
         @NamedQuery(
                 name = "getAllEncomendas",
                 query = "SELECT e FROM Encomenda e ORDER BY e.id" // JPQL
-        ),
-
-        @NamedQuery(
-                name = "getAllEncomendasEmProcessamento",
-                query = "SELECT e FROM Encomenda e WHERE e.estado LIKE 'Em Processamento' ORDER BY e.id" // JPQL
         )
+
 })
+
 
 public class Encomenda extends Versionable{
 
@@ -39,7 +37,7 @@ public class Encomenda extends Versionable{
 
     private LocalDateTime data_entrega;
 
-    @OneToMany(mappedBy="encomenda")
+    @OneToMany( fetch = FetchType.EAGER,mappedBy="encomenda")
     private List<Volume> volumes = new ArrayList<>();
 
     public Encomenda(int id, Cliente cliente, String estado, LocalDateTime data_expedicao, LocalDateTime data_entrega) {
