@@ -6,8 +6,10 @@ import jakarta.ws.rs.*;
 
 import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.EncomendasDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.SensorDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.ClienteBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Sensor;
 
 import java.util.List;
 
@@ -46,5 +48,15 @@ public class ClienteService {
         clienteBean.cancelarEncomenda(id,username);
         return Response.ok("Encomenda " + id + " cancelada com sucesso.").build();
     }
+
+    @GET
+    @Path("encomendas/{username}/sensor/{tipo_sensor}")
+    public Response getUltimaLeituraSensores(@PathParam("tipo_sensor") String tipo_sensor, @PathParam("username") String username) {
+        List<Sensor> sensores = clienteBean.getUltimaLeituraSensores(username, username);
+        return Response.ok(SensorDTO.from(sensores)).build();
+    }
+
+
+
 
 }

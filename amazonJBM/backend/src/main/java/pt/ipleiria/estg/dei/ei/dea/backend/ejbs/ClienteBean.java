@@ -4,9 +4,12 @@ package pt.ipleiria.estg.dei.ei.dea.backend.ejbs;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import org.hibernate.Hibernate;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Cliente;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Sensor;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Volume;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +91,27 @@ public class ClienteBean {
         
         encomenda.setEstado("Cancelada");
         em.merge(encomenda);
+    }
+
+    public List<Sensor> getUltimaLeituraSensores(String tipo_sensor, String username) {
+
+        var cliente = this.find(username);
+        Hibernate.initialize(cliente.getEncomendas());
+
+        List<Sensor> sensores = new ArrayList<>();
+
+        for (Encomenda encomenda : cliente.getEncomendas()) {
+            Hibernate.initialize(encomenda.getVolumes());
+
+            for (Volume volume : encomenda.getVolumes()){
+                for (Sensor sensor : volume.getSensores()){
+
+
+                }
+            }
+        }
+
+        return null;
     }
 
 }
