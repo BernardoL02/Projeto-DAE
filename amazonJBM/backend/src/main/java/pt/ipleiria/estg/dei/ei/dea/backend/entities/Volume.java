@@ -25,7 +25,7 @@ public class Volume {
 
     private int quantidade;
 
-    @OneToMany(mappedBy = "volume")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "volume")
     private List<Sensor> sensores = new ArrayList<>();
 
     public Volume(int id, Produto produto, int quantidade, Encomenda encomenda) {
@@ -76,4 +76,9 @@ public class Volume {
         sensores.add(sensor);
 
     }
+
+    public List<Sensor> getSensores() {
+        return sensores;
+    }
+
 }

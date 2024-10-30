@@ -36,6 +36,7 @@ public class EncomendaBean {
         }
         return encomenda;
     }
+
     public List<Encomenda> findAllEncomendasEmProcessamento() {
         return em.createNamedQuery("getAllEncomendasEmProcessamento", Encomenda.class).getResultList();
     }

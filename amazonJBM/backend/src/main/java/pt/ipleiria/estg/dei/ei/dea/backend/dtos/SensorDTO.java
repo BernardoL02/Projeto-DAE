@@ -11,6 +11,7 @@ public class SensorDTO implements Serializable {
     private int id;
     private int valor;
     private int tipoId;
+    private String tipoNome;
     private String estado;
     private Integer valMax;
     private Integer valMin;
@@ -19,10 +20,11 @@ public class SensorDTO implements Serializable {
 
     public SensorDTO() {}
 
-    public SensorDTO(int id, int valor, int tipoId, String estado, Integer valMax, Integer valMin, int volumeId) {
+    public SensorDTO(int id, int valor, int tipoId, String tipoNome, String estado, Integer valMax, Integer valMin, int volumeId) {
         this.id = id;
         this.valor = valor;
         this.tipoId = tipoId;
+        this.tipoNome = tipoNome;
         this.estado = estado;
         this.valMax = valMax;
         this.valMin = valMin;
@@ -30,15 +32,25 @@ public class SensorDTO implements Serializable {
         this.volumeId = volumeId;
     }
 
-    public SensorDTO(int id, int valor, int tipoId, String estado, int volumeId) {
+    public SensorDTO(int id, int valor, int tipoId, String tipoNome, String estado, int volumeId) {
         this.id = id;
         this.valor = valor;
         this.tipoId = tipoId;
+        this.tipoNome = tipoNome;
         this.estado = estado;
         this.valMax = null;
         this.valMin = null;
         this.timeStamp = LocalDateTime.now();
         this.volumeId = volumeId;
+    }
+
+
+    public String getTipoNome() {
+        return tipoNome;
+    }
+
+    public void setTipoNome(String tipoNome) {
+        this.tipoNome = tipoNome;
     }
 
     public int getId() {
@@ -110,6 +122,7 @@ public class SensorDTO implements Serializable {
                 sensor.getId(),
                 sensor.getValor(),
                 sensor.getTipo().getId(),
+                sensor.getTipo().getTipo(),
                 sensor.getEstado(),
                 sensor.getValMax(),
                 sensor.getValMin(),

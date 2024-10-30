@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 public class VolumeDTO implements Serializable {
 
+    private int id;
     private int id_produto;
     private String nome_produto;
     private int id_encomenda;
@@ -16,7 +17,8 @@ public class VolumeDTO implements Serializable {
     private int quantidade;
 
 
-    public VolumeDTO(int id_produto,String nome_produto, int id_encomenda, int quantidade) {
+    public VolumeDTO(int id, int id_produto,String nome_produto, int id_encomenda, int quantidade) {
+        this.id = id;
         this.id_produto = id_produto;
         this.nome_produto = nome_produto;
         this.id_encomenda = id_encomenda;
@@ -30,18 +32,30 @@ public class VolumeDTO implements Serializable {
 
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getId_produto() {
         return id_produto;
     }
+
     public void setId_produto(int id_produto) {
         this.id_produto = id_produto;
     }
+
     public String getNome_produto() {
         return nome_produto;
     }
+
     public void setNome_produto(String nome_produto) {
         this.nome_produto = nome_produto;
     }
+
     public int getQuantidade() {
         return quantidade;
     }
@@ -49,8 +63,6 @@ public class VolumeDTO implements Serializable {
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
-
-
 
     public int getId_encomenda() {
         return id_encomenda;
@@ -69,12 +81,20 @@ public class VolumeDTO implements Serializable {
     }
 
     public static VolumeDTO from(Volume volume) {
-        return new VolumeDTO(
+
+        List<SensorDTO> sensorDTOs = volume.getSensores().stream().map(SensorDTO::from).collect(Collectors.toList());
+
+        VolumeDTO volumeDTO =  new VolumeDTO(
+                volume.getId(),
                 volume.getProduto().getId(),
                 volume.getProduto().getNome(),
                 volume.getEncomenda().getId(),
                 volume.getQuantidade()
         );
+
+        volumeDTO.setSensores(sensorDTOs);
+
+        return volumeDTO;
     }
 
     public static List<VolumeDTO> from(List<Volume> volumes) {
