@@ -37,4 +37,12 @@ import java.awt.*;
         var encomenda = encomendaBean.find(id);
         return Response.ok(EncomendasDTO.from(encomenda)).build();
     }
+
+    @PATCH
+    @Path("encomendas/{id}/Entregue")
+    public Response entregarEncomenda(@PathParam("id") int id) {
+        encomendaBean.entregarEncomenda(id);
+        return Response.ok("Encomenda " + id + " concluida com sucesso.").build();
+    }
+
  }

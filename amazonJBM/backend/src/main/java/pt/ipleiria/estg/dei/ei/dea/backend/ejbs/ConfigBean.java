@@ -59,11 +59,11 @@ public class ConfigBean {
         produtoBean.create(2,"Banana", 1, 10);
 
         //Encomendas
-        encomendaBean.create(1,"Bernardo","Por Entregar",
+        encomendaBean.create(1,"Bernardo","PorEntregar",
                 LocalDateTime.of(2024, 10, 29, 15, 30),
                 LocalDateTime.of(2024, 10, 29, 15, 30)
                 );
-        encomendaBean.create(2,"Bernardo","Em Processamento",
+        encomendaBean.create(2,"Bernardo","EmProcessamento",
                 LocalDateTime.of(2024, 10, 29, 15, 30),
                 LocalDateTime.of(2024, 10, 29, 15, 30)
                 );
@@ -71,7 +71,7 @@ public class ConfigBean {
                 LocalDateTime.of(2024, 10, 29, 15, 30),
                 LocalDateTime.of(2024, 10, 29, 15, 30)
         );
-        encomendaBean.create(4,"Tendeiro","Em Processamento",
+        encomendaBean.create(4,"Tendeiro","EmProcessamento",
                 LocalDateTime.of(2023, 10, 29, 15, 30),
                 LocalDateTime.of(2023, 10, 29, 15, 30)
         );

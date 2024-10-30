@@ -2,6 +2,10 @@ package pt.ipleiria.estg.dei.ei.dea.backend.ejbs;
 
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.PersistenceException;
+import jakarta.ws.rs.PATCH;
+import jakarta.ws.rs.Path;
 import org.hibernate.Hibernate;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.EncomendasDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
@@ -53,7 +57,7 @@ public class EncomendaBean {
         return encomendasFiltradas;
     }
 
-    public List<Encomenda> findePendentes(){
+    public List<Encomenda> findPendentes(){
         List<Encomenda> encomendasFiltradas = new ArrayList<>();
         List<Encomenda> todasEncomendas = em.createNamedQuery("getAllEncomendas", Encomenda.class).getResultList();
         for (Encomenda encomenda : todasEncomendas) {
@@ -65,4 +69,19 @@ public class EncomendaBean {
         return encomendasFiltradas;
     }
 
+
+    public void entregarEncomenda(int id) {
+
+        var encomenda = this.find(id);
+        System.out.println(encomenda);
+        if (encomenda == null) {
+            throw new EntityNotFoundException("Encomenda com ID " + id + " não encontrada.");
+        }
+        encomenda.setEstado("Entregue");
+        try {
+            em.merge(encomenda);
+        } catch (Exception e) {
+            throw new PersistenceException("Erro ao atualizar encomenda.", e);
+        }
+    }
 }

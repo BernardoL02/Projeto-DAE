@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 public class SensorDTO implements Serializable {
     private int id;
     private String valor;
@@ -20,6 +21,13 @@ public class SensorDTO implements Serializable {
     private int volumeId;
 
     public SensorDTO() {}
+
+    public SensorDTO(int id, String valor, String tipoNome, String estado) {
+        this.id = id;
+        this.valor = valor;
+        this.tipoNome = tipoNome;
+        this.estado = estado;
+    }
 
     public SensorDTO(int id, String valor, int tipoId, String tipoNome, String estado, int bateria, Integer valMax, Integer valMin, int volumeId) {
         this.id = id;
@@ -46,7 +54,6 @@ public class SensorDTO implements Serializable {
         this.timeStamp = LocalDateTime.now();
         this.volumeId = volumeId;
     }
-
 
     public String getTipoNome() {
         return tipoNome;
@@ -142,7 +149,10 @@ public class SensorDTO implements Serializable {
         );
     }
 
+
     public static List<SensorDTO> from(List<Sensor> sensors) {
         return sensors.stream().map(SensorDTO::from).collect(Collectors.toList());
     }
+
+
 }

@@ -40,7 +40,7 @@ public class Sensor {
     private LocalDateTime timeStamp;
 
     @ManyToOne
-    @JoinColumn(name = "id_sensor", nullable = false)
+    @JoinColumn(name = "id_volume", nullable = false)
     private Volume volume;
 
     public Sensor(int id, String valor, Tipo_Sensores tipo, String estado, int bateria, int valMax, int valMin,Volume volume) {

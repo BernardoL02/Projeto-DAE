@@ -26,7 +26,7 @@ public class GestorService {
     @GET
     @Path("encomendas/pendentes")
     public Response getEncomendasPendendes() {
-        List<Encomenda> encomendas = encomendaBean.findePendentes();
+        List<Encomenda> encomendas = encomendaBean.findPendentes();
         return Response.ok( EncomendasDTO.from(encomendas)).build();
     }
 

@@ -1,7 +1,7 @@
 ################## End Points Sistema de Logistica ##################
 
 ### Get All Encomendas em processamento
-GET http://localhost:8080/backend/api/sl/encomendas/estado/Em Processamento
+GET http://localhost:8080/backend/api/sl/encomendas/estado/EmProcessamento
 Accept: application/json
 
 ### Get Encomendas Por Id
@@ -9,10 +9,19 @@ GET http://localhost:8080/backend/api/sl/encomendas/1
 Accept: application/json
 
 ### Get Encomendas por entregar
-GET http://localhost:8080/backend/api/sl/encomendas/pro-entregar
+GET http://localhost:8080/backend/api/sl/encomendas/estado/PorEntregar
 Accept: application/json
 
 
+### Entregar Encomenda
+
+PATCH http://localhost:8080/backend/api/sl/encomendas/1/Entregue
+Accept: application/json
+Content-Type: application/json
+
+{
+  "estado": "Entregue"
+}
 
 ################## End Points Sistema de Apoio ao Cliente ############
 ### Get All Encomendas By Cliente
@@ -25,11 +34,11 @@ Accept: application/json
 
 --------- Get encomandas por estado ---------
 ### Get All Encomendas Por Entregar
-GET http://localhost:8080/backend/api/sac/encomendas/estado/Por Entregar/Bernardo
+GET http://localhost:8080/backend/api/sac/encomendas/estado/PorEntregar/Bernardo
 Accept: application/json
 
 ### Get All Encomendas com estado Em Processamento
-GET http://localhost:8080/backend/api/sac/encomendas/estado/Em Processamento/Bernardo
+GET http://localhost:8080/backend/api/sac/encomendas/estado/EmProcessamento/Bernardo
 Accept: application/json
 
 ### Get All Encomendas com estado Entregue
@@ -50,6 +59,10 @@ Content-Type: application/json
 {
   "estado": "Cancelada"
 }
+
+### Get All Ultimo Valor dos Sensores por Tipo
+GET http://localhost:8080/backend/api/sac/encomendas/Bernardo/sensor/Temperatura
+Accept: application/json
 
 
 

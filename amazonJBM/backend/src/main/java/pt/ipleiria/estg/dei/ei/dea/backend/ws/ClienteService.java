@@ -52,8 +52,8 @@ public class ClienteService {
     @GET
     @Path("encomendas/{username}/sensor/{tipo_sensor}")
     public Response getUltimaLeituraSensores(@PathParam("tipo_sensor") String tipo_sensor, @PathParam("username") String username) {
-        List<Sensor> sensores = clienteBean.getUltimaLeituraSensores(username, username);
-        return Response.ok(SensorDTO.from(sensores)).build();
+        List<SensorDTO> sensores = clienteBean.getUltimaLeituraSensores(tipo_sensor, username);
+        return Response.ok(sensores).build();
     }
 
 

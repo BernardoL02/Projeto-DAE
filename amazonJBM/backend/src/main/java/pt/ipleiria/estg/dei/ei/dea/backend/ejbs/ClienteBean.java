@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import org.hibernate.Hibernate;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.SensorDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Cliente;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Sensor;
@@ -88,30 +89,33 @@ public class ClienteBean {
         var cliente = this.find(username);
 
         Encomenda encomenda = cliente.getEncomenda(id); //Todo -> Ver se encomenda existe
-        
+
         encomenda.setEstado("Cancelada");
         em.merge(encomenda);
     }
 
-    public List<Sensor> getUltimaLeituraSensores(String tipo_sensor, String username) {
-
+    public List<SensorDTO> getUltimaLeituraSensores(String tipo_sensor, String username) {
         var cliente = this.find(username);
         Hibernate.initialize(cliente.getEncomendas());
 
-        List<Sensor> sensores = new ArrayList<>();
+        List<SensorDTO> sensores = new ArrayList<>();
 
         for (Encomenda encomenda : cliente.getEncomendas()) {
-            Hibernate.initialize(encomenda.getVolumes());
-
-            for (Volume volume : encomenda.getVolumes()){
-                for (Sensor sensor : volume.getSensores()){
-
-
+            for (Volume volume : encomenda.getVolumes()) {
+                for (Sensor sensor : volume.getSensores()) {
+                    if (sensor.getTipo().getTipo().equals(tipo_sensor)) {
+                        sensores.add(new SensorDTO(
+                                sensor.getId(),
+                                String.valueOf(sensor.getValor()),
+                                sensor.getTipo().getTipo(),
+                                sensor.getEstado()
+                        ));
+                    }
                 }
             }
         }
 
-        return null;
+        return sensores;
     }
 
 }

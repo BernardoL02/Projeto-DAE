@@ -5,8 +5,10 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.EncomendasDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.SensorDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Logista;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Sensor;
 
 
 import java.util.ArrayList;
@@ -22,5 +24,6 @@ public class LogistaBean {
         var logista = new Logista(username, password, email, nome);
         em.persist(logista);
     }
+
 
 }
