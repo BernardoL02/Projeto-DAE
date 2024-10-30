@@ -1,36 +1,26 @@
-package pt.ipleiria.estg.dei.ei.dea.backend.entities;
+package pt.ipleiria.estg.dei.ei.dea.backend.dtos;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Logista;
 
-@Entity
-@Table(name = "utilizadores")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Utilizador {
+import java.io.Serializable;
+import java.util.List;
+import java.util.stream.Collectors;
 
-    @Id
-    @Column(name="username")
+public class LogistaDTO implements Serializable {
+
     private String username;
-
-    @Column(name="password")
     private String password;
-
-    @Column(name="email")
-    @Email
     private String email;
-
-    @Column(name="nome")
     private String nome;
 
-
-    public Utilizador(String username, String password, String email, String nome) {
+    public LogistaDTO(String username, String password, String email, String nome){
         this.username = username;
         this.password = password;
         this.email = email;
         this.nome = nome;
     }
 
-    public Utilizador(){
+    public LogistaDTO(){
 
     }
 
@@ -66,4 +56,17 @@ public class Utilizador {
         this.nome = nome;
     }
 
+    public static LogistaDTO from(Logista logista) {
+        return new LogistaDTO(
+                logista.getUsername(),
+                logista.getPassword(),
+                logista.getEmail(),
+                logista.getNome()
+        );
+    }
+
+    public static List<LogistaDTO> from(List<Logista> logista) {
+
+        return logista.stream().map(LogistaDTO::from).collect(Collectors.toList());
+    }
 }

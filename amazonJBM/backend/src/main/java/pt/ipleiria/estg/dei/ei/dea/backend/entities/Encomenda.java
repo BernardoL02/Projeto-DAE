@@ -16,13 +16,18 @@ import java.util.List;
         @NamedQuery(
                 name = "getAllEncomendas",
                 query = "SELECT e FROM Encomenda e ORDER BY e.id" // JPQL
+        ),
+
+        @NamedQuery(
+                name = "getAllEncomendasEmProcessamento",
+                query = "SELECT e FROM Encomenda e WHERE e.estado LIKE 'Em Processamento' ORDER BY e.id" // JPQL
         )
 })
 
 public class Encomenda extends Versionable{
 
     @Id
-    private long id;
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
@@ -37,7 +42,7 @@ public class Encomenda extends Versionable{
     @OneToMany(mappedBy="encomenda")
     private List<Volume> volumes = new ArrayList<>();
 
-    public Encomenda(long id, Cliente cliente, String estado, LocalDateTime data_expedicao, LocalDateTime data_entrega) {
+    public Encomenda(int id, Cliente cliente, String estado, LocalDateTime data_expedicao, LocalDateTime data_entrega) {
         this.id = id;
         this.cliente = cliente;
         this.estado = estado;
@@ -53,11 +58,11 @@ public class Encomenda extends Versionable{
 
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

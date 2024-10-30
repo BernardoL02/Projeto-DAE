@@ -17,14 +17,14 @@ import java.util.List;
 })
 public class Tipo_Sensores {
     @Id
-    private long id;
+    private int id;
 
     private String tipo;
 
     @OneToMany(mappedBy = "tipo")
     private List<Sensor> sensors;
 
-    public Tipo_Sensores(long id, String tipo) {
+    public Tipo_Sensores(int id, String tipo) {
         this.id = id;
         this.tipo = tipo;
 
@@ -38,11 +38,11 @@ public class Tipo_Sensores {
 
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

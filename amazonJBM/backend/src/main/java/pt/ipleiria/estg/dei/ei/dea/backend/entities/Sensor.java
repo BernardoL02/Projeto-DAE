@@ -7,9 +7,15 @@ import java.time.LocalDateTime;
 @Table(
         name = "sensor"
 )
+@NamedQueries({
+        @NamedQuery(
+                name = "getAllSensores",
+                query = "SELECT s FROM Sensor s"
+        ),
+})
 public class Sensor {
     @Id
-    private long id;
+    private int id;
 
     @Column(name="valor")
     private int valor;
@@ -34,7 +40,7 @@ public class Sensor {
     @JoinColumn(name = "id_sensor", nullable = false)
     private Volume volume;
 
-    public Sensor(long id, int valor, Tipo_Sensores tipo, String estado, int valMax, int valMin, Volume volume) {
+    public Sensor(int id, int valor, Tipo_Sensores tipo, String estado, int valMax, int valMin, Volume volume) {
         this.id = id;
         this.valor = valor;
         this.tipo = tipo;
@@ -44,7 +50,7 @@ public class Sensor {
         timeStamp = LocalDateTime.now();
         this.volume = volume;
     }
-    public Sensor(long id, int valor, Tipo_Sensores tipo, String estado, Volume volume) {
+    public Sensor(int id, int valor, Tipo_Sensores tipo, String estado, Volume volume) {
         this.id = id;
         this.valor = valor;
         this.tipo = tipo;
@@ -59,11 +65,11 @@ public class Sensor {
 
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -93,7 +99,7 @@ public class Sensor {
         timeStamp = LocalDateTime.now();
     }
 
-    public int getValMax() {
+    public Integer getValMax() {
         return valMax;
     }
 
@@ -101,7 +107,7 @@ public class Sensor {
         this.valMax = valMax;
     }
 
-    public int getValMin() {
+    public Integer getValMin() {
         return valMin;
     }
 
@@ -115,5 +121,21 @@ public class Sensor {
 
     public void setTimeStamp(LocalDateTime timeStamp) {
         this.timeStamp = timeStamp;
+    }
+
+    public void setValMax(Integer valMax) {
+        this.valMax = valMax;
+    }
+
+    public void setValMin(Integer valMin) {
+        this.valMin = valMin;
+    }
+
+    public Volume getVolume() {
+        return volume;
+    }
+
+    public void setVolume(Volume volume) {
+        this.volume = volume;
     }
 }

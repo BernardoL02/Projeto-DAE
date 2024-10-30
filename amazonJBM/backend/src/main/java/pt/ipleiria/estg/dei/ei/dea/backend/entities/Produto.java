@@ -12,7 +12,7 @@ import jakarta.persistence.*;
 public class Produto {
 
     @Id
-    private long id;
+    private int id;
 
     private String nome;
 
@@ -22,7 +22,7 @@ public class Produto {
 
     private int quantidade_por_volume;
 
-    public Produto(long id, String nome, Categoria categoria, int quantidade_por_volume) {
+    public Produto(int id, String nome, Categoria categoria, int quantidade_por_volume) {
         this.id = id;
         this.nome = nome;
         this.categoria = categoria;
@@ -33,7 +33,7 @@ public class Produto {
 
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
@@ -49,7 +49,7 @@ public class Produto {
         return categoria;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

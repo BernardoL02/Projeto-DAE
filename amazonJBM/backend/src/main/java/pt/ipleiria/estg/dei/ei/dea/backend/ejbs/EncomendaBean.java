@@ -2,8 +2,7 @@ package pt.ipleiria.estg.dei.ei.dea.backend.ejbs;
 
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Cliente;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,8 +11,6 @@ import java.util.stream.Collectors;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Tipo_Sensores;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Volume;
 
 @Stateless
 public class EncomendaBean {
@@ -24,7 +21,7 @@ public class EncomendaBean {
     @EJB
     private ClienteBean clienteBean;
 
-    public void create(long id, String client_username, String estado, LocalDateTime data_expedicao, LocalDateTime data_entrega) {
+    public void create(int id, String client_username, String estado, LocalDateTime data_expedicao, LocalDateTime data_entrega) {
 
         Cliente cliente = clienteBean.find(client_username);
 
@@ -32,11 +29,15 @@ public class EncomendaBean {
         em.persist(encomenda);
     }
 
-    public Encomenda find(long id) {
+    public Encomenda find(int id) {
         var encomenda = em.find(Encomenda.class, id);
         if (encomenda == null) {
             throw new NoSuchElementException("Encomenda com ID " + id + " não encontrado.");
         }
         return encomenda;
     }
+    public List<Encomenda> findAllEncomendasEmProcessamento() {
+        return em.createNamedQuery("getAllEncomendasEmProcessamento", Encomenda.class).getResultList();
+    }
+
 }

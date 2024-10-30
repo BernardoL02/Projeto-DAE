@@ -63,10 +63,24 @@ public class ConfigBean {
                 LocalDateTime.of(2024, 10, 29, 15, 30),
                 LocalDateTime.of(2024, 10, 29, 15, 30)
                 );
+        encomendaBean.create(2,"Bernardo","Em Processamento",
+                LocalDateTime.of(2024, 10, 29, 15, 30),
+                LocalDateTime.of(2024, 10, 29, 15, 30)
+                );
+        encomendaBean.create(3,"Tendeiro","Em Processamento",
+                LocalDateTime.of(2024, 10, 29, 15, 30),
+                LocalDateTime.of(2024, 10, 29, 15, 30)
+        );
+        encomendaBean.create(4,"Tendeiro","Em Processamento",
+                LocalDateTime.of(2023, 10, 29, 15, 30),
+                LocalDateTime.of(2023, 10, 29, 15, 30)
+        );
 
         //Volumes
         volumeBean.create(1, 1, 10, 1);
         volumeBean.create(2, 2, 1, 1);
+
+        volumeBean.create(3, 2, 1, 2);
 
         //Tipos de Sensores
         tipoSensoresBean.create(1, "Temperatura");
@@ -77,6 +91,7 @@ public class ConfigBean {
         //Sensores
         sensorBean.create(1, 30,1,"ativo",40,10,1);
         sensorBean.create(2, 30,4,"ativo",1);
+        sensorBean.create(3, 30,3,"ativo",10,5,1);
 
         //Alertas
         alertaBean.create("A comida está a descongelarrr",1, "Bernardo", 1 );

@@ -14,7 +14,7 @@ public class AlertaBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(String mensagem, long id_sensor, String username, long id_encomenda){
+    public void create(String mensagem, int id_sensor, String username, int id_encomenda){
 
         Utilizador utilizador = em.find(Utilizador.class, username);
         Sensor sensor = em.find(Sensor.class, id_sensor);

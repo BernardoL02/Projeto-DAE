@@ -1,3 +1,26 @@
-### Get All Utilziadores
-GET http://localhost:8080/backed/api/utilizadores
+################## End Points Sistema de Logistica ##################
+
+### Get All Logistas
+GET http://localhost:8080/backend/api/sl/encomendas/em-processamento
 Accept: application/json
+
+################## End Points Sistema de Apoio ao Cliente ############
+### Get All Clientes
+GET http://localhost:8080/backend/api/sac/encomendas/Bernardo
+Accept: application/json
+
+
+
+
+################## End Points Sistema Operacional ####################
+
+### Get All
+GET http://localhost:8080/backend/api/
+Accept: application/json
+
+####################### End Points Sensores ###########################
+
+### Get All sensores
+GET http://localhost:8080/backend/api/sensor/
+Accept: application/json
+

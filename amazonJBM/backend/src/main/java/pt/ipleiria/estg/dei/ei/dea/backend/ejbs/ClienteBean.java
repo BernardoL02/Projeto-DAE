@@ -4,7 +4,9 @@ package pt.ipleiria.estg.dei.ei.dea.backend.ejbs;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.hibernate.Hibernate;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Cliente;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
 
 import java.util.NoSuchElementException;
 
@@ -25,6 +27,18 @@ public class ClienteBean {
 
         if(cliente == null){
             throw new NoSuchElementException();
+        }
+
+        return cliente;
+    }
+
+    public Cliente findWithEncomendas(String username){
+
+        var cliente = this.find(username);
+        Hibernate.initialize(cliente.getEncomendas());
+
+        for (Encomenda encomenda : cliente.getEncomendas()) {
+            Hibernate.initialize(encomenda.getVolumes());
         }
 
         return cliente;

@@ -6,6 +6,9 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Logista;
 
+
+import java.util.List;
+
 @Stateless
 public class LogistaBean {
 

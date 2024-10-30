@@ -1,0 +1,13 @@
+Error on line -1 in Note: Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+Error on line 102 in C:\Users\MvCrespo\OneDrive - IPLeiria (1)\3 - Ano - Licenciatura\1 - Semestre\Desenvolvimento de Aplicacoes Empresariais\Projeto\Projeto-DAE\amazonJBM\backend\src\main\java\pt\ipleiria\estg\dei\ei\dea\backend\dtos\EncomendasDTO.java:102: error: <identifier> expected
+        ths.;
+            ^
+Error on line 102 in C:\Users\MvCrespo\OneDrive - IPLeiria (1)\3 - Ano - Licenciatura\1 - Semestre\Desenvolvimento de Aplicacoes Empresariais\Projeto\Projeto-DAE\amazonJBM\backend\src\main\java\pt\ipleiria\estg\dei\ei\dea\backend\dtos\EncomendasDTO.java:102: error: not a statement
+        ths.;
+           ^

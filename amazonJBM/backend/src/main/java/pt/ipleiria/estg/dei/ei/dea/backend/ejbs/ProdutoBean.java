@@ -15,7 +15,7 @@ public class ProdutoBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(long id, String nome, int categoria_id, int quantidade_por_volume){
+    public void create(int id, String nome, int categoria_id, int quantidade_por_volume){
 
         var categoria = em.find(Categoria.class, categoria_id);
 
@@ -23,7 +23,7 @@ public class ProdutoBean {
         em.persist(produto);
     }
 
-    public Produto find(long id) {
+    public Produto find(int id) {
         var produto = em.find(Produto.class, id);
         if (produto == null) {
             throw new NoSuchElementException("Produto com ID " + id + " não encontrado.");

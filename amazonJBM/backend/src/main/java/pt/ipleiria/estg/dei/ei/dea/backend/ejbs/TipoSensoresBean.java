@@ -14,12 +14,12 @@ public class TipoSensoresBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(long id, String tipo) {
+    public void create(int id, String tipo) {
         var tipoSensores = new Tipo_Sensores(id, tipo);
         em.persist(tipoSensores);
     }
 
-    public Tipo_Sensores find(long id) {
+    public Tipo_Sensores find(int id) {
         var tipo = em.find(Tipo_Sensores.class, id);
         if (tipo == null) {
             throw new NoSuchElementException("Tipo_Sensores com ID " + id + " não encontrado.");

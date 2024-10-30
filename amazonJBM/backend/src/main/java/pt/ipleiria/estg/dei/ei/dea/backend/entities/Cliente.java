@@ -31,11 +31,9 @@ public class Cliente extends Utilizador{
         }
     }
 
-
     public Cliente(){
 
     }
-
 
     public String getMorada() {
         return morada;

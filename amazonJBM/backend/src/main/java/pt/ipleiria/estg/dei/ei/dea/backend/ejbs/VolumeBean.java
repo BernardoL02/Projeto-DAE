@@ -16,7 +16,7 @@ public class VolumeBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(int id, long id_produto, int quantidade, long id_encomenda){
+    public void create(int id, int id_produto, int quantidade, int id_encomenda){
 
         Produto produto = em.find(Produto.class, id_produto);
         Encomenda encomenda = em.find(Encomenda.class, id_encomenda);
