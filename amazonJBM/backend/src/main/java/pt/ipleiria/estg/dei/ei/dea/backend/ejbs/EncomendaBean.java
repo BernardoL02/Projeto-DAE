@@ -50,7 +50,6 @@ public class EncomendaBean {
         List<Encomenda> todasEncomendas = em.createNamedQuery("getAllEncomendas", Encomenda.class).getResultList();
         for (Encomenda encomenda : todasEncomendas) {
             if (encomenda.getEstado().equals(estado)){
-                Hibernate.initialize(encomenda.getVolumes());
                 encomendasFiltradas.add(encomenda);
             }
         }

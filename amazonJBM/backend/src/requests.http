@@ -12,7 +12,7 @@ Accept: application/json
 GET http://localhost:8080/backend/api/sl/produtos
 Accept: application/json
 
-### Get Encomendas Por Id
+### Get Encomenda Por Id
 GET http://localhost:8080/backend/api/sl/encomendas/1
 Accept: application/json
 
@@ -30,6 +30,8 @@ Content-Type: application/json
 {
   "estado": "Entregue"
 }
+
+### Associar um Sensor a um Volume
 
 
 
@@ -71,10 +73,12 @@ Content-Type: application/json
 }
 
 ### Get All Ultimo Valor dos Sensores por Tipo
-GET http://localhost:8080/backend/api/sac/encomendas/Bernardo/sensor/Temperatura
+GET http://localhost:8080/backend/api/sac/encomendas/Bernardo/sensor/GPS
 Accept: application/json
 
-
+### Get All Alertas de Encomenda por Id
+GET http://localhost:8080/backend/api/sac/encomendas/3/alerta/Tendeiro
+Accept: application/json
 
 
 
@@ -107,13 +111,26 @@ GET http://localhost:8080/backend/api/so/encomendas/1
 Accept: application/json
 
 
-
-
 ####################### End Points Sensores ###########################
 
 ### Get All sensores
 GET http://localhost:8080/backend/api/sensor/
 Accept: application/json
+
+### Criar um alerta
+POST http://localhost:8080/backend/api/sensor/
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": 1,
+  "mensagem": "Temperatura elevada, comida a estragar-se",
+  "id_sensor": 1,
+  "valor": 40,
+  "bateria": 72,
+  "username": "Bernardo",
+  "id_encomenda": 1
+}
 
 ### Patch Sensor Estado
 PATCH http://localhost:8080/backend/api/sensor/2/desativar
@@ -133,4 +150,6 @@ Content-Type: application/json
   "valor": "26.5",
   "bateria": 72
 }
+
+
 

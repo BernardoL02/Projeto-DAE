@@ -4,17 +4,10 @@ package pt.ipleiria.estg.dei.ei.dea.backend.ejbs;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
 import org.hibernate.Hibernate;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ClienteDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.SensorDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Cliente;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Sensor;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Volume;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Stateless
 public class ClienteBean {
@@ -100,23 +93,18 @@ public class ClienteBean {
         em.merge(encomenda);
     }
 
-    public List<Map<String, Object>> getUltimaLeituraSensores(String tipo_sensor, String username) {
+    public List<Sensor> getUltimaLeituraSensoresByTipo(String tipo_sensor, String username) {
+
         var cliente = this.find(username);
         Hibernate.initialize(cliente.getEncomendas());
 
-        List<Map<String, Object>> sensores = new ArrayList<>();
+        List<Sensor> sensores = new ArrayList<>();
 
         for (Encomenda encomenda : cliente.getEncomendas()) {
             for (Volume volume : encomenda.getVolumes()) {
                 for (Sensor sensor : volume.getSensores()) {
                     if (sensor.getTipo().getTipo().equals(tipo_sensor)) {
-                        Map<String, Object> sensorMap = new HashMap<>();
-                        sensorMap.put("id", sensor.getId());
-                        sensorMap.put("valor", sensor.getValor());
-                        sensorMap.put("tipo", sensor.getTipo().getTipo());
-                        sensorMap.put("estado", sensor.getEstado());
-
-                        sensores.add(sensorMap);
+                        sensores.add(sensor);
                     }
                 }
             }
@@ -125,5 +113,7 @@ public class ClienteBean {
         return sensores;
     }
 
-
+    public List<Alerta> getAlertasByEncomenda(int id, String username) {
+        return em.createNamedQuery("getAlertasByEncomendaId", Alerta.class).setParameter("encomendaId", id).getResultList();
+    }
 }

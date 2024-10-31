@@ -14,13 +14,13 @@ public class AlertaBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(String mensagem, int id_sensor, String username, int id_encomenda){
+    public void create(int id, String mensagem, int id_sensor, String valor, String username, int id_encomenda){
 
         Utilizador utilizador = em.find(Utilizador.class, username);
         Sensor sensor = em.find(Sensor.class, id_sensor);
         Encomenda encomenda = em.find(Encomenda.class, id_encomenda);
 
-        var alerta = new Alerta(mensagem, sensor, utilizador, encomenda);
+        var alerta = new Alerta(id, mensagem, sensor, valor, utilizador, encomenda);
         em.persist(alerta);
     }
 

@@ -5,15 +5,15 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.*;
 
 import jakarta.ws.rs.core.Response;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.AlertaSAC_DTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.EncomendasDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.SensorDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResSensorUltimaLeituraByTipoDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.ClienteBean;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Alerta;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Sensor;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Path("sac") // relative url web path for this service
 @Produces({MediaType.APPLICATION_JSON}) // injects header “Content-Type: application/json”
@@ -22,8 +22,6 @@ public class ClienteService {
 
     @EJB
     private ClienteBean clienteBean;
-
-
 
     @GET
     @Path("encomendas/{username}")
@@ -43,7 +41,7 @@ public class ClienteService {
     @Path("encomendas/estado/{estado}/{username}")
     public Response getEncomendasClienteByEstado(@PathParam("estado") String estado, @PathParam("username") String username) {
         List<Encomenda> encomendas = clienteBean.findEncomendaByEstado(username, estado);
-        return Response.ok( EncomendasDTO.from(encomendas)).build();
+        return Response.ok(EncomendasDTO.from(encomendas)).build();
     }
 
     @PATCH
@@ -55,8 +53,18 @@ public class ClienteService {
 
     @GET
     @Path("encomendas/{username}/sensor/{tipo_sensor}")
-    public Response getUltimaLeituraSensores(@PathParam("tipo_sensor") String tipo_sensor, @PathParam("username") String username) {
-        List<Map<String, Object>> sensores = clienteBean.getUltimaLeituraSensores(tipo_sensor, username);
-        return Response.ok(sensores).build();
+    public Response getUltimaLeituraSensoresByTipo(@PathParam("tipo_sensor") String tipo_sensor, @PathParam("username") String username) {
+        List<Sensor> sensores = clienteBean.getUltimaLeituraSensoresByTipo(tipo_sensor, username);
+        return Response.ok(ResSensorUltimaLeituraByTipoDTO.from(sensores)).build();
     }
+
+    @GET
+    @Path("encomendas/{id}/alerta/{username}")
+    public Response getAlertasByEncomenda(@PathParam("id") int id, @PathParam("username") String username) {
+        List<Alerta> alertas = clienteBean.getAlertasByEncomenda(id, username);
+        return Response.ok(AlertaSAC_DTO.from(alertas)).build();
+    }
+
+    
+    
 }

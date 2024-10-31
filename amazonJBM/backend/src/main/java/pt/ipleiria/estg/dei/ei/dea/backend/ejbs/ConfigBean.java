@@ -79,8 +79,8 @@ public class ConfigBean {
         //Volumes
         volumeBean.create(1, 1, 10, 1);
         volumeBean.create(2, 2, 1, 1);
-
         volumeBean.create(3, 2, 1, 2);
+        volumeBean.create(4, 2, 1, 3);
 
         //Tipos de Sensores
         tipoSensoresBean.create(1, "Temperatura");
@@ -89,12 +89,15 @@ public class ConfigBean {
         tipoSensoresBean.create(4, "GPS");
 
         //Sensores
-        sensorBean.create(1, "30.0",1,"ativo", 100,40,10,1);
+        sensorBean.create(1, "29.0",1,"ativo", 100,40,10,1);
         sensorBean.create(2, "40.7123, -74.12312",4,"ativo", 100,1);
-        sensorBean.create(3, "30.0",3,"ativo", 100,10,5,3);
-        sensorBean.create(4, "25.0",1,"ativo", 100,10,5,1);
+        sensorBean.create(3, "28.0",3,"ativo", 100,10,5,3);
+        sensorBean.create(4, "21.0",1,"ativo", 100,10,5,1);
+        sensorBean.create(5, "21.0",2,"ativo", 99,10,5,4);
 
         //Alertas
-        alertaBean.create("A comida está a descongelarrr",1, "Bernardo", 1 );
+        //alertaBean.create(1,"A comida está a descongelarrr",1, "Bernardo", 1);
+        //alertaBean.create(2,"A comida está a descongelarrr",1, "Bernardo", 1);
+        //alertaBean.create(4,"O banana tem muita acelaracao",5, "Tendeiro", 3);
     }
 }

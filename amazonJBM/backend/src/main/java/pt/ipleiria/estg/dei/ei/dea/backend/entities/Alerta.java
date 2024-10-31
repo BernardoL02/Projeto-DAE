@@ -1,22 +1,30 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+
+@NamedQueries({
+        @NamedQuery(
+                name = "getAlertasByEncomendaId",
+                query = "SELECT a FROM Alerta a WHERE a.encomenda.id = :encomendaId"
+        )
+})
 
 @Entity
 public class Alerta {
 
     @Id
+    private int id;
+
     private String mensagem;
 
     @ManyToOne
     @JoinColumn(name = "id_sensor", nullable = false)
     private Sensor sensor;
+
+    private String valor;
 
     private LocalDateTime time_stamp;
 
@@ -29,9 +37,11 @@ public class Alerta {
     private Encomenda encomenda;
 
 
-    public Alerta(String mensagem, Sensor sensor, Utilizador utilizador, Encomenda encomenda) {
+    public Alerta(int id, String mensagem, Sensor sensor, String valor, Utilizador utilizador, Encomenda encomenda) {
+        this.id = id;
         this.mensagem = mensagem;
         this.sensor = sensor;
+        this.valor = valor;
         this.utilizador = utilizador;
         this.encomenda = encomenda;
         this.time_stamp = LocalDateTime.now();
@@ -39,6 +49,14 @@ public class Alerta {
 
     public Alerta(){
 
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public void setId(int id){
+        this.id = id;
     }
 
     public String getMensagem() {
@@ -55,6 +73,14 @@ public class Alerta {
 
     public void setSensor(Sensor sensor) {
         this.sensor = sensor;
+    }
+
+    public String getValor() {
+        return valor;
+    }
+
+    public void setValor(String valor) {
+        this.valor = valor;
     }
 
     public LocalDateTime getTime_stamp() {

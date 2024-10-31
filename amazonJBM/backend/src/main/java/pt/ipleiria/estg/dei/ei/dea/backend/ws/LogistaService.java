@@ -8,10 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ClienteDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.EncomendasDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.LogistaDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.ClienteBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.EncomendaBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.LogistaBean;
@@ -38,15 +35,16 @@ import java.awt.*;
      @GET
      @Path("encomendas/estado/{estado}")
      public Response getEncomendaByEstado(@PathParam("estado") String estado) {
+
          List<Encomenda> encomendas = encomendaBean.findEncomendasByEstado(estado);
-         return Response.ok( EncomendasDTO.from(encomendas)).build();
+         return Response.ok(ResEncomendaEmProcessamentoDTO.from(encomendas)).build();
      }
 
     @GET
     @Path("clientes")
     public Response getClientes() {
         var clientes = clienteBean.findAll();
-        return Response.ok(ClienteDTO.from(clientes)).build();
+        return Response.ok(ResClienteDTO.from(clientes)).build();
     }
 
     @GET
@@ -60,7 +58,7 @@ import java.awt.*;
     @Path("encomendas/{id}")
     public Response getEncomendasById(@PathParam("id") int id) {
         var encomenda = encomendaBean.find(id);
-        return Response.ok(EncomendasDTO.from(encomenda)).build();
+        return Response.ok(ResEncomendaDetalhesDTO.from(encomenda)).build();
     }
 
     @PATCH
@@ -69,5 +67,7 @@ import java.awt.*;
         encomendaBean.entregarEncomenda(id);
         return Response.ok("Encomenda " + id + " concluida com sucesso.").build();
     }
+
+
 
  }
