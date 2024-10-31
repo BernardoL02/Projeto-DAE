@@ -71,7 +71,7 @@ Content-Type: application/json
 }
 
 ### Get All Ultimo Valor dos Sensores por Tipo
-GET http://localhost:8080/backend/api/sac/encomendas/Bernardo/sensor/GPS
+GET http://localhost:8080/backend/api/sac/encomendas/Bernardo/sensor/Temperatura
 Accept: application/json
 
 

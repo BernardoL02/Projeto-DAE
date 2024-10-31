@@ -6,7 +6,6 @@ import jakarta.ws.rs.*;
 
 import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.EncomendasDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.GenericDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.SensorDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.ClienteBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
@@ -57,8 +56,7 @@ public class ClienteService {
     @GET
     @Path("encomendas/{username}/sensor/{tipo_sensor}")
     public Response getUltimaLeituraSensores(@PathParam("tipo_sensor") String tipo_sensor, @PathParam("username") String username) {
-        List<GenericDTO> sensores = clienteBean.getUltimaLeituraSensores(tipo_sensor, username);
-        List<Map<String, Object>> jsonSensores = sensores.stream().map(GenericDTO::toJson).collect(Collectors.toList());
-        return Response.ok(jsonSensores).build();
+        List<Map<String, Object>> sensores = clienteBean.getUltimaLeituraSensores(tipo_sensor, username);
+        return Response.ok(sensores).build();
     }
 }

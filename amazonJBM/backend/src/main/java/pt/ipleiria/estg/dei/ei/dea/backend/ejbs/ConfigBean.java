@@ -92,6 +92,7 @@ public class ConfigBean {
         sensorBean.create(1, "30.0",1,"ativo", 100,40,10,1);
         sensorBean.create(2, "40.7123, -74.12312",4,"ativo", 100,1);
         sensorBean.create(3, "30.0",3,"ativo", 100,10,5,3);
+        sensorBean.create(4, "25.0",1,"ativo", 100,10,5,1);
 
         //Alertas
         alertaBean.create("A comida está a descongelarrr",1, "Bernardo", 1 );
