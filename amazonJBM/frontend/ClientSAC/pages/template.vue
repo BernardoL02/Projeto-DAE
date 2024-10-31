@@ -23,7 +23,7 @@ const props = defineProps({
   
       <!-- Páginas de navegação -->
       <div class="space-x-16 hidden md:flex">
-        <a href="page1" 
+        <a href="home" 
            :class="currentPage === 'Home' ? 'highlighted' : ''" 
            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
             Home
