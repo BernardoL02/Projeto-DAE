@@ -2,11 +2,12 @@ package pt.ipleiria.estg.dei.ei.dea.backend.dtos;
 
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Sensor;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ResSensorDetalhesDTO {
+public class ResSensorDetalhesDTO implements Serializable {
 
     private int id;
     private String valor;

@@ -8,6 +8,7 @@ import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.Path;
 import org.hibernate.Hibernate;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.EncomendasDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.VolumeDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
 
 import java.time.LocalDateTime;
@@ -28,6 +29,9 @@ public class EncomendaBean {
     @EJB
     private ClienteBean clienteBean;
 
+    @EJB
+    private VolumeBean volumeBean;
+
     public void create(int id, String client_username, String estado, LocalDateTime data_expedicao, LocalDateTime data_entrega) {
 
         Cliente cliente = clienteBean.find(client_username);
@@ -35,6 +39,14 @@ public class EncomendaBean {
         Encomenda encomenda = new Encomenda(id,cliente,estado,data_expedicao,data_entrega);
         em.persist(encomenda);
     }
+
+    public void create(int id, String client_username, String estado, LocalDateTime data_expedicao, LocalDateTime data_entrega,List<Produto> produtos) {
+
+        Cliente cliente = clienteBean.find(client_username);
+        Encomenda encomenda = new Encomenda(id,cliente,estado,data_expedicao,data_entrega);
+        em.persist(encomenda);
+    }
+
 
     public Encomenda find(int id) {
         var encomenda = em.find(Encomenda.class, id);
@@ -81,6 +93,17 @@ public class EncomendaBean {
             em.merge(encomenda);
         } catch (Exception e) {
             throw new PersistenceException("Erro ao atualizar encomenda.", e);
+        }
+    }
+
+    public void generarVolumes(int id_encomenda,List<Produto> produtos){
+        int id_lasVolume = 5;
+        Encomenda encomenda = em.find(Encomenda.class, id_encomenda);
+
+        for (Produto produto:produtos) {
+            volumeBean.create(id_lasVolume, produto.getId(),produto.getQuantidade_por_volume(), id_encomenda);
+            encomenda.addVolume(em.find(Volume.class, id_lasVolume));
+            id_lasVolume++;
         }
     }
 }

@@ -3,6 +3,7 @@ package pt.ipleiria.estg.dei.ei.dea.backend.ejbs;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Sensor;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Tipo_Sensores;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -25,6 +26,10 @@ public class TipoSensoresBean {
             throw new NoSuchElementException("Tipo_Sensores com ID " + id + " não encontrado.");
         }
         return tipo;
+    }
+
+    public List<Tipo_Sensores> findAll() {
+        return em.createNamedQuery("getTipoSensor", Tipo_Sensores.class).getResultList();
     }
 
 }

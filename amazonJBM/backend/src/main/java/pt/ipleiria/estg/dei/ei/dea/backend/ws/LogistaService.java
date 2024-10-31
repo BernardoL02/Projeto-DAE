@@ -9,11 +9,9 @@ import java.util.List;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.*;
-import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.ClienteBean;
-import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.EncomendaBean;
-import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.LogistaBean;
-import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.ProdutoBean;
+import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Tipo_Sensores;
 
 import java.awt.*;
 
@@ -31,6 +29,14 @@ import java.awt.*;
 
      @EJB
      private ProdutoBean produtoBean;
+
+     @EJB
+     private VolumeBean volumeBean;
+
+     @EJB
+     private SensorBean sensorBean;
+     @EJB
+     private TipoSensoresBean tipoSensoresBean;
 
      @GET
      @Path("encomendas/estado/{estado}")
@@ -68,6 +74,64 @@ import java.awt.*;
         return Response.ok("Encomenda " + id + " concluida com sucesso.").build();
     }
 
+    @GET
+    @Path("volume/{id}")
+    public Response getDetalhesVolume(@PathParam("id") int id){
+        var volume = volumeBean.find(id);
+        return Response.ok(ResVolumeDetalhesDTO.from(volume)).build();
+    }
 
+    @POST
+    @Path("volume/{id}/sensor")
+    public Response associarSensorAVolume(@PathParam("id") int id,SensorDTO sensorDTO) {
+
+         if("GPS".equals(sensorDTO.getTipoNome())){
+             sensorBean.create(
+                     sensorDTO.getId(),
+                     sensorDTO.getValor(),
+                     sensorDTO.getTipoId(),
+                     sensorDTO.getEstado(),
+                     sensorDTO.getBateria(),
+                     id
+             );
+         }else{
+             sensorBean.create(
+                     sensorDTO.getId(),
+                     sensorDTO.getValor(),
+                     sensorDTO.getTipoId(),
+                     sensorDTO.getEstado(),
+                     sensorDTO.getBateria(),
+                     sensorDTO.getValMax(),
+                     sensorDTO.getValMin(),
+                     id
+             );
+         }
+
+        return Response.ok("Sensor associado com sucesso").build();
+    }
+
+    @POST
+    @Path("encomendas")
+    public Response criarEncomenda(CreateEncomendaDTO encomendasDTO) {
+        encomendaBean.create(
+                encomendasDTO.getId(),
+                encomendasDTO.getUsername(),
+                encomendasDTO.getEstado(),
+                encomendasDTO.getData_expedicao(),
+                encomendasDTO.getData_entrega(),
+                encomendasDTO.getProdutos()
+        );
+
+        encomendaBean.generarVolumes(encomendasDTO.getId(), encomendasDTO.getProdutos());
+
+        return Response.ok("Encomenda criada com sucesso").build();
+    }
+
+    @GET
+    @Path("tipoSensores")
+    public Response getTipoSensores() {
+        var tipoSensores = tipoSensoresBean.findAll();
+        return Response.ok(ResTipoSensoresDTO.from(tipoSensores)).build();
+    }
 
  }

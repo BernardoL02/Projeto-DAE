@@ -13,7 +13,7 @@ GET http://localhost:8080/backend/api/sl/produtos
 Accept: application/json
 
 ### Get Encomenda Por Id
-GET http://localhost:8080/backend/api/sl/encomendas/1
+GET http://localhost:8080/backend/api/sl/encomendas/7
 Accept: application/json
 
 ### Get Encomendas por entregar
@@ -31,8 +31,52 @@ Content-Type: application/json
   "estado": "Entregue"
 }
 
-### Associar um Sensor a um Volume
+### Get Detalhes Volume
+GET http://localhost:8080/backend/api/sl/volume/1
 
+###Associar um Sensor a um Volume
+POST http://localhost:8080/backend/api/sl/volume/3/sensor
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": 7,
+  "valor": 90,
+  "tipoId": 4,
+  "estado": "ativo",
+  "bateria": 72,
+  "tipoNome": "GPS"
+}
+
+### Get All Tipos de Sensor
+
+GET http://localhost:8080/backend/api/sl/tipoSensores
+
+
+###Criar uma nova encomenda
+POST http://localhost:8080/backend/api/sl/encomendas
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": 7,
+  "username": "Bernardo",
+  "estado": "PorEntregar",
+  "data_expedicao": "2024-10-31T10:00:00",
+  "data_entrega": "2024-11-05T10:00:00",
+  "produtos": [
+    {
+      "produtoId": 1,
+      "nome": "Gelados",
+      "quantidade": 10
+    },
+    {
+      "produtoId": 2,
+      "nome": "Banana",
+      "quantidade": 10
+    }
+  ]
+}
 
 
 ################## End Points Sistema de Apoio ao Cliente ############

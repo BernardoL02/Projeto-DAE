@@ -2,11 +2,12 @@ package pt.ipleiria.estg.dei.ei.dea.backend.dtos;
 
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Volume;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ResVolumeDetalhesDTO {
+public class ResVolumeDetalhesDTO implements Serializable {
     private int id;
     private String nome_produto;
     private List<ResSensorDetalhesDTO> sensores = new ArrayList<>();

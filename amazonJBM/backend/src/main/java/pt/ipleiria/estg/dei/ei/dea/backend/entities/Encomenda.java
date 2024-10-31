@@ -109,4 +109,14 @@ public class Encomenda extends Versionable{
 
     }
 
+    public List<Produto> getProdutos(){
+        List<Produto> produtos = new ArrayList<>();
+
+        for (Volume volume: volumes) {
+            produtos.add(volume.getProduto());
+        }
+
+        return produtos;
+    }
+
 }
