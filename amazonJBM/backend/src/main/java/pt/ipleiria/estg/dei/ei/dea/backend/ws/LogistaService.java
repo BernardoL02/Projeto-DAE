@@ -8,10 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ClienteDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.EncomendasDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.LogistaDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.ClienteBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.EncomendaBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.LogistaBean;
+import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.ProdutoBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
 
 import java.awt.*;
@@ -24,12 +28,33 @@ import java.awt.*;
 
      @EJB
      private EncomendaBean encomendaBean;
+
+     @EJB
+     private ClienteBean clienteBean;
+
+     @EJB
+     private ProdutoBean produtoBean;
+
      @GET
      @Path("encomendas/estado/{estado}")
      public Response getEncomendaByEstado(@PathParam("estado") String estado) {
          List<Encomenda> encomendas = encomendaBean.findEncomendasByEstado(estado);
          return Response.ok( EncomendasDTO.from(encomendas)).build();
      }
+
+    @GET
+    @Path("clientes")
+    public Response getClientes() {
+        var clientes = clienteBean.findAll();
+        return Response.ok(ClienteDTO.from(clientes)).build();
+    }
+
+    @GET
+    @Path("produtos")
+    public Response getProdutos() {
+         var produtos = produtoBean.findAll();
+         return Response.ok(ProdutoDTO.from(produtos)).build();
+    }
 
     @GET
     @Path("encomendas/{id}")

@@ -6,6 +6,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import org.hibernate.Hibernate;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ClienteDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.GenericDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.SensorDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Cliente;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
@@ -14,7 +16,9 @@ import pt.ipleiria.estg.dei.ei.dea.backend.entities.Volume;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Stateless
 public class ClienteBean {
@@ -27,6 +31,11 @@ public class ClienteBean {
         em.persist(cliente);
     }
 
+    public List<Cliente> findAll() {
+        List<Cliente> clientes = em.createNamedQuery("getAllClientes", Cliente.class).getResultList();
+        return clientes;
+    }
+
     public Cliente find(String username){
 
         var cliente = em.find(Cliente.class, username);
@@ -37,6 +46,7 @@ public class ClienteBean {
 
         return cliente;
     }
+
 
     public Cliente findWithEncomendas(String username){
 
@@ -94,22 +104,23 @@ public class ClienteBean {
         em.merge(encomenda);
     }
 
-    public List<SensorDTO> getUltimaLeituraSensores(String tipo_sensor, String username) {
+    public List<GenericDTO> getUltimaLeituraSensores(String tipo_sensor, String username) {
         var cliente = this.find(username);
         Hibernate.initialize(cliente.getEncomendas());
 
-        List<SensorDTO> sensores = new ArrayList<>();
+        List<GenericDTO> sensores = new ArrayList<>();
 
         for (Encomenda encomenda : cliente.getEncomendas()) {
             for (Volume volume : encomenda.getVolumes()) {
                 for (Sensor sensor : volume.getSensores()) {
                     if (sensor.getTipo().getTipo().equals(tipo_sensor)) {
-                        sensores.add(new SensorDTO(
-                                sensor.getId(),
-                                String.valueOf(sensor.getValor()),
-                                sensor.getTipo().getTipo(),
-                                sensor.getEstado()
-                        ));
+                        GenericDTO sensorGenericDTO = new GenericDTO("sensores")
+                                .addField("id", sensor.getId())
+                                .addField("valor", sensor.getValor())
+                                .addField("tipo", sensor.getTipo().getTipo())
+                                .addField("estado", sensor.getEstado());
+
+                        sensores.add(sensorGenericDTO);
                     }
                 }
             }
@@ -117,5 +128,9 @@ public class ClienteBean {
 
         return sensores;
     }
+
+
+
+
 
 }

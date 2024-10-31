@@ -4,6 +4,14 @@
 GET http://localhost:8080/backend/api/sl/encomendas/estado/EmProcessamento
 Accept: application/json
 
+### Get All Clientes
+GET http://localhost:8080/backend/api/sl/clientes
+Accept: application/json
+
+### Get All Produtos
+GET http://localhost:8080/backend/api/sl/produtos
+Accept: application/json
+
 ### Get Encomendas Por Id
 GET http://localhost:8080/backend/api/sl/encomendas/1
 Accept: application/json
@@ -22,6 +30,8 @@ Content-Type: application/json
 {
   "estado": "Entregue"
 }
+
+
 
 ################## End Points Sistema de Apoio ao Cliente ############
 ### Get All Encomendas By Cliente
@@ -61,7 +71,7 @@ Content-Type: application/json
 }
 
 ### Get All Ultimo Valor dos Sensores por Tipo
-GET http://localhost:8080/backend/api/sac/encomendas/Bernardo/sensor/Temperatura
+GET http://localhost:8080/backend/api/sac/encomendas/Bernardo/sensor/GPS
 Accept: application/json
 
 
@@ -76,7 +86,7 @@ GET http://localhost:8080/backend/api/so/encomendas/pendentes
 Accept: application/json
 
 ### Get Encomendas Por entregar
-GET http://localhost:8080/backend/api/so/encomendas/Por Entregar
+GET http://localhost:8080/backend/api/so/encomendas/PorEntregar
 Accept: application/json
 
 ### Get Encomendas Entregues

@@ -61,7 +61,7 @@ public class EncomendaBean {
         List<Encomenda> encomendasFiltradas = new ArrayList<>();
         List<Encomenda> todasEncomendas = em.createNamedQuery("getAllEncomendas", Encomenda.class).getResultList();
         for (Encomenda encomenda : todasEncomendas) {
-            if (encomenda.getEstado().equals("Em Processamento") || encomenda.getEstado().equals("Por Entregar")) {
+            if (encomenda.getEstado().equals("EmProcessamento") || encomenda.getEstado().equals("PorEntregar")) {
                 Hibernate.initialize(encomenda.getVolumes());
                 encomendasFiltradas.add(encomenda);
             }
