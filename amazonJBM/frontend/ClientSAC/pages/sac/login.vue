@@ -2,7 +2,7 @@
 const icon = '/Images/IconJBM.png';
 const title = "Sistema de Apoio ao Cliente"
 
-
+const username = ref('Bernardo');
 
 </script>
 
@@ -18,7 +18,7 @@ const title = "Sistema de Apoio ao Cliente"
 
       <form >
         <div class="mb-4">
-          <input type="username" placeholder="Username" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor"/>
+          <input v-model:="username" type="username" placeholder="Username" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor"/>
         </div>
 
         <div class="mb-6">
@@ -29,7 +29,7 @@ const title = "Sistema de Apoio ao Cliente"
 
           <a href="#" class="text-gray-800 underline hover:no-underline focus:no-underline focus:outline-none">Track Order</a>
         
-          <nuxt-link to="./home">
+          <nuxt-link :to="`/sac/${username}/encomendas`">
             <button type="submit" class="bg-PrimaryColor hover:bg-SecundaryColor text-white font-semibold py-2 px-8 rounded-full transition duration-300 ease-in-out shadow-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor">
               Login
             </button>

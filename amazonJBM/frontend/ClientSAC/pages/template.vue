@@ -7,8 +7,13 @@ const props = defineProps({
   currentPage: {
     type: String,
     required: true
+  },
+  username: {
+    type: String,
+    required: true
   }
 });
+
 </script>
 
 <template>
@@ -23,20 +28,20 @@ const props = defineProps({
   
       <!-- Páginas de navegação -->
       <div class="space-x-16 hidden md:flex">
-        <a href="home" 
-           :class="currentPage === 'Home' ? 'highlighted' : ''" 
+        <nuxt-link :to="`/sac/${username}/encomendas`"
+           :class="currentPage === 'Encomendas' ? 'highlighted' : ''" 
            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
-            Home
+           Encomendas
             <span class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full" 
-                  :class="currentPage === 'Home' ? 'w-full' : ''"></span>
-        </a>
-        <a href="#" 
-           :class="currentPage === 'Pagina2' ? 'highlighted' : ''" 
+                  :class="currentPage === 'Encomendas' ? 'w-full' : ''"></span>
+        </nuxt-link>
+        <p href="Encomenda" 
+           :class="currentPage === 'Encomenda' ? 'highlighted' : ''" 
            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
-            Pagina2
+            Encomenda
             <span class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full" 
-                  :class="currentPage === 'Pagina2' ? 'w-full' : ''"></span>
-        </a>
+                  :class="currentPage === 'Encomenda' ? 'w-full' : ''"></span>
+        </p>
         <a href="#" 
            :class="currentPage === 'Pagina3' ? 'highlighted' : ''" 
            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">

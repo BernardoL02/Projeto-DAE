@@ -1,5 +1,11 @@
 <script setup>
 import { defineProps } from 'vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute()
+const config = useRuntimeConfig()
+const api = config.public.API_URL
+const username = route.params.username;
 
 // Props to receive titles and data from parent component
 const props = defineProps({
@@ -10,21 +16,29 @@ const props = defineProps({
   tableData: {
     type: Array,
     required: true
+  }, 
+  mostrarOperacoes: {
+    type: Boolean,
+    required: true
   }
 });
+
+
 </script>
 
 <template>
+  
   <div class="table-container p-8">
     <div :class="{'overflow-y-auto max-h-96': tableData.length > 7}" class="shadow-lg rounded-lg relative">
       <table class="min-w-full bg-white rounded-lg border border-gray-300">
+        
         <!-- Table Headings -->
         <thead class="bg-gradient-to-r from-purple-600 to-indigo-600 sticky top-0 z-10">
           <tr>
             <th v-for="(title, index) in tableTitles" :key="index" class="py-4 px-6 text-white font-bold text-center uppercase border border-gray-300">
               {{ title }}
             </th>
-            <th class="py-4 px-6 text-white font-bold text-center uppercase border border-gray-300">Actions</th>
+            <th v-if="mostrarOperacoes == true" class="py-4 px-6 text-white font-bold text-center uppercase border border-gray-300">Operações</th>
           </tr>
         </thead>
 
@@ -34,17 +48,29 @@ const props = defineProps({
             <td v-for="(cell, cellIndex) in row" :key="cellIndex" class="py-4 px-6 text-center border border-gray-300">
               {{ cell }}
             </td>
-            <td class="py-4 px-6 text-center border border-gray-300">
+            <td v-if="mostrarOperacoes == true" class="py-4 px-6 text-center border border-gray-300">
               <div v-if="row.includes('Em Processamento')">
-                <button class="bg-blue-500 text-white py-1 px-3 rounded mr-2 hover:bg-blue-700 transition">Ver Detalhes</button>
+                
+                <nuxt-link :to="`/sac/${username}/encomenda/${row[0]}`">
+                  <button class="bg-blue-500 text-white py-1 px-3 rounded mr-2 hover:bg-blue-700 transition">Ver Detalhes</button>
+                </nuxt-link>
+
                 <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-700 transition">Cancelar</button>
               </div>
-              <div v-else-if="row.includes('Por entregar')">
-                <button class="bg-blue-500 text-white py-1 px-3 rounded mr-2 hover:bg-blue-700 transition">Ver Detalhes</button>
+
+              <div v-else-if="row.includes('Por Entregar')">
+                
+                <nuxt-link :to="`/sac/${username}/encomenda/${row[0]}`">
+                  <button class="bg-blue-500 text-white py-1 px-3 rounded mr-2 hover:bg-blue-700 transition">Ver Detalhes</button>
+                </nuxt-link>
+                
                 <button class="bg-green-500 text-white py-1 px-3 rounded hover:bg-green-700 transition">Tracking</button>
               </div>
+
               <div v-else>
-                <button class="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-700 transition">Ver Detalhes</button>
+                <nuxt-link :to="`/sac/${username}/encomenda/${row[0]}`">
+                  <button class="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-700 transition">Ver Detalhes</button>
+                </nuxt-link>
               </div>
             </td>
           </tr>
@@ -53,7 +79,7 @@ const props = defineProps({
     </div>
   </div>
 </template>
-
+<!-- http://localhost:3001/backend/api/sac/encomendas/2/Bernardo  -->
 <style scoped>
 .table-container {
   max-width: 90%;
