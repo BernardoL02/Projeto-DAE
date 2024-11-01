@@ -4,17 +4,12 @@ package pt.ipleiria.estg.dei.ei.dea.backend.ws;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Produto;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Tipo_Sensores;
-
-import java.awt.*;
 
 @Path("sl")
  @Produces({MediaType.APPLICATION_JSON})
@@ -44,7 +39,7 @@ import java.awt.*;
      public Response getEncomendaByEstado(@PathParam("estado") String estado) {
 
          List<Encomenda> encomendas = encomendaBean.findEncomendasByEstado(estado);
-         return Response.ok(ResEncomendaEmProcessamentoDTO.from(encomendas)).build();
+         return Response.ok(ResEncomendaEstadoDTO.from(encomendas)).build();
      }
 
     @GET

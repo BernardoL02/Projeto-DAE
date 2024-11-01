@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ResEncomendaEmProcessamentoDTO implements Serializable {
+public class ResEncomendaEstadoDTO implements Serializable {
 
     private int id;
     private String username;
@@ -15,7 +15,7 @@ public class ResEncomendaEmProcessamentoDTO implements Serializable {
     private LocalDateTime data_expedicao;
     private LocalDateTime data_entrega;
 
-    public ResEncomendaEmProcessamentoDTO(int id, String username, String estado, LocalDateTime data_expedicao, LocalDateTime data_entrega) {
+    public ResEncomendaEstadoDTO(int id, String username, String estado, LocalDateTime data_expedicao, LocalDateTime data_entrega) {
         this.id = id;
         this.username = username;
         this.estado = estado;
@@ -23,7 +23,7 @@ public class ResEncomendaEmProcessamentoDTO implements Serializable {
         this.data_entrega = data_entrega;
     }
 
-    public ResEncomendaEmProcessamentoDTO(){
+    public ResEncomendaEstadoDTO(){
 
     }
 
@@ -67,9 +67,9 @@ public class ResEncomendaEmProcessamentoDTO implements Serializable {
         this.data_entrega = data_entrega;
     }
 
-    public static ResEncomendaEmProcessamentoDTO from(Encomenda encomenda) {
+    public static ResEncomendaEstadoDTO from(Encomenda encomenda) {
 
-        ResEncomendaEmProcessamentoDTO dto = new ResEncomendaEmProcessamentoDTO(
+        ResEncomendaEstadoDTO dto = new ResEncomendaEstadoDTO(
                 encomenda.getId(),
                 encomenda.getCliente().getUsername(),
                 encomenda.getEstado(),
@@ -79,7 +79,7 @@ public class ResEncomendaEmProcessamentoDTO implements Serializable {
 
         return dto;
     }
-    public static List<ResEncomendaEmProcessamentoDTO> from(List<Encomenda> encomendas) {
-        return encomendas.stream().map(ResEncomendaEmProcessamentoDTO::from).collect(Collectors.toList());
+    public static List<ResEncomendaEstadoDTO> from(List<Encomenda> encomendas) {
+        return encomendas.stream().map(ResEncomendaEstadoDTO::from).collect(Collectors.toList());
     }
 }

@@ -98,8 +98,8 @@ public class ConfigBean {
         sensorBean.create(5, "21.0",2,"ativo", 99,10,5,4);
 
         //Alertas
-        //alertaBean.create(1,"A comida está a descongelarrr",1, "Bernardo", 1);
-        //alertaBean.create(2,"A comida está a descongelarrr",1, "Bernardo", 1);
-        //alertaBean.create(4,"O banana tem muita acelaracao",5, "Tendeiro", 3);
+        alertaBean.create(1,"A comida está a descongelarrr",1, "35", 1);
+        alertaBean.create(2,"A comida está a descongelarrr",1, "35", 1);
+        alertaBean.create(4,"O banana tem muita acelaracao",5, "23", 4);
     }
 }

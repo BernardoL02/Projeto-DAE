@@ -5,10 +5,13 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.EncomendasDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResEncomendaEstadoDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.ClienteBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.EncomendaBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.GestorBean;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Alerta;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Sensor;
 
 import java.util.List;
 
@@ -27,14 +30,14 @@ public class GestorService {
     @Path("encomendas/pendentes")
     public Response getEncomendasPendendes() {
         List<Encomenda> encomendas = encomendaBean.findPendentes();
-        return Response.ok( EncomendasDTO.from(encomendas)).build();
+        return Response.ok( ResEncomendaEstadoDTO.from(encomendas)).build();
     }
 
     @GET
     @Path("encomendas/{estado}")
     public Response getEncomendaByEstado(@PathParam("estado") String estado) {
         List<Encomenda> encomendas = encomendaBean.findEncomendasByEstado(estado);
-        return Response.ok( EncomendasDTO.from(encomendas)).build();
+        return Response.ok( ResEncomendaEstadoDTO.from(encomendas)).build();
     }
 
     @PATCH
@@ -45,9 +48,16 @@ public class GestorService {
     }
 
     @GET
-    @Path("encomendas/{id}/")
+    @Path("encomendas/detalhes/{id}/")
     public Response getEncomendaById(@PathParam("id") int id) {
         Encomenda encomenda = encomendaBean.find(id);
         return Response.ok( EncomendasDTO.from(encomenda)).build();
     }
+
+    /*@GET
+    @Path("encomendas/sensor/{id}/")
+    public Response getSensorAlertas(@PathParam("id") int id) {
+        Alerta alerta = .getSensorAlertas(id);
+        return Response.ok().build();
+    }*/
 }

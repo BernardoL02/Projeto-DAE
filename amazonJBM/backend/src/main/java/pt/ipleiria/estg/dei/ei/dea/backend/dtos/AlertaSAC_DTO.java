@@ -90,7 +90,7 @@ public class AlertaSAC_DTO implements Serializable {
                 alerta.getMensagem(),
                 alerta.getSensor().getId(),
                 alerta.getValor(),
-                alerta.getEncomenda().getId(),
+                alerta.getVolume().getEncomenda().getId(),
                 alerta.getTime_stamp()
         );
     }

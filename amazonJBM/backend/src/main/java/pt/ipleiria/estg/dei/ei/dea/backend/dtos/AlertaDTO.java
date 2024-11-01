@@ -19,17 +19,17 @@ public class AlertaDTO implements Serializable {
 
     private int id_encomenda;
 
-    private String username;
+    private int id_volume;
 
     private LocalDateTime time_stamp;
 
-    public AlertaDTO(int id, String mensagem, int id_sensor, String valor, int id_encomenda, String username, LocalDateTime time_stamp) {
+    public AlertaDTO(int id, String mensagem, int id_sensor, String valor, int id_encomenda, int id_volume, LocalDateTime time_stamp) {
         this.id = id;
         this.mensagem = mensagem;
         this.id_sensor = id_sensor;
         this.valor = valor;
         this.id_encomenda = id_encomenda;
-        this.username = username;
+        this.id_volume= id_volume;
         this.time_stamp = time_stamp;
     }
 
@@ -77,12 +77,12 @@ public class AlertaDTO implements Serializable {
         this.id_encomenda = id_encomenda;
     }
 
-    public String getUsername() {
-        return username;
+    public int getId_volume() {
+        return id_volume;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setId_volume(int id_volume) {
+        this.id_volume = id_volume;
     }
 
     public LocalDateTime getTime_stamp() {
@@ -99,8 +99,8 @@ public class AlertaDTO implements Serializable {
                 alerta.getMensagem(),
                 alerta.getSensor().getId(),
                 alerta.getSensor().getValor(),
-                alerta.getEncomenda().getId(),
-                alerta.getUtilizador().getUsername(),
+                alerta.getVolume().getEncomenda().getId(),
+                alerta.getVolume().getId(),
                 alerta.getTime_stamp()
         );
     }

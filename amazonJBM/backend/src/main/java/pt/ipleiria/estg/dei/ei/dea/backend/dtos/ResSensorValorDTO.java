@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ResSensorAllDTO implements Serializable {
+public class ResSensorValorDTO implements Serializable {
 
     private int id;
     private String valor;
@@ -15,21 +15,17 @@ public class ResSensorAllDTO implements Serializable {
     private String estado;
     private int bateria;
     private LocalDateTime timeStamp;
-    private int idVolume;
-    private int idEncomenda;
 
-    public ResSensorAllDTO(int id, String valor, String tipoNome, String estado, int bateria, LocalDateTime timeStamp, int idVolume, int idEncomenda) {
+    public ResSensorValorDTO(int id, String valor, String tipoNome, String estado, int bateria, LocalDateTime timeStamp) {
         this.id = id;
         this.valor = valor;
         this.tipoNome = tipoNome;
         this.estado = estado;
         this.bateria = bateria;
         this.timeStamp = timeStamp;
-        this.idVolume = idVolume;
-        this.idEncomenda = idEncomenda;
     }
 
-    public ResSensorAllDTO(){
+    public ResSensorValorDTO(){
 
     }
 
@@ -81,36 +77,19 @@ public class ResSensorAllDTO implements Serializable {
         this.timeStamp = timeStamp;
     }
 
-    public int getIdVolume() {
-        return idVolume;
-    }
 
-    public void setIdVolume(int idVolume) {
-        this.idVolume = idVolume;
-    }
-
-    public int getIdEncomenda() {
-        return idEncomenda;
-    }
-
-    public void setIdEncomenda(int idEncomenda) {
-        this.idEncomenda = idEncomenda;
-    }
-
-    public static ResSensorAllDTO from(Sensor sensor) {
-        return new ResSensorAllDTO(
+    public static ResSensorValorDTO from(Sensor sensor) {
+        return new ResSensorValorDTO(
                 sensor.getId(),
                 sensor.getValor(),
                 sensor.getTipo().getTipo(),
                 sensor.getEstado(),
                 sensor.getBateria(),
-                sensor.getTimeStamp(),
-                sensor.getVolume().getId(),
-                sensor.getVolume().getEncomenda().getId()
+                sensor.getTimeStamp()
         );
     }
 
-    public static List<ResSensorAllDTO> from(List<Sensor> sensors) {
-        return sensors.stream().map(ResSensorAllDTO::from).collect(Collectors.toList());
+    public static List<ResSensorValorDTO> from(List<Sensor> sensors) {
+        return sensors.stream().map(ResSensorValorDTO::from).collect(Collectors.toList());
     }
 }

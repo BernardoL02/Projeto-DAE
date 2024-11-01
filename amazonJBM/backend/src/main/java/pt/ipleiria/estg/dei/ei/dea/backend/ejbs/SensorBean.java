@@ -3,6 +3,7 @@ package pt.ipleiria.estg.dei.ei.dea.backend.ejbs;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResSensorValorDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.SensorDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Categoria;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Sensor;

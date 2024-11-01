@@ -163,7 +163,7 @@ Content-Type: application/json
 }
 
 ### GET Ver detalhes de uma encomenda
-GET http://localhost:3001/backend/api/so/encomendas/1
+GET http://localhost:3001/backend/api/so/encomendas/detalhes/1
 Accept: application/json
 
 
@@ -179,13 +179,12 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "id": 1,
-  "mensagem": "Temperatura elevada, comida a estragar-se",
-  "id_sensor": 1,
+  "id": 5,
+  "mensagem": "Temperatura elevada, aaaacomida a estragar-se",
+  "id_sensor": 5,
   "valor": 40,
   "bateria": 72,
-  "username": "Bernardo",
-  "id_encomenda": 1
+  "id_volume": 4
 }
 
 ### Patch Sensor Estado

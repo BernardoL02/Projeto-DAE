@@ -8,10 +8,9 @@ import java.time.LocalDateTime;
 @NamedQueries({
         @NamedQuery(
                 name = "getAlertasByEncomendaId",
-                query = "SELECT a FROM Alerta a WHERE a.encomenda.id = :encomendaId"
+                query = "SELECT a FROM Alerta a JOIN a.volume v JOIN v.encomenda e WHERE e.id = :encomendaId"
         )
 })
-
 @Entity
 public class Alerta {
 
@@ -29,21 +28,16 @@ public class Alerta {
     private LocalDateTime time_stamp;
 
     @ManyToOne
-    @JoinColumn(name = "id_cliente", nullable = false)
-    private Utilizador utilizador;
-
-    @ManyToOne
-    @JoinColumn(name = "id_encomenda", nullable = false)
-    private Encomenda encomenda;
+    @JoinColumn(name = "id_volume", nullable = false)
+    private Volume volume;
 
 
-    public Alerta(int id, String mensagem, Sensor sensor, String valor, Utilizador utilizador, Encomenda encomenda) {
+    public Alerta(int id, String mensagem, Sensor sensor, String valor, Volume volume) {
         this.id = id;
         this.mensagem = mensagem;
         this.sensor = sensor;
         this.valor = valor;
-        this.utilizador = utilizador;
-        this.encomenda = encomenda;
+        this.volume = volume;
         this.time_stamp = LocalDateTime.now();
     }
 
@@ -91,19 +85,11 @@ public class Alerta {
         this.time_stamp = time_stamp;
     }
 
-    public Utilizador getUtilizador() {
-        return utilizador;
+    public Volume getVolume() {
+        return volume;
     }
 
-    public void setUtilizador(Utilizador utilizador) {
-        this.utilizador = utilizador;
-    }
-
-    public Encomenda getEncomenda() {
-        return encomenda;
-    }
-
-    public void setEncomenda(Encomenda encomenda) {
-        this.encomenda = encomenda;
+    public void setVolume(Volume volume) {
+        this.volume = volume;
     }
 }
