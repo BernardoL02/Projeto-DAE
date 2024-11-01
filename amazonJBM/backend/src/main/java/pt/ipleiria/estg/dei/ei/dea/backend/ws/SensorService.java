@@ -32,7 +32,6 @@ public class SensorService {
     @Path("/")
     public Response create(AlertaDTO alertaDTO) {
         alertaBean.create(
-                alertaDTO.getId(),
                 alertaDTO.getMensagem(),
                 alertaDTO.getId_sensor(),
                 alertaDTO.getValor(),

@@ -95,27 +95,26 @@ public class ConfigBean {
         tipoSensoresBean.create(2, "Aceleração");
         tipoSensoresBean.create(3, "Pressão Atmosférica");
         tipoSensoresBean.create(4, "GPS");
-        tipoSensoresBean.create(5, "Humidade");
 
         // Sensores
-        sensorBean.create(1, "29.0", 1, "ativo", 100, 40, 10, 1);
+        sensorBean.create(1, "29.0", 1, "ativo", 100, 30, 10, 1);
         sensorBean.create(2, "40.7123, -74.12312", 4, "ativo", 100, 1);
-        sensorBean.create(3, "28.0", 3, "ativo", 100, 10, 5, 3);
-        sensorBean.create(4, "21.0", 1, "ativo", 100, 10, 5, 1);
-        sensorBean.create(5, "21.0", 2, "ativo", 99, 10, 5, 4);
-        sensorBean.create(6, "60%", 5, "ativo", 80, 1, 2, 5);
+        sensorBean.create(3, "28.0", 3, "ativo", 100, 50, 5, 3);
+        sensorBean.create(4, "21.0", 1, "ativo", 100, 35, 5, 1);
+        sensorBean.create(5, "21.0", 2, "ativo", 99, 40, 10, 4);
+        sensorBean.create(6, "22.0", 2, "ativo", 80, 30, 15, 5);
         sensorBean.create(7, "25.0", 1, "ativo", 90, 30, 15, 2);
-        sensorBean.create(8, "45%", 5, "ativo", 88, 1);
+        sensorBean.create(8, "40.7123, -74.12312", 4, "ativo", 88, 1);
 
         // Alertas
-        alertaBean.create(1, "A comida está a descongelar", 1, "35", 1);
-        alertaBean.create(2, "Fora do Alcance", 2, "40.7123, -74.12312", 2);
-        alertaBean.create(3, "A banana tem muita aceleração", 5, "23", 4);
-        alertaBean.create(4, "Pressão fora do limite", 3, "1010 hPa", 3);
-        alertaBean.create(5, "Humidade alta", 6, "60%", 5);
-        alertaBean.create(6, "GPS desconectado", 2, "Indisponível", 2);
-        alertaBean.create(7, "Temperatura baixa", 1, "15", 1);
-        alertaBean.create(8, "Humidade crítica", 6, "80%", 5);
+        alertaBean.create("A comida está a descongelar", 1, "35", 1);
+        alertaBean.create( "Fora do Alcance", 2, "40.7123, -74.12312", 2);
+        alertaBean.create("A banana tem muita aceleração", 5, "23", 4);
+        alertaBean.create( "Pressão fora do limite", 3, "1010 hPa", 3);
+        alertaBean.create( "Humidade alta", 6, "60%", 5);
+        alertaBean.create( "GPS desconectado", 2, "Indisponível", 2);
+        alertaBean.create( "Temperatura baixa", 1, "15", 1);
+        alertaBean.create( "Humidade crítica", 6, "80%", 5);
     }
 
 }

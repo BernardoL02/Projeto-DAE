@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 public class Alerta {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String mensagem;
@@ -36,8 +37,7 @@ public class Alerta {
     private Volume volume;
 
 
-    public Alerta(int id, String mensagem, Sensor sensor, String valor, Volume volume) {
-        this.id = id;
+    public Alerta(String mensagem, Sensor sensor, String valor, Volume volume) {
         this.mensagem = mensagem;
         this.sensor = sensor;
         this.valor = valor;

@@ -1,5 +1,6 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.dtos;
 
+import jakarta.persistence.Column;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Sensor;
 
 import java.io.Serializable;
@@ -17,8 +18,10 @@ public class ResSensorAllDTO implements Serializable {
     private LocalDateTime timeStamp;
     private int idVolume;
     private int idEncomenda;
+    private Integer valMax;
+    private Integer valMin;
 
-    public ResSensorAllDTO(int id, String valor, String tipoNome, String estado, int bateria, LocalDateTime timeStamp, int idVolume, int idEncomenda) {
+    public ResSensorAllDTO(int id, String valor, String tipoNome, String estado, int bateria, LocalDateTime timeStamp, int idVolume, int idEncomenda, Integer valMax, Integer valMin) {
         this.id = id;
         this.valor = valor;
         this.tipoNome = tipoNome;
@@ -27,6 +30,8 @@ public class ResSensorAllDTO implements Serializable {
         this.timeStamp = timeStamp;
         this.idVolume = idVolume;
         this.idEncomenda = idEncomenda;
+        this.valMax = valMax;
+        this.valMin = valMin;
     }
 
     public ResSensorAllDTO(){
@@ -97,6 +102,22 @@ public class ResSensorAllDTO implements Serializable {
         this.idEncomenda = idEncomenda;
     }
 
+    public Integer getValMax() {
+        return valMax;
+    }
+
+    public void setValMax(Integer valMax) {
+        this.valMax = valMax;
+    }
+
+    public Integer getValMin() {
+        return valMin;
+    }
+
+    public void setValMin(Integer valMin) {
+        this.valMin = valMin;
+    }
+
     public static ResSensorAllDTO from(Sensor sensor) {
         return new ResSensorAllDTO(
                 sensor.getId(),
@@ -106,7 +127,9 @@ public class ResSensorAllDTO implements Serializable {
                 sensor.getBateria(),
                 sensor.getTimeStamp(),
                 sensor.getVolume().getId(),
-                sensor.getVolume().getEncomenda().getId()
+                sensor.getVolume().getEncomenda().getId(),
+                sensor.getValMax(),
+                sensor.getValMin()
         );
     }
 

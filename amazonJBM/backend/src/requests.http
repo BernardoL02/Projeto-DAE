@@ -130,7 +130,7 @@ Content-Type: application/json
 
 ### Get All Ultimo Valor dos Sensores por Tipo
 GET http://localhost:3001/backend/api/sac/encomendas/Bernardo/sensor/GPS
-Accept: application/json
+Accept: application/json //TODO apenas das encomendas ProEntregar
 
 ### Get All Alertas de Encomenda por Id
 GET http://localhost:3001/backend/api/sac/encomendas/3/alerta/Tendeiro
@@ -195,7 +195,6 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "id": 25,
   "mensagem": "Temperatura elevada, aaaacomida a estragar-se",
   "id_sensor": 5,
   "valor": 40,

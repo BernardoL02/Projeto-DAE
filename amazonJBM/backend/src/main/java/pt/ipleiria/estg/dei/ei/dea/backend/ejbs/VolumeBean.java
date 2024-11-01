@@ -23,7 +23,7 @@ public class VolumeBean {
         var volume = new Volume(id, produto,quantidade, encomenda);
         encomenda.addVolume(volume);
         volume.setEncomenda(encomenda);
-        em.persist(volume);
+        em.persist(volume); //TODO verificar quantida por volume aquilo das caixas !! quantida_por_volume
     }
 
     public Volume find(int id) {
