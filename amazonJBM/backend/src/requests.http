@@ -59,21 +59,21 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "id": 7,
+  "id": 5,
   "username": "Bernardo",
   "estado": "PorEntregar",
   "data_expedicao": "2024-10-31T10:00:00",
   "data_entrega": "2024-11-05T10:00:00",
   "produtos": [
     {
-      "id_produto": 1,
+      "id": 1,
       "nome": "Gelados",
-      "quantidade": 10
+      "quantidade_por_volume": 10
     },
     {
-      "id_produto": 2,
+      "id": 2,
       "nome": "Banana",
-      "quantidade": 10
+      "quantidade_por_volume": 10
     }
   ]
 }

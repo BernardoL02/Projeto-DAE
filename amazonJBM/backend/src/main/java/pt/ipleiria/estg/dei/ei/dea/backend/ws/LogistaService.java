@@ -121,12 +121,7 @@ import java.awt.*;
                 encomendasDTO.getData_expedicao(),
                 encomendasDTO.getData_entrega()
         );
-        //TODO descobrir o porquê de o id estarem os 2 a 0
-        for (ProdutoDTO produtoDTO: encomendasDTO.getProdutos()) {
-            System.out.println(produtoDTO.getId());
-        }
-        //encomendaBean.gerarVolumes(encomendasDTO.getId(), encomendasDTO.getProdutos());
-
+        encomendaBean.gerarVolumes(encomendasDTO.getId(), encomendasDTO.getProdutos());
         return Response.ok("Encomenda criada com sucesso").build();
     }
 
