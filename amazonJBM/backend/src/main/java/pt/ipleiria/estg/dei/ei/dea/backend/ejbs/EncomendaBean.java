@@ -8,6 +8,7 @@ import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.Path;
 import org.hibernate.Hibernate;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.EncomendasDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.VolumeDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
 
@@ -40,12 +41,7 @@ public class EncomendaBean {
         em.persist(encomenda);
     }
 
-    public void create(int id, String client_username, String estado, LocalDateTime data_expedicao, LocalDateTime data_entrega,List<Produto> produtos) {
 
-        Cliente cliente = clienteBean.find(client_username);
-        Encomenda encomenda = new Encomenda(id,cliente,estado,data_expedicao,data_entrega);
-        em.persist(encomenda);
-    }
 
 
     public Encomenda find(int id) {
@@ -96,13 +92,11 @@ public class EncomendaBean {
         }
     }
 
-    public void generarVolumes(int id_encomenda,List<Produto> produtos){
+    public void gerarVolumes(int id_encomenda,List<ProdutoDTO> produtos){
         int id_lasVolume = 5;
-        Encomenda encomenda = em.find(Encomenda.class, id_encomenda);
 
-        for (Produto produto:produtos) {
-            volumeBean.create(id_lasVolume, produto.getId(),produto.getQuantidade_por_volume(), id_encomenda);
-            encomenda.addVolume(em.find(Volume.class, id_lasVolume));
+        for (ProdutoDTO produto:produtos) {
+            volumeBean.create(id_lasVolume, produto.getId(), produto.getQuantidade_por_volume(), id_encomenda);
             id_lasVolume++;
         }
     }

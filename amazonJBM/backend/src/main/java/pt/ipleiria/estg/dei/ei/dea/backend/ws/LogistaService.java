@@ -11,6 +11,7 @@ import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Produto;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Tipo_Sensores;
 
 import java.awt.*;
@@ -118,11 +119,13 @@ import java.awt.*;
                 encomendasDTO.getUsername(),
                 encomendasDTO.getEstado(),
                 encomendasDTO.getData_expedicao(),
-                encomendasDTO.getData_entrega(),
-                encomendasDTO.getProdutos()
+                encomendasDTO.getData_entrega()
         );
-
-        encomendaBean.generarVolumes(encomendasDTO.getId(), encomendasDTO.getProdutos());
+        //TODO descobrir o porquê de o id estarem os 2 a 0
+        for (ProdutoDTO produtoDTO: encomendasDTO.getProdutos()) {
+            System.out.println(produtoDTO.getId());
+        }
+        //encomendaBean.gerarVolumes(encomendasDTO.getId(), encomendasDTO.getProdutos());
 
         return Response.ok("Encomenda criada com sucesso").build();
     }

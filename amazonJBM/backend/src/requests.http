@@ -1,29 +1,29 @@
 ################## End Points Sistema de Logistica ##################
 
 ### Get All Encomendas em processamento
-GET http://localhost:8080/backend/api/sl/encomendas/estado/EmProcessamento
+GET http://localhost:3001/backend/api/sl/encomendas/estado/EmProcessamento
 Accept: application/json
 
 ### Get All Clientes
-GET http://localhost:8080/backend/api/sl/clientes
+GET http://localhost:3001/backend/api/sl/clientes
 Accept: application/json
 
 ### Get All Produtos
-GET http://localhost:8080/backend/api/sl/produtos
+GET http://localhost:3001/backend/api/sl/produtos
 Accept: application/json
 
 ### Get Encomenda Por Id
-GET http://localhost:8080/backend/api/sl/encomendas/7
+GET http://localhost:3001/backend/api/sl/encomendas/7
 Accept: application/json
 
 ### Get Encomendas por entregar
-GET http://localhost:8080/backend/api/sl/encomendas/estado/PorEntregar
+GET http://localhost:3001/backend/api/sl/encomendas/estado/PorEntregar
 Accept: application/json
 
 
 ### Entregar Encomenda
 
-PATCH http://localhost:8080/backend/api/sl/encomendas/1/Entregue
+PATCH http://localhost:3001/backend/api/sl/encomendas/1/Entregue
 Accept: application/json
 Content-Type: application/json
 
@@ -32,10 +32,10 @@ Content-Type: application/json
 }
 
 ### Get Detalhes Volume
-GET http://localhost:8080/backend/api/sl/volume/1
+GET http://localhost:3001/backend/api/sl/volume/1
 
 ###Associar um Sensor a um Volume
-POST http://localhost:8080/backend/api/sl/volume/3/sensor
+POST http://localhost:3001/backend/api/sl/volume/3/sensor
 Accept: application/json
 Content-Type: application/json
 
@@ -50,11 +50,11 @@ Content-Type: application/json
 
 ### Get All Tipos de Sensor
 
-GET http://localhost:8080/backend/api/sl/tipoSensores
+GET http://localhost:3001/backend/api/sl/tipoSensores
 
 
 ###Criar uma nova encomenda
-POST http://localhost:8080/backend/api/sl/encomendas
+POST http://localhost:3001/backend/api/sl/encomendas
 Accept: application/json
 Content-Type: application/json
 
@@ -66,12 +66,12 @@ Content-Type: application/json
   "data_entrega": "2024-11-05T10:00:00",
   "produtos": [
     {
-      "produtoId": 1,
+      "id_produto": 1,
       "nome": "Gelados",
       "quantidade": 10
     },
     {
-      "produtoId": 2,
+      "id_produto": 2,
       "nome": "Banana",
       "quantidade": 10
     }
@@ -81,34 +81,34 @@ Content-Type: application/json
 
 ################## End Points Sistema de Apoio ao Cliente ############
 ### Get All Encomendas By Cliente
-GET http://localhost:8080/backend/api/sac/encomendas/Bernardo
+GET http://localhost:3001/backend/api/sac/encomendas/Bernardo
 Accept: application/json
 
 ### Get All Encomendas By Clinete + id_encomenda
-GET http://localhost:8080/backend/api/sac/encomendas/1/Bernardo
+GET http://localhost:3001/backend/api/sac/encomendas/1/Bernardo
 Accept: application/json
 
 --------- Get encomandas por estado ---------
 ### Get All Encomendas Por Entregar
-GET http://localhost:8080/backend/api/sac/encomendas/estado/PorEntregar/Bernardo
+GET http://localhost:3001/backend/api/sac/encomendas/estado/PorEntregar/Bernardo
 Accept: application/json
 
 ### Get All Encomendas com estado Em Processamento
-GET http://localhost:8080/backend/api/sac/encomendas/estado/EmProcessamento/Bernardo
+GET http://localhost:3001/backend/api/sac/encomendas/estado/EmProcessamento/Bernardo
 Accept: application/json
 
 ### Get All Encomendas com estado Entregue
-GET http://localhost:8080/backend/api/sac/encomendas/estado/Entregue/Tendeiro
+GET http://localhost:3001/backend/api/sac/encomendas/estado/Entregue/Tendeiro
 Accept: application/json
 
 ### Get All Encomendas com estado Cancelada
-GET http://localhost:8080/backend/api/sac/encomendas/estado/Cancelada/Bernardo
+GET http://localhost:3001/backend/api/sac/encomendas/estado/Cancelada/Bernardo
 Accept: application/json
 
 ------------------------------------
 
 ### Cancelar Encomenda
-PATCH http://localhost:8080/backend/api/sac/encomendas/2/Bernardo
+PATCH http://localhost:3001/backend/api/sac/encomendas/2/Bernardo
 Accept: application/json
 Content-Type: application/json
 
@@ -117,11 +117,11 @@ Content-Type: application/json
 }
 
 ### Get All Ultimo Valor dos Sensores por Tipo
-GET http://localhost:8080/backend/api/sac/encomendas/Bernardo/sensor/GPS
+GET http://localhost:3001/backend/api/sac/encomendas/Bernardo/sensor/GPS
 Accept: application/json
 
 ### Get All Alertas de Encomenda por Id
-GET http://localhost:8080/backend/api/sac/encomendas/3/alerta/Tendeiro
+GET http://localhost:3001/backend/api/sac/encomendas/3/alerta/Tendeiro
 Accept: application/json
 
 
@@ -130,19 +130,19 @@ Accept: application/json
 ################## End Points Sistema Operacional ####################
 
 ### Get Encomendas Pendentes
-GET http://localhost:8080/backend/api/so/encomendas/pendentes
+GET http://localhost:3001/backend/api/so/encomendas/pendentes
 Accept: application/json
 
 ### Get Encomendas Por entregar
-GET http://localhost:8080/backend/api/so/encomendas/PorEntregar
+GET http://localhost:3001/backend/api/so/encomendas/PorEntregar
 Accept: application/json
 
 ### Get Encomendas Entregues
-GET http://localhost:8080/backend/api/so/encomendas/Entregue
+GET http://localhost:3001/backend/api/so/encomendas/Entregue
 Accept: application/json
 
 ### Patch Alterar Estado para Cancelado
-PATCH http://localhost:8080/backend/api/so/encomendas/1
+PATCH http://localhost:3001/backend/api/so/encomendas/1
 Accept: application/json
 Content-Type: application/json
 
@@ -151,18 +151,18 @@ Content-Type: application/json
 }
 
 ### GET Ver detalhes de uma encomenda
-GET http://localhost:8080/backend/api/so/encomendas/1
+GET http://localhost:3001/backend/api/so/encomendas/1
 Accept: application/json
 
 
 ####################### End Points Sensores ###########################
 
 ### Get All sensores
-GET http://localhost:8080/backend/api/sensor/
+GET http://localhost:3001/backend/api/sensor/
 Accept: application/json
 
 ### Criar um alerta
-POST http://localhost:8080/backend/api/sensor/
+POST http://localhost:3001/backend/api/sensor/
 Accept: application/json
 Content-Type: application/json
 
@@ -177,7 +177,7 @@ Content-Type: application/json
 }
 
 ### Patch Sensor Estado
-PATCH http://localhost:8080/backend/api/sensor/2/desativar
+PATCH http://localhost:3001/backend/api/sensor/2/desativar
 Accept: application/json
 Content-Type: application/json
 
@@ -186,7 +186,7 @@ Content-Type: application/json
 }
 
 ### Patch Sensor Valor
-PATCH http://localhost:8080/backend/api/sensor/1
+PATCH http://localhost:3001/backend/api/sensor/1
 Accept: application/json
 Content-Type: application/json
 

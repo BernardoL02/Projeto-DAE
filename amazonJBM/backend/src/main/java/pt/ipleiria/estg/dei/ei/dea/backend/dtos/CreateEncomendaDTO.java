@@ -1,7 +1,6 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.dtos;
 
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Produto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -12,17 +11,13 @@ import java.util.stream.Collectors;
 public class CreateEncomendaDTO implements Serializable {
 
     private int id;
-
     private String username;
-
     private String estado;
-
     private LocalDateTime data_expedicao;
-
     private LocalDateTime data_entrega;
+    private List<ProdutoDTO> produtos = new ArrayList<>();
 
-    private List<Produto> produtos = new ArrayList<>();
-    public CreateEncomendaDTO(int id, String username, String estado, LocalDateTime data_expedicao, LocalDateTime data_entrega,List<Produto> produtos) {
+    public CreateEncomendaDTO(int id, String username, String estado, LocalDateTime data_expedicao, LocalDateTime data_entrega, List<ProdutoDTO> produtos) {
         this.id = id;
         this.username = username;
         this.estado = estado;
@@ -31,9 +26,9 @@ public class CreateEncomendaDTO implements Serializable {
         this.produtos = produtos;
     }
 
-    public CreateEncomendaDTO(){
-
+    public CreateEncomendaDTO() {
     }
+
     public int getId() {
         return id;
     }
@@ -74,26 +69,27 @@ public class CreateEncomendaDTO implements Serializable {
         this.data_entrega = data_entrega;
     }
 
-    public List<Produto> getProdutos() {
+    public List<ProdutoDTO> getProdutos() {
         return produtos;
     }
 
-    public void setProdutos(List<Produto> produtos) {
+    public void setProdutos(List<ProdutoDTO> produtos) {
         this.produtos = produtos;
     }
 
     public static CreateEncomendaDTO from(Encomenda encomenda) {
+        List<ProdutoDTO> produtosDTO = encomenda.getProdutos().stream()
+                .map(produto -> new ProdutoDTO(produto.getId(), produto.getNome(), produto.getCategoria().getNome(),produto.getQuantidade_por_volume()))
+                .collect(Collectors.toList());
 
-        CreateEncomendaDTO dto = new CreateEncomendaDTO(
+        return new CreateEncomendaDTO(
                 encomenda.getId(),
                 encomenda.getCliente().getUsername(),
                 encomenda.getEstado(),
                 encomenda.getData_expedicao(),
                 encomenda.getData_entrega(),
-                encomenda.getProdutos()
+                produtosDTO
         );
-
-        return dto;
     }
 
     public static List<CreateEncomendaDTO> from(List<Encomenda> encomendas) {
