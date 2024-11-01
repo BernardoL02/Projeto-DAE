@@ -4,9 +4,7 @@ import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.EncomendasDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResEncomendaEstadoDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.ClienteBean;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.EncomendaBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.GestorBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Alerta;
@@ -14,6 +12,7 @@ import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Sensor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("so") // relative url web path for this service
 @Produces({MediaType.APPLICATION_JSON}) // injects header “Content-Type: application/json”
@@ -54,10 +53,33 @@ public class GestorService {
         return Response.ok( EncomendasDTO.from(encomenda)).build();
     }
 
-    /*@GET
-    @Path("encomendas/sensor/{id}/")
-    public Response getSensorAlertas(@PathParam("id") int id) {
-        Alerta alerta = .getSensorAlertas(id);
-        return Response.ok().build();
-    }*/
+    @GET
+    @Path("sensor/{id}/alertas")
+    public Response getAlertasSensor(@PathParam("id") int id) {
+        List<Alerta> alertas = gestorBean.getAlertasSensor(id);
+        return Response.ok(alertas.stream().map(ResAlertasSensorDTO::from).collect(Collectors.toList())).build();
+    }
+
+    @GET
+    @Path("encomendas/{id}/alertas")
+    public Response getAlertasEncomenda(@PathParam("id") int id) {
+        List<Alerta> alertas = gestorBean.getAlertasEncomenda(id);
+        ResAlertasEncomendaDTO responseDto = ResAlertasEncomendaDTO.from(alertas);
+        return Response.ok(responseDto).build();
+    }
+
+    @GET
+    @Path("encomendas/alertas")
+    public Response getEncomendasAlertas() {
+        List<Alerta> alertas = gestorBean.getEncomendasAlertas();
+        return Response.ok(alertas.stream().map(ResEncomendasAlertasDTO::from).collect(Collectors.toList())).build();
+    }
+
+    @GET
+    @Path("sensor/{tipo_sensor}")
+    public Response getUltimaLeituraSensoresByTipo(@PathParam("tipo_sensor") String tipo_sensor) {
+        List<Sensor> alertas = gestorBean.getUltimaLeituraSensoresByTipo(tipo_sensor);
+        return Response.ok(alertas.stream().map(ResSensorUltimaLeituraByTipoDTO::from).collect(Collectors.toList())).build();
+    }
+
 }

@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AlertaDTO implements Serializable {
+public class ResEncomendasAlertasDTO implements Serializable {
 
     private int id;
 
@@ -19,21 +19,21 @@ public class AlertaDTO implements Serializable {
 
     private int id_encomenda;
 
-    private int id_volume;
+    private String username;
 
     private LocalDateTime time_stamp;
 
-    public AlertaDTO(int id, String mensagem, int id_sensor, String valor, int id_encomenda, int id_volume, LocalDateTime time_stamp) {
+    public ResEncomendasAlertasDTO(int id, String mensagem, int id_sensor, String valor, int id_encomenda, String username, LocalDateTime time_stamp){
         this.id = id;
         this.mensagem = mensagem;
         this.id_sensor = id_sensor;
         this.valor = valor;
         this.id_encomenda = id_encomenda;
-        this.id_volume= id_volume;
+        this.username = username;
         this.time_stamp = time_stamp;
     }
 
-    public AlertaDTO(){
+    public ResEncomendasAlertasDTO(){
 
     }
 
@@ -53,20 +53,20 @@ public class AlertaDTO implements Serializable {
         this.mensagem = mensagem;
     }
 
-    public int getId_sensor() {
-        return id_sensor;
-    }
-
-    public void setId_sensor(int id_sensor) {
-        this.id_sensor = id_sensor;
-    }
-
     public String getValor() {
         return valor;
     }
 
     public void setValor(String valor) {
         this.valor = valor;
+    }
+
+    public int getId_sensor() {
+        return id_sensor;
+    }
+
+    public void setId_sensor(int id_sensor) {
+        this.id_sensor = id_sensor;
     }
 
     public int getId_encomenda() {
@@ -77,12 +77,12 @@ public class AlertaDTO implements Serializable {
         this.id_encomenda = id_encomenda;
     }
 
-    public int getId_volume() {
-        return id_volume;
+    public String getUsername() {
+        return username;
     }
 
-    public void setId_volume(int id_volume) {
-        this.id_volume = id_volume;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public LocalDateTime getTime_stamp() {
@@ -93,19 +93,19 @@ public class AlertaDTO implements Serializable {
         this.time_stamp = time_stamp;
     }
 
-    public static AlertaDTO from(Alerta alerta) {
-        return new AlertaDTO(
+    public static ResEncomendasAlertasDTO from(Alerta alerta) {
+        return new ResEncomendasAlertasDTO(
                 alerta.getId(),
                 alerta.getMensagem(),
                 alerta.getSensor().getId(),
                 alerta.getValor(),
                 alerta.getVolume().getEncomenda().getId(),
-                alerta.getVolume().getId(),
+                alerta.getVolume().getEncomenda().getCliente().getUsername(),
                 alerta.getTime_stamp()
         );
     }
 
-    public static List<AlertaDTO> from(List<Alerta> alerta) {
-        return alerta.stream().map(AlertaDTO::from).collect(Collectors.toList());
+    public static List<ResEncomendasAlertasDTO> from(List<Alerta> alerta) {
+        return alerta.stream().map(ResEncomendasAlertasDTO::from).collect(Collectors.toList());
     }
 }

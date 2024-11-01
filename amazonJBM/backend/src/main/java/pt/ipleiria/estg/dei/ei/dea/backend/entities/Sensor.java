@@ -12,6 +12,10 @@ import java.time.LocalDateTime;
                 name = "getAllSensores",
                 query = "SELECT s FROM Sensor s ORDER BY s.id"
         ),
+        @NamedQuery(
+                name = "Sensor.findByTipoAndEstado",
+                query = "SELECT s FROM Sensor s WHERE s.tipo.id = :tipoId AND s.estado = 'ativo'"
+        )
 })
 public class Sensor {
     @Id

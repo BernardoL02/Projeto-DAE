@@ -45,61 +45,77 @@ public class ConfigBean {
     @PostConstruct
     public void populateDB() {
 
-        //Users
-        clienteBean.create("Bernardo", "12#45", "bernas@gmail.com", "Bernardo1", "Leira");
+        // Clientes
+        clienteBean.create("Bernardo", "12#45", "bernas@gmail.com", "Bernardo1", "Leiria");
+        clienteBean.create("Tendeiro", "12#45", "tendeiro@gmail.com", "ten", "Leiria");
+        clienteBean.create("Sousa", "45678", "sousa@gmail.com", "SousaX", "Porto");
+        clienteBean.create("Ferreira", "78#90", "ferreira@gmail.com", "Fer", "Lisboa");
+        clienteBean.create("Carvalho", "abc123", "carvalho@gmail.com", "Carva", "Coimbra");
+        // Logistas
         logistaBean.create("Miguel", "123", "miguel@gmail.com", "Smigueli");
+        // Gestores
         gestorBean.create("Delgado", "123", "delgado@gmail.com", "José");
-        clienteBean.create("Tendeiro", "12#45", "tendeiro@gmail.com", "ten", "Leira");
 
-        //Categorias dos Produtos
+        // Categorias de Produtos
         categoriaBean.create(1, "Alimentos", "Isotérmica");
-        categoriaBean.create(2, "Tv e Som", "Isotérmica");
+        categoriaBean.create(2, "Tv e Som", "Eletrónica");
+        categoriaBean.create(3, "Ferramentas", "Industrial");
+        categoriaBean.create(4, "Bebidas", "Isotérmica");
+        categoriaBean.create(5, "Eletrodomésticos", "Eletrónica");
 
-        //Produtos
-        produtoBean.create(1,"Gelados", 1, 10);
-        produtoBean.create(2,"Banana", 1, 10);
-        produtoBean.create(3,"TV", 2, 10);
+        // Produtos
+        produtoBean.create(1, "Gelados", 1, 10);
+        produtoBean.create(2, "Banana", 1, 5);
+        produtoBean.create(3, "TV", 2, 15);
+        produtoBean.create(4, "Refrigerante", 4, 20);
+        produtoBean.create(5, "Martelo", 3, 25);
+        produtoBean.create(6, "Computador", 2, 8);
+        produtoBean.create(7, "Suco de Laranja", 4, 30);
+        produtoBean.create(8, "Ar Condicionado", 5, 12);
 
-        //Encomendas
-        encomendaBean.create(1,"Bernardo","PorEntregar",
-                LocalDateTime.of(2024, 10, 29, 15, 30),
-                LocalDateTime.of(2024, 10, 29, 15, 30)
-                );
-        encomendaBean.create(2,"Bernardo","EmProcessamento",
-                LocalDateTime.of(2024, 10, 29, 15, 30),
-                LocalDateTime.of(2024, 10, 29, 15, 30)
-                );
-        encomendaBean.create(3,"Tendeiro","Entregue",
-                LocalDateTime.of(2024, 10, 29, 15, 30),
-                LocalDateTime.of(2024, 10, 29, 15, 30)
-        );
-        encomendaBean.create(4,"Tendeiro","EmProcessamento",
-                LocalDateTime.of(2023, 10, 29, 15, 30),
-                LocalDateTime.of(2023, 10, 29, 15, 30)
-        );
+        // Encomendas
+        encomendaBean.create(1, "Bernardo", "PorEntregar", LocalDateTime.of(2024, 10, 29, 15, 30), LocalDateTime.of(2024, 10, 29, 15, 30));
+        encomendaBean.create(2, "Bernardo", "EmProcessamento", LocalDateTime.of(2024, 10, 29, 15, 30), LocalDateTime.of(2024, 10, 29, 15, 30));
+        encomendaBean.create(3, "Tendeiro", "Entregue", LocalDateTime.of(2024, 10, 29, 15, 30), LocalDateTime.of(2024, 10, 29, 15, 30));
+        encomendaBean.create(4, "Tendeiro", "EmProcessamento", LocalDateTime.of(2023, 10, 29, 15, 30), LocalDateTime.of(2023, 10, 29, 15, 30));
+        encomendaBean.create(5, "Sousa", "PorEntregar", LocalDateTime.of(2024, 11, 2, 12, 0), LocalDateTime.of(2024, 11, 2, 12, 30));
 
-        //Volumes
+        // Volumes
         volumeBean.create(1, 1, 10, 1);
         volumeBean.create(2, 2, 1, 1);
         volumeBean.create(3, 2, 1, 2);
         volumeBean.create(4, 2, 1, 3);
+        volumeBean.create(5, 3, 5, 4);
+        volumeBean.create(6, 4, 2, 1);
+        volumeBean.create(7, 5, 4, 3);
+        volumeBean.create(8, 6, 1, 4);
 
-        //Tipos de Sensores
+        // Tipos de Sensores
         tipoSensoresBean.create(1, "Temperatura");
-        tipoSensoresBean.create(2, "Acelaracao");
-        tipoSensoresBean.create(3, "Pressao Atmosferia");
+        tipoSensoresBean.create(2, "Aceleração");
+        tipoSensoresBean.create(3, "Pressão Atmosférica");
         tipoSensoresBean.create(4, "GPS");
+        tipoSensoresBean.create(5, "Humidade");
 
-        //Sensores
-        sensorBean.create(1, "29.0",1,"ativo", 100,40,10,1);
-        sensorBean.create(2, "40.7123, -74.12312",4,"ativo", 100,1);
-        sensorBean.create(3, "28.0",3,"ativo", 100,10,5,3);
-        sensorBean.create(4, "21.0",1,"ativo", 100,10,5,1);
-        sensorBean.create(5, "21.0",2,"ativo", 99,10,5,4);
+        // Sensores
+        sensorBean.create(1, "29.0", 1, "ativo", 100, 40, 10, 1);
+        sensorBean.create(2, "40.7123, -74.12312", 4, "ativo", 100, 1);
+        sensorBean.create(3, "28.0", 3, "ativo", 100, 10, 5, 3);
+        sensorBean.create(4, "21.0", 1, "ativo", 100, 10, 5, 1);
+        sensorBean.create(5, "21.0", 2, "ativo", 99, 10, 5, 4);
+        sensorBean.create(6, "60%", 5, "ativo", 80, 1, 2, 5);
+        sensorBean.create(7, "25.0", 1, "ativo", 90, 30, 15, 2);
+        sensorBean.create(8, "45%", 5, "ativo", 88, 1);
 
-        //Alertas
-        alertaBean.create(1,"A comida está a descongelarrr",1, "35", 1);
-        alertaBean.create(2,"A comida está a descongelarrr",1, "35", 1);
-        alertaBean.create(4,"O banana tem muita acelaracao",5, "23", 4);
+        // Alertas
+        alertaBean.create(1, "A comida está a descongelar", 1, "35", 1);
+        alertaBean.create(2, "Fora do Alcance", 2, "40.7123, -74.12312", 2);
+        alertaBean.create(3, "A banana tem muita aceleração", 5, "23", 4);
+        alertaBean.create(4, "Pressão fora do limite", 3, "1010 hPa", 3);
+        alertaBean.create(5, "Humidade alta", 6, "60%", 5);
+        alertaBean.create(6, "GPS desconectado", 2, "Indisponível", 2);
+        alertaBean.create(7, "Temperatura baixa", 1, "15", 1);
+        alertaBean.create(8, "Humidade crítica", 6, "80%", 5);
     }
+
 }

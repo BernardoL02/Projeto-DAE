@@ -1,11 +1,15 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.ejbs;
 
+import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Gestor;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Logista;
+import org.hibernate.Hibernate;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Stateless
@@ -13,6 +17,18 @@ public class GestorBean {
 
     @PersistenceContext
     private EntityManager em;
+
+    @EJB
+    private AlertaBean alertaBean;
+
+    @EJB
+    private EncomendaBean encomendaBean;
+
+    @EJB
+    private ClienteBean clienteBean;
+
+    @EJB
+    private TipoSensoresBean tipoSensoresBean;
 
     public void create(String username, String password, String email, String nome){
         var gestor = new Gestor(username, password, email, nome);
@@ -26,4 +42,36 @@ public class GestorBean {
         em.merge(encomenda);
     }
 
+    public List<Alerta> getAlertasSensor(int sensorId) {
+        List<Alerta> todosAlertas = alertaBean.findAll();
+        return todosAlertas.stream().filter(alerta -> alerta.getSensor().getId() == sensorId).collect(Collectors.toList());
+    }
+
+    public List<Alerta> getAlertasEncomenda(int id) {
+        List<Alerta> alertas = alertaBean.findAll();
+        return alertas.stream()
+                .filter(alerta -> alerta.getVolume().getEncomenda().getId() == id)
+                .collect(Collectors.toList());
+    }
+
+    public List<Alerta> getEncomendasAlertas() {
+        List<Encomenda> encomendasPorEntregar = encomendaBean.findEncomendasByEstado("PorEntregar");
+
+        List<Integer> encomendaIds = encomendasPorEntregar.stream()
+                .map(Encomenda::getId)
+                .collect(Collectors.toList());
+
+        List<Alerta> todosAlertas = alertaBean.findAll();
+        return todosAlertas.stream()
+                .filter(alerta -> encomendaIds.contains(alerta.getVolume().getEncomenda().getId()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Sensor> getUltimaLeituraSensoresByTipo(String tipo_sensor) {
+        Tipo_Sensores tipoSensores = tipoSensoresBean.findAll().stream()
+                .filter(tipo -> tipo.getTipo().equals(tipo_sensor))
+                .findFirst().orElse(null);
+
+        return em.createNamedQuery("Sensor.findByTipoAndEstado", Sensor.class).setParameter("tipoId", tipoSensores.getId()).getResultList();
+    }
 }

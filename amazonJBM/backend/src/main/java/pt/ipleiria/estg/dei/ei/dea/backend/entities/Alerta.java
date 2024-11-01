@@ -9,6 +9,10 @@ import java.time.LocalDateTime;
         @NamedQuery(
                 name = "getAlertasByEncomendaId",
                 query = "SELECT a FROM Alerta a JOIN a.volume v JOIN v.encomenda e WHERE e.id = :encomendaId"
+        ),
+        @NamedQuery(
+                name = "Alerta.findAll",
+                query = "SELECT a FROM Alerta a ORDER BY a.time_stamp DESC" // Ordena por data, ajuste conforme necessário
         )
 })
 @Entity

@@ -59,7 +59,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "id": 5,
+  "id": 10,
   "username": "Bernardo",
   "estado": "PorEntregar",
   "data_expedicao": "2024-10-31T10:00:00",
@@ -84,7 +84,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "id": 8,
+  "id": 15,
   "id_produto": 3,
   "quantidade": 10
 
@@ -166,6 +166,22 @@ Content-Type: application/json
 GET http://localhost:3001/backend/api/so/encomendas/detalhes/1
 Accept: application/json
 
+### GET Ver Alertas de um sensor
+GET http://localhost:3001/backend/api/so/sensor/1/alertas
+Accept: application/json
+
+### GET Ver Alertas de uma encomenda
+GET http://localhost:3001/backend/api/so/encomendas/1/alertas
+Accept: application/json
+
+### GET Ver Alertas de encomendas (PorEntregar)
+GET http://localhost:3001/backend/api/so/encomendas/alertas
+Accept: application/json
+
+### GET All Ultimo Valor dos Sensores por Tipo
+GET http://localhost:3001/backend/api/so/sensor/Temperatura
+Accept: application/json
+
 
 ####################### End Points Sensores ###########################
 
@@ -179,7 +195,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "id": 5,
+  "id": 25,
   "mensagem": "Temperatura elevada, aaaacomida a estragar-se",
   "id_sensor": 5,
   "valor": 40,

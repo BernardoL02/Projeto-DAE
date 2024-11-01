@@ -94,7 +94,6 @@ public class ClienteBean {
     }
 
     public List<Sensor> getUltimaLeituraSensoresByTipo(String tipo_sensor, String username) {
-
         var cliente = this.find(username);
         Hibernate.initialize(cliente.getEncomendas());
 
