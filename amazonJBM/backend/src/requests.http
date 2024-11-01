@@ -78,6 +78,18 @@ Content-Type: application/json
   ]
 }
 
+### Associar um volume a uma encomenda
+POST http://localhost:3001/backend/api/sl/encomendas/4/volume
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": 8,
+  "id_produto": 3,
+  "quantidade": 10
+
+}
+
 
 ################## End Points Sistema de Apoio ao Cliente ############
 ### Get All Encomendas By Cliente

@@ -53,10 +53,12 @@ public class ConfigBean {
 
         //Categorias dos Produtos
         categoriaBean.create(1, "Alimentos", "Isotérmica");
+        categoriaBean.create(2, "Tv e Som", "Isotérmica");
 
         //Produtos
         produtoBean.create(1,"Gelados", 1, 10);
         produtoBean.create(2,"Banana", 1, 10);
+        produtoBean.create(3,"TV", 2, 10);
 
         //Encomendas
         encomendaBean.create(1,"Bernardo","PorEntregar",

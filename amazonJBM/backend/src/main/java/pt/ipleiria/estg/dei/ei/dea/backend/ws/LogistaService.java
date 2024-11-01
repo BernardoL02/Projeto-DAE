@@ -132,4 +132,17 @@ import java.awt.*;
         return Response.ok(ResTipoSensoresDTO.from(tipoSensores)).build();
     }
 
+    @POST
+    @Path("encomendas/{id}/volume")
+    public Response associarVolumeEncomenda(@PathParam("id") int id_encomenda, VolumeDTO volumeDTO){
+        volumeBean.create(
+                volumeDTO.getId(),
+                volumeDTO.getId_produto(),
+                volumeDTO.getQuantidade(),
+                id_encomenda
+
+        );
+        return Response.ok("Volume associado com sucesso").build();
+    }
+
  }
