@@ -1,6 +1,9 @@
 <script setup>
 const icon = '/Images/IconJBM.png';
 const title = "Sistema de Apoio ao Cliente"
+
+
+
 </script>
 
 <template>
@@ -26,7 +29,7 @@ const title = "Sistema de Apoio ao Cliente"
 
           <a href="#" class="text-gray-800 underline hover:no-underline focus:no-underline focus:outline-none">Track Order</a>
         
-          <nuxt-link to="./page1">
+          <nuxt-link to="./home">
             <button type="submit" class="bg-PrimaryColor hover:bg-SecundaryColor text-white font-semibold py-2 px-8 rounded-full transition duration-300 ease-in-out shadow-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor">
               Login
             </button>
