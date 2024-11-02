@@ -23,10 +23,80 @@ const props = defineProps({
   }
 });
 
+const formatDate = (dateString) => {
+  return dateString.replace('T', ' '); 
+};
+
+const formateEstado = (estado) => {
+
+  if (estado === "EmProcessamento") {
+    return estado.replace("EmProcessamento", "Em Processamento"); 
+  }
+  else if (estado === "PorEntregar") {
+    return estado.replace("PorEntregar", "Por Entregar"); 
+  }
+
+  return estado;
+};
+
+
+let successMessage = ref("")
+
+async function refresh() {
+  try {
+    const response = await $fetch(`${api}/sac/encomendas/${username}`);
+    // Atualiza a tabela com os dados recebidos
+    props.tableData.splice(0, props.tableData.length, ...response.map(order => [
+      order.id,                            
+      formatDate(order.data_expedicao),    
+      formatDate(order.data_entrega),     
+      formateEstado(order.estado)            
+    ]));
+
+    successMessage.value = "Encomenda cancelada com sucesso!"
+
+    setTimeout(() => (successMessage.value = ''), 3000);
+
+    console.log(`${api}/sac/encomendas/${username}`)
+
+  } catch (error) {
+    
+    successMessage.value = "Encomenda cancelada com sucesso!"
+    setTimeout(() => (successMessage.value = ''), 3000);
+  }
+}
+
+async function cancelar(id) {
+  
+  const requestOptions = {
+    method: 'PATCH',
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json" // Adiciona o cabeçalho Accept para especificar o tipo de resposta esperada
+    },
+    body: JSON.stringify({ estado: "Cancelada" }) // Adiciona o corpo da requisição com o novo estado
+  };
+
+  try {
+    const response = await $fetch(`${api}/sac/encomendas/${id}/${username}`, requestOptions);
+
+    refresh();
+
+  } catch (error) {
+    console.error("Erro ao cancelar a encomenda!");
+  }
+}
 
 </script>
 
 <template>
+
+  <div v-if="successMessage" class="fixed -top-2 ml-10 left-0 w-full flex justify-center mt-4 z-50 transition-transform transform-gpu"
+  :class="{ 'animate-slide-down': successMessage, 'animate-slide-up': !successMessage }">
+    <div class="bg-green-500 text-white py-2 px-4 mr-28 rounded shadow-md">
+      {{ successMessage }}
+    </div>
+  </div> 
   
   <div class="table-container p-8">
     <div :class="{'overflow-y-auto max-h-96': tableData.length > 7}" class="shadow-lg rounded-lg relative">
@@ -55,7 +125,7 @@ const props = defineProps({
                   <button class="bg-blue-500 text-white py-1 px-3 rounded mr-2 hover:bg-blue-700 transition">Ver Detalhes</button>
                 </nuxt-link>
 
-                <button class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-700 transition">Cancelar</button>
+                <button @click="cancelar(row[0])" class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-700 transition">Cancelar</button>
               </div>
 
               <div v-else-if="row.includes('Por Entregar')">
@@ -121,4 +191,38 @@ button {
 .z-10 {
   z-index: 10;
 }
+
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes slideUp {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+.animate-slide-down {
+  animation: slideDown 0.5s forwards;
+}
+.animate-slide-up {
+  animation: slideUp 0.5s forwards;
+}
+
 </style>
