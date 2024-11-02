@@ -85,7 +85,6 @@ public class ResSensorDetalhesDTO implements Serializable {
         );
     }
 
-
     public static List<ResSensorDetalhesDTO> from(List<Sensor> sensors) {
         return sensors.stream().map(ResSensorDetalhesDTO::from).collect(Collectors.toList());
     }

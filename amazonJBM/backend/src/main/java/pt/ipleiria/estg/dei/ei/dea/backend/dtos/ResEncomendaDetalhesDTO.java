@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ResEncomendaDetalhesDTO implements Serializable {
@@ -83,9 +84,7 @@ public class ResEncomendaDetalhesDTO implements Serializable {
         this.volumes = volumes;
     }
 
-    public static ResEncomendaDetalhesDTO from(Encomenda encomenda) {
-
-        List<ResVolumeDetalhesDTO> volumeDTOs = encomenda.getVolumes().stream().map(ResVolumeDetalhesDTO::from).collect(Collectors.toList());
+    public static ResEncomendaDetalhesDTO from(Encomenda encomenda, String frontEnd) {
 
         ResEncomendaDetalhesDTO dto = new ResEncomendaDetalhesDTO(
                 encomenda.getId(),
@@ -94,6 +93,10 @@ public class ResEncomendaDetalhesDTO implements Serializable {
                 encomenda.getData_expedicao(),
                 encomenda.getData_entrega()
         );
+
+        List<ResVolumeDetalhesDTO> volumeDTOs = encomenda.getVolumes().stream()
+                .map(volume -> ResVolumeDetalhesDTO.from(volume, frontEnd)) // Adicionando o parâmetro frontEnd
+                .collect(Collectors.toList());
 
         dto.setVolumes(volumeDTOs);
 

@@ -7,24 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ResVolumeDetalhesDTO implements Serializable {
+public class ResVolumeDetalhesDTO<T> implements Serializable { // Classe parametrizada com T
     private int id;
     private String nome_produto;
-    private List<ResSensorDetalhesDTO> sensores = new ArrayList<>();
+    private List<T> sensores = new ArrayList<>(); // Lista tipada com T
     private int quantidade;
-
 
     public ResVolumeDetalhesDTO(int id, String nome_produto, int quantidade) {
         this.id = id;
         this.nome_produto = nome_produto;
         this.quantidade = quantidade;
-
-        if(sensores == null){
-            sensores = new ArrayList<>();
-        }
-
     }
 
+    // Getters e setters
     public int getId() {
         return id;
     }
@@ -41,11 +36,11 @@ public class ResVolumeDetalhesDTO implements Serializable {
         this.nome_produto = nome_produto;
     }
 
-    public List<ResSensorDetalhesDTO> getSensores() {
+    public List<T> getSensores() {
         return sensores;
     }
 
-    public void setSensores(List<ResSensorDetalhesDTO> sensores) {
+    public void setSensores(List<T> sensores) {
         this.sensores = sensores;
     }
 
@@ -57,9 +52,7 @@ public class ResVolumeDetalhesDTO implements Serializable {
         this.quantidade = quantidade;
     }
 
-    public static ResVolumeDetalhesDTO from(Volume volume) {
-
-        List<ResSensorDetalhesDTO> sensorDTOs = volume.getSensores().stream().map(ResSensorDetalhesDTO::from).collect(Collectors.toList());
+    public static ResVolumeDetalhesDTO from(Volume volume, String frontEnd) {
 
         ResVolumeDetalhesDTO volumeDTO =  new ResVolumeDetalhesDTO(
                 volume.getId(),
@@ -67,12 +60,18 @@ public class ResVolumeDetalhesDTO implements Serializable {
                 volume.getQuantidade()
         );
 
-        volumeDTO.setSensores(sensorDTOs);
+        if(frontEnd.equalsIgnoreCase("SAC")){
+            List<ResSacSensorDetalhesDTO> sensorDTOs = volume.getSensores().stream().map(ResSacSensorDetalhesDTO::from).collect(Collectors.toList());
+            volumeDTO.setSensores(sensorDTOs);
+        }else{
+            List<ResSensorDetalhesDTO> sensorDTOs = volume.getSensores().stream().map(ResSensorDetalhesDTO::from).collect(Collectors.toList());
+            volumeDTO.setSensores(sensorDTOs);
+        }
 
         return volumeDTO;
     }
 
-    public static List<ResVolumeDetalhesDTO> from(List<Volume> volumes) {
-        return volumes.stream().map(ResVolumeDetalhesDTO::from).collect(Collectors.toList());
+    public static List<ResVolumeDetalhesDTO> from(List<Volume> volumes, String frontEnd) {
+        return volumes.stream().map(volume -> from(volume, frontEnd)).collect(Collectors.toList());
     }
 }

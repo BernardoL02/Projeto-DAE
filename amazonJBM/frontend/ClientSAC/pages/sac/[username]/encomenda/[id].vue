@@ -13,10 +13,26 @@ const encomendaId = route.params.id
 
 const api = config.public.API_URL
 
-
 const encomendaData = ref({});
 const tableDataVolumes = ref([]);
-const tableTitlesVolumes = ['ID', 'Produto', 'Quantidade',"Sensor","Útima leitura"];
+const tableTitlesVolumes = ['ID', 'Produto', 'Quantidade',"Sensor","Útima leitura","Timestamp"];
+
+const formatDate = (dateString) => {
+  return dateString.replace('T', ' '); 
+};
+
+const formateEstado = (estado) => {
+
+if (estado === "EmProcessamento") {
+  return estado.replace("EmProcessamento", "Em Processamento"); 
+}
+else if (estado === "PorEntregar") {
+  return estado.replace("PorEntregar", "Por Entregar"); 
+}
+
+return estado;
+};
+
 
 // Obtenha os dados da encomenda com o ID e username fornecidos
 const { data, error } = await useFetch(`${api}/sac/encomendas/${encomendaId}`);
@@ -35,7 +51,8 @@ watchEffect(() => {
           nome_produto: volume.nome_produto,
           quantidade: volume.quantidade,
           tipo_sensor: sensor.tipoNome,
-          valor_sensor: sensor.valor
+          valor_sensor: sensor.valor,
+          timestamp: formatDate(sensor.timeStamp)
         }));
       } else {
         // Caso não haja sensores, ainda precisamos incluir a linha com valores vazios
@@ -44,7 +61,8 @@ watchEffect(() => {
           nome_produto: volume.nome_produto,
           quantidade: volume.quantidade,
           tipo_sensor: 'Nenhum',
-          valor_sensor: 'N/A'
+          valor_sensor: 'N/A',
+          timestamp: 'N/A'
         }];
       }
     });
@@ -58,22 +76,6 @@ watchEffect(() => {
   }
 });
 
-const formatDate = (dateString) => {
-  return dateString.replace('T', ' '); 
-};
-
-const formateEstado = (estado) => {
-
-  if (estado === "EmProcessamento") {
-    return estado.replace("EmProcessamento", "Em Processamento"); 
-  }
-  else if (estado === "PorEntregar") {
-    return estado.replace("PorEntregar", "Por Entregar"); 
-  }
-
-  return estado;
-};
-
 </script>
 
 <template>
@@ -81,12 +83,12 @@ const formateEstado = (estado) => {
   <Template :username="username" :currentPage="currentPage"></Template> <!-- Importar o Template -->
 
   <!-- Contêiner para os detalhes da encomenda e a tabela -->
-  <div class="flex flex-row justify-between mx-auto mt-10 p-6 mb-10 bg-white shadow-md rounded-lg border border-gray-300 w-full max-w-5xl">
+  <div class="flex flex-row justify-between mx-auto mt-10 p-6 mb-10 bg-white shadow-md rounded-lg border border-gray-300 w-full max-w-6xl">
 
     <!-- Detalhes da encomenda -->
     <div class="flex flex-col items-start p-4 w-1/2">
       <h1 class="text-center text-xl font-semibold mb-8">Detalhes da Encomenda</h1>
-      <p class="text-gray-700"><strong>ID</strong>  {{ encomendaId }}</p><br> 
+      <p class="text-gray-700"><strong>ID - </strong>  {{ encomendaId }}</p><br> 
       <p class="text-gray-700"><strong>Data de Expedição</strong> <br> {{ formatDate(encomendaData.data_expedicao) }}</p><br> 
       <p class="text-gray-700"><strong>Data de Entrega</strong> <br> {{ formatDate(encomendaData.data_entrega) }}</p><br> 
       <p class="text-gray-700"><strong>Estado</strong> <br> {{ formateEstado(encomendaData.estado) }}</p><br> 

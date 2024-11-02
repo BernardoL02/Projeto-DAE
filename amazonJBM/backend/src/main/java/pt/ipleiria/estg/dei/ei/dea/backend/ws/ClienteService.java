@@ -5,10 +5,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.*;
 
 import jakarta.ws.rs.core.Response;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.AlertaSAC_DTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.EncomendasDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResAlertasEncomendaDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResSensorUltimaLeituraByTipoDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.ClienteBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Alerta;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
@@ -32,7 +29,7 @@ public class ClienteService {
         String username = "Bernardo"; //Todo ver que user esta a fazer o pedido
 
         var cliente = clienteBean.findWithEncomendas(username);
-        return Response.ok(EncomendasDTO.from(cliente.getEncomendas())).build();
+        return Response.ok(ResEncomendaEstadoDTO.from(cliente.getEncomendas())).build();
     }
 
     @GET
@@ -42,7 +39,7 @@ public class ClienteService {
         String username = "Bernardo"; //Todo ver que user esta a fazer o pedido
 
         var encomenda = clienteBean.findEncomendaById(id);
-        return Response.ok(EncomendasDTO.from(encomenda)).build();
+        return Response.ok(ResEncomendaDetalhesDTO.from(encomenda,"SAC")).build();
     }
 
     @GET
@@ -52,7 +49,7 @@ public class ClienteService {
         String username = "Bernardo"; //Todo ver que user esta a fazer o pedido
 
         List<Encomenda> encomendas = clienteBean.findEncomendaByEstado(username, estado);
-        return Response.ok(EncomendasDTO.from(encomendas)).build();
+        return Response.ok(ResEncomendaEstadoDTO.from(encomendas)).build();
     }
 
     @PATCH

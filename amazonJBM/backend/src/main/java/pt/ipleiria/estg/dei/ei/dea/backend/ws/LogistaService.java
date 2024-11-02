@@ -60,7 +60,7 @@ import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
     @Path("encomendas/{id}")
     public Response getEncomendasById(@PathParam("id") int id) {
         var encomenda = encomendaBean.find(id);
-        return Response.ok(ResEncomendaDetalhesDTO.from(encomenda)).build();
+        return Response.ok(ResEncomendaDetalhesDTO.from(encomenda,"SL")).build();
     }
 
     @PATCH
@@ -74,7 +74,9 @@ import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
     @Path("volume/{id}")
     public Response getDetalhesVolume(@PathParam("id") int id){
         var volume = volumeBean.find(id);
-        return Response.ok(ResVolumeDetalhesDTO.from(volume)).build();
+
+        ResVolumeDetalhesDTO<ResSensorDetalhesDTO> volumeDTO = ResVolumeDetalhesDTO.from(volume,"SL");
+        return Response.ok(volumeDTO).build();
     }
 
     @POST
