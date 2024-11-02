@@ -22,13 +22,6 @@ public class SensorDTO implements Serializable {
 
     public SensorDTO() {}
 
-    public SensorDTO(int id, String valor, String tipoNome, String estado) {
-        this.id = id;
-        this.valor = valor;
-        this.tipoNome = tipoNome;
-        this.estado = estado;
-    }
-
     public SensorDTO(int id, String valor, int tipoId, String tipoNome, String estado, int bateria, Integer valMax, Integer valMin, int volumeId) {
         this.id = id;
         this.valor = valor;

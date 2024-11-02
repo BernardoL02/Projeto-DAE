@@ -33,12 +33,14 @@ public class EncomendaBean {
     @EJB
     private VolumeBean volumeBean;
 
-    public void create(int id, String client_username, String estado, LocalDateTime data_expedicao, LocalDateTime data_entrega) {
+    public Encomenda create(String client_username, String estado, LocalDateTime data_expedicao, LocalDateTime data_entrega) {
 
         Cliente cliente = clienteBean.find(client_username);
 
-        Encomenda encomenda = new Encomenda(id,cliente,estado,data_expedicao,data_entrega);
+        Encomenda encomenda = new Encomenda(cliente,estado,data_expedicao,data_entrega);
         em.persist(encomenda);
+        em.flush();
+        return encomenda;
     }
 
 
@@ -93,11 +95,9 @@ public class EncomendaBean {
     }
 
     public void gerarVolumes(int id_encomenda,List<ProdutoDTO> produtos){
-        int id_lasVolume = 5;
 
         for (ProdutoDTO produto:produtos) {
-            volumeBean.create(id_lasVolume, produto.getId(), produto.getQuantidade_por_volume(), id_encomenda);
-            id_lasVolume++;
+            volumeBean.create(produto.getId(), produto.getQuantidade_por_volume(), id_encomenda);
         }
     }
 }

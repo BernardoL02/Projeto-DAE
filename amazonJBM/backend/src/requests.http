@@ -40,7 +40,6 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "id": 7,
   "valor": 90,
   "tipoId": 4,
   "estado": "ativo",
@@ -59,7 +58,6 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "id": 10,
   "username": "Bernardo",
   "estado": "PorEntregar",
   "data_expedicao": "2024-10-31T10:00:00",
@@ -84,7 +82,6 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "id": 15,
   "id_produto": 3,
   "quantidade": 10
 

@@ -13,6 +13,7 @@ import java.util.List;
 public class Volume {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
@@ -28,8 +29,7 @@ public class Volume {
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "volume")
     private List<Sensor> sensores = new ArrayList<>();
 
-    public Volume(int id, Produto produto, int quantidade, Encomenda encomenda) {
-        this.id = id;
+    public Volume(Produto produto, int quantidade, Encomenda encomenda) {
         this.produto = produto;
         this.quantidade = quantidade;
         this.encomenda = encomenda;

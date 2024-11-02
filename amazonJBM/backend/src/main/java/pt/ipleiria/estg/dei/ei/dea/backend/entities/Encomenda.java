@@ -25,6 +25,7 @@ import java.util.List;
 public class Encomenda extends Versionable{
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
@@ -40,8 +41,7 @@ public class Encomenda extends Versionable{
     @OneToMany( fetch = FetchType.EAGER,mappedBy="encomenda")
     private List<Volume> volumes = new ArrayList<>();
 
-    public Encomenda(int id, Cliente cliente, String estado, LocalDateTime data_expedicao, LocalDateTime data_entrega) {
-        this.id = id;
+    public Encomenda(Cliente cliente, String estado, LocalDateTime data_expedicao, LocalDateTime data_entrega) {
         this.cliente = cliente;
         this.estado = estado;
         this.data_expedicao = data_expedicao;

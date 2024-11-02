@@ -58,37 +58,101 @@ public class ConfigBean {
 
         // Categorias de Produtos
         categoriaBean.create(1, "Alimentos", "Isotérmica");
-        categoriaBean.create(2, "Tv e Som", "Eletrónica");
-        categoriaBean.create(3, "Ferramentas", "Industrial");
+        categoriaBean.create(2, "Tv e Som", "Original");
+        categoriaBean.create(3, "Ferramentas", "Reforçada");
         categoriaBean.create(4, "Bebidas", "Isotérmica");
-        categoriaBean.create(5, "Eletrodomésticos", "Eletrónica");
+        categoriaBean.create(5, "Eletrodomésticos", "Reforçada");
+        categoriaBean.create(6, "Vestuário", "Original");
+        categoriaBean.create(7, "Educação", "Original");
+        categoriaBean.create(9, "Esportivo", "Reforçada");
+        categoriaBean.create(10, "Casa", "Reforçada");
+        categoriaBean.create(11, "Beleza", "Original");
+        categoriaBean.create(12, "Ferramentas Elétricas", "Reforçada");
+
 
         // Produtos
-        produtoBean.create(1, "Gelados", 1, 10);
-        produtoBean.create(2, "Banana", 1, 5);
-        produtoBean.create(3, "TV", 2, 15);
-        produtoBean.create(4, "Refrigerante", 4, 20);
-        produtoBean.create(5, "Martelo", 3, 25);
-        produtoBean.create(6, "Computador", 2, 8);
-        produtoBean.create(7, "Suco de Laranja", 4, 30);
-        produtoBean.create(8, "Ar Condicionado", 5, 12);
 
-        // Encomendas
-        encomendaBean.create(1, "Bernardo", "PorEntregar", LocalDateTime.of(2024, 10, 29, 15, 30), LocalDateTime.of(2024, 10, 29, 15, 30));
-        encomendaBean.create(2, "Bernardo", "EmProcessamento", LocalDateTime.of(2024, 10, 29, 15, 30), LocalDateTime.of(2024, 10, 29, 15, 30));
-        encomendaBean.create(3, "Tendeiro", "Entregue", LocalDateTime.of(2024, 10, 29, 15, 30), LocalDateTime.of(2024, 10, 29, 15, 30));
-        encomendaBean.create(4, "Tendeiro", "EmProcessamento", LocalDateTime.of(2023, 10, 29, 15, 30), LocalDateTime.of(2023, 10, 29, 15, 30));
-        encomendaBean.create(5, "Sousa", "PorEntregar", LocalDateTime.of(2024, 11, 2, 12, 0), LocalDateTime.of(2024, 11, 2, 12, 30));
+        // Alimentos
+        produtoBean.create(1, "Maçã", 1, 5);
+        produtoBean.create(2, "Pão Integral", 1, 10);
+        produtoBean.create(3, "Gelados", 1, 15);
 
-        // Volumes
-        volumeBean.create(1, 1, 10, 1);
-        volumeBean.create(2, 2, 1, 1);
-        volumeBean.create(3, 2, 1, 2);
-        volumeBean.create(4, 2, 1, 3);
-        volumeBean.create(5, 3, 5, 4);
-        volumeBean.create(6, 4, 2, 1);
-        volumeBean.create(7, 5, 4, 3);
-        volumeBean.create(8, 6, 1, 4);
+        // Tv e Som
+        produtoBean.create(4, "Televisão LED 40\"", 2, 2);
+        produtoBean.create(5, "Sistema de Som", 2, 3);
+        produtoBean.create(6, "Fones", 2, 20);
+
+        // Ferramentas
+        produtoBean.create(7, "Martelo", 3, 25);
+        produtoBean.create(8, "Chave de Fenda", 3, 30);
+        produtoBean.create(9, "Alicate", 3, 15);
+
+        // Bebidas
+        produtoBean.create(10, "Coca Cola", 4, 20);
+        produtoBean.create(11, "Água Mineral", 4, 30);
+        produtoBean.create(12, "Sumo de Laranja", 4, 25);
+
+        // Eletrodomésticos
+        produtoBean.create(13, "Frigorifico", 5, 1);
+        produtoBean.create(14, "Micro-ondas", 5, 5);
+        produtoBean.create(15, "Aspirador de Pó", 5, 10);
+
+        // Vestuário
+        produtoBean.create(16, "Polo", 6, 20);
+        produtoBean.create(17, "Calça Jeans", 6, 15);
+        produtoBean.create(18, "Casaco de Lã", 6, 5);
+
+        // Educação
+        produtoBean.create(19, "Livro de Matemática", 7, 10);
+        produtoBean.create(20, "Dicionário", 7, 5);
+        produtoBean.create(21, "Atlas Geográfico", 7, 8);
+
+        // Esportivo
+        produtoBean.create(25, "Bola de Futebol", 9, 10);
+        produtoBean.create(26, "Raquete de Tênis", 9, 5);
+        produtoBean.create(27, "Luvas de Boxe", 9, 8);
+
+        // Casa
+        produtoBean.create(28, "Sofá de Couro", 10, 1);
+        produtoBean.create(29, "Mesa de Jantar", 10, 1);
+        produtoBean.create(30, "Cadeira de Madeira", 10, 6);
+
+        // Beleza
+        produtoBean.create(31, "Perfume", 11, 15);
+        produtoBean.create(32, "Creme Hidratante", 11, 20);
+        produtoBean.create(33, "Shampoo", 11, 30);
+
+        // Ferramentas Elétricas
+        produtoBean.create(34, "Berbequins", 12, 8);
+        produtoBean.create(35, "Aparafusadora", 12, 10);
+        produtoBean.create(36, "Caixote Do Lixo", 12, 4);
+
+
+
+        // Encomendas e Volumes
+        encomendaBean.create("Bernardo", "PorEntregar", LocalDateTime.of(2024, 10, 29, 15, 30), LocalDateTime.of(2024, 10, 29, 15, 30));
+        volumeBean.create(3, 5, 1);
+        volumeBean.create(31, 1, 1);
+
+        encomendaBean.create("Tendeiro", "Entregue", LocalDateTime.of(2024, 10, 29, 15, 30), LocalDateTime.of(2024, 10, 29, 15, 30));
+        volumeBean.create(35, 1, 2);
+        volumeBean.create(29, 1, 2);
+
+        encomendaBean.create("Sousa", "PorEntregar", LocalDateTime.of(2024, 11, 2, 12, 0), LocalDateTime.of(2024, 11, 2, 12, 30));
+        volumeBean.create(25, 2, 3);
+        volumeBean.create(13, 1, 3);
+
+        encomendaBean.create("Bernardo", "EmProcessamento", LocalDateTime.of(2024, 10, 29, 15, 30), LocalDateTime.of(2024, 10, 29, 15, 30));
+        volumeBean.create(3, 5, 4);
+        volumeBean.create(6, 1, 4);
+
+        encomendaBean.create("Ferreira", "EmProcessamento", LocalDateTime.of(2023, 10, 29, 15, 30), LocalDateTime.of(2023, 10, 29, 15, 30));
+        volumeBean.create(8, 2, 5);
+        volumeBean.create(16, 1, 5);
+
+        encomendaBean.create("Ferreira", "Cancelada", LocalDateTime.of(2023, 10, 29, 15, 30), LocalDateTime.of(2023, 10, 29, 15, 30));
+        volumeBean.create(12, 1, 6);
+
 
         // Tipos de Sensores
         tipoSensoresBean.create(1, "Temperatura");
@@ -97,24 +161,38 @@ public class ConfigBean {
         tipoSensoresBean.create(4, "GPS");
 
         // Sensores
-        sensorBean.create(1, "29.0", 1, "ativo", 100, 30, 10, 1);
-        sensorBean.create(2, "40.7123, -74.12312", 4, "ativo", 100, 1);
-        sensorBean.create(3, "28.0", 3, "ativo", 100, 50, 5, 3);
-        sensorBean.create(4, "21.0", 1, "ativo", 100, 35, 5, 1);
-        sensorBean.create(5, "21.0", 2, "ativo", 99, 40, 10, 4);
-        sensorBean.create(6, "22.0", 2, "ativo", 80, 30, 15, 5);
-        sensorBean.create(7, "25.0", 1, "ativo", 90, 30, 15, 2);
-        sensorBean.create(8, "40.7123, -74.12312", 4, "ativo", 88, 1);
+        //Encomenda 1
+        sensorBean.create("29.0", 1, "ativo", 100, 30, 10, 1);
+        sensorBean.create("40.7123, -74.12312", 4, "ativo", 100, 2);
+        //Encomenda 2
+        sensorBean.create("40.7123, -74.12312", 4, "inativo", 5, 3);
+        sensorBean.create("1000", 3, "inativo", 100, 1015, 980,3);
+        sensorBean.create("40.7123, -74.12312", 4, "inativo", 88, 4);
+        sensorBean.create("25", 2, "inativo", 88, 30, 5, 4);
+        //Encomenda 3
+        sensorBean.create("21.0", 1, "ativo", 99, 35, 10, 5);
+        sensorBean.create("1000", 3, "ativo", 80, 1015, 980, 5);
+        sensorBean.create("40.7123, -74.12312", 4, "ativo", 100, 6);
+        sensorBean.create("20", 2, "ativo", 100,30, 5, 6);
+        //Encomenda 6
+        sensorBean.create("25.0", 1, "inativo", 90, 30, 15, 2);
+
 
         // Alertas
-        alertaBean.create("A comida está a descongelar", 1, "35", 1);
-        alertaBean.create( "Fora do Alcance", 2, "40.7123, -74.12312", 2);
-        alertaBean.create("A banana tem muita aceleração", 5, "23", 4);
-        alertaBean.create( "Pressão fora do limite", 3, "1010 hPa", 3);
-        alertaBean.create( "Humidade alta", 6, "60%", 5);
-        alertaBean.create( "GPS desconectado", 2, "Indisponível", 2);
-        alertaBean.create( "Temperatura baixa", 1, "15", 1);
-        alertaBean.create( "Humidade crítica", 6, "80%", 5);
+        // Alerta para Temperatura
+        alertaBean.create("Valor acima do limite máximo (35) para o sensor Temperatura", 1, "35", 1);
+        alertaBean.create("Valor abaixo do limite mínimo (15) para o sensor Temperatura", 1, "10", 1);
+
+        // Alerta para Aceleração
+        alertaBean.create("Valor acima do limite máximo (30) para o sensor Aceleração", 6, "32", 4);
+        alertaBean.create("Valor abaixo do limite mínimo (5) para o sensor Aceleração", 6, "3", 4);
+        alertaBean.create("Valor abaixo do limite mínimo (5) para o sensor Aceleração", 10, "3", 6);
+
+        // Alerta para Pressão Atmosférica
+        alertaBean.create("Valor acima do limite máximo (1015) para o sensor Pressão Atmosférica", 4, "1016", 3);
+        alertaBean.create("Valor abaixo do limite mínimo (980) para o sensor Pressão Atmosférica", 4, "975", 3);
+
+
     }
 
 }

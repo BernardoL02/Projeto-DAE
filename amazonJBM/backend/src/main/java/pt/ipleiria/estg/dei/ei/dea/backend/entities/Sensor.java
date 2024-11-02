@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 })
 public class Sensor {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name="valor")
@@ -47,8 +48,7 @@ public class Sensor {
     @JoinColumn(name = "id_volume", nullable = false)
     private Volume volume;
 
-    public Sensor(int id, String valor, Tipo_Sensores tipo, String estado, int bateria, int valMax, int valMin,Volume volume) {
-        this.id = id;
+    public Sensor(String valor, Tipo_Sensores tipo, String estado, int bateria, int valMax, int valMin,Volume volume) {
         this.valor = valor;
         this.tipo = tipo;
         this.estado = estado;
@@ -58,8 +58,7 @@ public class Sensor {
         timeStamp = LocalDateTime.now();
         this.volume = volume;
     }
-    public Sensor(int id, String valor, Tipo_Sensores tipo, String estado, int bateria, Volume volume) {
-        this.id = id;
+    public Sensor(String valor, Tipo_Sensores tipo, String estado, int bateria, Volume volume) {
         this.valor = valor;
         this.tipo = tipo;
         this.valMax = null;

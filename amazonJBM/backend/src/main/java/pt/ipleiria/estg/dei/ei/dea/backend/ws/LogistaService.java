@@ -83,7 +83,6 @@ import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
 
          if("GPS".equals(sensorDTO.getTipoNome())){
              sensorBean.create(
-                     sensorDTO.getId(),
                      sensorDTO.getValor(),
                      sensorDTO.getTipoId(),
                      sensorDTO.getEstado(),
@@ -92,7 +91,6 @@ import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
              );
          }else{
              sensorBean.create(
-                     sensorDTO.getId(),
                      sensorDTO.getValor(),
                      sensorDTO.getTipoId(),
                      sensorDTO.getEstado(),
@@ -109,15 +107,16 @@ import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
     @POST
     @Path("encomendas")
     public Response criarEncomenda(CreateEncomendaDTO encomendasDTO) {
-        encomendaBean.create(
-                encomendasDTO.getId(),
+        Encomenda encomenda = encomendaBean.create(
                 encomendasDTO.getUsername(),
                 encomendasDTO.getEstado(),
                 encomendasDTO.getData_expedicao(),
                 encomendasDTO.getData_entrega()
         );
-        encomendaBean.gerarVolumes(encomendasDTO.getId(), encomendasDTO.getProdutos());
-        return Response.ok("Encomenda criada com sucesso").build();
+
+        encomendaBean.gerarVolumes(encomenda.getId(), encomendasDTO.getProdutos());
+
+        return Response.ok("Encomenda criada com sucesso com ID: " + encomenda.getId()).build();
     }
 
     @GET
@@ -131,11 +130,9 @@ import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
     @Path("encomendas/{id}/volume")
     public Response associarVolumeEncomenda(@PathParam("id") int id_encomenda, VolumeDTO volumeDTO){
         volumeBean.create(
-                volumeDTO.getId(),
                 volumeDTO.getId_produto(),
                 volumeDTO.getQuantidade(),
                 id_encomenda
-
         );
         return Response.ok("Volume associado com sucesso").build();
     }

@@ -20,22 +20,22 @@ public class SensorBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(int id, String valor, int tipoId, String estado, int bateria, int valMax, int valMin, int id_volume) {
+    public void create(String valor, int tipoId, String estado, int bateria, int valMax, int valMin, int id_volume) {
         Tipo_Sensores tipoSensores = em.find(Tipo_Sensores.class, tipoId);
         Volume volume = em.find(Volume.class, id_volume);
         if (tipoSensores == null) {
             throw new NoSuchElementException("Tipo_Sensores com ID " + tipoId + " não encontrado.");
         }
-        var sensor = new Sensor(id, valor, tipoSensores, estado, bateria, valMax, valMin, volume);
+        var sensor = new Sensor(valor, tipoSensores, estado, bateria, valMax, valMin, volume);
         em.persist(sensor);
     }
-    public void create(int id, String valor, int tipoId, String estado, int bateria, int id_volume) {
+    public void create(String valor, int tipoId, String estado, int bateria, int id_volume) {
         Tipo_Sensores tipoSensores = em.find(Tipo_Sensores.class, tipoId);
         Volume volume = em.find(Volume.class, id_volume);
         if (tipoSensores == null) {
             throw new NoSuchElementException("Tipo_Sensores com ID " + tipoId + " não encontrado.");
         }
-        var sensor = new Sensor(id, valor, tipoSensores, estado, bateria, volume);
+        var sensor = new Sensor(valor, tipoSensores, estado, bateria, volume);
         em.persist(sensor);
     }
 
