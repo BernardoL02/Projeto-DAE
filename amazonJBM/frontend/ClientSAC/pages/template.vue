@@ -42,13 +42,13 @@ const props = defineProps({
             <span class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full" 
                   :class="currentPage === 'Encomenda' ? 'w-full' : ''"></span>
         </p>
-        <a href="#" 
-           :class="currentPage === 'Pagina3' ? 'highlighted' : ''" 
+        <nuxt-link :to="`/sac/${username}/alertas`"
+           :class="currentPage === 'Alertas' ? 'highlighted' : ''" 
            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
-            Pagina3
+            Alertas
             <span class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full" 
-                  :class="currentPage === 'Pagina3' ? 'w-full' : ''"></span>
-        </a>
+                  :class="currentPage === 'Alertas' ? 'w-full' : ''"></span>
+        </nuxt-link>
       </div>
   
         <!-- Nome do sistema -->
