@@ -15,7 +15,7 @@ const username = route.params.username;
 const tableData = ref([]);
 const tableTitles = ['ID Encomenda', 'Data de Expedição', 'Data de Entrega', 'Estado'];
 
-const { data, error } = await useFetch(`${api}/sac/encomendas/${username}`);
+const { data, error } = await useFetch(`${api}/sac/encomendas`);
 
 const formatDate = (dateString) => {
   return dateString.replace('T', ' '); 
@@ -60,9 +60,9 @@ watch(
         let fetchedData; 
 
         if (newValue === "Todas") {
-          fetchedData = await $fetch(`${api}/sac/encomendas/${username}`);
+          fetchedData = await $fetch(`${api}/sac/encomendas`);
         } else {
-          fetchedData = await $fetch(`${api}/sac/encomendas/estado/${newValue}/${username}`);
+          fetchedData = await $fetch(`${api}/sac/encomendas/estado/${newValue}`);
         }
 
         tableData.value = fetchedData.map(order => [

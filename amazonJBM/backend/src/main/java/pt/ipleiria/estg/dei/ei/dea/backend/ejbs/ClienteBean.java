@@ -49,20 +49,13 @@ public class ClienteBean {
         return cliente;
     }
 
-    public Encomenda findEncomendaById(String username, int encomendaId) {
+    public Encomenda findEncomendaById(int id) {
 
-        var cliente = this.find(username);
+        var encomenda = em.find(Encomenda.class, id);
 
-        Hibernate.initialize(cliente.getEncomendas());
+        //TODO -> Ver se a encomenda pertence ao utilizador
 
-        for (Encomenda encomenda : cliente.getEncomendas()) {
-            if (encomenda.getId() == encomendaId) {
-                Hibernate.initialize(encomenda.getVolumes());
-                return encomenda;
-            }
-        }
-
-        return null; //TODO -> Retornar codigo apropriado
+        return encomenda;
     }
 
     public List<Encomenda> findEncomendaByEstado(String username, String estado) {

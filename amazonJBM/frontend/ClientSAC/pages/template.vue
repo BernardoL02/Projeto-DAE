@@ -35,19 +35,19 @@ const props = defineProps({
             <span class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full" 
                   :class="currentPage === 'Encomendas' ? 'w-full' : ''"></span>
         </nuxt-link>
-        <p href="Encomenda" 
+        <p href="encomenda" 
            :class="currentPage === 'Encomenda' ? 'highlighted' : ''" 
            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
             Encomenda
             <span class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full" 
                   :class="currentPage === 'Encomenda' ? 'w-full' : ''"></span>
         </p>
-        <nuxt-link :to="`/sac/${username}/alertas`"
-           :class="currentPage === 'Alertas' ? 'highlighted' : ''" 
+        <nuxt-link :to="`/sac/${username}/sensores`"
+           :class="currentPage === 'Sensores' ? 'highlighted' : ''" 
            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
-            Alertas
+            Sensores
             <span class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full" 
-                  :class="currentPage === 'Alertas' ? 'w-full' : ''"></span>
+                  :class="currentPage === 'Sensores' ? 'w-full' : ''"></span>
         </nuxt-link>
       </div>
   

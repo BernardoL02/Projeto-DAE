@@ -23,44 +23,63 @@ public class ClienteService {
     @EJB
     private ClienteBean clienteBean;
 
+
     @GET
-    @Path("encomendas/{username}")
-    public Response getEncomendasCliente(@PathParam("username") String username) {
+    @Path("encomendas")
+    public Response getEncomendasCliente() {
+
+        String username = "Bernardo"; //Todo ver que user esta a fazer o pedido
+
         var cliente = clienteBean.findWithEncomendas(username);
         return Response.ok(EncomendasDTO.from(cliente.getEncomendas())).build();
     }
 
     @GET
-    @Path("encomendas/{id}/{username}")
-    public Response getEncomendasClienteById(@PathParam("id") int id, @PathParam("username") String username) {
-        var encomenda = clienteBean.findEncomendaById(username, id);
+    @Path("encomendas/{id}")
+    public Response getEncomendasClienteById(@PathParam("id") int id) {
+
+        String username = "Bernardo"; //Todo ver que user esta a fazer o pedido
+
+        var encomenda = clienteBean.findEncomendaById(id);
         return Response.ok(EncomendasDTO.from(encomenda)).build();
     }
 
     @GET
-    @Path("encomendas/estado/{estado}/{username}")
-    public Response getEncomendasClienteByEstado(@PathParam("estado") String estado, @PathParam("username") String username) {
+    @Path("encomendas/estado/{estado}")
+    public Response getEncomendasClienteByEstado(@PathParam("estado") String estado) {
+
+        String username = "Bernardo"; //Todo ver que user esta a fazer o pedido
+
         List<Encomenda> encomendas = clienteBean.findEncomendaByEstado(username, estado);
         return Response.ok(EncomendasDTO.from(encomendas)).build();
     }
 
     @PATCH
-    @Path("encomendas/{id}/{username}")
-    public Response cancelarEncomenda(@PathParam("id") int id, @PathParam("username") String username) {
+    @Path("encomendas/{id}")
+    public Response cancelarEncomenda(@PathParam("id") int id) {
+
+        String username = "Bernardo"; //Todo ver que user esta a fazer o pedido e se a encomenda é dele
+
         clienteBean.cancelarEncomenda(id,username);
         return Response.ok("Encomenda " + id + " cancelada com sucesso.").build();
     }
 
     @GET
-    @Path("encomendas/{username}/sensor/{tipo_sensor}")
-    public Response getUltimaLeituraSensoresByTipo(@PathParam("tipo_sensor") String tipo_sensor, @PathParam("username") String username) {
+    @Path("encomendas/sensor/{tipo_sensor}")
+    public Response getUltimaLeituraSensoresByTipo(@PathParam("tipo_sensor") String tipo_sensor) {
+
+        String username = "Bernardo"; //Todo ver que user esta a fazer o pedido e se a encomenda é dele
+
         List<Sensor> sensores = clienteBean.getUltimaLeituraSensoresByTipo(tipo_sensor, username);
         return Response.ok(ResSensorUltimaLeituraByTipoDTO.from(sensores)).build();
     }
 
     @GET
-    @Path("encomendas/{id}/alerta/{username}")
-    public Response getAlertasByEncomenda(@PathParam("id") int id, @PathParam("username") String username) {
+    @Path("encomendas/{id}/alertas")
+    public Response getAlertasByEncomenda(@PathParam("id") int id) {
+
+        String username = "Bernardo"; //Todo ver que user esta a fazer o pedido e se a encomenda é dele
+
         List<Alerta> alertas = clienteBean.getAlertasByEncomenda(id, username);
         return Response.ok(AlertaSAC_DTO.from(alertas)).build();
     }

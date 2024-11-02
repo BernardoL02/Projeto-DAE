@@ -90,34 +90,34 @@ Content-Type: application/json
 
 ################## End Points Sistema de Apoio ao Cliente ############
 ### Get All Encomendas By Cliente
-GET http://localhost:3001/backend/api/sac/encomendas/Bernardo
-Accept: application/json
+GET http://localhost:3001/backend/api/sac/encomendas
+Accept: application/json //TODO -> Retirar o username, pois iremos usar tockens
 
-### Get All Encomendas By Clinete + id_encomenda
-GET http://localhost:3001/backend/api/sac/encomendas/1/Bernardo
+### Get Encomenda por Id
+GET http://localhost:3001/backend/api/sac/encomendas/1
 Accept: application/json
 
 --------- Get encomandas por estado ---------
 ### Get All Encomendas Por Entregar
-GET http://localhost:3001/backend/api/sac/encomendas/estado/PorEntregar/Bernardo
+GET http://localhost:3001/backend/api/sac/encomendas/estado/PorEntregar
 Accept: application/json
 
 ### Get All Encomendas com estado Em Processamento
-GET http://localhost:3001/backend/api/sac/encomendas/estado/EmProcessamento/Bernardo
+GET http://localhost:3001/backend/api/sac/encomendas/estado/EmProcessamento
 Accept: application/json
 
 ### Get All Encomendas com estado Entregue
-GET http://localhost:3001/backend/api/sac/encomendas/estado/Entregue/Tendeiro
+GET http://localhost:3001/backend/api/sac/encomendas/estado/Entregue
 Accept: application/json
 
 ### Get All Encomendas com estado Cancelada
-GET http://localhost:3001/backend/api/sac/encomendas/estado/Cancelada/Bernardo
+GET http://localhost:3001/backend/api/sac/encomendas/estado/Cancelada
 Accept: application/json
 
 ------------------------------------
 
 ### Cancelar Encomenda
-PATCH http://localhost:3001/backend/api/sac/encomendas/2/Bernardo
+PATCH http://localhost:3001/backend/api/sac/encomendas/1
 Accept: application/json
 Content-Type: application/json
 
@@ -126,11 +126,11 @@ Content-Type: application/json
 }
 
 ### Get All Ultimo Valor dos Sensores por Tipo
-GET http://localhost:3001/backend/api/sac/encomendas/Bernardo/sensor/GPS
+GET http://localhost:3001/backend/api/sac/encomendas/sensor/Temperatura
 Accept: application/json //TODO apenas das encomendas ProEntregar
 
 ### Get All Alertas de Encomenda por Id
-GET http://localhost:3001/backend/api/sac/encomendas/3/alerta/Tendeiro
+GET http://localhost:3001/backend/api/sac/encomendas/1/alertas
 Accept: application/json
 
 

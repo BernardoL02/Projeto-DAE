@@ -19,7 +19,7 @@ const tableDataVolumes = ref([]);
 const tableTitlesVolumes = ['ID', 'Produto', 'Quantidade',"Sensor","Útima leitura"];
 
 // Obtenha os dados da encomenda com o ID e username fornecidos
-const { data, error } = await useFetch(`${api}/sac/encomendas/${encomendaId}/${username}`);
+const { data, error } = await useFetch(`${api}/sac/encomendas/${encomendaId}`);
 
 // WatchEffect para processar os dados da encomenda
 watchEffect(() => {
@@ -95,7 +95,7 @@ const formateEstado = (estado) => {
     <!-- Tabela dos Volumes -->
     <div class="p-4">
       <h1 class=" ml-16 text-lg font-semibold mb-2">Volumes</h1>
-      <Table class="m-80" :tableTitles="tableTitlesVolumes" :tableData="tableDataVolumes" :mostrarOperacoes="false" /> 
+      <Table :tableTitles="tableTitlesVolumes" :tableData="tableDataVolumes" :mostrarOperacoes="false" /> 
     </div>
     
   </div>
