@@ -3,6 +3,7 @@ package pt.ipleiria.estg.dei.ei.dea.backend.dtos;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Sensor;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,13 +14,15 @@ public class ResSensorUltimaLeituraByTipoDTO implements Serializable {
     private String tipoNome;
     private String estado;
     private int bateria;
+    private LocalDateTime timeStamp;
 
-    public ResSensorUltimaLeituraByTipoDTO(int id, String valor, String tipoNome, String estado, int bateria) {
+    public ResSensorUltimaLeituraByTipoDTO(int id, String valor, String tipoNome, String estado, int bateria, LocalDateTime timeStamp) {
         this.id = id;
         this.valor = valor;
         this.tipoNome = tipoNome;
         this.estado = estado;
         this.bateria = bateria;
+        this.timeStamp = timeStamp;
     }
 
     public ResSensorUltimaLeituraByTipoDTO(){
@@ -65,13 +68,22 @@ public class ResSensorUltimaLeituraByTipoDTO implements Serializable {
         this.bateria = bateria;
     }
 
+    public LocalDateTime getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(LocalDateTime timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
     public static ResSensorUltimaLeituraByTipoDTO from(Sensor sensor) {
         return new ResSensorUltimaLeituraByTipoDTO(
                 sensor.getId(),
                 sensor.getValor(),
                 sensor.getTipo().getTipo(),
                 sensor.getEstado(),
-                sensor.getBateria()
+                sensor.getBateria(),
+                sensor.getTimeStamp()
         );
     }
 

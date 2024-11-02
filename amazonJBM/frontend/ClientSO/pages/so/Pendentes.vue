@@ -1,0 +1,187 @@
+<script setup>
+import Template from '../template.vue';
+import Table from '../table.vue';
+import { ref, onMounted } from 'vue';
+import { useRuntimeConfig, useRoute } from '#app';
+
+const route = useRoute();
+const config = useRuntimeConfig();
+const api = config.public.API_URL;
+
+const encomendasTableTitles = ['ID Encomenda', 'Utilizador', 'Data de Expedição', 'Data de Entrega', 'Estado'];
+const encomendasTableData = ref([]);
+const currentPage = 'Pendentes';
+const successMessage = ref('');
+const errorMessages = ref([]);
+const mostrarAlertasModal = ref(false); // Controla a exibição do modal de alertas
+const alertasData = ref([]); // Dados dos alertas para o modal
+
+// Função para formatar o estado
+const formatEstado = (estado) => {
+  switch (estado) {
+    case 'EmProcessamento':
+      return 'Em Processamento';
+    case 'PorEntregar':
+      return 'Por Entregar';
+    default:
+      return estado;
+  }
+};
+
+// Função para buscar encomendas pendentes
+const fetchEncomendasPendentes = async () => {
+  try {
+    const response = await fetch(`${api}/so/encomendas/pendentes`);
+    if (!response.ok) throw new Error("Erro ao buscar encomendas pendentes");
+
+    const data = await response.json();
+    encomendasTableData.value = data.map(encomenda => ({
+      id: encomenda.id,
+      username: encomenda.username,
+      dataExpedicao: new Date(encomenda.data_expedicao).toLocaleString(),
+      dataEntrega: new Date(encomenda.data_entrega).toLocaleString(),
+      estado: formatEstado(encomenda.estado)
+    }));
+  } catch (error) {
+    console.error("Erro ao carregar encomendas pendentes:", error);
+  }
+};
+
+// Função para cancelar uma encomenda
+const cancelarEncomenda = async (id) => {
+  try {
+    const response = await fetch(`${api}/so/encomendas/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ estado: "Cancelada" })
+    });
+    if (!response.ok) throw new Error(`Erro ao cancelar encomenda ${id}`);
+    
+    successMessage.value = `Encomenda ${id} cancelada com sucesso!`;
+    setTimeout(() => { successMessage.value = ''; }, 3000);
+
+    await fetchEncomendasPendentes();
+  } catch (error) {
+    errorMessages.value.push(`Erro ao cancelar encomenda ${id}: ${error.message}`);
+  }
+};
+
+// Função para buscar alertas de uma encomenda
+const verAlertasEncomenda = async (id) => {
+  try {
+    const response = await fetch(`${api}/so/encomendas/${id}/alertas`);
+    if (!response.ok) throw new Error("Erro ao buscar alertas da encomenda");
+
+    const data = await response.json();
+    alertasData.value = data.sensores.map(sensor => ({
+      id: sensor.id,
+      tipo: sensor.tipo,
+      alertas: sensor.alertas.map(alerta => ({
+        id: alerta.id,
+        mensagem: alerta.mensagem,
+        timeStamp: alerta.timeStamp,
+        valor: alerta.valor
+      }))
+    }));
+    
+    mostrarAlertasModal.value = true;
+  } catch (error) {
+    console.error("Erro ao buscar alertas da encomenda:", error);
+  }
+};
+
+onMounted(fetchEncomendasPendentes);
+</script>
+
+<template>
+  <Template :currentPage="currentPage" />
+
+  <div class="flex justify-center mr-24 mt-20">
+    <h1>Sistema de Gestão - Encomendas Pendentes</h1>
+  </div>
+
+  <!-- Mensagem de Sucesso -->
+  <div
+    v-if="successMessage"
+    class="fixed top-0 left-0 w-full flex justify-center mt-4 z-50 transition-transform transform-gpu"
+    :class="{ 'animate-slide-down': successMessage, 'animate-slide-up': !successMessage }"
+  >
+    <div class="bg-green-500 text-white py-2 px-4 mr-28 rounded shadow-md">
+      {{ successMessage }}
+    </div>
+  </div>
+
+  <!-- Tabela para Encomendas Pendentes com botão de ver alertas -->
+  <Table 
+    :tableTitles="encomendasTableTitles" 
+    :tableData="encomendasTableData" 
+    @cancelar="cancelarEncomenda"
+    @verAlertas="verAlertasEncomenda"
+  />
+
+  <!-- Modal de Alertas -->
+  <div v-if="mostrarAlertasModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white w-1/2 p-6 rounded shadow-lg relative">
+      <button @click="mostrarAlertasModal = false" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900">
+        <i class="fas fa-times"></i> <!-- Botão de fechar -->
+      </button>
+      <h2 class="text-xl font-semibold mb-4">Alertas da Encomenda</h2>
+      <div v-for="sensor in alertasData" :key="sensor.id" class="mb-4 p-4 bg-gray-100 rounded-lg border">
+        <p class="font-semibold">Sensor ID: {{ sensor.id }} - Tipo: {{ sensor.tipo }}</p>
+        <ul class="mt-2 space-y-2">
+          <li v-for="alerta in sensor.alertas" :key="alerta.id" class="p-3 bg-yellow-100 rounded-lg border">
+            <p><strong>ID do Alerta:</strong> {{ alerta.id }}</p>
+            <p><strong>Data:</strong> {{ alerta.timeStamp }}</p>
+            <p><strong>Mensagem:</strong> {{ alerta.mensagem }}</p>
+            <p><strong>Valor:</strong> {{ alerta.valor }}</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.ml-10 {
+  margin-left: 2.5rem;
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes slideUp {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+.animate-slide-down {
+  animation: slideDown 0.5s forwards;
+}
+.animate-slide-up {
+  animation: slideUp 0.5s forwards;
+}
+</style>

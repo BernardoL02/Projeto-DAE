@@ -1,0 +1,135 @@
+<script setup>
+import Template from '../template.vue';
+import Table from '../table.vue';
+import { ref, onMounted } from 'vue';
+import { useRuntimeConfig, useRoute } from '#app';
+
+const route = useRoute();
+const config = useRuntimeConfig();
+const api = config.public.API_URL;
+
+const encomendasTableTitles = ['ID Encomenda', 'Utilizador', 'Data de Expedição', 'Data de Entrega', 'Estado'];
+const encomendasTableData = ref([]);
+const currentPage = 'Por Entregar';
+
+const mostrarAlertasModal = ref(false); // Controla a exibição do modal de alertas
+const alertasData = ref([]); // Dados dos alertas para o modal
+const errorMessages = ref([]); // Mensagens de erro
+
+// Função para formatar o estado
+const formatEstado = (estado) => {
+  switch (estado) {
+    case 'EmProcessamento':
+      return 'Em Processamento';
+    case 'PorEntregar':
+      return 'Por Entregar';
+    default:
+      return estado;
+  }
+};
+
+// Função para buscar encomendas "Por Entregar"
+const fetchEncomendasPendentes = async () => {
+  try {
+    const response = await fetch(`${api}/so/encomendas/PorEntregar`);
+    if (!response.ok) throw new Error("Erro ao buscar encomendas 'Por Entregar'");
+
+    const data = await response.json();
+    encomendasTableData.value = data.map(encomenda => ({
+      id: encomenda.id,
+      username: encomenda.username,
+      dataExpedicao: new Date(encomenda.data_expedicao).toLocaleString(),
+      dataEntrega: new Date(encomenda.data_entrega).toLocaleString(),
+      estado: formatEstado(encomenda.estado)
+    }));
+  } catch (error) {
+    errorMessages.value.push(`Erro ao carregar encomendas 'Por Entregar': ${error.message}`);
+  }
+};
+
+// Função para buscar alertas de uma encomenda específica
+const verAlertasEncomenda = async (id) => {
+  try {
+    const response = await fetch(`${api}/so/encomendas/${id}/alertas`);
+    if (!response.ok) throw new Error("Erro ao buscar alertas da encomenda");
+
+    const data = await response.json();
+    console.log("Dados de alerta recebidos:", data); // Log para verificar o conteúdo de `data`
+
+    // Mapear a estrutura de "sensores" e "alertas" conforme a resposta fornecida
+    if (data.sensores && Array.isArray(data.sensores)) {
+      alertasData.value = data.sensores.map(sensor => ({
+        id: sensor.id,
+        tipo: sensor.tipo,
+        alertas: sensor.alertas.map(alerta => ({
+          id: alerta.id,
+          mensagem: alerta.mensagem,
+          timeStamp: alerta.timeStamp,
+          valor: alerta.valor
+        }))
+      }));
+    } else {
+      throw new Error("Formato inesperado dos dados de alerta");
+    }
+
+    mostrarAlertasModal.value = true;
+  } catch (error) {
+    errorMessages.value.push(`Erro ao buscar alertas da encomenda ${id}: ${error.message}`);
+  }
+};
+
+
+
+// Chama a função ao montar o componente
+onMounted(fetchEncomendasPendentes);
+</script>
+
+<template>
+  <Template :currentPage="currentPage" />
+
+  <div class="flex justify-center mr-24 mt-20">
+    <h1>Sistema de Gestão - Encomendas Por Entregar</h1>
+  </div>
+
+  <div v-if="errorMessages.length" class="text-red-500 text-center mt-4">
+    <p v-for="(error, index) in errorMessages" :key="index">{{ error }}</p>
+  </div>
+
+  <!-- Tabela para Encomendas "Por Entregar" com botão de ver alertas -->
+  <Table 
+    :tableTitles="encomendasTableTitles" 
+    :tableData="encomendasTableData" 
+    @verAlertas="verAlertasEncomenda"
+  />
+
+  <!-- Modal de Alertas -->
+  <div v-if="mostrarAlertasModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white w-1/2 p-6 rounded shadow-lg relative">
+      <button @click="mostrarAlertasModal = false" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900">
+        <i class="fas fa-times"></i> <!-- Botão de fechar -->
+      </button>
+      <h2 class="text-xl font-semibold mb-4">Alertas da Encomenda</h2>
+      <div v-for="sensor in alertasData" :key="sensor.id" class="mb-4 p-4 bg-gray-100 rounded-lg border">
+        <p class="font-semibold">Sensor ID: {{ sensor.id }} - Tipo: {{ sensor.tipo }}</p>
+        <ul class="mt-2 space-y-2">
+          <li v-for="alerta in sensor.alertas" :key="alerta.id" class="p-3 bg-yellow-100 rounded-lg border">
+            <p><strong>ID do Alerta:</strong> {{ alerta.id }}</p>
+            <p><strong>Data:</strong> {{ alerta.timeStamp }}</p>
+            <p><strong>Mensagem:</strong> {{ alerta.mensagem }}</p>
+            <p><strong>Valor:</strong> {{ alerta.valor }}</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.ml-10 {
+  margin-left: 2.5rem;
+}
+</style>
