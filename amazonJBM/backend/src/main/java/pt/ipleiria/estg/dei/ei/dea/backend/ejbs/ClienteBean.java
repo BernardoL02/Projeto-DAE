@@ -95,7 +95,7 @@ public class ClienteBean {
         for (Encomenda encomenda : cliente.getEncomendas()) {
             for (Volume volume : encomenda.getVolumes()) {
                 for (Sensor sensor : volume.getSensores()) {
-                    if (sensor.getTipo().getTipo().equals(tipo_sensor)) {
+                    if (sensor.getEstado().equalsIgnoreCase("ativo") && sensor.getTipo().getTipo().equals(tipo_sensor)) {
                         sensores.add(sensor);
                     }
                 }

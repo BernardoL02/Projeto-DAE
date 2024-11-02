@@ -1,6 +1,7 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.dtos;
 
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Sensor;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Volume;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -15,19 +16,24 @@ public class ResSensorUltimaLeituraByTipoDTO implements Serializable {
     private String estado;
     private int bateria;
     private LocalDateTime timeStamp;
+    private int id_encomenda;
+    private int id_volume;
 
-    public ResSensorUltimaLeituraByTipoDTO(int id, String valor, String tipoNome, String estado, int bateria, LocalDateTime timeStamp) {
+    public ResSensorUltimaLeituraByTipoDTO(int id, String valor, String tipoNome, String estado, int bateria, LocalDateTime timeStamp, int id_encomenda, int id_volume) {
         this.id = id;
         this.valor = valor;
         this.tipoNome = tipoNome;
         this.estado = estado;
         this.bateria = bateria;
         this.timeStamp = timeStamp;
+        this.id_encomenda = id_encomenda;
+        this.id_volume = id_volume;
     }
 
     public ResSensorUltimaLeituraByTipoDTO(){
 
     }
+
     public int getId() {
         return id;
     }
@@ -76,6 +82,22 @@ public class ResSensorUltimaLeituraByTipoDTO implements Serializable {
         this.timeStamp = timeStamp;
     }
 
+    public int getId_encomenda() {
+        return id_encomenda;
+    }
+
+    public void setId_encomenda(int id_encomenda) {
+        this.id_encomenda = id_encomenda;
+    }
+
+    public int getId_volume() {
+        return id_volume;
+    }
+
+    public void setId_volume(int id_volume) {
+        this.id_volume = id_volume;
+    }
+
     public static ResSensorUltimaLeituraByTipoDTO from(Sensor sensor) {
         return new ResSensorUltimaLeituraByTipoDTO(
                 sensor.getId(),
@@ -83,7 +105,9 @@ public class ResSensorUltimaLeituraByTipoDTO implements Serializable {
                 sensor.getTipo().getTipo(),
                 sensor.getEstado(),
                 sensor.getBateria(),
-                sensor.getTimeStamp()
+                sensor.getTimeStamp(),
+                sensor.getVolume().getEncomenda().getId(),
+                sensor.getVolume().getId()
         );
     }
 

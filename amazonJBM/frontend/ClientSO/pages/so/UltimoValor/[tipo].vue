@@ -8,7 +8,7 @@ const config = useRuntimeConfig();
 const api = config.public.API_URL;
 const route = useRoute();
 
-const sensorTableTitles = ['ID Sensor', 'Valor' , 'Data' , 'Tipo'];
+const sensorTableTitles = ['ID Sensor', 'Data' , 'Valor' , 'Bateria', 'Estado', 'ID Encomenda', 'ID Volume'];
 const sensorTableData = ref([]);
 const errorMessages = ref([]);
 const tiposSensores = ref([]);
@@ -45,14 +45,19 @@ const fetchUltimoValor = async () => {
     const data = await response.json();
     sensorTableData.value = data.map(sensor => ({
       idSensor: sensor.id,
+      data: formatDate(sensor.timeStamp), 
       valor: sensor.valor,
-      data: formatDate(sensor.timeStamp),
-      tipo: sensor.tipoNome
+      bateria: sensor.bateria,
+      estado: sensor.estado,                                      
+      idEncomenda: sensor.id_encomenda,   
+      idVolume: sensor.id_volume                   
     }));
+
   } catch (error) {
     errorMessages.value.push(`Erro ao carregar dados do sensor ${selectedTipo.value}`);
   }
 };
+
 
 // Atualiza automaticamente os dados a cada 3 segundos
 let updateInterval;

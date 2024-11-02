@@ -54,7 +54,7 @@ const props = defineProps({
         <!-- Nome do sistema -->
         <div class="text-right">
           <div class="text-white font-bold">Amazon JBM</div>
-          <div class="text-white">Sistema Operacional</div>
+          <div class="text-white">Sistema de Apoio ao Cliente</div>
         </div>
       </div>
     </nav>

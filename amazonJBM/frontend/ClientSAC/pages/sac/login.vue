@@ -34,7 +34,6 @@ const username = ref('Bernardo');
               Login
             </button>
           </nuxt-link>
-
         </div>
       </form>
     </div>

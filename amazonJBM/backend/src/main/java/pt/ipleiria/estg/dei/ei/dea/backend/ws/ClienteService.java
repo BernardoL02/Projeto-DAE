@@ -7,6 +7,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.AlertaSAC_DTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.EncomendasDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResAlertasEncomendaDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResSensorUltimaLeituraByTipoDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.ClienteBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Alerta;
@@ -71,6 +72,7 @@ public class ClienteService {
         String username = "Bernardo"; //Todo ver que user esta a fazer o pedido e se a encomenda é dele
 
         List<Sensor> sensores = clienteBean.getUltimaLeituraSensoresByTipo(tipo_sensor, username);
+
         return Response.ok(ResSensorUltimaLeituraByTipoDTO.from(sensores)).build();
     }
 
@@ -81,6 +83,9 @@ public class ClienteService {
         String username = "Bernardo"; //Todo ver que user esta a fazer o pedido e se a encomenda é dele
 
         List<Alerta> alertas = clienteBean.getAlertasByEncomenda(id, username);
-        return Response.ok(AlertaSAC_DTO.from(alertas)).build();
+
+        ResAlertasEncomendaDTO responseDto = ResAlertasEncomendaDTO.from(alertas);
+
+        return Response.ok(responseDto).build();
     }
 }

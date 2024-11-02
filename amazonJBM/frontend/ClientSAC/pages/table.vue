@@ -3,10 +3,13 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import { defineProps } from 'vue';
 import { useRoute } from 'vue-router';
 
+const emit = defineEmits(['verAlertas']);
+
 const route = useRoute()
 const config = useRuntimeConfig()
 const api = config.public.API_URL
 const username = route.params.username;
+
 
 // Props to receive titles and data from parent component
 const props = defineProps({
@@ -90,7 +93,7 @@ async function cancelar(id) {
 
 <template>
 
-    <div  v-bind="$attrs" v-if="successMessage" class="fixed -top-2 ml-10 left-0 w-full flex justify-center mt-4 z-50 transition-transform transform-gpu"
+    <div  v-bind="$attrs" v-if="successMessage" class="fixed -top-2 ml-4 left-0 w-full flex justify-center mt-4 z-50 transition-transform transform-gpu"
     :class="{ 'animate-slide-down': successMessage, 'animate-slide-up': !successMessage }">
       <div class="bg-green-500 text-white py-2 px-4 mr-28 rounded shadow-md">
         {{ successMessage }}
@@ -143,7 +146,7 @@ async function cancelar(id) {
                     <i class="fas fa-map-marker-alt"></i> <!-- Ícone de localização para "Tracking" -->
                   </button>
 
-                  <button class="ml-2 bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 transition">
+                  <button @click="emit('verAlertas', row[0])" class="ml-2 bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 transition">
                     <i class="fas fa-bell"></i> <!-- Ícone de campainha para "Alertas" -->
                   </button>
 
@@ -156,7 +159,7 @@ async function cancelar(id) {
                     </button>
                   </nuxt-link>
 
-                  <button class="ml-2 bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 transition">
+                  <button @click="emit('verAlertas', row[0])" class="ml-2 bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 transition">
                     <i class="fas fa-bell"></i> <!-- Ícone de campainha para "Alertas" -->
                   </button>
                   
@@ -169,7 +172,7 @@ async function cancelar(id) {
     </div>
 
 </template>
-<!-- http://localhost:3001/backend/api/sac/encomendas/2/Bernardo  -->
+
 <style scoped>
 .table-container {
   max-width: 90%;

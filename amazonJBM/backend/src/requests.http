@@ -130,7 +130,7 @@ GET http://localhost:3001/backend/api/sac/encomendas/sensor/Temperatura
 Accept: application/json //TODO apenas das encomendas ProEntregar
 
 ### Get All Alertas de Encomenda por Id
-GET http://localhost:3001/backend/api/sac/encomendas/1/alertas
+GET http://localhost:3001/backend/api/sac/encomendas/3/alertas
 Accept: application/json
 
 
