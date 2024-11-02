@@ -13,7 +13,7 @@ GET http://localhost:3001/backend/api/sl/produtos
 Accept: application/json
 
 ### Get Encomenda Por Id
-GET http://localhost:3001/backend/api/sl/encomendas/7
+GET http://localhost:3001/backend/api/sl/encomendas/1
 Accept: application/json
 
 ### Get Encomendas por entregar

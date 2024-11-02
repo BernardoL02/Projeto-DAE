@@ -83,7 +83,4 @@ public class ClienteService {
         List<Alerta> alertas = clienteBean.getAlertasByEncomenda(id, username);
         return Response.ok(AlertaSAC_DTO.from(alertas)).build();
     }
-
-    
-    
 }
