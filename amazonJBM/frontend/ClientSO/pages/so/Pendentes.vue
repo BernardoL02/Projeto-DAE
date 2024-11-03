@@ -47,10 +47,6 @@ const formatEstado = (estado) => {
   }
 };
 
-const formatDate = (dateString) => {
-  return dateString.replace('T', ' '); 
-};
-
 const fetchEncomendasPendentes = async () => {
   try {
     const response = await fetch(`${api}/so/encomendas/pendentes`);
@@ -157,6 +153,20 @@ const goToLocation = (lat, lng) => {
   }
 };
 
+const showCancelConfirmModal = ref(false);
+const selectedEncomendaId = ref(null);
+
+const handleCancelClick = (id) => {
+  selectedEncomendaId.value = id;
+  showCancelConfirmModal.value = true;
+};
+
+const confirmCancel = async () => {
+  await cancelarEncomenda(selectedEncomendaId.value);
+  showCancelConfirmModal.value = false;
+};
+
+
 onMounted(async () => {
   loadLeafletCSS();
   await loadLeafletJS();
@@ -187,10 +197,22 @@ onMounted(async () => {
     <Table 
       :tableTitles="encomendasTableTitles" 
       :tableData="encomendasTableData" 
-      @cancelar="cancelarEncomenda"
+      @cancelar="handleCancelClick"
       @verAlertas="verAlertasEncomenda"
       @tracking="verTracking"
     />
+
+    <!-- Modal de Confirmação de Cancelamento -->
+    <div v-if="showCancelConfirmModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white w-1/3 p-6 rounded shadow-lg">
+        <h2 class="text-xl font-semibold mb-4">Confirmar Cancelamento</h2>
+        <p>Tem certeza que deseja cancelar a encomenda ID {{ selectedEncomendaId }}?</p>
+        <div class="mt-4 flex justify-end space-x-2">
+          <button @click="showCancelConfirmModal = false" class="bg-gray-500 text-white py-1 px-4 rounded hover:bg-gray-700">Cancelar</button>
+          <button @click="confirmCancel" class="bg-red-500 text-white py-1 px-4 rounded hover:bg-red-700">Confirmar</button>
+        </div>
+      </div>
+    </div>
 
     <!-- Modal de Alertas -->
     <div v-if="mostrarAlertasModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
@@ -204,7 +226,7 @@ onMounted(async () => {
           <ul class="mt-2 space-y-2">
             <li v-for="alerta in sensor.alertas" :key="alerta.id" class="p-3 bg-yellow-100 rounded-lg border">
               <p><strong>ID do Alerta:</strong> {{ alerta.id }}</p>
-              <p><strong>Data:</strong> {{ formatDate(alerta.timeStamp) }}</p>
+              <p><strong>Data:</strong> {{ new Date(alerta.timeStamp).toLocaleString() }}</p>
               <p><strong>Mensagem:</strong> {{ alerta.mensagem }}</p>
               <p><strong>Valor:</strong> {{ alerta.valor }}</p>
             </li>
@@ -235,6 +257,7 @@ onMounted(async () => {
     </div>
   </div>
 </template>
+
 
 <style scoped>
 h1 {

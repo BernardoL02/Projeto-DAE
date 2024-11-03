@@ -48,10 +48,6 @@ const formatEstado = (estado) => {
   }
 };
 
-const formatDate = (dateString) => {
-  return dateString.replace('T', ' '); 
-};
-
 const fetchEncomendasPendentes = async () => {
   try {
     const response = await fetch(`${api}/so/encomendas/PorEntregar`);
@@ -180,7 +176,7 @@ onMounted(async () => {
         <ul class="mt-2 space-y-2">
           <li v-for="alerta in sensor.alertas" :key="alerta.id" class="p-3 bg-yellow-100 rounded-lg border">
             <p><strong>ID do Alerta:</strong> {{ alerta.id }}</p>
-            <p><strong>Data:</strong> {{ formatDate(alerta.timeStamp) }}</p>
+            <p><strong>Data:</strong> {{ new Date(alerta.timeStamp).toLocaleString() }}</p>
             <p><strong>Mensagem:</strong> {{ alerta.mensagem }}</p>
             <p><strong>Valor:</strong> {{ alerta.valor }}</p>
           </li>

@@ -9,10 +9,21 @@ import java.util.stream.Collectors;
 
 public class ResTipoSensoresDTO implements Serializable {
 
+    private int id;
+
     private String tipo;
 
-    public ResTipoSensoresDTO(String tipo) {
+    public ResTipoSensoresDTO(int id, String tipo) {
+        this.id = id;
         this.tipo = tipo;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTipo() {
@@ -25,6 +36,7 @@ public class ResTipoSensoresDTO implements Serializable {
 
     public static ResTipoSensoresDTO from(Tipo_Sensores tipoSensores) {
         return new ResTipoSensoresDTO(
+                tipoSensores.getId(),
                 tipoSensores.getTipo()
         );
     }

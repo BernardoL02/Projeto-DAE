@@ -23,26 +23,26 @@ const props = defineProps({
   
         <!-- Páginas de navegação -->
       <div class="space-x-16 hidden md:flex">
-        <a href="page1" 
-           :class="currentPage === 'Home' ? 'highlighted' : ''" 
+        <a href="gestao" 
+           :class="currentPage === 'gestao' ? 'highlighted' : ''" 
            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
-            Home
+           Gestao
             <span class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full" 
-                  :class="currentPage === 'Home' ? 'w-full' : ''"></span>
+                  :class="currentPage === 'gestao' ? 'w-full' : ''"></span>
         </a>
-        <a href="#" 
-           :class="currentPage === 'Pagina2' ? 'highlighted' : ''" 
+        <a href="PorEntregar" 
+           :class="currentPage === 'Por Entregar' ? 'highlighted' : ''" 
            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
-            Pagina2
+           Por Entregar
             <span class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full" 
-                  :class="currentPage === 'Pagina2' ? 'w-full' : ''"></span>
+                  :class="currentPage === 'Por Entregar' ? 'w-full' : ''"></span>
         </a>
-        <a href="#" 
-           :class="currentPage === 'Pagina3' ? 'highlighted' : ''" 
+        <a href="CriarEncomenda" 
+           :class="currentPage === 'CriarEncomenda' ? 'highlighted' : ''" 
            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
-            Pagina3
+            Criar Encomenda
             <span class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full" 
-                  :class="currentPage === 'Pagina3' ? 'w-full' : ''"></span>
+                  :class="currentPage === 'CriarEncomenda' ? 'w-full' : ''"></span>
         </a>
       </div>
   

@@ -19,11 +19,6 @@ const formateEstado = (estado) => {
   return estado === "EmProcessamento" ? "Em Processamento" : estado === "PorEntregar" ? "Por Entregar" : estado || "Indefinido";
 };
 
-// Função para formatar a data
-const formatDate = (dateString) => {
-  return dateString ? dateString.replace('T', ' ') : "Data não disponível";
-};
-
 // Função para buscar detalhes da encomenda e volumes associados
 const fetchEncomendaDetalhes = async () => {
   try {
@@ -50,7 +45,7 @@ const fetchEncomendaDetalhes = async () => {
         valor: sensor.valor,
         bateria: sensor.bateria,
         estado: sensor.estado,
-        ultimaLeitura: formatDate(sensor.timeStamp),
+        ultimaLeitura: new Date(sensor.timeStamp).toLocaleString(),
         mostrarAlertas: false
       }))
     }));
@@ -76,7 +71,7 @@ const fetchAlertas = async (sensor) => {
       const alertas = await response.json();
       alertasData.value[sensor.id] = alertas.map(alerta => ({
         id: alerta.id,
-        data: formatDate(alerta.data),
+        data: new Date(alerta.data).toLocaleString(),
         mensagem: alerta.menssagem,
         valor: alerta.valor
       }));
@@ -99,8 +94,8 @@ onMounted(fetchEncomendaDetalhes);
       <h1 class="text-center text-2xl font-semibold mb-4">Detalhes da Encomenda</h1>
       <p class="text-gray-700"><strong>ID:</strong> {{ encomendaData.id }}</p>
       <p class="text-gray-700"><strong>Utilizador:</strong> {{ encomendaData.username }}</p>
-      <p class="text-gray-700"><strong>Data de Expedição:</strong> {{ formatDate(encomendaData.data_expedicao) }}</p>
-      <p class="text-gray-700"><strong>Data de Entrega:</strong> {{ formatDate(encomendaData.data_entrega) }}</p>
+      <p class="text-gray-700"><strong>Data de Expedição:</strong> {{ new Date(encomendaData.data_expedicao).toLocaleString() }}</p>
+      <p class="text-gray-700"><strong>Data de Entrega:</strong> {{ new Date(encomendaData.data_entrega).toLocaleString() }}</p>
       <p class="text-gray-700"><strong>Estado:</strong> {{ encomendaData.estado }}</p>
     </div>
 

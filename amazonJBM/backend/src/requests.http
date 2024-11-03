@@ -22,7 +22,6 @@ Accept: application/json
 
 
 ### Entregar Encomenda
-
 PATCH http://localhost:3001/backend/api/sl/encomendas/1/Entregue
 Accept: application/json
 Content-Type: application/json
@@ -48,7 +47,6 @@ Content-Type: application/json
 }
 
 ### Get All Tipos de Sensor
-
 GET http://localhost:3001/backend/api/sl/tipoSensores
 
 

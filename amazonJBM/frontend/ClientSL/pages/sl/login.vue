@@ -24,7 +24,7 @@ const title = "Sistema de Logistica"
 
         <div class="flex justify-center items-center text-sm mb-4 space-x-28 mt-6">
           
-          <nuxt-link to="./page1">
+          <nuxt-link to="./gestao">
             <button type="submit" class="bg-PrimaryColor hover:bg-SecundaryColor text-white font-semibold py-2 px-8 rounded-full transition duration-300 ease-in-out shadow-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor">
               Login
             </button>
