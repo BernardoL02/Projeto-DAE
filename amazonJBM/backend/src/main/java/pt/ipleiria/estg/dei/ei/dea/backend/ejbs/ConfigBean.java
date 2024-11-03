@@ -163,19 +163,23 @@ public class ConfigBean {
         // Sensores
         //Encomenda 1
         sensorBean.create("29.0", 1, "ativo", 100, 30, 10, 1);
-        sensorBean.create("40.7123, -74.12312", 4, "ativo", 100, 2);
+        sensorBean.create("39.7344200469475, -8.821063143811228", 4, "ativo", 100, 1);
+        sensorBean.create("39.73965392397057, -8.818502730615972", 4, "ativo", 100, 2);
+        sensorBean.create("1000", 3, "ativo", 80, 1015, 980, 2);
         //Encomenda 2
-        sensorBean.create("40.7123, -74.12312", 4, "inativo", 5, 3);
+        sensorBean.create("39.73513810246074, -8.799701988029124", 4, "inativo", 5, 3);
         sensorBean.create("1000", 3, "inativo", 100, 1015, 980,3);
-        sensorBean.create("40.7123, -74.12312", 4, "inativo", 88, 4);
+        sensorBean.create("39.74986926478417, -8.808952733780515", 4, "inativo", 88, 4);
         sensorBean.create("25", 2, "inativo", 88, 30, 5, 4);
         //Encomenda 3
         sensorBean.create("21.0", 1, "ativo", 99, 35, 10, 5);
         sensorBean.create("1000", 3, "ativo", 80, 1015, 980, 5);
-        sensorBean.create("40.7123, -74.12312", 4, "ativo", 100, 6);
+        sensorBean.create("39.75604230095242, -9.03173385047379", 4, "ativo", 100, 5);
+        sensorBean.create("39.60047246334607, -9.073144176554514", 4, "ativo", 100, 6);
         sensorBean.create("20", 2, "ativo", 100,30, 5, 6);
         //Encomenda 6
-        sensorBean.create("25.0", 1, "inativo", 90, 30, 15, 2);
+        sensorBean.create("25.0", 1, "inativo", 90, 30, 15, 11);
+        sensorBean.create("39.362060990104126, -9.374644032197038", 4, "inativo", 100, 11);
 
 
         // Alertas

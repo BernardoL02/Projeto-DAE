@@ -18,7 +18,8 @@ const props = defineProps({
   }
 });
 
-const emit = defineEmits(['cancelar', 'verAlertas']);
+// Definindo os eventos que podem ser emitidos
+const emit = defineEmits(['cancelar', 'verAlertas', 'tracking']);
 </script>
 
 <template>
@@ -56,6 +57,7 @@ const emit = defineEmits(['cancelar', 'verAlertas']);
               </button>
               <button 
                 v-if="row.estado === 'Por Entregar'" 
+                @click="emit('tracking', row.id)"
                 class="bg-green-500 text-white py-1 px-2 rounded hover:bg-green-700 transition"
               >
                 <i class="fas fa-map-marker-alt"></i> <!-- Ícone de localização para "Tracking" -->

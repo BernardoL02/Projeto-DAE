@@ -74,4 +74,20 @@ public class GestorBean {
 
         return em.createNamedQuery("Sensor.findByTipoAndEstado", Sensor.class).setParameter("tipoId", tipoSensores.getId()).getResultList();
     }
+
+    public List<Object[]> getCoordenadasEncomenda(int id) {
+        Encomenda encomenda = em.find(Encomenda.class, id);
+
+        List<Object[]> coordenadasList = new ArrayList<>();
+
+        for (Volume volume : encomenda.getVolumes()) {
+            for (Sensor sensor : volume.getSensores()) {
+                if ("GPS".equals(sensor.getTipo().getTipo())) {
+                    coordenadasList.add(new Object[]{volume.getId(), volume.getProduto().getNome(), sensor.getValor()});
+                }
+            }
+        }
+
+        return coordenadasList;
+    }
 }

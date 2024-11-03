@@ -142,6 +142,10 @@ Accept: application/json
 GET http://localhost:3001/backend/api/so/encomendas/pendentes
 Accept: application/json
 
+### Get Coordenadas Volumes
+GET http://localhost:3001/backend/api/so/encomendas/1/coordenadas
+Accept: application/json
+
 ### Get Encomendas Por entregar
 GET http://localhost:3001/backend/api/so/encomendas/PorEntregar
 Accept: application/json

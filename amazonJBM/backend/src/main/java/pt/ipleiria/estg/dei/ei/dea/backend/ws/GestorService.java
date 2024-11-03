@@ -33,6 +33,18 @@ public class GestorService {
     }
 
     @GET
+    @Path("encomendas/{id}/coordenadas")
+    public Response getCoordenadasEncomenda(@PathParam("id") int id) {
+        List<Object[]> resultados = gestorBean.getCoordenadasEncomenda(id);
+
+        List<ResCoordenadasDTO> coordenadasDTOs = resultados.stream()
+                .map(result -> new ResCoordenadasDTO((int) result[0], (String) result[1], (String) result[2]))
+                .collect(Collectors.toList());
+
+        return Response.ok(coordenadasDTOs).build();
+    }
+
+    @GET
     @Path("encomendas/{estado}")
     public Response getEncomendaByEstado(@PathParam("estado") String estado) {
         List<Encomenda> encomendas = encomendaBean.findEncomendasByEstado(estado);
