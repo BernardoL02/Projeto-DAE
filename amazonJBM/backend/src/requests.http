@@ -124,7 +124,7 @@ Content-Type: application/json
 }
 
 ### Get All Ultimo Valor dos Sensores por Tipo
-GET http://localhost:3001/backend/api/sac/encomendas/sensor/Temperatura
+GET http://localhost:3001/backend/api/sac/encomendas/sensor/GPS
 Accept: application/json //TODO apenas das encomendas ProEntregar
 
 ### Get All Alertas de Encomenda por Id
