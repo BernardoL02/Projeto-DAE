@@ -124,22 +124,21 @@ const verTracking = async (id) => {
     mostrarTrackingModal.value = true;
 
     setTimeout(() => {
-      if (!map) {
-        const firstCoord = trackingData.value[0].coordenadas.split(',');
-        map = L.map('map').setView([firstCoord[0], firstCoord[1]], 13);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+      // Reinicializa o mapa e os marcadores ao abrir o modal
+      if (map) {
+        map.remove(); // Remove o mapa anterior
       }
+      const firstCoord = trackingData.value[0].coordenadas.split(',');
+      map = L.map('map').setView([firstCoord[0], firstCoord[1]], 13);
 
-      markers.forEach(marker => map.removeLayer(marker)); 
-      markers = [];
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
 
-      trackingData.value.forEach(coord => {
+      markers = trackingData.value.map(coord => {
         const [lat, lng] = coord.coordenadas.split(',').map(Number);
         const marker = L.marker([lat, lng]).addTo(map).bindPopup(`Volume ID: ${coord.volumeId}, Produto: ${coord.produtoNome}`);
-        markers.push(marker);
+        return marker;
       });
     }, 0);
   } catch (error) {
