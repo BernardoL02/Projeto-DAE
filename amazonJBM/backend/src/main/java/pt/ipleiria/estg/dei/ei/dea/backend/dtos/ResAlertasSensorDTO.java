@@ -10,14 +10,14 @@ import java.util.stream.Collectors;
 public class ResAlertasSensorDTO implements Serializable {
 
     private int id;
-    private String menssagem;
+    private String mensagem;
     private String valor;
     private LocalDateTime data;
     private int id_encomenda;
 
     public ResAlertasSensorDTO(int id, String menssagem, String valor, LocalDateTime data, int id_encomenda) {
         this.id = id;
-        this.menssagem = menssagem;
+        this.mensagem = menssagem;
         this.valor = valor;
         this.data = data;
         this.id_encomenda = id_encomenda;
@@ -35,12 +35,12 @@ public class ResAlertasSensorDTO implements Serializable {
         this.id = id;
     }
 
-    public String getMenssagem() {
-        return menssagem;
+    public String getMensagem() {
+        return mensagem;
     }
 
-    public void setMenssagem(String menssagem) {
-        this.menssagem = menssagem;
+    public void setMensagem(String menssagem) {
+        this.mensagem = menssagem;
     }
 
     public String getValor() {
