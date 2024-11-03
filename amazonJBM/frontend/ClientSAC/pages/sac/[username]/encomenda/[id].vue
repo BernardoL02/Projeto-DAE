@@ -83,7 +83,7 @@ watchEffect(() => {
   <Template :username="username" :currentPage="currentPage"></Template> <!-- Importar o Template -->
 
   <!-- Contêiner para os detalhes da encomenda e a tabela -->
-  <div class="flex flex-row justify-between mx-auto mt-10 p-6 mb-10 bg-white shadow-md rounded-lg border border-gray-300 w-full max-w-6xl">
+  <div class="flex flex-row justify-between mx-auto mt-10 p-6 mb-10 bg-white shadow-md rounded-lg border border-gray-300 w-full max-w-screen-xl">
 
     <!-- Detalhes da encomenda -->
     <div class="flex flex-col items-start p-4 w-1/2">
