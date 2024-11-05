@@ -40,6 +40,10 @@ public class EncomendasDTO implements Serializable {
         }
     }
 
+    public EncomendasDTO(){
+
+    }
+
     public int getId() {
         return id;
     }

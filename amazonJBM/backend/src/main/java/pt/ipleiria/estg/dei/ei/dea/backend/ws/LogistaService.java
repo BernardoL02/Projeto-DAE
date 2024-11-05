@@ -64,10 +64,10 @@ import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
     }
 
     @PATCH
-    @Path("encomendas/{id}/Entregue")
-    public Response entregarEncomenda(@PathParam("id") int id) {
-        encomendaBean.entregarEncomenda(id);
-        return Response.ok("Encomenda " + id + " concluida com sucesso.").build();
+    @Path("encomendas/{id}")
+    public Response mudarEstadoEncomenda(@PathParam("id") int id, EncomendasDTO encomendasDTO) {
+        encomendaBean.mudarEstadoEncomenda(id,encomendasDTO.getEstado());
+        return Response.ok("Estado da encomenda " + id + " alterado com sucesso para " + encomendasDTO.getEstado()).build();
     }
 
     @GET
@@ -81,7 +81,7 @@ import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
 
     @POST
     @Path("volume/{id}/sensor")
-    public Response associarSensorAVolume(@PathParam("id") int id,SensorDTO sensorDTO) {
+    public Response associarSensorAVolume(@PathParam("id") int id, SensorDTO sensorDTO) {
 
          if("GPS".equals(sensorDTO.getTipoNome())){
              sensorBean.create(

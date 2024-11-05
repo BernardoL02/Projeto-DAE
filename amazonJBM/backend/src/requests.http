@@ -1,7 +1,7 @@
 ################## End Points Sistema de Logistica ##################
 
 ### Get All Encomendas em processamento
-GET http://localhost:3001/backend/api/sl/encomendas/estado/EmProcessamento
+GET http://localhost:3001/backend/api/sl/encomendas/estado/EmProcessamento 
 Accept: application/json
 
 ### Get All Clientes
@@ -11,6 +11,9 @@ Accept: application/json
 ### Get All Produtos
 GET http://localhost:3001/backend/api/sl/produtos
 Accept: application/json
+
+### Get All Tipos de Sensor
+GET http://localhost:3001/backend/api/sl/tipoSensores
 
 ### Get Encomenda Por Id
 GET http://localhost:3001/backend/api/sl/encomendas/1
@@ -22,7 +25,7 @@ Accept: application/json
 
 
 ### Entregar Encomenda
-PATCH http://localhost:3001/backend/api/sl/encomendas/1/Entregue
+PATCH http://localhost:3001/backend/api/sl/encomendas/1
 Accept: application/json
 Content-Type: application/json
 
@@ -45,10 +48,6 @@ Content-Type: application/json
   "bateria": 72,
   "tipoNome": "GPS"
 }
-
-### Get All Tipos de Sensor
-GET http://localhost:3001/backend/api/sl/tipoSensores
-
 
 ###Criar uma nova encomenda
 POST http://localhost:3001/backend/api/sl/encomendas
@@ -82,7 +81,6 @@ Content-Type: application/json
 {
   "id_produto": 3,
   "quantidade": 10
-
 }
 
 

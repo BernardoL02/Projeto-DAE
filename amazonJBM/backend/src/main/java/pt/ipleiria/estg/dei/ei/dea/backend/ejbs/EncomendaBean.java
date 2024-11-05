@@ -79,14 +79,27 @@ public class EncomendaBean {
     }
 
 
-    public void entregarEncomenda(int id) {
+    public void mudarEstadoEncomenda(int id, String estado) {
 
         var encomenda = this.find(id);
-        System.out.println(encomenda);
+
         if (encomenda == null) {
             throw new EntityNotFoundException("Encomenda com ID " + id + " não encontrada.");
         }
-        encomenda.setEstado("Entregue");
+
+        encomenda.setEstado(estado);
+
+        if(estado.equalsIgnoreCase("Entregue")){
+
+            List<Volume> volumes = encomenda.getVolumes();
+
+            for (Volume volume : volumes) {
+                for(Sensor sensor : volume.getSensores()){
+                    sensor.setEstado("inativo");
+                }
+            }
+        }
+
         try {
             em.merge(encomenda);
         } catch (Exception e) {

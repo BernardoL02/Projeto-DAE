@@ -53,6 +53,11 @@ const emit = defineEmits(['tracking']);
               >
                 <i class="fas fa-truck"></i> <!-- Ícone de caminhão para "Tracking" -->
               </button>
+              
+              <button v-if="row.estado === 'Em Processamento'" @click="$emit('expedirEncomenda', row.id)" class="bg-green-500 text-white py-1 px-2 rounded hover:bg-green-700 transition">
+                <i class="fas fa-truck"></i> <!-- Ícone de caminhão para "Tracking" -->
+              </button>
+
             </td>
           </tr>
         </tbody>

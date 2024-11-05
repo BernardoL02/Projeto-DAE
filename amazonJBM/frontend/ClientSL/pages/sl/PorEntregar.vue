@@ -45,7 +45,7 @@ const fetchEncomendasPendentes = async () => {
 
 const confirmarEntrega = async (id) => {
   try {
-    const response = await fetch(`${api}/sl/encomendas/${id}/Entregue`, {
+    const response = await fetch(`${api}/sl/encomendas/${id}`, {
       method: 'PATCH',
       headers: {
         'Accept': 'application/json',
