@@ -80,7 +80,7 @@ watch(selectedTipo, fetchUltimoValor);
     <Template :currentPage="currentPage" />
   
     <!-- Título da Página -->
-    <div class="flex justify-center mr-24 mt-10">
+    <div class="flex justify-center mr-24 mt-20">
       <h1 v-if="selectedTipo" class="text-xl font-semibold text-gray-700">
         Último Valor dos Sensores - {{ selectedTipo }}
       </h1>

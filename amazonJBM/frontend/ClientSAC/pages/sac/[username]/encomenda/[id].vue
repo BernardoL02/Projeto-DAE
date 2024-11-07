@@ -13,9 +13,9 @@ const encomendaId = route.params.id
 
 const api = config.public.API_URL
 
-const encomendaData = ref({});
-const tableDataVolumes = ref([]);
-const tableTitlesVolumes = ['ID', 'Produto', 'Quantidade',"Sensor","Útima leitura","Timestamp"];
+const encomendaData = ref(null);
+const volumesData = ref([]);
+const alertasData = ref({});
 
 const formateEstado = (estado) => {
 
@@ -30,75 +30,135 @@ return estado;
 };
 
 
-// Obtenha os dados da encomenda com o ID e username fornecidos
-const { data, error } = await useFetch(`${api}/sac/encomendas/${encomendaId}`);
+// Função para buscar detalhes da encomenda e volumes associados
+const fetchEncomendaDetalhes = async () => {
+  try {
+    const response = await fetch(`${api}/sac/encomendas/${encomendaId}`);
+    if (!response.ok) throw new Error("Erro ao buscar detalhes da encomenda");
 
-// WatchEffect para processar os dados da encomenda
-watchEffect(() => {
-  if (data.value) {
-    const fetchedData = data.value;
-
-    // Mapeie os volumes da encomenda, incluindo tipos de sensores e valores lidos
-    tableDataVolumes.value = fetchedData.volumes.flatMap(volume => {
-      // Verifique se há sensores e mapeie-os
-      if (volume.sensores.length > 0) {
-        return volume.sensores.map(sensor => ({
-          id: volume.id,
-          nome_produto: volume.nome_produto,
-          quantidade: volume.quantidade,
-          tipo_sensor: sensor.tipoNome,
-          valor_sensor: sensor.valor,
-          timestamp: new Date(sensor.timeStamp).toLocaleString()
-        }));
-      } else {
-        // Caso não haja sensores, ainda precisamos incluir a linha com valores vazios
-        return [{
-          id: volume.id,
-          nome_produto: volume.nome_produto,
-          quantidade: volume.quantidade,
-          tipo_sensor: 'Nenhum',
-          valor_sensor: 'N/A',
-          timestamp: 'N/A'
-        }];
-      }
-    });
-
-    // Você pode armazenar os dados da encomenda em uma variável para uso no template
+    const data = await response.json();
     encomendaData.value = {
-      data_expedicao: fetchedData.data_expedicao,
-      data_entrega: fetchedData.data_entrega,
-      estado: fetchedData.estado
+      id: data.id,
+      username: data.username,
+      data_expedicao: data.data_expedicao,
+      data_entrega: data.data_entrega,
+      estado: formateEstado(data.estado),
     };
-  }
-});
 
+    volumesData.value = data.volumes.map(volume => ({
+      id: volume.id,
+      nome_produto: volume.nome_produto,
+      quantidade: volume.quantidade,
+      mostrarSensores: false,
+      sensores: volume.sensores.map(sensor => ({
+        tipo: sensor.tipoNome,
+        valor: sensor.valor,
+        ultimaLeitura: new Date(sensor.timeStamp).toLocaleString(),
+        mostrarAlertas: false
+      }))
+    }));
+  } catch (error) {
+    console.error("Erro ao carregar detalhes da encomenda:", error);
+  }
+};
+
+// Função para alternar a exibição de sensores de um volume específico
+const toggleSensores = (volume) => {
+  volume.mostrarSensores = !volume.mostrarSensores;
+};
+
+// Função para buscar e exibir alertas de um sensor específico
+const fetchAlertas = async (sensor) => {
+  try {
+    if (alertasData.value[sensor.id]) {
+      sensor.mostrarAlertas = !sensor.mostrarAlertas;
+    } else {
+      const response = await fetch(`${api}/so/sensor/${sensor.id}/alertas`);
+      if (!response.ok) throw new Error(`Erro ao buscar alertas do sensor ${sensor.id}`);
+      const alertas = await response.json();
+      alertasData.value[sensor.id] = alertas.map(alerta => ({
+        id: alerta.id,
+        data: new Date(alerta.data).toLocaleString(),
+        mensagem: alerta.mensagem,
+        valor: alerta.valor
+      }));
+      sensor.mostrarAlertas = true;
+
+      console.log(alertas)
+    }
+  } catch (error) {
+    console.error(`Erro ao buscar alertas do sensor ${sensor.id}:`, error);
+  }
+};
+
+onMounted(fetchEncomendaDetalhes);
 </script>
 
 <template>
-  
-  <Template :username="username" :currentPage="currentPage"></Template> <!-- Importar o Template -->
+  <Template />
 
-  <!-- Contêiner para os detalhes da encomenda e a tabela -->
-  <div class="flex flex-row justify-between mx-auto mt-10 p-6 mb-10 bg-white shadow-md rounded-lg border border-gray-300 w-full max-w-screen-xl">
-
-    <!-- Detalhes da encomenda -->
-    <div class="flex flex-col items-start p-4 w-1/2">
-      <h1 class="text-center text-xl font-semibold mb-8">Detalhes da Encomenda</h1>
-      <p class="text-gray-700"><strong>ID - </strong>  {{ encomendaId }}</p><br> 
-      <p class="text-gray-700"><strong>Data de Expedição</strong> <br> {{ new Date(encomendaData.data_expedicao).toLocaleString()}}</p><br> 
-      <p class="text-gray-700"><strong>Data de Entrega</strong> <br> {{ new Date(encomendaData.data_entrega).toLocaleString()}}</p><br> 
-      <p class="text-gray-700"><strong>Estado</strong> <br> {{ formateEstado(encomendaData.estado) }}</p><br> 
+  <div v-if="encomendaData" class="flex flex-col justify-center mx-auto mt-10 p-6 mb-10 bg-white shadow-md rounded-lg border border-gray-300 w-full max-w-5xl">
+    <div class="mb-8">
+      <h1 class="text-center text-2xl font-semibold mb-4">Detalhes da Encomenda</h1>
+      <p class="text-gray-700"><strong>ID:</strong> {{ encomendaData.id }}</p>
+      <p class="text-gray-700"><strong>Utilizador:</strong> {{ encomendaData.username }}</p>
+      <p class="text-gray-700"><strong>Data de Expedição:</strong> {{ new Date(encomendaData.data_expedicao).toLocaleString() }}</p>
+      <p class="text-gray-700"><strong>Data de Entrega:</strong> {{ new Date(encomendaData.data_entrega).toLocaleString() }}</p>
+      <p class="text-gray-700"><strong>Estado:</strong> {{ encomendaData.estado }}</p>
     </div>
 
-    <!-- Tabela dos Volumes -->
-    <div class="p-4">
-      <h1 class=" ml-16 text-lg font-semibold mb-2">Volumes</h1>
-      <Table :tableTitles="tableTitlesVolumes" :tableData="tableDataVolumes" :mostrarOperacoes="false" /> 
+    <div>
+      <h2 class="text-xl font-semibold mb-4">Volumes</h2>
+      <div v-for="volume in volumesData" :key="volume.id" class="mb-6 p-4 bg-gray-100 rounded-lg border border-gray-300">
+        <div class="flex justify-between items-center">
+          <div>
+            <h3 class="font-semibold text-lg text-gray-800">Volume ID: {{ volume.id }} - {{ volume.nome_produto }}</h3>
+            <p class="text-gray-600">Quantidade: {{ volume.quantidade }}</p>
+          </div>
+          <button 
+            @click="toggleSensores(volume)" 
+            class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
+          >
+            {{ volume.mostrarSensores ? 'Esconder Detalhes' : 'Mostrar Detalhes' }}
+          </button>
+        </div>
+
+        <div v-if="volume.mostrarSensores" class="mt-4">
+          <h4 class="font-semibold text-md text-gray-700">Sensores Associados:</h4>
+          <ul>
+            <li v-for="sensor in volume.sensores" :key="sensor.id" class="p-2 bg-white my-2 rounded shadow">
+              <p><strong>Tipo:</strong> {{ sensor.tipo }}</p>
+              <p><strong>Valor:</strong> {{ sensor.valor }}</p>
+              <p><strong>Última Leitura:</strong> {{ sensor.ultimaLeitura }}</p>
+              <button
+                @click="fetchAlertas(sensor)"
+                class="bg-yellow-500 text-white px-3 py-1 rounded mt-2 hover:bg-yellow-700 transition"
+              >
+                {{ sensor.mostrarAlertas ? 'Esconder Alertas' : 'Ver Alertas' }}
+              </button>
+
+              <div v-if="sensor.mostrarAlertas && alertasData[sensor.id]" class="mt-2 p-2 bg-yellow-100 rounded shadow">
+                <h5 class="font-semibold text-sm text-yellow-800 mb-2">Alertas:</h5>
+                <ul>
+                  <li v-for="alerta in alertasData[sensor.id]" :key="alerta.id" class="mb-2 p-2 border-b border-yellow-300 last:border-none">
+                    <p><strong>ID:</strong> {{ alerta.id }}</p>
+                    <p><strong>Data:</strong> {{ alerta.data }}</p>
+                    <p><strong>Mensagem:</strong> {{ alerta.mensagem }}</p>
+                    <p><strong>Valor:</strong> {{ alerta.valor }}</p>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-    
+  </div>
+
+  <div v-else class="text-center mt-20">
+    <p>Carregando detalhes da encomenda...</p>
   </div>
 </template>
-
 
 <style scoped>
 body {
@@ -112,3 +172,4 @@ h1 {
   font-weight: bold;
 }
 </style>
+

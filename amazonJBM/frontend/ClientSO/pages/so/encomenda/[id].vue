@@ -1,5 +1,5 @@
 <script setup>
-import Template from '../template.vue';
+import Template from '../../template.vue';
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useRuntimeConfig } from '#app';
@@ -12,7 +12,7 @@ const encomendaId = route.params.id;
 
 const encomendaData = ref(null);
 const volumesData = ref([]);
-const alertasData = ref({}); // Armazenará os alertas de cada sensor
+const alertasData = ref({});
 
 // Função para formatar o estado da encomenda
 const formateEstado = (estado) => {
@@ -61,7 +61,6 @@ const toggleSensores = (volume) => {
 
 // Função para buscar e exibir alertas de um sensor específico
 const fetchAlertas = async (sensor) => {
-  //console.log(`Faz um Get aos Alertas do sensor ${alertasData.value[sensor.id]}`)
   try {
     if (alertasData.value[sensor.id]) {
       sensor.mostrarAlertas = !sensor.mostrarAlertas;

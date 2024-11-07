@@ -43,7 +43,7 @@ const emit = defineEmits(['cancelar', 'verAlertas', 'tracking']);
             </td>
             <!-- Renderizar as ações apenas se mostrarAcoes for true -->
             <td v-if="mostrarAcoes" class="py-4 px-6 text-center border border-gray-300 flex justify-center space-x-2">
-              <nuxt-link :to="`/so/${row.id}`">
+              <nuxt-link :to="`/so/encomenda/${row.id}`">
                 <button class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700 transition">
                   <i class="fas fa-eye"></i> <!-- Ícone de olho para "Ver Detalhes" -->
                 </button>
