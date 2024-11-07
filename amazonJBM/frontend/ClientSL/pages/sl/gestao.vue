@@ -15,6 +15,8 @@ const currentPage = 'gestao';
 const showConfirmModal = ref(false);
 const selectedEncomendaId = ref(null);
 
+// Função para obter o token do sessionStorage
+const getToken = () => sessionStorage.getItem('token');
 
 const formatEstado = (estado) => {
   switch (estado) {
@@ -33,7 +35,14 @@ const formatDate = (dateString) => {
 
 const fetchEncomendasEmProcessamento = async () => {
   try {
-    const response = await fetch(`${api}/sl/encomendas/estado/EmProcessamento`);
+    const token = getToken();
+    const response = await fetch(`${api}/sl/encomendas/estado/EmProcessamento`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
     if (!response.ok) throw new Error("Erro ao buscar encomendas Em Processamento");
 
     const data = await response.json();
@@ -51,18 +60,20 @@ const fetchEncomendasEmProcessamento = async () => {
 
 const expedirEncomenda = async (id) => {
   try {
+    const token = getToken();
     const response = await fetch(`${api}/sl/encomendas/${id}`, {
       method: 'PATCH',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({ estado: "PorEntregar" })
     });
     if (!response.ok) throw new Error(`Erro ao entregar encomenda ${id}`);
     fetchEncomendasEmProcessamento();
   } catch (error) {
-    errorMessages.value.push(`Erro ao entregar encomenda ${id}: ${error.message}`);
+    console.error(`Erro ao entregar encomenda ${id}:`, error);
   }
 };
 
@@ -95,7 +106,6 @@ onMounted(async () => {
       </div>
     </div>
   </div>
-
 </template>
 
 <style scoped>

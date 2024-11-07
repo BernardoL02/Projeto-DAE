@@ -10,10 +10,12 @@ import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
+import pt.ipleiria.estg.dei.ei.dea.backend.security.Authenticated;
 
 @Path("sl")
  @Produces({MediaType.APPLICATION_JSON})
  @Consumes({MediaType.APPLICATION_JSON})
+@Authenticated
 
  public class LogistaService {
 

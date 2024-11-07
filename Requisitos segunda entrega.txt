@@ -10,6 +10,8 @@ exceto os sensores de aceleração que só enviam quando é detetado um moviment
 
 - Quando existem muitos alertas de uma determinada encomenda de um determinado user, não aparece o x para fechar os alertas(botão sininho) SAC e SO
 
-- Alterar o frontend do SAC corrigir e meter tudo com o mesmo style
+- Alterar o frontend do SAC corrigir e meter tudo com o mesmo style (quase)
 
-- Aleterar endpoint detalhes da encomenda SO o url esta incorreto
+- Aleterar endpoint detalhes da encomenda SO o url esta incorreto ✅
+
+- Alterar todos os EndPoints para usar se Token (Exceto o sl)

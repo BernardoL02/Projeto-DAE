@@ -160,7 +160,7 @@ Content-Type: application/json
 }
 
 ### GET Ver detalhes de uma encomenda
-GET http://localhost:3001/backend/api/so/encomendas/detalhes/1
+GET http://localhost:3001/backend/api/so/encomendas/1/detalhes
 Accept: application/json
 
 ### GET Ver Alertas de um sensor
@@ -219,4 +219,18 @@ Content-Type: application/json
 }
 
 
+####################### End Points Login ###########################
 
+### REQUEST JWT TOKEN
+POST http://localhost:3001/backend/api/auth/login
+Content-Type: application/json
+Accept: application/json
+
+{ "username": "Miguel", "password": "123" }
+
+
+
+### GET ALL Encomendas em Processamento com TOKEN
+GET http://localhost:3001/backend/api/sl/encomendas/estado/EmProcessamento
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzEwMDcxMTAsImV4cCI6MTczMTAxMDcxMH0.6bawFOsdFhaMAm5qwf2IYqBsqvebHk-tPRSyup_5g9l0b-THyPLSS_DfSjao7d75

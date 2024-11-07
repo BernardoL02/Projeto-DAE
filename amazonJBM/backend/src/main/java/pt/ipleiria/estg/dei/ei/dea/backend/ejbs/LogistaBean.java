@@ -9,6 +9,7 @@ import pt.ipleiria.estg.dei.ei.dea.backend.dtos.SensorDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Logista;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Sensor;
+import pt.ipleiria.estg.dei.ei.dea.backend.security.Hasher;
 
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class LogistaBean {
     private EntityManager em;
 
     public void create(String username, String password, String email, String nome){
-        var logista = new Logista(username, password, email, nome);
+        var logista = new Logista(username, Hasher.hash(password), email, nome);
         em.persist(logista);
     }
 

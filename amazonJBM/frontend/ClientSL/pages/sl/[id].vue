@@ -25,6 +25,9 @@ const valMin = ref(null);
 const successMessage = ref('');
 const errorMessage = ref('');
 
+// Função para obter o token do sessionStorage
+const getToken = () => sessionStorage.getItem('token');
+
 // Função para formatar o estado da encomenda
 const formateEstado = (estado) => {
   return estado === "EmProcessamento" ? "Em Processamento" : estado === "PorEntregar" ? "Por Entregar" : estado || "Indefinido";
@@ -33,7 +36,14 @@ const formateEstado = (estado) => {
 // Função para buscar detalhes da encomenda e volumes associados
 const fetchEncomendaDetalhes = async () => {
   try {
-    const response = await fetch(`${api}/sl/encomendas/${encomendaId}`);
+    const token = getToken();
+    const response = await fetch(`${api}/sl/encomendas/${encomendaId}`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
     if (!response.ok) throw new Error("Erro ao buscar detalhes da encomenda");
 
     const data = await response.json();
@@ -67,7 +77,14 @@ const fetchEncomendaDetalhes = async () => {
 // Função para buscar tipos de sensores
 const fetchTiposSensores = async () => {
   try {
-    const response = await fetch(`${api}/sl/tipoSensores`);
+    const token = getToken();
+    const response = await fetch(`${api}/sl/tipoSensores`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
     if (!response.ok) throw new Error("Erro ao buscar tipos de sensores");
 
     tiposSensores.value = await response.json();
@@ -79,7 +96,14 @@ const fetchTiposSensores = async () => {
 // Função para buscar detalhes do volume
 const fetchVolumeDetails = async (volumeId) => {
   try {
-    const response = await fetch(`${api}/sl/volume/${volumeId}`);
+    const token = getToken();
+    const response = await fetch(`${api}/sl/volume/${volumeId}`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
     if (!response.ok) throw new Error("Erro ao buscar detalhes do volume");
 
     const volumeData = await response.json();
@@ -154,11 +178,13 @@ const associarSensor = async () => {
       ...(tipoSelecionado.value.id !== 4 && { valMax: valMax.value, valMin: valMin.value })
     };
 
+    const token = getToken();
     const response = await fetch(`${api}/sl/volume/${volumeSelecionado.value.id}/sensor`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(sensorData)
     });
@@ -193,11 +219,13 @@ const adicionarProduto = async () => {
       quantidade: quantidade.value
     };
 
+    const token = getToken();
     const response = await fetch(`${api}/sl/encomendas/${encomendaId}/volume`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(volumeData)
     });
@@ -218,7 +246,14 @@ const adicionarProduto = async () => {
 // Função para buscar produtos disponíveis
 const fetchProdutos = async () => {
   try {
-    const response = await fetch(`${api}/sl/produtos`);
+    const token = getToken();
+    const response = await fetch(`${api}/sl/produtos`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
     if (!response.ok) throw new Error("Erro ao buscar produtos");
 
     produtos.value = await response.json();

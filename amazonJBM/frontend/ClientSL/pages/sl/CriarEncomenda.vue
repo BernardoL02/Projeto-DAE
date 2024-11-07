@@ -17,10 +17,20 @@ const successMessage = ref('');
 const errorMessage = ref('');
 const currentPage = 'CriarEncomenda';
 
+// Função para obter o token do sessionStorage
+const getToken = () => sessionStorage.getItem('token');
+
 // Função para buscar todos os clientes
 const fetchClientes = async () => {
   try {
-    const response = await fetch(`${api}/sl/clientes`);
+    const token = getToken();
+    const response = await fetch(`${api}/sl/clientes`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
     if (!response.ok) throw new Error("Erro ao buscar clientes");
 
     clientes.value = await response.json();
@@ -32,7 +42,14 @@ const fetchClientes = async () => {
 // Função para buscar todos os produtos
 const fetchProdutos = async () => {
   try {
-    const response = await fetch(`${api}/sl/produtos`);
+    const token = getToken();
+    const response = await fetch(`${api}/sl/produtos`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
     if (!response.ok) throw new Error("Erro ao buscar produtos");
 
     produtos.value = await response.json();
@@ -92,11 +109,13 @@ const criarEncomenda = async () => {
   console.log("Enviando JSON para o backend:", encomendaData);
 
   try {
+    const token = getToken();
     const response = await fetch(`${api}/sl/encomendas`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(encomendaData)
     });

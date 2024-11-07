@@ -22,7 +22,7 @@ const formateEstado = (estado) => {
 // Função para buscar detalhes da encomenda e volumes associados
 const fetchEncomendaDetalhes = async () => {
   try {
-    const response = await fetch(`${api}/so/encomendas/detalhes/${encomendaId}`);
+    const response = await fetch(`${api}/so/encomendas/${encomendaId}/detalhes`);
     if (!response.ok) throw new Error("Erro ao buscar detalhes da encomenda");
 
     const data = await response.json();

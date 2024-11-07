@@ -10,6 +10,7 @@ import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.GestorBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Alerta;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Sensor;
+import pt.ipleiria.estg.dei.ei.dea.backend.security.Authenticated;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -59,10 +60,10 @@ public class GestorService {
     }
 
     @GET
-    @Path("encomendas/detalhes/{id}/")
+    @Path("encomendas/{id}/detalhes/")
     public Response getEncomendaById(@PathParam("id") int id) {
         Encomenda encomenda = encomendaBean.find(id);
-        return Response.ok( EncomendasDTO.from(encomenda)).build();
+        return Response.ok( ResEncomendaDetalhesDTO.from(encomenda, "SO")).build();
     }
 
     @GET

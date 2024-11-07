@@ -14,6 +14,9 @@ const errorMessages = ref([]);
 const showConfirmModal = ref(false);
 const selectedEncomendaId = ref(null);
 
+// Função para obter o token do sessionStorage
+const getToken = () => sessionStorage.getItem('token');
+
 const formatEstado = (estado) => {
   switch (estado) {
     case 'EmProcessamento':
@@ -27,7 +30,14 @@ const formatEstado = (estado) => {
 
 const fetchEncomendasPendentes = async () => {
   try {
-    const response = await fetch(`${api}/sl/encomendas/estado/PorEntregar`);
+    const token = getToken();
+    const response = await fetch(`${api}/sl/encomendas/estado/PorEntregar`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
     if (!response.ok) throw new Error("Erro ao buscar encomendas 'Por Entregar'");
 
     const data = await response.json();
@@ -45,11 +55,13 @@ const fetchEncomendasPendentes = async () => {
 
 const confirmarEntrega = async (id) => {
   try {
+    const token = getToken();
     const response = await fetch(`${api}/sl/encomendas/${id}`, {
       method: 'PATCH',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({ estado: "Entregue" })
     });
