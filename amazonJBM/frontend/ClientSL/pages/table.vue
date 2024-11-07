@@ -12,7 +12,7 @@ const props = defineProps({
     type: Array,
     required: true
   },
-  mostrarAcoes: { // Nova prop para controlar a exibição da coluna de ações
+  mostrarAcoes: { 
     type: Boolean,
     default: true
   }

@@ -84,6 +84,7 @@ onMounted(() => {
   <Table 
     :tableTitles="encomendasTableTitles" 
     :tableData="encomendasTableData" 
+    :currentPage="currentPage"
     @confirmEntrega="handleConfirmEntrega"
   />
 

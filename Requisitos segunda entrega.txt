@@ -3,7 +3,7 @@ de validar se os volumes/produtos, têm os sensores adequados à categoria desse
 
 - Validar o número máximo de produtos por volume
 
-- Remover a opção de conseguirmos adicionar produtos e associar sensores nos detalhes de uma encomenda na página "Por Entregar" do Sistema de Logistica
+- Remover a opção de conseguirmos adicionar produtos e associar sensores nos detalhes de uma encomenda na página "Por Entregar" do Sistema de Logistica✅
 
 - Validar se os sensores enviam informação de x em x minutos,
 exceto os sensores de aceleração que só enviam quando é detetado um movimento brusco(valor inferior/superior ao estipulado)

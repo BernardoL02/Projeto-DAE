@@ -227,6 +227,9 @@ const fetchProdutos = async () => {
   }
 };
 
+
+
+
 onMounted(() => {
   fetchEncomendaDetalhes();
   fetchTiposSensores();
@@ -262,6 +265,7 @@ onMounted(() => {
     <div>
       <h2 class="text-xl font-semibold mb-4">Volumes</h2>
       <button 
+        v-if="encomendaData.estado === 'Em Processamento'"
         @click="mostrarAdicionarProdutoModal = true" 
         class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700 transition mb-4"
       >
@@ -281,6 +285,7 @@ onMounted(() => {
               {{ volume.mostrarSensores ? 'Esconder Detalhes' : 'Mostrar Detalhes' }}
             </button>
             <button 
+              v-if="encomendaData.estado === 'Em Processamento'"
               @click="handleAssociarSensor(volume)" 
               class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-700 transition"
             >
