@@ -27,10 +27,6 @@ const props = defineProps({
   }
 });
 
-const formatDate = (dateString) => {
-  return dateString.replace('T', ' '); 
-};
-
 const formateEstado = (estado) => {
 
   if (estado === "EmProcessamento") {
@@ -52,8 +48,8 @@ async function refresh() {
     // Atualiza a tabela com os dados recebidos
     props.tableData.splice(0, props.tableData.length, ...response.map(order => [
       order.id,                            
-      formatDate(order.data_expedicao),    
-      formatDate(order.data_entrega),     
+      new Date(order.data_expedicao).toLocaleString(),    
+      new Date(order.data_entrega).toLocaleString(),     
       formateEstado(order.estado)            
     ]));
 

@@ -40,7 +40,7 @@ const fetchSensorData = async (tipoSensor) => {
 
     tableData.value = fetchedData.map(sensor => [
       sensor.id,                           
-      formatDate(sensor.timeStamp),        
+      new Date(sensor.timeStamp).toLocaleString(),        
       sensor.valor,                        
       `${sensor.bateria}%`,
       sensor.estado,
@@ -63,12 +63,6 @@ watch(
     }
   }
 );
-
-
-const formatDate = (dateString) => {
-  return dateString.replace('T', ' '); 
-};
-
 </script>
 
 <template>

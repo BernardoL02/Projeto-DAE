@@ -17,10 +17,6 @@ const encomendaData = ref({});
 const tableDataVolumes = ref([]);
 const tableTitlesVolumes = ['ID', 'Produto', 'Quantidade',"Sensor","Útima leitura","Timestamp"];
 
-const formatDate = (dateString) => {
-  return dateString.replace('T', ' '); 
-};
-
 const formateEstado = (estado) => {
 
 if (estado === "EmProcessamento") {
@@ -52,7 +48,7 @@ watchEffect(() => {
           quantidade: volume.quantidade,
           tipo_sensor: sensor.tipoNome,
           valor_sensor: sensor.valor,
-          timestamp: formatDate(sensor.timeStamp)
+          timestamp: new Date(sensor.timeStamp).toLocaleString()
         }));
       } else {
         // Caso não haja sensores, ainda precisamos incluir a linha com valores vazios
@@ -89,8 +85,8 @@ watchEffect(() => {
     <div class="flex flex-col items-start p-4 w-1/2">
       <h1 class="text-center text-xl font-semibold mb-8">Detalhes da Encomenda</h1>
       <p class="text-gray-700"><strong>ID - </strong>  {{ encomendaId }}</p><br> 
-      <p class="text-gray-700"><strong>Data de Expedição</strong> <br> {{ formatDate(encomendaData.data_expedicao) }}</p><br> 
-      <p class="text-gray-700"><strong>Data de Entrega</strong> <br> {{ formatDate(encomendaData.data_entrega) }}</p><br> 
+      <p class="text-gray-700"><strong>Data de Expedição</strong> <br> {{ new Date(encomendaData.data_expedicao).toLocaleString()}}</p><br> 
+      <p class="text-gray-700"><strong>Data de Entrega</strong> <br> {{ new Date(encomendaData.data_entrega).toLocaleString()}}</p><br> 
       <p class="text-gray-700"><strong>Estado</strong> <br> {{ formateEstado(encomendaData.estado) }}</p><br> 
     </div>
 

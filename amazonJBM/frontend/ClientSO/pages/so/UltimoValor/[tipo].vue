@@ -45,7 +45,7 @@ const fetchUltimoValor = async () => {
     const data = await response.json();
     sensorTableData.value = data.map(sensor => ({
       idSensor: sensor.id,
-      data: formatDate(sensor.timeStamp), 
+      data: new Date(sensor.timeStamp).toLocaleString(), 
       valor: sensor.valor,
       bateria: sensor.bateria,
       estado: sensor.estado,                                      

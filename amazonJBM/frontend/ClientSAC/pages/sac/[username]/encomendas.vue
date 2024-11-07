@@ -19,10 +19,6 @@ const alertasData = ref([]);
 
 const { data, error } = await useFetch(`${api}/sac/encomendas`);
 
-const formatDate = (dateString) => {
-  return dateString.replace('T', ' '); 
-};
-
 const formateEstado = (estado) => {
 
   if (estado === "EmProcessamento") {
@@ -43,8 +39,8 @@ watchEffect(() => {
 
     tableData.value = fetchedData.map(order => [
       order.id,                            
-      formatDate(order.data_expedicao),        
-      formatDate(order.data_entrega),   
+      new Date(order.data_expedicao).toLocaleString(),        
+      new Date(order.data_entrega).toLocaleString(),   
       formateEstado(order.estado)           
     ]);
   }
@@ -69,8 +65,8 @@ watch(
 
         tableData.value = fetchedData.map(order => [
           order.id,                             
-          formatDate(order.data_expedicao),    
-          formatDate(order.data_entrega),       
+          new Date(order.data_expedicao).toLocaleString(),    
+          new Date(order.data_entrega).toLocaleString(),       
           formateEstado(order.estado)            
         ]);
 
@@ -150,7 +146,7 @@ const verAlertasEncomenda = async (id) => {
             <ul class="mt-2 space-y-2">
               <li v-for="alerta in sensor.alertas" :key="alerta.id" class="p-3 bg-yellow-100 rounded-lg border">
                 <p><strong>ID do Alerta:</strong> {{ alerta.id }}</p>
-                <p><strong>Data:</strong> {{ formatDate(alerta.timeStamp) }}</p>
+                <p><strong>Data:</strong> {{ new Date(alerta.timeStamp).toLocaleString() }}</p>
                 <p><strong>Mensagem:</strong> {{ alerta.mensagem }}</p>
                 <p><strong>Valor:</strong> {{ alerta.valor }}</p>
               </li>
