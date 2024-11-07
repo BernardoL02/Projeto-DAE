@@ -15,6 +15,7 @@ const config = useRuntimeConfig();
 const api = config.public.API_URL;
 const tiposSensores = ref([]); 
 const selectedTipo = ref('');
+const isDropdownOpen = ref(false); // Controle do estado de abertura do dropdown
 
 // Função para buscar os tipos de sensores
 const fetchTiposSensores = async () => {
@@ -29,14 +30,29 @@ const fetchTiposSensores = async () => {
   }
 };
 
-// Redirecionar para página de valores ao selecionar
-const handleTipoChange = () => {
-  if (selectedTipo.value) {
-    window.location.href = `/so/UltimoValor/${selectedTipo.value}`;
+onMounted(fetchTiposSensores);
+
+// Fecha o dropdown ao clicar fora dele
+const handleClickOutside = (event) => {
+  const dropdown = document.querySelector('.dropdown-container');
+  if (dropdown && !dropdown.contains(event.target)) {
+    isDropdownOpen.value = false;
   }
 };
 
-onMounted(fetchTiposSensores);
+// Adicione o método selectTipo para redirecionar ao selecionar um tipo
+const selectTipo = (tipo) => {
+  selectedTipo.value = tipo;
+  isDropdownOpen.value = false; // Fecha o dropdown após a seleção
+  // Redireciona para a rota dinâmica
+  window.location.href = `/so/UltimoValor/${tipo}`;
+};
+
+
+// Adiciona e remove o event listener no momento certo
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside);
+});
 </script>
 
 <template>
@@ -85,18 +101,31 @@ onMounted(fetchTiposSensores);
           </a>
         </div>
 
-        <!-- Dropdown para Seleção de Sensor -->
-        <div class="relative">
-          <select 
-            v-model="selectedTipo" 
-            @change="handleTipoChange" 
-            class="bg-white text-black p-2 rounded shadow-md focus:outline-none"
+        <!-- Dropdown customizado para seleção de sensores -->
+        <div 
+          class="relative dropdown-container"
+          @mouseenter="isDropdownOpen = true" 
+          @mouseleave="isDropdownOpen = false"
+        >
+          <button class="bg-transparent text-white font-semibold p-2 focus:outline-none">
+            {{ selectedTipo || 'Últimos Valores' }}
+          </button>
+          <!-- Lista de tipos de sensores, sempre no DOM mas controlado por v-show -->
+          <div 
+            v-show="isDropdownOpen" 
+            class="absolute left-0 -mt-1 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50"
           >
-            <option disabled value="">Ultimos Valores</option>
-            <option v-for="tipo in tiposSensores" :key="tipo" :value="tipo">
-              {{ tipo }}
-            </option>
-          </select>
+            <div class="py-1">  
+              <a
+                v-for="tipo in tiposSensores"
+                :key="tipo"
+                @click.prevent="selectTipo(tipo)"
+                class="block px-4 py-2 text-gray-700 hover:bg-green-100 hover:text-green-700 cursor-pointer"
+              >
+                {{ tipo }}
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -120,13 +149,7 @@ body {
   background: linear-gradient(40deg, #202c38 25%, #66c981 120%);
 }
 
-select {
-  min-width: 200px;
-  border: none;
-}
-
 .highlighted {
   font-weight: bold;
 }
-
 </style>

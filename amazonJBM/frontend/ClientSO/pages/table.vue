@@ -63,6 +63,7 @@ const emit = defineEmits(['cancelar', 'verAlertas', 'tracking']);
                 <i class="fas fa-map-marker-alt"></i> <!-- Ícone de localização para "Tracking" -->
               </button>
               <button 
+                v-if="row.estado === 'Por Entregar'" 
                 @click="emit('verAlertas', row.id)"
                 class="bg-yellow-500 text-white py-1 px-2 rounded hover:bg-yellow-600 transition"
               >
