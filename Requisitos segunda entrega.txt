@@ -9,3 +9,5 @@ de validar se os volumes/produtos, têm os sensores adequados à categoria desse
 exceto os sensores de aceleração que só enviam quando é detetado um movimento brusco(valor inferior/superior ao estipulado)
 
 - Quando existem muitos alertas de uma determinada encomenda de um determinado user, não aparece o x para fechar os alertas(botão sininho) SAC e SO
+
+- Alterar o frontend do SAC corrigir e meter tudo com o mesmo style

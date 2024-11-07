@@ -7,7 +7,7 @@ const icon = '/Images/IconJBM.png';
 const props = defineProps({
   currentPage: {
     type: String,
-    required: true
+    required: false
   }
 });
 

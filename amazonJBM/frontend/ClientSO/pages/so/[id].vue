@@ -72,10 +72,12 @@ const fetchAlertas = async (sensor) => {
       alertasData.value[sensor.id] = alertas.map(alerta => ({
         id: alerta.id,
         data: new Date(alerta.data).toLocaleString(),
-        mensagem: alerta.menssagem,
+        mensagem: alerta.mensagem,
         valor: alerta.valor
       }));
       sensor.mostrarAlertas = true;
+
+      console.log(alertas)
     }
   } catch (error) {
     console.error(`Erro ao buscar alertas do sensor ${sensor.id}:`, error);
