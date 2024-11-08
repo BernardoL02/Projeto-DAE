@@ -15,9 +15,9 @@ import pt.ipleiria.estg.dei.ei.dea.backend.security.Authenticated;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Path("so") // relative url web path for this service
-@Produces({MediaType.APPLICATION_JSON}) // injects header “Content-Type: application/json”
-@Consumes({MediaType.APPLICATION_JSON}) // injects header “Accept: application/json”
+@Path("so")
+@Produces({MediaType.APPLICATION_JSON})
+@Consumes({MediaType.APPLICATION_JSON})
 public class GestorService {
 
     @EJB

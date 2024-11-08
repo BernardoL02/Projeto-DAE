@@ -220,119 +220,44 @@ Content-Type: application/json
 }
 
 
-####################### End Points Login ###########################
+#########################################################################
+######################### Novos Endpoints ###############################
+#########################################################################
 
-### REQUEST JWT TOKEN
-POST http://localhost:3001/backend/api/auth/login
-Content-Type: application/json
+######################### Produtos Service ################################
+### GET All Ultimo Valor dos Sensores por Tipo
+GET http://localhost:3001/backend/api/produtos
 Accept: application/json
 
-{ "username": "Miguel", "password": "123" }
-
-
-### GET ALL Encomendas em Processamento com TOKEN
-GET http://localhost:3001/backend/api/sl/encomendas/estado/EmProcessamento
+######################### Clientes Service ################################
+### GET All clientes
+GET http://localhost:3001/backend/api/clientes
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzEwMTU4MjEsImV4cCI6MTczMTAxOTQyMX0.9miVitKAyYEcsY5peXQWKkRn2EQAJpcAyIFQMZ_eCavYtQEoXCiH7bjHLRjcST2u
 
-
-
-
-
-
-
-
-
-
-
-
-################################ Encomenda Service ################################
+######################### Encomenda Service ################################
 ### Get Encomenda Por Id
-GET http://localhost:3001/backend/api/sl/encomendas/1
+GET http://localhost:3001/backend/api/encomendas/4
 Accept: application/json
 
-### Get Encomenda por Id
-GET http://localhost:3001/backend/api/sac/encomendas/1
-Accept: application/json
-
-### GET Ver detalhes de uma encomenda
-GET http://localhost:3001/backend/api/so/encomendas/1/detalhes
-Accept: application/json
-
-### Get All Encomendas By Cliente
-GET http://localhost:3001/backend/api/sac/encomendas
-Accept: application/json //TODO -> Retirar o username, pois iremos usar tockens
-
---------- Get encomandas por estado ---------
-### Get All Encomendas Por Entregar
-GET http://localhost:3001/backend/api/sac/encomendas/estado/PorEntregar
-Accept: application/json
-
-### Get All Encomendas com estado Em Processamento
-GET http://localhost:3001/backend/api/sac/encomendas/estado/EmProcessamento
-Accept: application/json
-
-### Get All Encomendas com estado Entregue
-GET http://localhost:3001/backend/api/sac/encomendas/estado/Entregue
-Accept: application/json
-
-### Get All Encomendas com estado Cancelada
-GET http://localhost:3001/backend/api/sac/encomendas/estado/Cancelada
-Accept: application/json
-
-### Get All Encomendas em processamento
-GET http://localhost:3001/backend/api/sl/encomendas/estado/EmProcessamento
-Accept: application/json
-
-### Get Encomendas por entregar
-GET http://localhost:3001/backend/api/sl/encomendas/estado/PorEntregar
+### Get All Encomendas por um determinado estado
+GET http://localhost:3001/backend/api/encomendas/estado/PorEntregar
 Accept: application/json
 
 ### Get Encomendas Pendentes
-GET http://localhost:3001/backend/api/so/encomendas/pendentes
+GET http://localhost:3001/backend/api/encomendas/pendentes
 Accept: application/json
 
-### Get Encomendas Por entregar
-GET http://localhost:3001/backend/api/so/encomendas/PorEntregar
-Accept: application/json
-
-### Get Encomendas Entregues
-GET http://localhost:3001/backend/api/so/encomendas/Entregue
-Accept: application/json
-
-------------------------------------
-
-### Entregar Encomenda
-PATCH http://localhost:3001/backend/api/sl/encomendas/1
-Accept: application/json
-Content-Type: application/json
-
-{
-  "estado": "Entregue"
-}
-
-### Cancelar Encomenda
-PATCH http://localhost:3001/backend/api/sac/encomendas/1
+### Alterar estado de uma encomenda
+PATCH http://localhost:3001/backend/api/encomendas/1
 Accept: application/json
 Content-Type: application/json
 
 {
   "estado": "Cancelada"
 }
-
-### Patch Alterar Estado para Cancelado
-PATCH http://localhost:3001/backend/api/so/encomendas/1
-Accept: application/json
-Content-Type: application/json
-
-{
-  "estado": "Cancelada"
-}
-
-
 
 ###Criar uma nova encomenda
-POST http://localhost:3001/backend/api/sl/encomendas
+POST http://localhost:3001/backend/api/encomendas
 Accept: application/json
 Content-Type: application/json
 
@@ -344,49 +269,45 @@ Content-Type: application/json
   "produtos": [
     {
       "id": 1,
-      "nome": "Gelados",
       "quantidade_por_volume": 10
     },
     {
       "id": 2,
-      "nome": "Banana",
       "quantidade_por_volume": 10
     }
   ]
 }
 
 ### Associar um volume a uma encomenda
-POST http://localhost:3001/backend/api/sl/encomendas/4/volume
+POST http://localhost:3001/backend/api/encomendas/4/volume
 Accept: application/json
 Content-Type: application/json
 
 {
-  "id_produto": 3,
-  "quantidade": 10
+  "id_produto": 7,
+  "quantidade": 2
 }
 
 ### Get All Alertas de Encomenda por Id
-GET http://localhost:3001/backend/api/sac/encomendas/1/alertas
-Accept: application/json
-
-### GET Ver Alertas de uma encomenda
-GET http://localhost:3001/backend/api/so/encomendas/1/alertas
+GET http://localhost:3001/backend/api/encomendas/1/alertas
 Accept: application/json
 
 ### GET Ver Alertas de encomendas (PorEntregar)
-GET http://localhost:3001/backend/api/so/encomendas/alertas
+GET http://localhost:3001/backend/api/encomendas/alertas
 Accept: application/json
 
 ### Get Coordenadas Volumes
-GET http://localhost:3001/backend/api/so/encomendas/1/coordenadas
+GET http://localhost:3001/backend/api/encomendas/1/coordenadas
 Accept: application/json
 
-################################ Volume Service ################################
+######################### Volume Service ################################
+
 ### Get Detalhes Volume
-GET http://localhost:3001/backend/api/sl/volume/1
+GET http://localhost:3001/backend/api/volume/3
+Accept: application/json
 
 ###Associar um Sensor a um Volume
-POST http://localhost:3001/backend/api/sl/volume/3/sensor
+POST http://localhost:3001/backend/api/volume/3/sensor
 Accept: application/json
 Content-Type: application/json
 
@@ -394,30 +315,10 @@ Content-Type: application/json
   "valor": 90,
   "tipoId": 4,
   "estado": "ativo",
-  "bateria": 72,
-  "tipoNome": "GPS"
+  "bateria": 72
 }
 
-################################ Cliente Service ################################
-### Get All Clientes
-GET http://localhost:3001/backend/api/sl/clientes
-Accept: application/json
-
-
-################################ Produtos Service ################################
-### Get All Produtos
-GET http://localhost:3001/backend/api/sl/produtos
-Accept: application/json
-
-
 ################################ Sensor Service ################################
-### Get All Tipos de Sensor
-GET http://localhost:3001/backend/api/sl/tipoSensores
-Accept: application/json
-
-### GET Ver Alertas de um sensor
-GET http://localhost:3001/backend/api/so/sensor/1/alertas
-Accept: application/json
 
 ### Get All sensores
 GET http://localhost:3001/backend/api/sensor/
@@ -455,28 +356,30 @@ Content-Type: application/json
   "bateria": 72
 }
 
-### Get All Ultimo Valor dos Sensores por Tipo
-GET http://localhost:3001/backend/api/sac/encomendas/sensor/GPS
-Accept: application/json //TODO apenas das encomendas ProEntregar e só das encomadas de um user
-
-### GET All Ultimo Valor dos Sensores por Tipo
-GET http://localhost:3001/backend/api/so/sensor/Temperatura
+### Get All Tipos de Sensor
+GET http://localhost:3001/backend/api/sensor/tipos
 Accept: application/json
 
+### GET All Ultimo Valor dos Sensores por Tipo
+GET http://localhost:3001/backend/api/sensor/Temperatura
+Accept: application/json
 
+### GET Ver Alertas de um sensor
+GET http://localhost:3001/backend/api/sensor/1/alertas
+Accept: application/json
 
+################################ End Points Login ################################
 
+### REQUEST JWT TOKEN
+POST http://localhost:3001/backend/api/auth/login
+Content-Type: application/json
+Accept: application/json
 
+{ "username": "Miguel", "password": "123" }
 
-
-
-
-
-
-
-
-
-
-
+### GET ALL Encomendas em Processamento com TOKEN
+GET http://localhost:3001/backend/api/sl/encomendas/estado/EmProcessamento
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzEwMTU4MjEsImV4cCI6MTczMTAxOTQyMX0.9miVitKAyYEcsY5peXQWKkRn2EQAJpcAyIFQMZ_eCavYtQEoXCiH7bjHLRjcST2u
 
 

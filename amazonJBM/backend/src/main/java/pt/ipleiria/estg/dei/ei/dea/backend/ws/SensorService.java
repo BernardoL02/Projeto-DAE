@@ -6,10 +6,14 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.AlertaBean;
+import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.GestorBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.SensorBean;
+import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.TipoSensoresBean;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Alerta;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Sensor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Path("sensor")
 @Produces({MediaType.APPLICATION_JSON}) // injects header “Content-Type: application/json”
@@ -21,6 +25,12 @@ public class SensorService {
 
     @EJB
     private AlertaBean alertaBean;
+
+    @EJB
+    private TipoSensoresBean tipoSensoresBean;
+
+    @EJB
+    private GestorBean gestorBean;
 
     @GET
     @Path("/")
@@ -54,4 +64,26 @@ public class SensorService {
         Sensor updatedSensor = sensorBean.updateEstado(id, sensorDTO);
         return Response.ok(SensorDTO.from(updatedSensor)).build();
     }
+
+    @GET
+    @Path("tipos")
+    public Response getTipoSensores() {
+        var tipoSensores = tipoSensoresBean.findAll();
+        return Response.ok(ResTipoSensoresDTO.from(tipoSensores)).build();
+    }
+
+    @GET
+    @Path("/{tipo_sensor}")
+    public Response getUltimaLeituraSensoresByTipo(@PathParam("tipo_sensor") String tipo_sensor) {
+        List<Sensor> alertas = gestorBean.getUltimaLeituraSensoresByTipo(tipo_sensor);
+        return Response.ok(alertas.stream().map(ResSensorUltimaLeituraByTipoDTO::from).collect(Collectors.toList())).build();
+    }
+
+    @GET
+    @Path("/{id}/alertas")
+    public Response getAlertasSensor(@PathParam("id") int id) {
+        List<Alerta> alertas = gestorBean.getAlertasSensor(id);
+        return Response.ok(alertas.stream().map(ResAlertasSensorDTO::from).collect(Collectors.toList())).build();
+    }
+
 }
