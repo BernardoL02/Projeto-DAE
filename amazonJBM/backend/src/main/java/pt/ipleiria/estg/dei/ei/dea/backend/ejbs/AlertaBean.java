@@ -1,17 +1,22 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.ejbs;
 
 
+import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Stateless
 public class AlertaBean {
     @PersistenceContext
     private EntityManager em;
+
+    @EJB
+    private EncomendaBean encomendaBean;
 
     public void create(String mensagem, int id_sensor, String valor, int id_volume){
 
@@ -26,4 +31,24 @@ public class AlertaBean {
         return em.createNamedQuery("Alerta.findAll", Alerta.class).getResultList();
     }
 
+
+    public List<Alerta> getEncomendasAlertas() {
+        List<Encomenda> encomendasPorEntregar = encomendaBean.findEncomendasByEstado("PorEntregar");
+
+        List<Integer> encomendaIds = encomendasPorEntregar.stream()
+                .map(Encomenda::getId)
+                .collect(Collectors.toList());
+
+        List<Alerta> todosAlertas = findAll();
+        return todosAlertas.stream()
+                .filter(alerta -> encomendaIds.contains(alerta.getVolume().getEncomenda().getId()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Alerta> getAlertasEncomenda(int id) {
+        List<Alerta> alertas = findAll();
+        return alertas.stream()
+                .filter(alerta -> alerta.getVolume().getEncomenda().getId() == id)
+                .collect(Collectors.toList());
+    }
 }

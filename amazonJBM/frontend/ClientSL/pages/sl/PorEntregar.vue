@@ -31,7 +31,7 @@ const formatEstado = (estado) => {
 const fetchEncomendasPendentes = async () => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/sl/encomendas/estado/PorEntregar`, {
+    const response = await fetch(`${api}/encomendas/estado/PorEntregar`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

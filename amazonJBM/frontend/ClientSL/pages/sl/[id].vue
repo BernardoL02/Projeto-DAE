@@ -37,7 +37,7 @@ const formateEstado = (estado) => {
 const fetchEncomendaDetalhes = async () => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/sl/encomendas/${encomendaId}`, {
+    const response = await fetch(`${api}/encomendas/${encomendaId}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -78,7 +78,7 @@ const fetchEncomendaDetalhes = async () => {
 const fetchTiposSensores = async () => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/sl/tipoSensores`, {
+    const response = await fetch(`${api}/sensor/tipos`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -97,7 +97,7 @@ const fetchTiposSensores = async () => {
 const fetchVolumeDetails = async (volumeId) => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/sl/volume/${volumeId}`, {
+    const response = await fetch(`${api}/volume/${volumeId}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -179,7 +179,7 @@ const associarSensor = async () => {
     };
 
     const token = getToken();
-    const response = await fetch(`${api}/sl/volume/${volumeSelecionado.value.id}/sensor`, {
+    const response = await fetch(`${api}/volume/${volumeSelecionado.value.id}/sensor`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -220,7 +220,7 @@ const adicionarProduto = async () => {
     };
 
     const token = getToken();
-    const response = await fetch(`${api}/sl/encomendas/${encomendaId}/volume`, {
+    const response = await fetch(`${api}/encomendas/${encomendaId}/volume`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -247,7 +247,7 @@ const adicionarProduto = async () => {
 const fetchProdutos = async () => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/sl/produtos`, {
+    const response = await fetch(`${api}/produtos`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -374,7 +374,7 @@ onMounted(() => {
     <div class="bg-white w-1/3 p-6 rounded shadow-lg">
       <h2 class="text-xl font-semibold mb-4">Adicionar Produto</h2>
       <p>Escolha um produto para adicionar à encomenda:</p>
-      <select v-model="produtoSelecionado" class="w-full p-2 border border-gray-300 rounded mb-4">
+      <select v-model="produtoSelecionado" class="w-full p-2 border border-gray-300 rounded mb-4 max-h-52 overflow-y-auto mt-2 mb-2">
         <option v-for="produto in produtos" :key="produto.id" :value="produto">{{ produto.nome }}</option>
       </select>
       <label class="block text-gray-700 font-semibold mb-1">Quantidade:</label>

@@ -44,7 +44,10 @@ public class EncomendaBean {
     }
 
 
-
+    public List<Encomenda> findAll() {
+        List<Encomenda> encomendas = em.createNamedQuery("getAllEncomendas", Encomenda.class).getResultList();
+        return encomendas;
+    }
 
     public Encomenda find(int id) {
         var encomenda = em.find(Encomenda.class, id);
@@ -52,6 +55,15 @@ public class EncomendaBean {
             throw new NoSuchElementException("Encomenda com ID " + id + " não encontrado.");
         }
         Hibernate.initialize(encomenda);
+        return encomenda;
+    }
+
+    public Encomenda findEncomendaById(int id) {
+
+        var encomenda = em.find(Encomenda.class, id);
+
+        //TODO -> Ver se a encomenda pertence ao utilizador
+
         return encomenda;
     }
 
@@ -112,5 +124,21 @@ public class EncomendaBean {
         for (ProdutoDTO produto:produtos) {
             volumeBean.create(produto.getId(), produto.getQuantidade_por_volume(), id_encomenda);
         }
+    }
+
+    public List<Object[]> getCoordenadasEncomenda(int id) {
+        Encomenda encomenda = em.find(Encomenda.class, id);
+
+        List<Object[]> coordenadasList = new ArrayList<>();
+
+        for (Volume volume : encomenda.getVolumes()) {
+            for (Sensor sensor : volume.getSensores()) {
+                if ("GPS".equals(sensor.getTipo().getTipo())) {
+                    coordenadasList.add(new Object[]{volume.getId(), volume.getProduto().getNome(), sensor.getValor()});
+                }
+            }
+        }
+
+        return coordenadasList;
     }
 }

@@ -24,7 +24,7 @@ const getToken = () => sessionStorage.getItem('token');
 const fetchClientes = async () => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/sl/clientes`, {
+    const response = await fetch(`${api}/clientes`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -43,7 +43,7 @@ const fetchClientes = async () => {
 const fetchProdutos = async () => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/sl/produtos`, {
+    const response = await fetch(`${api}/produtos`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -110,7 +110,7 @@ const criarEncomenda = async () => {
 
   try {
     const token = getToken();
-    const response = await fetch(`${api}/sl/encomendas`, {
+    const response = await fetch(`${api}/encomendas`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

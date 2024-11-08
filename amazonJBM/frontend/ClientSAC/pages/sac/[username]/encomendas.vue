@@ -17,7 +17,7 @@ const tableTitles = ['ID Encomenda', 'Data de Expedição', 'Data de Entrega', '
 const mostrarAlertasModal = ref(false); 
 const alertasData = ref([]); 
 
-const { data, error } = await useFetch(`${api}/sac/encomendas`);
+const { data, error } = await useFetch(`${api}/encomendas`);
 
 const formateEstado = (estado) => {
 
@@ -58,9 +58,9 @@ watch(
         let fetchedData; 
 
         if (newValue === "Todas") {
-          fetchedData = await $fetch(`${api}/sac/encomendas`);
+          fetchedData = await $fetch(`${api}/encomendas`);
         } else {
-          fetchedData = await $fetch(`${api}/sac/encomendas/estado/${newValue}`);
+          fetchedData = await $fetch(`${api}/encomendas/estado/${newValue}`);
         }
 
         tableData.value = fetchedData.map(order => [
@@ -79,7 +79,7 @@ watch(
 
 const verAlertasEncomenda = async (id) => {
   try {
-    const response = await fetch(`${api}/sac/encomendas/${id}/alertas`);
+    const response = await fetch(`${api}/encomendas/${id}/alertas`);
     if (!response.ok) throw new Error("Erro ao buscar alertas da encomenda");
 
     const data = await response.json();

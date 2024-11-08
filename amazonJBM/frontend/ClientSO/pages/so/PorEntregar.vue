@@ -50,7 +50,7 @@ const formatEstado = (estado) => {
 
 const fetchEncomendasPendentes = async () => {
   try {
-    const response = await fetch(`${api}/so/encomendas/PorEntregar`);
+    const response = await fetch(`${api}/encomendas/estado/PorEntregar`);
     if (!response.ok) throw new Error("Erro ao buscar encomendas 'Por Entregar'");
 
     const data = await response.json();
@@ -68,7 +68,7 @@ const fetchEncomendasPendentes = async () => {
 
 const verAlertasEncomenda = async (id) => {
   try {
-    const response = await fetch(`${api}/so/encomendas/${id}/alertas`);
+    const response = await fetch(`${api}/encomendas/${id}/alertas`);
     if (!response.ok) throw new Error("Erro ao buscar alertas da encomenda");
 
     const data = await response.json();
@@ -97,7 +97,7 @@ const verAlertasEncomenda = async (id) => {
 
 const verTracking = async (id) => {
   try {
-    const response = await fetch(`${api}/so/encomendas/${id}/coordenadas`);
+    const response = await fetch(`${api}/encomendas/${id}/coordenadas`);
     if (!response.ok) throw new Error("Erro ao buscar coordenadas da encomenda");
 
     const data = await response.json();

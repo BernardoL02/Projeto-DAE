@@ -75,14 +75,14 @@ public class SensorService {
     @GET
     @Path("/{tipo_sensor}")
     public Response getUltimaLeituraSensoresByTipo(@PathParam("tipo_sensor") String tipo_sensor) {
-        List<Sensor> alertas = gestorBean.getUltimaLeituraSensoresByTipo(tipo_sensor);
+        List<Sensor> alertas = sensorBean.getUltimaLeituraSensoresByTipo(tipo_sensor);
         return Response.ok(alertas.stream().map(ResSensorUltimaLeituraByTipoDTO::from).collect(Collectors.toList())).build();
     }
 
     @GET
     @Path("/{id}/alertas")
     public Response getAlertasSensor(@PathParam("id") int id) {
-        List<Alerta> alertas = gestorBean.getAlertasSensor(id);
+        List<Alerta> alertas = sensorBean.getAlertasSensor(id);
         return Response.ok(alertas.stream().map(ResAlertasSensorDTO::from).collect(Collectors.toList())).build();
     }
 

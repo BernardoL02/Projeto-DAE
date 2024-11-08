@@ -5,10 +5,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.*;
-import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.ClienteBean;
-import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.EncomendaBean;
-import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.GestorBean;
-import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.VolumeBean;
+import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Alerta;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
 
@@ -32,12 +29,15 @@ public class EncomendaService {
     @EJB
     private GestorBean gestorBean;
 
+    @EJB
+    private AlertaBean alertaBean;
+
     @GET
     @Path("/")
-    public Response getAllEncomendas(@PathParam("id") int id) {
+    public Response getAllEncomendas() {
         //TODO -> Saber qual a role do user que faz o pedido
-        var encomenda = clienteBean.findEncomendaById(id);
-        return Response.ok(ResEncomendaDetalhesDTO.from(encomenda,"SAC")).build();
+        List<Encomenda> encomenda = encomendaBean.findAll();
+        return Response.ok(ResEncomendaEstadoDTO.from(encomenda)).build();
     }
 
     @POST
@@ -59,8 +59,8 @@ public class EncomendaService {
     @Path("/{id}")
     public Response getEncomendasById(@PathParam("id") int id) {
         //TODO -> Saber qual a role do user que faz o pedido
-        var encomenda = clienteBean.findEncomendaById(id);
-        return Response.ok(ResEncomendaDetalhesDTO.from(encomenda,"SAC")).build();
+        var encomenda = encomendaBean.findEncomendaById(id);
+        return Response.ok(ResEncomendaDetalhesDTO.from(encomenda,"SO")).build();
     }
 
     @PATCH
@@ -98,14 +98,14 @@ public class EncomendaService {
     @GET
     @Path("/alertas")
     public Response getEncomendasAlertas() {
-        List<Alerta> alertas = gestorBean.getEncomendasAlertas();
+        List<Alerta> alertas = alertaBean.getEncomendasAlertas();
         return Response.ok(alertas.stream().map(ResEncomendasAlertasDTO::from).collect(Collectors.toList())).build();
     }
 
     @GET
     @Path("/{id}/alertas")
     public Response getAlertasEncomenda(@PathParam("id") int id) {
-        List<Alerta> alertas = gestorBean.getAlertasEncomenda(id);
+        List<Alerta> alertas = alertaBean.getAlertasEncomenda(id);
         ResAlertasEncomendaDTO responseDto = ResAlertasEncomendaDTO.from(alertas);
         return Response.ok(responseDto).build();
     }
@@ -113,7 +113,7 @@ public class EncomendaService {
     @GET
     @Path("/{id}/coordenadas")
     public Response getCoordenadasEncomenda(@PathParam("id") int id) {
-        List<Object[]> resultados = gestorBean.getCoordenadasEncomenda(id);
+        List<Object[]> resultados = encomendaBean.getCoordenadasEncomenda(id);
 
         List<ResCoordenadasDTO> coordenadasDTOs = resultados.stream()
                 .map(result -> new ResCoordenadasDTO((int) result[0], (String) result[1], (String) result[2]))

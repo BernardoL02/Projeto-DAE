@@ -21,7 +21,7 @@ const selectedTipo = ref('Temperatura');
 // Função para buscar os tipos de sensores
 const fetchTiposSensores = async () => {
   try {
-    const response = await fetch(`${api}/sl/tipoSensores`);
+    const response = await fetch(`${api}/sensor/tipos`);
     if (!response.ok) throw new Error("Erro ao buscar tipos de sensores");
 
     const data = await response.json();
@@ -36,7 +36,7 @@ fetchTiposSensores()
 const fetchSensorData = async (tipoSensor) => {
   try {
     
-    const fetchedData = await $fetch(`${api}/sac/encomendas/sensor/${tipoSensor}`);
+    const fetchedData = await $fetch(`${api}/sensor/${tipoSensor}`);
 
     tableData.value = fetchedData.map(sensor => [
       sensor.id,                           

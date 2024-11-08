@@ -29,7 +29,19 @@
     </div>
   </div>
 
-  <Table :tableTitles="tableTitles" :tableData="tableData" @update="confirmUpdateSensor" @cancel="cancelSensor" />
+  <Table :tableTitles="tableTitles" :tableData="tableData" @update="confirmUpdateSensor" @cancel="handleCancelSensorClick" />
+
+  <!-- Modal de Confirmação de Cancelamento -->
+  <div v-if="showCancelSensorConfirmModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white w-1/3 p-6 rounded shadow-lg">
+      <h2 class="text-xl font-semibold mb-4">Confirmar Cancelamento</h2>
+      <p>Tem certeza que deseja cancelar o sensor ID {{ selectedSensor?.id }}?</p>
+      <div class="mt-4 flex justify-end space-x-2">
+        <button @click="showCancelSensorConfirmModal = false" class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-700">Cancelar</button>
+        <button @click="confirmCancelSensor" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700">Confirmar</button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
@@ -62,13 +74,6 @@
       opacity: 0;
     }
   }
-
-  .animate-slide-down {
-    animation: slideDown 0.5s forwards;
-  }
-  .animate-slide-up {
-    animation: slideUp 0.5s forwards;
-  }
 </style>
 
 <script setup>
@@ -83,7 +88,9 @@ const api = config.public.API_URL;
 const tableTitles = ['ID', 'Tipo de Sensor', 'Valor', 'Estado', 'Timestamp', 'Bateria', 'ID Encomenda', 'ID Volume'];
 const errorMessages = ref([]);
 const successMessage = ref('');
-const isValueUpdateRunning = ref(false); // Estado do intervalo de atualização
+const isValueUpdateRunning = ref(false);
+const showCancelSensorConfirmModal = ref(false);
+const selectedSensor = ref(null);
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -231,6 +238,21 @@ const confirmUpdateSensor = async (sensor) => {
   }
 };
 
+// Função para abrir o modal de confirmação
+const handleCancelSensorClick = (sensor) => {
+  selectedSensor.value = sensor;
+  showCancelSensorConfirmModal.value = true;
+};
+
+// Função para confirmar o cancelamento do sensor
+const confirmCancelSensor = async () => {
+  if (selectedSensor.value) {
+    await cancelSensor(selectedSensor.value);
+    showCancelSensorConfirmModal.value = false;
+    selectedSensor.value = null;
+  }
+};
+
 // Função para cancelar o sensor
 const cancelSensor = async (sensor) => {
   try {
@@ -243,8 +265,7 @@ const cancelSensor = async (sensor) => {
     if (!response.ok) throw new Error(`Erro ao cancelar sensor com ID ${sensor.id}`);
 
     sensor.estado = "inativo";
-
-    successMessage.value = `Sensor com id:${sensor.id} foi desativado com sucesso!`;
+    successMessage.value = `Sensor com ID: ${sensor.id} foi desativado com sucesso!`;
 
     setTimeout(async () => {
       successMessage.value = '';

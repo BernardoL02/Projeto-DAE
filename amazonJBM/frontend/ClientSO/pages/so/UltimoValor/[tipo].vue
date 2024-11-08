@@ -15,16 +15,10 @@ const tiposSensores = ref([]);
 const selectedTipo = ref(route.params.tipo || ''); // Tipo do sensor selecionado
 const currentPage = 'Ultimos Valores';
 
-// Função para formatar a data
-const formatDate = (dateString) => {
-  return dateString ? dateString.replace('T', ' ') : "Data não disponível";
-};
-
-
 // Função para buscar tipos de sensores para o dropdown
 const fetchTiposSensores = async () => {
   try {
-    const response = await fetch(`${api}/sl/tipoSensores`);
+    const response = await fetch(`${api}/sensor/tipos`);
     if (!response.ok) throw new Error("Erro ao buscar tipos de sensores");
 
     const data = await response.json();
@@ -39,7 +33,7 @@ const fetchUltimoValor = async () => {
   if (!selectedTipo.value) return;
 
   try {
-    const response = await fetch(`${api}/so/sensor/${selectedTipo.value}`);
+    const response = await fetch(`${api}/sensor/${selectedTipo.value}`);
     if (!response.ok) throw new Error("Erro ao buscar último valor do sensor");
 
     const data = await response.json();

@@ -20,7 +20,7 @@ const isDropdownOpen = ref(false); // Controle do estado de abertura do dropdown
 // Função para buscar os tipos de sensores
 const fetchTiposSensores = async () => {
   try {
-    const response = await fetch(`${api}/sl/tipoSensores`);
+    const response = await fetch(`${api}/sensor/tipos`);
     if (!response.ok) throw new Error("Erro ao buscar tipos de sensores");
 
     const data = await response.json();

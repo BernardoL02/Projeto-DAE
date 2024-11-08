@@ -49,7 +49,7 @@ const formatEstado = (estado) => {
 
 const fetchEncomendasPendentes = async () => {
   try {
-    const response = await fetch(`${api}/so/encomendas/pendentes`);
+    const response = await fetch(`${api}/encomendas/pendentes`);
     if (!response.ok) throw new Error("Erro ao buscar encomendas pendentes");
 
     const data = await response.json();
@@ -67,7 +67,7 @@ const fetchEncomendasPendentes = async () => {
 
 const cancelarEncomenda = async (id) => {
   try {
-    const response = await fetch(`${api}/so/encomendas/${id}`, {
+    const response = await fetch(`${api}/encomendas/${id}`, {
       method: 'PATCH',
       headers: {
         'Accept': 'application/json',
@@ -88,7 +88,7 @@ const cancelarEncomenda = async (id) => {
 
 const verAlertasEncomenda = async (id) => {
   try {
-    const response = await fetch(`${api}/so/encomendas/${id}/alertas`);
+    const response = await fetch(`${api}/encomendas/${id}/alertas`);
     if (!response.ok) throw new Error("Erro ao buscar alertas da encomenda");
 
     const data = await response.json();
@@ -111,7 +111,7 @@ const verAlertasEncomenda = async (id) => {
 
 const verTracking = async (id) => {
   try {
-    const response = await fetch(`${api}/so/encomendas/${id}/coordenadas`);
+    const response = await fetch(`${api}/encomendas/${id}/coordenadas`);
     if (!response.ok) throw new Error("Erro ao buscar coordenadas da encomenda");
 
     const data = await response.json();
@@ -214,6 +214,7 @@ onMounted(async () => {
       </div>
     </div>
 
+
     <!-- Modal de Alertas -->
     <div v-if="mostrarAlertasModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white w-1/2 p-6 rounded shadow-lg relative">
@@ -221,6 +222,10 @@ onMounted(async () => {
           <i class="fas fa-times"></i>
         </button>
         <h2 class="text-xl font-semibold mb-4">Alertas da Encomenda</h2>
+        <div v-if="alertasData.length === 0" class="flex flex-col items-center text-gray-600 p-6 border border-gray-300 bg-gray-50 rounded-lg">
+          <i class="fas fa-info-circle text-3xl text-blue-500 mb-2"></i>
+          <p class="text-lg font-medium">Encomenda sem alertas</p>
+        </div>
         <div v-for="sensor in alertasData" :key="sensor.id" class="mb-4 p-4 bg-gray-100 rounded-lg border">
           <p class="font-semibold">Sensor ID: {{ sensor.id }} - Tipo: {{ sensor.tipo }}</p>
           <ul class="mt-2 space-y-2">

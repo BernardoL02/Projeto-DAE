@@ -22,7 +22,7 @@ const formateEstado = (estado) => {
 // Função para buscar detalhes da encomenda e volumes associados
 const fetchEncomendaDetalhes = async () => {
   try {
-    const response = await fetch(`${api}/so/encomendas/${encomendaId}/detalhes`);
+    const response = await fetch(`${api}/encomendas/${encomendaId}`);
     if (!response.ok) throw new Error("Erro ao buscar detalhes da encomenda");
 
     const data = await response.json();
@@ -65,7 +65,7 @@ const fetchAlertas = async (sensor) => {
     if (alertasData.value[sensor.id]) {
       sensor.mostrarAlertas = !sensor.mostrarAlertas;
     } else {
-      const response = await fetch(`${api}/so/sensor/${sensor.id}/alertas`);
+      const response = await fetch(`${api}/sensor/${sensor.id}/alertas`);
       if (!response.ok) throw new Error(`Erro ao buscar alertas do sensor ${sensor.id}`);
       const alertas = await response.json();
       alertasData.value[sensor.id] = alertas.map(alerta => ({

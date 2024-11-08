@@ -36,7 +36,7 @@ const formatDate = (dateString) => {
 const fetchEncomendasEmProcessamento = async () => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/sl/encomendas/estado/EmProcessamento`, {
+    const response = await fetch(`${api}/encomendas/estado/EmProcessamento`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -61,7 +61,7 @@ const fetchEncomendasEmProcessamento = async () => {
 const expedirEncomenda = async (id) => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/sl/encomendas/${id}`, {
+    const response = await fetch(`${api}/encomendas/${id}`, {
       method: 'PATCH',
       headers: {
         'Accept': 'application/json',

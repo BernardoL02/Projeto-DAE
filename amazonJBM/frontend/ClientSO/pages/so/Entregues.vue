@@ -37,7 +37,7 @@ const formatDate = (dateString) => {
 // Função para buscar encomendas entregues
 const fetchEncomendasEntregues = async () => {
   try {
-    const response = await fetch(`${api}/so/encomendas/Entregue`);
+    const response = await fetch(`${api}/encomendas/estado/Entregue`);
     if (!response.ok) throw new Error("Erro ao buscar encomendas entregues");
 
     const data = await response.json();
@@ -56,7 +56,7 @@ const fetchEncomendasEntregues = async () => {
 // Função para buscar alertas de uma encomenda específica
 const verAlertasEncomenda = async (id) => {
   try {
-    const response = await fetch(`${api}/so/encomendas/${id}/alertas`);
+    const response = await fetch(`${api}/encomendas/${id}/alertas`);
     if (!response.ok) throw new Error("Erro ao buscar alertas da encomenda");
 
     const data = await response.json();
@@ -112,6 +112,10 @@ onMounted(fetchEncomendasEntregues);
         <i class="fas fa-times"></i> <!-- Botão de fechar -->
       </button>
       <h2 class="text-xl font-semibold mb-4">Alertas da Encomenda</h2>
+      <div v-if="alertasData.length === 0" class="flex flex-col items-center text-gray-600 p-6 border border-gray-300 bg-gray-50 rounded-lg">
+          <i class="fas fa-info-circle text-3xl text-blue-500 mb-2"></i>
+          <p class="text-lg font-medium">Encomenda sem alertas</p>
+      </div>
       <div v-for="sensor in alertasData" :key="sensor.id" class="mb-4 p-4 bg-gray-100 rounded-lg border">
         <p class="font-semibold">Sensor ID: {{ sensor.id }} - Tipo: {{ sensor.tipo }}</p>
         <ul class="mt-2 space-y-2">

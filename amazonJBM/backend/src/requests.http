@@ -236,10 +236,14 @@ Accept: application/json
 
 ######################### Encomenda Service ################################
 ### Get Encomenda Por Id
-GET http://localhost:3001/backend/api/encomendas/4
+GET http://localhost:3001/backend/api/encomendas/
 Accept: application/json
 
-### Get All Encomendas por um determinado estado
+### Get Encomenda Por Id
+GET http://localhost:3001/backend/api/encomendas/1
+Accept: application/json
+
+### Get All Encomendas por um determinado estado "PorEntregar" "Cancelada" "EmProcessamento" "Entregue"
 GET http://localhost:3001/backend/api/encomendas/estado/PorEntregar
 Accept: application/json
 
@@ -279,7 +283,7 @@ Content-Type: application/json
 }
 
 ### Associar um volume a uma encomenda
-POST http://localhost:3001/backend/api/encomendas/4/volume
+POST http://localhost:3001/backend/api/encomendas/6/volume
 Accept: application/json
 Content-Type: application/json
 
@@ -333,7 +337,6 @@ Content-Type: application/json
   "mensagem": "Temperatura elevada, aaaacomida a estragar-se",
   "id_sensor": 5,
   "valor": 40,
-  "bateria": 72,
   "id_volume": 4
 }
 

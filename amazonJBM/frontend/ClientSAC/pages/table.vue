@@ -44,7 +44,7 @@ let successMessage = ref("")
 
 async function refresh() {
   try {
-    const response = await $fetch(`${api}/sac/encomendas`);
+    const response = await $fetch(`${api}/encomendas`);
     // Atualiza a tabela com os dados recebidos
     props.tableData.splice(0, props.tableData.length, ...response.map(order => [
       order.id,                            
@@ -76,7 +76,7 @@ async function cancelar(id) {
   };
 
   try {
-    const response = await $fetch(`${api}/sac/encomendas/${id}`, requestOptions);
+    const response = await $fetch(`${api}/encomendas/${id}`, requestOptions);
 
     refresh();
 

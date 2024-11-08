@@ -15,7 +15,7 @@ const errorMessages = ref([]);
 // Função para buscar alertas de encomendas
 const fetchAlertasEncomendas = async () => {
   try {
-    const response = await fetch(`${api}/so/encomendas/alertas`);
+    const response = await fetch(`${api}/encomendas/alertas`);
     if (!response.ok) throw new Error("Erro ao buscar alertas das encomendas");
 
     const data = await response.json();
