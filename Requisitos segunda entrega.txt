@@ -20,11 +20,11 @@ exceto os sensores de aceleração que só enviam quando é detetado um moviment
 
 Retirar os sensores de GPS de todos os volumes -> tem de ter pelo menos um sensor
 
-Um volume pode ter mais de uma encomenda
+Um volume pode ter mais do que um produto
 
 Modificar o criar encomenda -> As datas não fazem sentido ja existirem
 
-Adicionar caixas a volumes e essas caixas é que tem sensores
+Adicionar caixas a volumes e essas caixas é que têm sensores
 Caixa isotérmica modelo x1 -> Sensor de temperatura + sensor de GPS
 Caixa isotérmica modelo x2 -> Sensor de temperatura + sensor de humidade
 Caixa de cartão -> Pode ter um sensor de temperatura 
