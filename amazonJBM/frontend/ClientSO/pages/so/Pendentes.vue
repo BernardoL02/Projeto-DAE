@@ -20,6 +20,9 @@ const trackingData = ref([]);
 let map = null;
 let markers = [];
 
+// Função para obter o token do sessionStorage
+const getToken = () => sessionStorage.getItem('token');
+
 const loadLeafletCSS = () => {
   const link = document.createElement('link');
   link.rel = 'stylesheet';
@@ -49,7 +52,14 @@ const formatEstado = (estado) => {
 
 const fetchEncomendasPendentes = async () => {
   try {
-    const response = await fetch(`${api}/encomendas/pendentes`);
+    const token = getToken();
+    const response = await fetch(`${api}/encomendas/estado/EmProcessamento`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
     if (!response.ok) throw new Error("Erro ao buscar encomendas pendentes");
 
     const data = await response.json();

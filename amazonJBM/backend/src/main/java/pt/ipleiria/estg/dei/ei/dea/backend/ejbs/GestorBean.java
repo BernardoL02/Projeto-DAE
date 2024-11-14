@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.hibernate.Hibernate;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
+import pt.ipleiria.estg.dei.ei.dea.backend.security.Hasher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ public class GestorBean {
 
 
     public void create(String username, String password, String email, String nome){
-        var gestor = new Gestor(username, password, email, nome);
+        var gestor = new Gestor(username, Hasher.hash(password), email, nome);
         em.persist(gestor);
     }
 

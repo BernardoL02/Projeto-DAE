@@ -1,6 +1,50 @@
 <script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
 const icon = '/Images/IconJBM.png';
-const title = "Sistema Operacional"
+const title = "Sistema Operacional";
+
+const username = ref('');
+const password = ref('');
+const errorMessage = ref(''); // Variável para armazenar mensagem de erro
+
+const config = useRuntimeConfig();
+const api = config.public.API_URL;
+const router = useRouter();
+
+const login = async () => {
+  try {
+    errorMessage.value = ''; // Limpa a mensagem de erro antes de tentar login
+
+    const response = await fetch(`${api}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        username: username.value,
+        password: password.value
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error('Nome de usuário ou senha incorretos');
+    }
+
+    const token = await response.text();
+
+    // Armazena o token no localStorage
+    sessionStorage.setItem('token', token);
+
+    // Navega para a página de gestão
+    router.push('/so/Pendentes');
+  } catch (error) {
+    errorMessage.value = error.message || 'Erro ao fazer login';
+    console.error('Erro ao fazer login:', error);
+  }
+};
 </script>
 
 <template>
@@ -13,23 +57,24 @@ const title = "Sistema Operacional"
       
       <h2 class="text-2xl font-bold text-center mb-6"> {{ title }}</h2>
 
-      <form >
+      <form @submit.prevent="login">
         <div class="mb-4">
-          <input type="username" placeholder="Username" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor"/>
+          <input v-model="username" type="text" placeholder="Username" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor"/>
         </div>
 
         <div class="mb-6">
-          <input type="password" placeholder="Password" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor"/>
+          <input v-model="password" type="password" placeholder="Password" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor"/>
         </div>
 
         <div class="flex justify-center items-center text-sm mb-4 space-x-28 mt-6">
+          <button type="submit" class="bg-PrimaryColor hover:bg-SecundaryColor text-white font-semibold py-2 px-8 rounded-full transition duration-300 ease-in-out shadow-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor">
+            Login
+          </button>
+        </div>
 
-          <nuxt-link to="./Pendentes">
-            <button type="submit" class="bg-PrimaryColor hover:bg-SecundaryColor text-white font-semibold py-2 px-8 rounded-full transition duration-300 ease-in-out shadow-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor">
-              Login
-            </button>
-          </nuxt-link>
-
+        <!-- Exibe a mensagem de erro se houver -->
+        <div v-if="errorMessage" class="text-red-500 text-center mt-4">
+          {{ errorMessage }}
         </div>
       </form>
     </div>

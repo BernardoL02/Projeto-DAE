@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.hibernate.Hibernate;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
+import pt.ipleiria.estg.dei.ei.dea.backend.security.Hasher;
 
 import java.util.*;
 
@@ -16,7 +17,7 @@ public class ClienteBean {
     private EntityManager em;
 
     public void create(String username, String password, String email, String nome, String morada ){
-        var cliente = new Cliente(username, password, email, nome, morada);
+        var cliente = new Cliente(username, Hasher.hash(password), email, nome, morada);
         em.persist(cliente);
     }
 

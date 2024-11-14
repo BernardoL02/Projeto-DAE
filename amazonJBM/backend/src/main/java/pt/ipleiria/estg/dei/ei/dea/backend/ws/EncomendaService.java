@@ -1,13 +1,17 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.ws;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.SecurityContext;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Alerta;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
+import pt.ipleiria.estg.dei.ei.dea.backend.security.Authenticated;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,7 +19,12 @@ import java.util.stream.Collectors;
 @Path("encomendas")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
+@Authenticated
+@RolesAllowed({"Gestor"})
 public class EncomendaService {
+
+    @Context
+    private SecurityContext securityContext;
 
     @EJB
     private ClienteBean clienteBean;
@@ -79,6 +88,7 @@ public class EncomendaService {
 
     @GET
     @Path("/pendentes")
+    @RolesAllowed({"Gestor"})
     public Response getEncomendasPendendes() {
         List<Encomenda> encomendas = encomendaBean.findPendentes();
         return Response.ok( ResEncomendaEstadoDTO.from(encomendas)).build();

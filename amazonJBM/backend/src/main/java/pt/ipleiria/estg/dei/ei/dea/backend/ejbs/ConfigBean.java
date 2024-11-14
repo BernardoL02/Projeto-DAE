@@ -46,13 +46,14 @@ public class ConfigBean {
     public void populateDB() {
 
         // Clientes
-        clienteBean.create("Bernardo", "12#45", "bernas@gmail.com", "Bernardo1", "Leiria");
-        clienteBean.create("Tendeiro", "12#45", "tendeiro@gmail.com", "ten", "Leiria");
-        clienteBean.create("Sousa", "45678", "sousa@gmail.com", "SousaX", "Porto");
-        clienteBean.create("Ferreira", "78#90", "ferreira@gmail.com", "Fer", "Lisboa");
-        clienteBean.create("Carvalho", "abc123", "carvalho@gmail.com", "Carva", "Coimbra");
+        clienteBean.create("Bernardo", "123", "bernas@gmail.com", "Bernardo1", "Leiria");
+        clienteBean.create("Tendeiro", "123", "tendeiro@gmail.com", "ten", "Leiria");
+        clienteBean.create("Sousa", "123", "sousa@gmail.com", "SousaX", "Porto");
+        clienteBean.create("Ferreira", "123", "ferreira@gmail.com", "Fer", "Lisboa");
+        clienteBean.create("Carvalho", "123", "carvalho@gmail.com", "Carva", "Coimbra");
         // Logistas
         logistaBean.create("Miguel", "123", "miguel@gmail.com", "Smigueli");
+        logistaBean.create("Jose", "123", "jose@gmail.com", "JoseD");
         // Gestores
         gestorBean.create("Delgado", "123", "delgado@gmail.com", "José");
 
