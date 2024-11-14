@@ -15,3 +15,20 @@ exceto os sensores de aceleração que só enviam quando é detetado um moviment
 - Aleterar endpoint detalhes da encomenda SO o url esta incorreto ✅
 
 - Alterar todos os EndPoints para usar se Token (Exceto o sl)
+
+
+
+Retirar os sensores de GPS de todos os volumes -> tem de ter pelo menos um sensor
+
+Um volume pode ter mais de uma encomenda
+
+Modificar o criar encomenda -> As datas não fazem sentido ja existirem
+
+Adicionar caixas a volumes e essas caixas é que tem sensores
+Caixa isotérmica modelo x1 -> Sensor de temperatura + sensor de GPS
+Caixa isotérmica modelo x2 -> Sensor de temperatura + sensor de humidade
+Caixa de cartão -> Pode ter um sensor de temperatura 
+
+nota: apenas verificar os requisitos mínimos de cada caixa (caixa x tem no minimo dois sensores x e y, pode ter mais)
+
+Temos de ter uma tabela de produtos -> tipo de caixa por produto -> sensores para aquela caixa
