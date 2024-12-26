@@ -2,6 +2,7 @@ package pt.ipleiria.estg.dei.ei.dea.backend.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import org.hibernate.Hibernate;
 
 @Entity
 @Table(name = "utilizadores")
@@ -66,4 +67,7 @@ public class Utilizador {
         this.nome = nome;
     }
 
+    public String getRole() {
+        return this.getClass().getSimpleName();
+    }
 }

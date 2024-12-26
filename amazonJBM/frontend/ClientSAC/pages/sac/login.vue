@@ -4,6 +4,13 @@ const title = "Sistema de Apoio ao Cliente"
 
 const username = ref('Bernardo');
 
+
+
+
+
+
+
+
 </script>
 
 <template>

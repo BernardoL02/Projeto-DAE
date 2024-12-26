@@ -45,6 +45,11 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                 return
                         org.hibernate.Hibernate.getClass(user).getSimpleName().equals(s);
             }
+
+            public String getUserRole() {
+                return org.hibernate.Hibernate.getClass(user).getSimpleName();
+            }
+
             @Override
             public boolean isSecure() {
                 return uriInfo.getAbsolutePath().toString().startsWith("https");

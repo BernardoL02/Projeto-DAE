@@ -36,4 +36,9 @@ public class UtilizadorBean {
         return user;
     }
 
+    public String getRole(String username) {
+        var user = findOrFail(username);
+        return Hibernate.getClass(user).getSimpleName();
+    }
+
 }

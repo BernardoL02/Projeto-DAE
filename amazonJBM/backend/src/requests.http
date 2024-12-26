@@ -235,7 +235,7 @@ GET http://localhost:3001/backend/api/clientes
 Accept: application/json
 
 ######################### Encomenda Service ################################
-### Get Encomenda Por Id
+### Get All Encomenda
 GET http://localhost:3001/backend/api/encomendas/
 Accept: application/json
 
@@ -378,11 +378,14 @@ POST http://localhost:3001/backend/api/auth/login
 Content-Type: application/json
 Accept: application/json
 
-{ "username": "Miguel", "password": "123" }
+{ "username": "Bernardo", "password": "123" }
 
 ### GET ALL Encomendas em Processamento com TOKEN
 GET http://localhost:3001/backend/api/sl/encomendas/estado/EmProcessamento
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzEwMTU4MjEsImV4cCI6MTczMTAxOTQyMX0.9miVitKAyYEcsY5peXQWKkRn2EQAJpcAyIFQMZ_eCavYtQEoXCiH7bjHLRjcST2u
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1MjE5NjYzLCJleHAiOjE3MzUyMjMyNjN9.98T0Wpiw_MxrFHI6CdUwOStczLMNsYuRolGChhBPVgUMhaykNxcfBLQTIHbDsQtG
 
-
+### Get All Encomenda
+GET http://localhost:3001/backend/api/encomendas/
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTIyMDkyNiwiZXhwIjoxNzM1MjI0NTI2fQ.3NVEHIxef7QY-n78qtpTgpwpZ1wkgxmOa0RCAhpxP58S1PFO14y7p3v1HxdHBCWD

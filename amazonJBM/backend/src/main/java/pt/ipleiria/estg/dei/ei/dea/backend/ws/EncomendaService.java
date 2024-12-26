@@ -11,6 +11,7 @@ import pt.ipleiria.estg.dei.ei.dea.backend.dtos.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Alerta;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Utilizador;
 import pt.ipleiria.estg.dei.ei.dea.backend.security.Authenticated;
 
 import java.util.List;
@@ -20,11 +21,14 @@ import java.util.stream.Collectors;
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
 @Authenticated
-@RolesAllowed({"Gestor"})
+@RolesAllowed({"Gestor", "Cliente"})
 public class EncomendaService {
 
     @Context
     private SecurityContext securityContext;
+
+    @EJB
+    private UtilizadorBean utilizadorBean;
 
     @EJB
     private ClienteBean clienteBean;
@@ -44,9 +48,10 @@ public class EncomendaService {
     @GET
     @Path("/")
     public Response getAllEncomendas() {
-        //TODO -> Saber qual a role do user que faz o pedido
-        List<Encomenda> encomenda = encomendaBean.findAll();
-        return Response.ok(ResEncomendaEstadoDTO.from(encomenda)).build();
+        Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
+
+        List<Encomenda> encomendas = encomendaBean.findAll(user);
+        return Response.ok(ResEncomendaEstadoDTO.from(encomendas)).build();
     }
 
     @POST

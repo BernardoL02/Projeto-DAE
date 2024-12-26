@@ -43,9 +43,19 @@ public class EncomendaBean {
         return encomenda;
     }
 
+    public List<Encomenda> findAll(Utilizador user) {
 
-    public List<Encomenda> findAll() {
-        List<Encomenda> encomendas = em.createNamedQuery("getAllEncomendas", Encomenda.class).getResultList();
+        List<Encomenda> encomendas = new ArrayList<>();
+
+        if (user.getRole().equals("Cliente")) {
+            Cliente cliente = em.find(Cliente.class, user.getUsername());
+            Hibernate.initialize(cliente.getEncomendas());
+            encomendas = cliente.getEncomendas();
+        }
+        else{
+            encomendas = em.createNamedQuery("getAllEncomendas", Encomenda.class).getResultList();
+        }
+
         return encomendas;
     }
 
