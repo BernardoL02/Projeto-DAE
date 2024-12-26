@@ -380,12 +380,7 @@ Accept: application/json
 
 { "username": "Bernardo", "password": "123" }
 
-### GET ALL Encomendas em Processamento com TOKEN
-GET http://localhost:3001/backend/api/sl/encomendas/estado/EmProcessamento
+### GET User Info
+GET http://localhost:3001/backend/api/auth/user
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1MjE5NjYzLCJleHAiOjE3MzUyMjMyNjN9.98T0Wpiw_MxrFHI6CdUwOStczLMNsYuRolGChhBPVgUMhaykNxcfBLQTIHbDsQtG
-
-### Get All Encomenda
-GET http://localhost:3001/backend/api/encomendas/
-Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTIyMDkyNiwiZXhwIjoxNzM1MjI0NTI2fQ.3NVEHIxef7QY-n78qtpTgpwpZ1wkgxmOa0RCAhpxP58S1PFO14y7p3v1HxdHBCWD
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTIyNTg3NiwiZXhwIjoxNzM1MjI5NDc2fQ.D5vp08BndFDGMP2gLTYWbJjKy-CDJDROpK4Tg75FwjHbgmR2HocGg5qSUTK4cbSv
