@@ -32,9 +32,3 @@ Caixa de cartão -> Pode ter um sensor de temperatura
 nota: apenas verificar os requisitos mínimos de cada caixa (caixa x tem no minimo dois sensores x e y, pode ter mais)
 
 Temos de ter uma tabela de produtos -> tipo de caixa por produto -> sensores para aquela caixa
-
-Extras
-
-[x] - Loc das encomendas no maps
-
-[] - Criar nova caixa, associar sencores à caixa em vez de utilizar os pré-definidos

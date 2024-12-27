@@ -16,17 +16,20 @@ public class ResSensorAllDTO implements Serializable {
     private String estado;
     private int bateria;
     private LocalDateTime timeStamp;
+    private int idVolume;
     private int idEncomenda;
     private Integer valMax;
     private Integer valMin;
 
-    public ResSensorAllDTO(int id, String valor, String tipoNome, String estado, int bateria, LocalDateTime timeStamp,  Integer valMax, Integer valMin) {
+    public ResSensorAllDTO(int id, String valor, String tipoNome, String estado, int bateria, LocalDateTime timeStamp, int idVolume, int idEncomenda, Integer valMax, Integer valMin) {
         this.id = id;
         this.valor = valor;
         this.tipoNome = tipoNome;
         this.estado = estado;
         this.bateria = bateria;
         this.timeStamp = timeStamp;
+        this.idVolume = idVolume;
+        this.idEncomenda = idEncomenda;
         this.valMax = valMax;
         this.valMin = valMin;
     }
@@ -83,6 +86,13 @@ public class ResSensorAllDTO implements Serializable {
         this.timeStamp = timeStamp;
     }
 
+    public int getIdVolume() {
+        return idVolume;
+    }
+
+    public void setIdVolume(int idVolume) {
+        this.idVolume = idVolume;
+    }
 
     public int getIdEncomenda() {
         return idEncomenda;
@@ -116,6 +126,8 @@ public class ResSensorAllDTO implements Serializable {
                 sensor.getEstado(),
                 sensor.getBateria(),
                 sensor.getTimeStamp(),
+                sensor.getVolume().getId(),
+                sensor.getVolume().getEncomenda().getId(),
                 sensor.getValMax(),
                 sensor.getValMin()
         );

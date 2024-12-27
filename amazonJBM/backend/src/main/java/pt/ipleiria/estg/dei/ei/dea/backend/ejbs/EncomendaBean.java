@@ -128,9 +128,9 @@ public class EncomendaBean {
             List<Volume> volumes = encomenda.getVolumes();
 
             for (Volume volume : volumes) {
-                /*for(Sensor sensor : volume.getSensores()){
+                for(Sensor sensor : volume.getSensores()){
                     sensor.setEstado("inativo");
-                }*/
+                }
             }
         }
 
@@ -144,7 +144,7 @@ public class EncomendaBean {
     public void gerarVolumes(int id_encomenda,List<ProdutoDTO> produtos){
 
         for (ProdutoDTO produto:produtos) {
-            //volumeBean.create(produto.getId(), produto.getQuantidade_por_volume(), id_encomenda);
+            volumeBean.create(produto.getId(), produto.getQuantidade_por_volume(), id_encomenda);
         }
     }
 
@@ -154,11 +154,11 @@ public class EncomendaBean {
         List<Object[]> coordenadasList = new ArrayList<>();
 
         for (Volume volume : encomenda.getVolumes()) {
-            /*for (Sensor sensor : volume.getSensores()) {
+            for (Sensor sensor : volume.getSensores()) {
                 if ("GPS".equals(sensor.getTipo().getTipo())) {
                     coordenadasList.add(new Object[]{volume.getId(), volume.getProduto().getNome(), sensor.getValor()});
                 }
-            }*/
+            }
         }
 
         return coordenadasList;

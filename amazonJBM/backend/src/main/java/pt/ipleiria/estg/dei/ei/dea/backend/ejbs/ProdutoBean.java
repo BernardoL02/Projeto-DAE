@@ -3,7 +3,10 @@ package pt.ipleiria.estg.dei.ei.dea.backend.ejbs;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Categoria;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Cliente;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Produto;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Tipo_Sensores;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -14,11 +17,11 @@ public class ProdutoBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(int id, String nome, int categoria_id, int quantidade_por_volume, int embalagem_id){
+    public void create(int id, String nome, int categoria_id, int quantidade_por_volume){
 
         var categoria = em.find(Categoria.class, categoria_id);
-        var embalagem = em.find(Tipo_Embalagem.class, embalagem_id);
-        var produto = new Produto(id, nome, categoria, quantidade_por_volume, embalagem);
+
+        var produto = new Produto(id, nome, categoria, quantidade_por_volume);
         em.persist(produto);
     }
 

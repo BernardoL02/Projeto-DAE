@@ -22,16 +22,11 @@ public class Produto {
 
     private int quantidade_por_volume;
 
-    @ManyToOne
-    @JoinColumn(name = "embalagem_id", nullable = false)
-    private Tipo_Embalagem embalagem;
-
-    public Produto(int id, String nome, Categoria categoria, int quantidade_por_volume, Tipo_Embalagem embalagem) {
+    public Produto(int id, String nome, Categoria categoria, int quantidade_por_volume) {
         this.id = id;
         this.nome = nome;
         this.categoria = categoria;
         this.quantidade_por_volume = quantidade_por_volume;
-        this.embalagem = embalagem;
     }
 
     public Produto(){
@@ -68,13 +63,5 @@ public class Produto {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
-    }
-
-    public Tipo_Embalagem getEmbalagem() {
-        return embalagem;
-    }
-
-    public void setEmbalagem(Tipo_Embalagem embalagem) {
-        this.embalagem = embalagem;
     }
 }

@@ -85,14 +85,14 @@ public class EncomendaService {
             return Response.status(Response.Status.FORBIDDEN).entity("Apenas pode ver os detalhes de encomendas que lhe pertencem.").build();
         }
 
-        return Response.ok(/*ResEncomendaDetalhesDTO.from(encomenda,"SO")*/).build();
+        return Response.ok(ResEncomendaDetalhesDTO.from(encomenda,"SO")).build();
     }
 
     @PATCH
     @Path("/{id}")
     public Response mudarEstadoEncomenda(@PathParam("id") int id, EncomendasDTO encomendasDTO) {
-        //encomendaBean.mudarEstadoEncomenda(id,encomendasDTO.getEstado());
-        return Response.ok("Estado da encomenda " + id + " alterado com sucesso para " /*+ encomendasDTO.getEstado()*/).build();
+        encomendaBean.mudarEstadoEncomenda(id,encomendasDTO.getEstado());
+        return Response.ok("Estado da encomenda " + id + " alterado com sucesso para " + encomendasDTO.getEstado()).build();
     }
 
     @GET
@@ -116,11 +116,11 @@ public class EncomendaService {
     @POST
     @Path("/{id}/volume")
     public Response associarVolumeEncomenda(@PathParam("id") int id_encomenda, VolumeDTO volumeDTO){
-        /*volumeBean.create(
+        volumeBean.create(
                 volumeDTO.getId_produto(),
                 volumeDTO.getQuantidade(),
                 id_encomenda
-        );*/
+        );
         return Response.ok("Volume associado com sucesso").build();
     }
 
