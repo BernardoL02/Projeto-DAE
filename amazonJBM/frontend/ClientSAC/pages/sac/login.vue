@@ -3,7 +3,7 @@ import { useAuthStore } from "~/store/auth-store.js"
 
 const icon = '/Images/IconJBM.png';
 const title = "Sistema de Apoio ao Cliente"
-const config = useRuntimeConfig();
+
 const router = useRouter()
 const authStore = useAuthStore()
 

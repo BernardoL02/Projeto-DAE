@@ -9,8 +9,8 @@ export const useAuthStore = defineStore("authStore", () => {
   const messages = ref([]);
 
   const loginFormData = reactive({
-    username: "Bernardo",
-    password: "123",
+    username: null,
+    password: null,
   });
 
   function logout() {
