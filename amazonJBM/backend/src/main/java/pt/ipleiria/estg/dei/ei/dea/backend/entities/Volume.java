@@ -16,24 +16,30 @@ public class Volume {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_produto", nullable = false)
-    private Produto produto;
+    @ManyToMany
+    @JoinTable(
+            name = "volume_produto",
+            joinColumns = @JoinColumn(
+                    name = "volume_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "produto_id",
+                    referencedColumnName = "id"
+            )
+    )
+    private List<Produto> produtos = new ArrayList<>();
 
     @ManyToOne
     @NotNull
     private  Encomenda encomenda;
 
-    private int quantidade;
+    public Volume( Encomenda encomenda) {
+        if(produtos == null){
+            this.produtos = new ArrayList<>();
+        }
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "volume")
-    private List<Sensor> sensores = new ArrayList<>();
-
-    public Volume(Produto produto, int quantidade, Encomenda encomenda) {
-        this.produto = produto;
-        this.quantidade = quantidade;
         this.encomenda = encomenda;
-
     }
 
     public Volume(){
@@ -48,20 +54,16 @@ public class Volume {
         this.id = id;
     }
 
-    public Produto getProduto() {
-        return produto;
+    public List<Produto> getProdutos() {
+        return produtos;
     }
 
-    public void setProduto(Produto produto) {
-        this.produto = produto;
+    public void setProduto(List<Produto> produtos) {
+        this.produtos = produtos;
     }
+    public void addProduto(Produto produto) {
+        produtos.add(produto);
 
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
     }
 
     public @NotNull Encomenda getEncomenda() {
@@ -72,13 +74,5 @@ public class Volume {
         this.encomenda = encomenda;
     }
 
-    public void addSensor(Sensor sensor) {
-        sensores.add(sensor);
-
-    }
-
-    public List<Sensor> getSensores() {
-        return sensores;
-    }
 
 }

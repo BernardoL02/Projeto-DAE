@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 
 public class VolumeDTO implements Serializable {
 
-    private int id;
+    /*private int id;
     private int id_produto;
-    private String nome_produto;
+    private List<ProdutoDTO> produtos = new ArrayList<>();
     private int id_encomenda;
     private List<SensorDTO> sensores = new ArrayList<>();
     private int quantidade;
@@ -20,7 +20,6 @@ public class VolumeDTO implements Serializable {
     public VolumeDTO(int id, int id_produto,String nome_produto, int id_encomenda, int quantidade) {
         this.id = id;
         this.id_produto = id_produto;
-        this.nome_produto = nome_produto;
         this.id_encomenda = id_encomenda;
         this.quantidade = quantidade;
 
@@ -86,8 +85,8 @@ public class VolumeDTO implements Serializable {
 
         VolumeDTO volumeDTO =  new VolumeDTO(
                 volume.getId(),
-                volume.getProduto().getId(),
-                volume.getProduto().getNome(),
+                volume.getProdutos().getId(),
+                volume.getProdutos().getNome(),
                 volume.getEncomenda().getId(),
                 volume.getQuantidade()
         );
@@ -99,5 +98,5 @@ public class VolumeDTO implements Serializable {
 
     public static List<VolumeDTO> from(List<Volume> volumes) {
         return volumes.stream().map(VolumeDTO::from).collect(Collectors.toList());
-    }
+    }*/
 }

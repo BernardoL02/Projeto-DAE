@@ -2,6 +2,7 @@ package pt.ipleiria.estg.dei.ei.dea.backend.entities;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(
@@ -44,11 +45,15 @@ public class Sensor {
     @Column(name="time_stamp")
     private LocalDateTime timeStamp;
 
-    @ManyToOne
-    @JoinColumn(name = "id_volume", nullable = false)
-    private Volume volume;
 
-    public Sensor(String valor, Tipo_Sensores tipo, String estado, int bateria, int valMax, int valMin,Volume volume) {
+    @ManyToMany(mappedBy = "tipoSensores")
+    private List<Tipo_Embalagem> embalagens;
+
+    @ManyToOne
+    @JoinColumn(name = "id_embalagem", nullable = false)
+    private Embalagem embalagem;
+
+    public Sensor(String valor, Tipo_Sensores tipo, String estado, int bateria, int valMax, int valMin, Embalagem embalagem) {
         this.valor = valor;
         this.tipo = tipo;
         this.estado = estado;
@@ -56,9 +61,9 @@ public class Sensor {
         this.valMax = valMax;
         this.valMin = valMin;
         timeStamp = LocalDateTime.now();
-        this.volume = volume;
+        this.embalagem = embalagem;
     }
-    public Sensor(String valor, Tipo_Sensores tipo, String estado, int bateria, Volume volume) {
+    public Sensor(String valor, Tipo_Sensores tipo, String estado, int bateria,Embalagem embalagem) {
         this.valor = valor;
         this.tipo = tipo;
         this.valMax = null;
@@ -66,7 +71,8 @@ public class Sensor {
         this.estado = estado;
         this.bateria = bateria;
         timeStamp = LocalDateTime.now();
-        this.volume = volume;
+        this.embalagem = embalagem;
+
     }
 
     public Sensor() {
@@ -147,11 +153,19 @@ public class Sensor {
         this.valMin = valMin;
     }
 
-    public Volume getVolume() {
-        return volume;
+    public List<Tipo_Embalagem> getEmbalagens() {
+        return embalagens;
     }
 
-    public void setVolume(Volume volume) {
-        this.volume = volume;
+    public void setEmbalagens(List<Tipo_Embalagem> embalagens) {
+        this.embalagens = embalagens;
+    }
+
+    public Embalagem getEmbalagem() {
+        return embalagem;
+    }
+
+    public void setEmbalagem(Embalagem embalagem) {
+        this.embalagem = embalagem;
     }
 }

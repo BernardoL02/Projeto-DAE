@@ -19,15 +19,13 @@ public class ResSensorUltimaLeituraByTipoDTO implements Serializable {
     private int id_encomenda;
     private int id_volume;
 
-    public ResSensorUltimaLeituraByTipoDTO(int id, String valor, String tipoNome, String estado, int bateria, LocalDateTime timeStamp, int id_encomenda, int id_volume) {
+    public ResSensorUltimaLeituraByTipoDTO(int id, String valor, String tipoNome, String estado, int bateria, LocalDateTime timeStamp) {
         this.id = id;
         this.valor = valor;
         this.tipoNome = tipoNome;
         this.estado = estado;
         this.bateria = bateria;
         this.timeStamp = timeStamp;
-        this.id_encomenda = id_encomenda;
-        this.id_volume = id_volume;
     }
 
     public ResSensorUltimaLeituraByTipoDTO(){
@@ -105,9 +103,7 @@ public class ResSensorUltimaLeituraByTipoDTO implements Serializable {
                 sensor.getTipo().getTipo(),
                 sensor.getEstado(),
                 sensor.getBateria(),
-                sensor.getTimeStamp(),
-                sensor.getVolume().getEncomenda().getId(),
-                sensor.getVolume().getId()
+                sensor.getTimeStamp()
         );
     }
 

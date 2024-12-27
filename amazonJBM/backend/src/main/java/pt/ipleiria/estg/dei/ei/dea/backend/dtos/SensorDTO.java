@@ -1,5 +1,6 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.dtos;
 
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Embalagem;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Sensor;
 
 import java.io.Serializable;
@@ -19,10 +20,11 @@ public class SensorDTO implements Serializable {
     private Integer valMin;
     private LocalDateTime timeStamp;
     private int volumeId;
+    private Embalagem embalagem;
 
     public SensorDTO() {}
 
-    public SensorDTO(int id, String valor, int tipoId, String tipoNome, String estado, int bateria, Integer valMax, Integer valMin, int volumeId) {
+    public SensorDTO(int id, String valor, int tipoId, String tipoNome, String estado, int bateria, Integer valMax, Integer valMin, Embalagem embalagem) {
         this.id = id;
         this.valor = valor;
         this.tipoId = tipoId;
@@ -32,10 +34,10 @@ public class SensorDTO implements Serializable {
         this.valMax = valMax;
         this.valMin = valMin;
         this.timeStamp = LocalDateTime.now();
-        this.volumeId = volumeId;
+        this.embalagem = embalagem;
     }
 
-    public SensorDTO(int id, String valor, int tipoId, String tipoNome, String estado, int bateria, int volumeId) {
+    public SensorDTO(int id, String valor, int tipoId, String tipoNome, String estado, int bateria,Embalagem embalagem) {
         this.id = id;
         this.valor = valor;
         this.tipoId = tipoId;
@@ -45,7 +47,7 @@ public class SensorDTO implements Serializable {
         this.valMax = null;
         this.valMin = null;
         this.timeStamp = LocalDateTime.now();
-        this.volumeId = volumeId;
+        this.embalagem = embalagem;
     }
 
     public String getTipoNome() {
@@ -128,6 +130,14 @@ public class SensorDTO implements Serializable {
         this.volumeId = volumeId;
     }
 
+    public Embalagem getEmbalagem() {
+        return embalagem;
+    }
+
+    public void setEmbalagem(Embalagem embalagem) {
+        this.embalagem = embalagem;
+    }
+
     public static SensorDTO from(Sensor sensor) {
         return new SensorDTO(
                 sensor.getId(),
@@ -138,7 +148,7 @@ public class SensorDTO implements Serializable {
                 sensor.getBateria(),
                 sensor.getValMax(),
                 sensor.getValMin(),
-                sensor.getVolume().getId()
+                sensor.getEmbalagem()
         );
     }
 

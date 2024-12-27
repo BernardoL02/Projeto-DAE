@@ -32,7 +32,7 @@ public class ResClienteDTO implements Serializable {
         );
     }
 
-    public static List<ResClienteDTO> from(List<Cliente> students) {
-        return students.stream().map(ResClienteDTO::from).collect(Collectors.toList());
+    public static List<ResClienteDTO> from(List<Cliente> clientes) {
+        return clientes.stream().map(ResClienteDTO::from).collect(Collectors.toList());
     }
 }

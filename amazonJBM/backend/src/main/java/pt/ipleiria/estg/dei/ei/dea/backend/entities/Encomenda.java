@@ -113,7 +113,7 @@ public class Encomenda extends Versionable{
         List<Produto> produtos = new ArrayList<>();
 
         for (Volume volume: volumes) {
-            produtos.add(volume.getProduto());
+            //produtos.add(volume.getProduto());
         }
 
         return produtos;

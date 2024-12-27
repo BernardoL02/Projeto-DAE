@@ -26,8 +26,8 @@ public class VolumeService {
     public Response getDetalhesVolume(@PathParam("id") int id){
         var volume = volumeBean.find(id);
 
-        ResVolumeDetalhesDTO<ResSensorDetalhesDTO> volumeDTO = ResVolumeDetalhesDTO.from(volume,"SL");
-        return Response.ok(volumeDTO).build();
+        //ResVolumeDetalhesDTO<ResSensorDetalhesDTO> volumeDTO = ResVolumeDetalhesDTO.from(volume,"SL");
+        return Response.ok(/*volumeDTO*/).build();
     }
 
     @POST
@@ -40,7 +40,8 @@ public class VolumeService {
                     sensorDTO.getTipoId(),
                     sensorDTO.getEstado(),
                     sensorDTO.getBateria(),
-                    id
+                    sensorDTO.getEmbalagem().getId()
+
             );
         }else{
             sensorBean.create(
@@ -50,7 +51,7 @@ public class VolumeService {
                     sensorDTO.getBateria(),
                     sensorDTO.getValMax(),
                     sensorDTO.getValMin(),
-                    id
+                    sensorDTO.getEmbalagem().getId()
             );
         }
 
