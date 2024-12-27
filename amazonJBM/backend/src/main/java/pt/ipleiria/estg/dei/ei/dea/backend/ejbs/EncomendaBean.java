@@ -9,6 +9,7 @@ import jakarta.ws.rs.Path;
 import org.hibernate.Hibernate;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.EncomendasDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.UtilizadorDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.VolumeDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
 
@@ -36,10 +37,11 @@ public class EncomendaBean {
     public Encomenda create(String client_username, String estado, LocalDateTime data_expedicao, LocalDateTime data_entrega) {
 
         Cliente cliente = clienteBean.find(client_username);
-
+        //TODO -> se o cliente nao existir
         Encomenda encomenda = new Encomenda(cliente,estado,data_expedicao,data_entrega);
         em.persist(encomenda);
         em.flush();
+
         return encomenda;
     }
 
@@ -62,7 +64,7 @@ public class EncomendaBean {
     public Encomenda find(int id) {
         var encomenda = em.find(Encomenda.class, id);
         if (encomenda == null) {
-            throw new NoSuchElementException("Encomenda com ID " + id + " não encontrado.");
+            throw new NoSuchElementException("Encomenda com ID " + id + " não encontrada.");
         }
         Hibernate.initialize(encomenda);
         return encomenda;
@@ -72,19 +74,29 @@ public class EncomendaBean {
 
         var encomenda = em.find(Encomenda.class, id);
 
-        //TODO -> Ver se a encomenda pertence ao utilizador
-
         return encomenda;
     }
 
-    public List<Encomenda> findEncomendasByEstado(String estado) {
+    public List<Encomenda> findEncomendasByEstado(String estado, Utilizador user) {
         List<Encomenda> encomendasFiltradas = new ArrayList<>();
         List<Encomenda> todasEncomendas = em.createNamedQuery("getAllEncomendas", Encomenda.class).getResultList();
-        for (Encomenda encomenda : todasEncomendas) {
-            if (encomenda.getEstado().equals(estado)){
-                encomendasFiltradas.add(encomenda);
+
+        if(user.isCliente()){
+            for (Encomenda encomenda : todasEncomendas) {
+                if (encomenda.getEstado().equals(estado) && encomenda.getCliente().getUsername().equals(user.getUsername())){
+                    encomendasFiltradas.add(encomenda);
+                }
             }
         }
+        else{
+            for (Encomenda encomenda : todasEncomendas) {
+                if (encomenda.getEstado().equals(estado)){
+                    encomendasFiltradas.add(encomenda);
+                }
+            }
+        }
+
+
         return encomendasFiltradas;
     }
 

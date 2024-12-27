@@ -32,8 +32,8 @@ public class AlertaBean {
     }
 
 
-    public List<Alerta> getEncomendasAlertas() {
-        List<Encomenda> encomendasPorEntregar = encomendaBean.findEncomendasByEstado("PorEntregar");
+    public List<Alerta> getEncomendasAlertas(Utilizador user) {
+        List<Encomenda> encomendasPorEntregar = encomendaBean.findEncomendasByEstado("PorEntregar", user);
 
         List<Integer> encomendaIds = encomendasPorEntregar.stream()
                 .map(Encomenda::getId)
