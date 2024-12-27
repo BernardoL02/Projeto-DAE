@@ -15,16 +15,23 @@ const username = route.params.username;
 
 const tableData = ref([]);
 const tableTitles = ['ID Encomenda', 'Data de Expedição', 'Data de Entrega', 'Estado'];
+const encomendas = ref(null);
+
 const mostrarAlertasModal = ref(false);
 const alertasData = ref([]);
 
 const authStore = useAuthStore()
 
-const { data, error } = await useFetch(`${api}/encomendas`, {
-  headers: {
-    Authorization: `Bearer ${authStore.token}`
-  }
-})
+onMounted(async () => {
+
+  const { data, error } = await useFetch(`${api}/encomendas`, {
+    headers: {
+      Authorization: `Bearer ${authStore.token}`
+    }
+  })
+
+  encomendas.value = data.value
+});
 
 const formateEstado = (estado) => {
 
@@ -40,9 +47,9 @@ const formateEstado = (estado) => {
 
 
 watchEffect(() => {
-  if (data.value) {
+  if (encomendas.value) {
 
-    const fetchedData = data.value;
+    const fetchedData = encomendas.value;
 
     tableData.value = fetchedData.map(order => [
       order.id,

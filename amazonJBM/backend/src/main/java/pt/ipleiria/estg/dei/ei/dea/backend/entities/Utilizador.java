@@ -70,4 +70,8 @@ public class Utilizador {
     public String getRole() {
         return this.getClass().getSimpleName();
     }
+
+    public boolean isCliente() {
+        return this.getRole().equals("Cliente");
+    }
 }

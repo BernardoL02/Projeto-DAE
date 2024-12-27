@@ -220,6 +220,13 @@ Content-Type: application/json
 }
 
 
+
+
+
+
+
+
+
 #########################################################################
 ######################### Novos Endpoints ###############################
 #########################################################################
@@ -384,3 +391,8 @@ Accept: application/json
 GET http://localhost:3001/backend/api/auth/user
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTIyNTg3NiwiZXhwIjoxNzM1MjI5NDc2fQ.D5vp08BndFDGMP2gLTYWbJjKy-CDJDROpK4Tg75FwjHbgmR2HocGg5qSUTK4cbSv
+
+### Get Encomenda Por Id
+GET http://localhost:3001/backend/api/encomendas/1
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTI5MzM3OSwiZXhwIjoxNzM1Mjk2OTc5fQ.h26yN2e6XwKqezA-bqEmr4Jn0vwgLrf27jZovbaIJDJrCHPmXd-vrfVkyCogyePs

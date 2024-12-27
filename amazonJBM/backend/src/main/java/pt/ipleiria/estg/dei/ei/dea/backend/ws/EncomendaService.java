@@ -1,5 +1,6 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.ws;
 
+import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
@@ -10,6 +11,7 @@ import jakarta.ws.rs.core.SecurityContext;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Alerta;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Cliente;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Utilizador;
 import pt.ipleiria.estg.dei.ei.dea.backend.security.Authenticated;
@@ -21,7 +23,7 @@ import java.util.stream.Collectors;
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
 @Authenticated
-@RolesAllowed({"Gestor", "Cliente"})
+@PermitAll
 public class EncomendaService {
 
     @Context
@@ -47,6 +49,7 @@ public class EncomendaService {
 
     @GET
     @Path("/")
+    @RolesAllowed({"Gestor", "Cliente", "Logista"})
     public Response getAllEncomendas() {
         Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
 
@@ -56,6 +59,7 @@ public class EncomendaService {
 
     @POST
     @Path("/")
+    @RolesAllowed({"Logista"})
     public Response criarEncomenda(CreateEncomendaDTO encomendasDTO) {
         Encomenda encomenda = encomendaBean.create(
                 encomendasDTO.getUsername(),
@@ -71,9 +75,16 @@ public class EncomendaService {
 
     @GET
     @Path("/{id}")
+    @RolesAllowed({"Gestor", "Cliente", "Logista"})
     public Response getEncomendasById(@PathParam("id") int id) {
-        //TODO -> Saber qual a role do user que faz o pedido
+        Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
+
         var encomenda = encomendaBean.findEncomendaById(id);
+
+        if (user.isCliente() && !encomenda.getCliente().getUsername().equals(user.getUsername())) {
+            return Response.status(Response.Status.FORBIDDEN).entity("Apenas pode ver os detalhes de encomendas que lhe pertencem.").build();
+        }
+
         return Response.ok(ResEncomendaDetalhesDTO.from(encomenda,"SO")).build();
     }
 
@@ -86,8 +97,11 @@ public class EncomendaService {
 
     @GET
     @Path("estado/{estado}")
+    @RolesAllowed({"Gestor", "Cliente", "Logista"})
     public Response getEncomendaByEstado(@PathParam("estado") String estado) {
-        List<Encomenda> encomendas = encomendaBean.findEncomendasByEstado(estado);
+        Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
+
+        List<Encomenda> encomendas = encomendaBean.findEncomendasByEstado(estado, user);
         return Response.ok( ResEncomendaEstadoDTO.from(encomendas)).build();
     }
 
@@ -113,7 +127,9 @@ public class EncomendaService {
     @GET
     @Path("/alertas")
     public Response getEncomendasAlertas() {
-        List<Alerta> alertas = alertaBean.getEncomendasAlertas();
+        Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
+
+        List<Alerta> alertas = alertaBean.getEncomendasAlertas(user);
         return Response.ok(alertas.stream().map(ResEncomendasAlertasDTO::from).collect(Collectors.toList())).build();
     }
 
