@@ -85,7 +85,7 @@ public class EncomendaService {
             return Response.status(Response.Status.FORBIDDEN).entity("Apenas pode ver os detalhes de encomendas que lhe pertencem.").build();
         }
 
-        return Response.ok(ResEncomendaDetalhesDTO.from(encomenda,"SO")).build();
+        return Response.ok(/*ResEncomendaDetalhesDTO.from(encomenda,"SO")*/).build();
     }
 
     @PATCH

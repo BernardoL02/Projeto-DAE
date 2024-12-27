@@ -1,6 +1,5 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.dtos;
 
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Volume;
 
 import java.io.Serializable;
@@ -9,19 +8,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ResVolumeDetalhesDTO<T> implements Serializable { // Classe parametrizada com T
-    private int id;
-    private List<T> produtos = new ArrayList<>(); // Lista tipada com T
-    private Encomenda encomenda;
+    /*private int id;
+    private String nome_produto;
+    private List<T> sensores = new ArrayList<>(); // Lista tipada com T
+    private int quantidade;
 
-    public ResVolumeDetalhesDTO(int id, Encomenda encomenda) {
+    public ResVolumeDetalhesDTO(int id, String nome_produto, int quantidade) {
         this.id = id;
-        this.encomenda = encomenda;
-
-        if(produtos == null){
-            produtos = new ArrayList<>();
-        }
+        this.nome_produto = nome_produto;
+        this.quantidade = quantidade;
     }
 
+    // Getters e setters
     public int getId() {
         return id;
     }
@@ -30,37 +28,50 @@ public class ResVolumeDetalhesDTO<T> implements Serializable { // Classe paramet
         this.id = id;
     }
 
-    public List<T> getProdutos() {
-        return produtos;
+    public String getNome_produto() {
+        return nome_produto;
     }
 
-    public void setProdutos(List<T> produtos) {
-        this.produtos = produtos;
+    public void setNome_produto(String nome_produto) {
+        this.nome_produto = nome_produto;
     }
 
-    public Encomenda getEncomenda() {
-        return encomenda;
+    public List<T> getSensores() {
+        return sensores;
     }
 
-    public void setEncomenda(Encomenda encomenda) {
-        this.encomenda = encomenda;
+    public void setSensores(List<T> sensores) {
+        this.sensores = sensores;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
     }
 
     public static ResVolumeDetalhesDTO from(Volume volume, String frontEnd) {
 
-        List<ProdutoDTO> produtosDTOs = volume.getProdutos().stream().map(ProdutoDTO::from).collect(Collectors.toList());
-
         ResVolumeDetalhesDTO volumeDTO =  new ResVolumeDetalhesDTO(
                 volume.getId(),
-                volume.getEncomenda()
+                volume.getProduto().getNome(),
+                volume.getQuantidade()
         );
 
-        volumeDTO.setProdutos(produtosDTOs);
+        if(frontEnd.equalsIgnoreCase("SAC")){
+            List<ResSacSensorDetalhesDTO> sensorDTOs = volume.getSensores().stream().map(ResSacSensorDetalhesDTO::from).collect(Collectors.toList());
+            volumeDTO.setSensores(sensorDTOs);
+        }else{
+            List<ResSensorDetalhesDTO> sensorDTOs = volume.getSensores().stream().map(ResSensorDetalhesDTO::from).collect(Collectors.toList());
+            volumeDTO.setSensores(sensorDTOs);
+        }
 
         return volumeDTO;
     }
 
     public static List<ResVolumeDetalhesDTO> from(List<Volume> volumes, String frontEnd) {
         return volumes.stream().map(volume -> from(volume, frontEnd)).collect(Collectors.toList());
-    }
+    }*/
 }

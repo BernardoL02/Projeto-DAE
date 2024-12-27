@@ -4,7 +4,6 @@ import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import org.hibernate.Hibernate;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResSensorValorDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.SensorDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
@@ -53,7 +52,6 @@ public class SensorBean {
     public Sensor updateEstado(int id, SensorDTO sensorDTO) {
         Sensor sensor = em.find(Sensor.class, id);
 
-        Hibernate.initialize(sensor.getEmbalagem().getTipo().getTipoSensores());
         sensor.setEstado(sensorDTO.getEstado());
 
         em.merge(sensor);
