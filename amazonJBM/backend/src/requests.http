@@ -4,17 +4,17 @@
 #########################################################################
 
 ######################### Produtos Service ################################
-### GET All Ultimo Valor dos Sensores por Tipo
+### GET All Ultimo Valor dos Sensores por Tipo #
 GET http://localhost:3001/backend/api/produtos
 Accept: application/json
 
 ######################### Clientes Service ################################
-### GET All clientes
+### GET All clientes #
 GET http://localhost:3001/backend/api/clientes
 Accept: application/json
 
 ######################### Encomenda Service ################################
-### Get All Encomenda
+### Get All Encomenda #
 GET http://localhost:3001/backend/api/encomendas/
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTMyNTE2MCwiZXhwIjoxNzM1MzI4NzYwfQ.-oP2IsF8YR3kE9f98tOA6Q6BU5LI-JRkFQtK7DbeoZTTHBIAbtms1PF3f_Io8B3g
@@ -25,13 +25,15 @@ Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTMyNTE2MCwiZXhwIjoxNzM1MzI4NzYwfQ.-oP2IsF8YR3kE9f98tOA6Q6BU5LI-JRkFQtK7DbeoZTTHBIAbtms1PF3f_Io8B3g
 
 
-### Get All Encomendas por um determinado estado "PorEntregar" "Cancelada" "EmProcessamento" "Entregue"
+### Get All Encomendas por um determinado estado "PorEntregar" "Cancelada" "EmProcessamento" "Entregue" #
 GET http://localhost:3001/backend/api/encomendas/estado/PorEntregar
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTMyNTU3OSwiZXhwIjoxNzM1MzI5MTc5fQ.sLJvK5t8rzdYn0eQYlHggaNlDtvTUjVdFjw5gLIjmZ57b2hvo_3UIeAp9LCElSC4
 
-### Get Encomendas Pendentes
+### Get Encomendas Pendentes #
 GET http://localhost:3001/backend/api/encomendas/pendentes
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1MzI2MDg2LCJleHAiOjE3MzUzMjk2ODZ9.JL2tSOpAOErLxlSBq6aY27xVY3Rpca-Vl45L1oERFtXSZ3ppVWY1LR4Q-jL0FlmI
 
 ### Alterar estado de uma encomenda
 PATCH http://localhost:3001/backend/api/encomendas/1
@@ -75,13 +77,16 @@ Content-Type: application/json
   "quantidade": 2
 }
 
-### Get All Alertas de Encomenda por Id
+### Get All Alertas de Encomenda por Id #
 GET http://localhost:3001/backend/api/encomendas/1/alertas
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTMyNTU3OSwiZXhwIjoxNzM1MzI5MTc5fQ.sLJvK5t8rzdYn0eQYlHggaNlDtvTUjVdFjw5gLIjmZ57b2hvo_3UIeAp9LCElSC4
 
 ### GET Ver Alertas de encomendas (PorEntregar)
 GET http://localhost:3001/backend/api/encomendas/alertas
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTMyNTU3OSwiZXhwIjoxNzM1MzI5MTc5fQ.sLJvK5t8rzdYn0eQYlHggaNlDtvTUjVdFjw5gLIjmZ57b2hvo_3UIeAp9LCElSC4
+
 
 ### Get Coordenadas Volumes
 GET http://localhost:3001/backend/api/encomendas/1/coordenadas
@@ -107,11 +112,11 @@ Content-Type: application/json
 
 ################################ Sensor Service ################################
 
-### Get All sensores
+### Get All sensores #
 GET http://localhost:3001/backend/api/sensor/
 Accept: application/json
 
-### Criar um alerta
+### Criar um alerta #
 POST http://localhost:3001/backend/api/sensor/
 Accept: application/json
 Content-Type: application/json
@@ -123,7 +128,7 @@ Content-Type: application/json
   "id_volume": 4
 }
 
-### Patch Sensor Estado
+### Patch Sensor Estado #
 PATCH http://localhost:3001/backend/api/sensor/2/desativar
 Accept: application/json
 Content-Type: application/json
@@ -132,7 +137,7 @@ Content-Type: application/json
   "estado": "inativo"
 }
 
-### Patch Sensor Valor
+### Patch Sensor Valor #
 PATCH http://localhost:3001/backend/api/sensor/1
 Accept: application/json
 Content-Type: application/json
@@ -142,33 +147,28 @@ Content-Type: application/json
   "bateria": 72
 }
 
-### Get All Tipos de Sensor
+### Get All Tipos de Sensor #
 GET http://localhost:3001/backend/api/sensor/tipos
 Accept: application/json
 
-### GET All Ultimo Valor dos Sensores por Tipo
+### GET All Ultimo Valor dos Sensores por Tipo #
 GET http://localhost:3001/backend/api/sensor/Temperatura
 Accept: application/json
 
-### GET Ver Alertas de um sensor
+### GET Ver Alertas de um sensor #
 GET http://localhost:3001/backend/api/sensor/1/alertas
 Accept: application/json
 
 ################################ End Points Login ################################
 
-### REQUEST JWT TOKEN
+### REQUEST JWT TOKEN #
 POST http://localhost:3001/backend/api/auth/login
 Content-Type: application/json
 Accept: application/json
 
-{ "username": "Bernardo", "password": "123" }
+{ "username": "Delgado", "password": "123" }
 
-### GET User Info
+### GET User Info #
 GET http://localhost:3001/backend/api/auth/user
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTI5NDQzNCwiZXhwIjoxNzM1Mjk4MDM0fQ.-Ut1d90PcHyx2Z8H0UzA4seyTNaut2QDq9C9helMowxhJRHGng8ax1x6ETDh6SPG
-
-### Get Encomenda Por Id
-GET http://localhost:3001/backend/api/encomendas/7
-Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTMyNTE2MCwiZXhwIjoxNzM1MzI4NzYwfQ.-oP2IsF8YR3kE9f98tOA6Q6BU5LI-JRkFQtK7DbeoZTTHBIAbtms1PF3f_Io8B3g
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTMyNTU3OSwiZXhwIjoxNzM1MzI5MTc5fQ.sLJvK5t8rzdYn0eQYlHggaNlDtvTUjVdFjw5gLIjmZ57b2hvo_3UIeAp9LCElSC4
