@@ -9,6 +9,7 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.SecurityContext;
+import org.hibernate.Hibernate;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
@@ -64,20 +65,23 @@ public class EncomendaService {
         Response encomendaResponse = encomendaBean.create(
                 encomendasDTO.getUsername(),
                 encomendasDTO.getVolumes(),
-                encomendasDTO.getEstado(),
                 encomendasDTO.getData_expedicao()
         );
 
         return encomendaResponse;
     }
 
-   /* @GET
+    @GET
     @Path("/{id}")
     @RolesAllowed({"Gestor", "Cliente", "Logista"})
     public Response getEncomendasById(@PathParam("id") int id) {
         Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
 
         var encomenda = encomendaBean.findEncomendaById(id);
+
+        if(encomenda == null) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Encomenda não encontrado!").build();
+        }
 
         if (user.isCliente() && !encomenda.getCliente().getUsername().equals(user.getUsername())) {
             return Response.status(Response.Status.FORBIDDEN).entity("Apenas pode ver os detalhes de encomendas que lhe pertencem.").build();
@@ -86,13 +90,23 @@ public class EncomendaService {
         return Response.ok(ResEncomendaDetalhesDTO.from(encomenda,"SO")).build();
     }
 
+
     @PATCH
     @Path("/{id}")
     public Response mudarEstadoEncomenda(@PathParam("id") int id, EncomendasDTO encomendasDTO) {
-        encomendaBean.mudarEstadoEncomenda(id,encomendasDTO.getEstado());
+
+        Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
+
+        if(user.isCliente() && !encomendasDTO.getEstado().equals("Cancelada")){
+            return Response.ok("Apenas pode mudar estado de encomendas para cancelada").build();
+        }
+
+        encomendaBean.mudarEstadoEncomenda(id, encomendasDTO.getEstado(), user);
+
         return Response.ok("Estado da encomenda " + id + " alterado com sucesso para " + encomendasDTO.getEstado()).build();
     }
 
+    /*
     @GET
     @Path("estado/{estado}")
     @RolesAllowed({"Gestor", "Cliente", "Logista"})

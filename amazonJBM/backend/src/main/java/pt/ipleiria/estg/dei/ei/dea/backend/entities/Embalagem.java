@@ -17,7 +17,7 @@ public class Embalagem {
     @NotNull
     private Produto produto;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_volume", nullable = false)
     private Volume volume;
 

@@ -32,9 +32,7 @@ public class ProdutoBean {
 
     public Produto find(int id) {
         var produto = em.find(Produto.class, id);
-        if (produto == null) {
-            throw new NoSuchElementException("Produto com ID " + id + " não encontrado.");
-        }
+
         return produto;
     }
 }

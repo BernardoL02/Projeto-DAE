@@ -4,6 +4,8 @@ import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.VolumeDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Categoria;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Embalagem;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
@@ -144,31 +146,99 @@ public class ConfigBean {
         produtoBean.create(35, "Aparafusadora", 12, 10);
         produtoBean.create(36, "Caixote Do Lixo", 12, 4);
 
-        /*
-        // Encomendas e Volumes
-        encomendaBean.create("Bernardo", "PorEntregar", LocalDateTime.of(2024, 10, 29, 15, 30), LocalDateTime.of(2024, 10, 29, 15, 30));
-        volumeBean.create(3, 5, 1);
-        volumeBean.create(31, 1, 1);
 
-        encomendaBean.create("Tendeiro", "Entregue", LocalDateTime.of(2024, 10, 29, 15, 30), LocalDateTime.of(2024, 10, 29, 15, 30));
-        volumeBean.create(35, 1, 2);
-        volumeBean.create(29, 1, 2);
+        ///////////////////////Criar Encomendas e Volumes
+        ///////// Criar Encomenda para Bernardo
+            List<VolumeDTO> volumesBernardo1 = new ArrayList<>();
+            // Volume 1
+                    VolumeDTO volume1Bernardo1 = new VolumeDTO();
+                    List<ProdutoDTO> produtosVolume1Bernardo1 = new ArrayList<>();
+                    produtosVolume1Bernardo1.add(new ProdutoDTO(5, 10));
+                    produtosVolume1Bernardo1.add(new ProdutoDTO(1, 10));
+                    volume1Bernardo1.setProdutos(produtosVolume1Bernardo1);
+                    volumesBernardo1.add(volume1Bernardo1);
+            // Volume 2
+                    VolumeDTO volume2Bernardo1 = new VolumeDTO();
+                    List<ProdutoDTO> produtosVolume2Bernardo1 = new ArrayList<>();
+                    produtosVolume2Bernardo1.add(new ProdutoDTO(10, 10));
+                    volume2Bernardo1.setProdutos(produtosVolume2Bernardo1);
+                    volumesBernardo1.add(volume2Bernardo1);
+            // Encomenda
+                    encomendaBean.create("Bernardo", volumesBernardo1, LocalDateTime.of(2024, 10, 31, 10, 0));
 
-        encomendaBean.create("Sousa", "PorEntregar", LocalDateTime.of(2024, 11, 2, 12, 0), LocalDateTime.of(2024, 11, 2, 12, 30));
-        volumeBean.create(25, 2, 3);
-        volumeBean.create(13, 1, 3);
+        ///////// Criar Encomenda para Tendeiro
+            List<VolumeDTO> volumesTendeiro = new ArrayList<>();
+            // Volume 1
+                    VolumeDTO volume1Tendeiro = new VolumeDTO();
+                    List<ProdutoDTO> produtosVolume1Tendeiro = new ArrayList<>();
+                    produtosVolume1Tendeiro.add(new ProdutoDTO(1, 10));
+                    produtosVolume1Tendeiro.add(new ProdutoDTO(2, 10));
+                    volume1Tendeiro.setProdutos(produtosVolume1Tendeiro);
+                    volumesTendeiro.add(volume1Tendeiro);
+            // Volume 2
+                    VolumeDTO volume2Tendeiro = new VolumeDTO();
+                    List<ProdutoDTO> produtosVolume2Tendeiro = new ArrayList<>();
+                    produtosVolume2Tendeiro.add(new ProdutoDTO(1, 10));
+                    produtosVolume2Tendeiro.add(new ProdutoDTO(2, 10));
+                    volume2Tendeiro.setProdutos(produtosVolume2Tendeiro);
+                    volumesTendeiro.add(volume2Tendeiro);
+            // Encomenda
+            encomendaBean.create("Tendeiro", volumesTendeiro, LocalDateTime.of(2024, 10, 31, 10, 0));
 
-        encomendaBean.create("Bernardo", "EmProcessamento", LocalDateTime.of(2024, 10, 29, 15, 30), LocalDateTime.of(2024, 10, 29, 15, 30));
-        volumeBean.create(3, 5, 4);
-        volumeBean.create(6, 1, 4);
+        ///////// Criar Encomenda para Sousa
+            List<VolumeDTO> volumesSousa = new ArrayList<>();
+            // Volume 1
+                    VolumeDTO volume1Sousa = new VolumeDTO();
+                    List<ProdutoDTO> produtosVolume1Sousa = new ArrayList<>();
+                    produtosVolume1Sousa.add(new ProdutoDTO(25, 2));
+                    volume1Sousa.setProdutos(produtosVolume1Sousa);
+                    volumesSousa.add(volume1Sousa);
 
-        encomendaBean.create("Ferreira", "EmProcessamento", LocalDateTime.of(2023, 10, 29, 15, 30), LocalDateTime.of(2023, 10, 29, 15, 30));
-        volumeBean.create(8, 2, 5);
-        volumeBean.create(16, 1, 5);
+            // Volume 2
+                    VolumeDTO volume2Sousa = new VolumeDTO();
+                    List<ProdutoDTO> produtosVolume2Sousa = new ArrayList<>();
+                    produtosVolume2Sousa.add(new ProdutoDTO(13, 1));
+                    volume2Sousa.setProdutos(produtosVolume2Sousa);
+                    volumesSousa.add(volume2Sousa);
+            // Encomenda
+            encomendaBean.create("Sousa", volumesSousa, LocalDateTime.of(2024, 11, 2, 12, 0));
 
-        encomendaBean.create("Ferreira", "Cancelada", LocalDateTime.of(2023, 10, 29, 15, 30), LocalDateTime.of(2023, 10, 29, 15, 30));
-        volumeBean.create(12, 1, 6);
-        */
+        ///////// Criar Encomenda para Bernardo
+            List<VolumeDTO> volumesBernardo2 = new ArrayList<>();
+            // Volume 1
+                    VolumeDTO volume1Bernardo2 = new VolumeDTO();
+                    List<ProdutoDTO> produtosVolume1Bernardo2 = new ArrayList<>();
+                    produtosVolume1Bernardo2.add(new ProdutoDTO(5, 10));
+                    produtosVolume1Bernardo2.add(new ProdutoDTO(1, 10));
+                    volume1Bernardo2.setProdutos(produtosVolume1Bernardo2);
+                    volumesBernardo2.add(volume1Bernardo2);
+            // Volume 2
+                    VolumeDTO volume2Bernardo2 = new VolumeDTO();
+                    List<ProdutoDTO> produtosVolume2Bernardo2 = new ArrayList<>();
+                    produtosVolume2Bernardo2.add(new ProdutoDTO(10, 10));
+                    volume2Bernardo2.setProdutos(produtosVolume2Bernardo2);
+                    volumesBernardo2.add(volume2Bernardo2);
+            // Encomenda
+            encomendaBean.create("Bernardo", volumesBernardo2, LocalDateTime.of(2024, 10, 31, 10, 0));
+
+        ///////// Criar Encomenda para Ferreira
+            List<VolumeDTO> volumesFerreira = new ArrayList<>();
+            // Volume 1
+                    VolumeDTO volume1Ferreira = new VolumeDTO();
+                    List<ProdutoDTO> produtosVolume1Ferreira = new ArrayList<>();
+                    produtosVolume1Ferreira.add(new ProdutoDTO(8, 2));
+                    volume1Ferreira.setProdutos(produtosVolume1Ferreira);
+                    volumesFerreira.add(volume1Ferreira);
+            // Volume 2
+                    VolumeDTO volume2Ferreira = new VolumeDTO();
+                    List<ProdutoDTO> produtosVolume2Ferreira = new ArrayList<>();
+                    produtosVolume2Ferreira.add(new ProdutoDTO(16, 1));
+                    volume2Ferreira.setProdutos(produtosVolume2Ferreira);
+                    volumesFerreira.add(volume2Ferreira);
+            // Encomenda
+            encomendaBean.create("Ferreira", volumesFerreira, LocalDateTime.of(2023, 10, 29, 15, 30));
+
+
 
         // Tipos de Sensores
         tipoSensoresBean.create(1, "Temperatura");
@@ -176,17 +246,17 @@ public class ConfigBean {
         tipoSensoresBean.create(3, "Pressão Atmosférica");
         tipoSensoresBean.create(4, "GPS");
 
-        /*// Sensores
+        // Sensores
         //Encomenda 1
         sensorBean.create("29.0", 1, "ativo", 100, 30, 10, 1);
-        sensorBean.create("39.7344200469475, -8.821063143811228", 4, "ativo", 100, 1);
+        sensorBean.create("39.7344200469475, -8.821063143811228", 4, "ativo", 100, 3);
         sensorBean.create("39.73965392397057, -8.818502730615972", 4, "ativo", 100, 2);
         sensorBean.create("1000", 3, "ativo", 80, 1015, 980, 2);
         //Encomenda 2
-        sensorBean.create("39.73513810246074, -8.799701988029124", 4, "inativo", 5, 3);
-        sensorBean.create("1000", 3, "inativo", 100, 1015, 980,3);
-        sensorBean.create("39.74986926478417, -8.808952733780515", 4, "inativo", 88, 4);
-        sensorBean.create("25", 2, "inativo", 88, 30, 5, 4);
+        sensorBean.create("39.73513810246074, -8.799701988029124", 4, "ativo", 5, 3);
+        sensorBean.create("1000", 3, "ativo", 100, 1015, 980,3);
+        sensorBean.create("39.74986926478417, -8.808952733780515", 4, "ativo", 88, 4);
+        sensorBean.create("25", 2, "ativo", 88, 30, 5, 4);
         //Encomenda 3
         sensorBean.create("21.0", 1, "ativo", 99, 35, 10, 5);
         sensorBean.create("1000", 3, "ativo", 80, 1015, 980, 5);
@@ -194,8 +264,8 @@ public class ConfigBean {
         sensorBean.create("39.60047246334607, -9.073144176554514", 4, "ativo", 100, 6);
         sensorBean.create("20", 2, "ativo", 100,30, 5, 6);
         //Encomenda 6
-        sensorBean.create("25.0", 1, "inativo", 90, 30, 15, 11);
-        sensorBean.create("39.362060990104126, -9.374644032197038", 4, "inativo", 100, 11);
+        sensorBean.create("25.0", 1, "ativo", 90, 30, 15, 11);
+        sensorBean.create("39.362060990104126, -9.374644032197038", 4, "ativo", 100, 11);
 
 
         // Alertas
@@ -212,7 +282,6 @@ public class ConfigBean {
         alertaBean.create("Valor acima do limite máximo (1015) para o sensor Pressão Atmosférica", 4, "1016", 3);
         alertaBean.create("Valor abaixo do limite mínimo (980) para o sensor Pressão Atmosférica", 4, "975", 3);
 
-*/
     }
 
 }

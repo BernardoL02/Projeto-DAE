@@ -9,25 +9,27 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ResSensorAllDTO implements Serializable {
-/*
+
     private int id;
     private String valor;
     private String tipoNome;
     private String estado;
     private int bateria;
     private LocalDateTime timeStamp;
+    private int idEmbalagem;
     private int idVolume;
     private int idEncomenda;
     private Integer valMax;
     private Integer valMin;
 
-    public ResSensorAllDTO(int id, String valor, String tipoNome, String estado, int bateria, LocalDateTime timeStamp, int idVolume, int idEncomenda, Integer valMax, Integer valMin) {
+    public ResSensorAllDTO(int id, String valor, String tipoNome, String estado, int bateria, LocalDateTime timeStamp, int idEmbalagem ,int idVolume, int idEncomenda, Integer valMax, Integer valMin) {
         this.id = id;
         this.valor = valor;
         this.tipoNome = tipoNome;
         this.estado = estado;
         this.bateria = bateria;
         this.timeStamp = timeStamp;
+        this.idEmbalagem = idEmbalagem;
         this.idVolume = idVolume;
         this.idEncomenda = idEncomenda;
         this.valMax = valMax;
@@ -86,6 +88,14 @@ public class ResSensorAllDTO implements Serializable {
         this.timeStamp = timeStamp;
     }
 
+    public int getIdEmbalagem() {
+        return idEmbalagem;
+    }
+
+    public void setIdEmbalagem(int idEmbalagem) {
+        this.idEmbalagem = idEmbalagem;
+    }
+
     public int getIdVolume() {
         return idVolume;
     }
@@ -126,8 +136,9 @@ public class ResSensorAllDTO implements Serializable {
                 sensor.getEstado(),
                 sensor.getBateria(),
                 sensor.getTimeStamp(),
-                sensor.getVolume().getId(),
-                sensor.getVolume().getEncomenda().getId(),
+                sensor.getEmbalagem().getId(),
+                sensor.getEmbalagem().getVolume().getId(),
+                sensor.getEmbalagem().getVolume().getEncomenda().getId(),
                 sensor.getValMax(),
                 sensor.getValMin()
         );
@@ -136,5 +147,5 @@ public class ResSensorAllDTO implements Serializable {
     public static List<ResSensorAllDTO> from(List<Sensor> sensors) {
         return sensors.stream().map(ResSensorAllDTO::from).collect(Collectors.toList());
     }
-    */
+
 }

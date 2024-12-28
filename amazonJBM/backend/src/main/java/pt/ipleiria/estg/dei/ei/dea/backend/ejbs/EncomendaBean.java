@@ -35,30 +35,42 @@ public class EncomendaBean {
     @EJB
     private VolumeBean volumeBean;
 
-    public Response create(String client_username, List<VolumeDTO> volumes, String estado, LocalDateTime data_expedicao) {
+    public Response create(String client_username, List<VolumeDTO> volumes, LocalDateTime data_expedicao) {
         Cliente cliente = clienteBean.find(client_username);
 
         if(cliente == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("Cliente não encontrado!").build();
-
         }
 
-        Encomenda encomenda = new Encomenda(cliente,estado,data_expedicao);
+        for(VolumeDTO volume: volumes) {
+            for (ProdutoDTO produto : volume.getProdutos()) {
+                Produto produto1 = em.find(Produto.class, produto.getId());
+
+                if(produto1 == null){
+                    return Response.status(Response.Status.NOT_FOUND).entity("Produto não encontrado!").build();
+                }
+            }
+        }
+
+        Encomenda encomenda = new Encomenda(cliente,data_expedicao);
         em.persist(encomenda);
 
-            for(VolumeDTO volume: volumes) {
-                Volume volume1 = new Volume(encomenda);
-                em.persist(volume1);
-                for (ProdutoDTO produto : volume.getProdutos()) {
-                    Produto produto1 = em.find(Produto.class, produto.getId());
-                    Embalagem embalagem = new Embalagem(produto1, volume1, produto.getQuantidade_de_produtos_comprados());
-                    volume1.addEmbalagem(embalagem);
-                    em.persist(embalagem);
-                }
-                encomenda.addVolume(volume1);
+        for(VolumeDTO volume: volumes) {
+            Volume volume1 = new Volume(encomenda);
+            em.persist(volume1);
+
+            for (ProdutoDTO produto : volume.getProdutos()) {
+                Produto produto1 = em.find(Produto.class, produto.getId());
+                Embalagem embalagem = new Embalagem(produto1, volume1, produto.getQuantidade_de_produtos_comprados());
+                em.persist(embalagem);
+
+                volume1.addEmbalagem(embalagem);
+            }
+
+            encomenda.addVolume(volume1);
         }
 
-        return Response.ok("Encomenda criada com sucesso com ID: " + encomenda.getId()).build();
+        return Response.ok("Encomenda criada com sucesso.").build();
     }
 
     public List<Encomenda> findAll(Utilizador user) {
@@ -79,10 +91,8 @@ public class EncomendaBean {
 
     public Encomenda find(int id) {
         var encomenda = em.find(Encomenda.class, id);
-        if (encomenda == null) {
-            throw new NoSuchElementException("Encomenda com ID " + id + " não encontrada.");
-        }
         Hibernate.initialize(encomenda);
+
         return encomenda;
     }
 
@@ -112,7 +122,6 @@ public class EncomendaBean {
             }
         }
 
-
         return encomendasFiltradas;
     }
 
@@ -129,34 +138,39 @@ public class EncomendaBean {
     }
 
 
-    public void mudarEstadoEncomenda(int id, String estado) {
-        //Todo
-        /*
-        var encomenda = this.find(id);
+    public Response mudarEstadoEncomenda(int id, String estado, Utilizador user) {
 
+        var encomenda = this.find(id);
         if (encomenda == null) {
-            throw new EntityNotFoundException("Encomenda com ID " + id + " não encontrada.");
+            return Response.status(Response.Status.NOT_FOUND).entity("Encomenda não encontrada!").build();
         }
 
+        Cliente cliente = em.find(Cliente.class, user.getUsername());
+        Hibernate.initialize(cliente.getEncomendas());
+        Encomenda isMinha = cliente.getEncomenda(id);
+
+        if(isMinha == null){
+            return Response.status(Response.Status.BAD_REQUEST).entity("A encomenda não te pertence!").build();
+        }
         encomenda.setEstado(estado);
 
-        if(estado.equalsIgnoreCase("Entregue")){
+        if(estado.equalsIgnoreCase("Entregue") || estado.equalsIgnoreCase("Cancelada")){
 
-            List<Volume> volumes = encomenda.getVolumes();
+            if(estado.equalsIgnoreCase("Entregue")){
+                encomenda.setData_entrega(LocalDateTime.now());
+            }
 
-            for (Volume volume : volumes) {
-                for(Sensor sensor : volume.getSensores()){
-                    sensor.setEstado("inativo");
+            for(Volume volume : encomenda.getVolumes()){
+                for(Embalagem embalagem : volume.getEmbalagens()){
+                    for(Sensor sensor : embalagem.getSensores()){
+                        sensor.setEstado("inativo");
+                    }
                 }
             }
         }
 
-        try {
-            em.merge(encomenda);
-        } catch (Exception e) {
-            throw new PersistenceException("Erro ao atualizar encomenda.", e);
-        }
-        */
+        em.merge(encomenda);
+        return Response.ok("Estado da encomenda " + encomenda.getId() + " modificado para " + estado).build();
     }
 
     public void gerarVolumes(int id_encomenda,List<ProdutoDTO> produtos){

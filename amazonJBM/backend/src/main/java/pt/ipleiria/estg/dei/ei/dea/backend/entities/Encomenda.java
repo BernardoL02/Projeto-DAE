@@ -28,7 +28,7 @@ public class Encomenda extends Versionable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
@@ -38,12 +38,12 @@ public class Encomenda extends Versionable{
 
     private LocalDateTime data_entrega;
 
-    @OneToMany( fetch = FetchType.EAGER,mappedBy="encomenda")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="encomenda")
     private List<Volume> volumes = new ArrayList<>();
 
-    public Encomenda(Cliente cliente, String estado, LocalDateTime data_expedicao) {
+    public Encomenda(Cliente cliente, LocalDateTime data_expedicao) {
         this.cliente = cliente;
-        this.estado = estado;
+        this.estado = "EmProcessamento";
         this.data_expedicao = data_expedicao;
 
         if(volumes == null) {

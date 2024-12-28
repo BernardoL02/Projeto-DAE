@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class EncomendasDTO implements Serializable {
 
-    /*
+
     private int id;
 
     //Atributos do Cliente
@@ -113,5 +113,5 @@ public class EncomendasDTO implements Serializable {
     public void setVolumes(List<VolumeDTO> volumes) {
         this.volumes = volumes;
     }
-     */
+
 }

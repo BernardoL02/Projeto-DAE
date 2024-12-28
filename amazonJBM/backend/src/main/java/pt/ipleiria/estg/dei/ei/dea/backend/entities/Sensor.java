@@ -42,7 +42,7 @@ public class Sensor {
     @Column(name = "time_stamp")
     private LocalDateTime timeStamp;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_embalagem", nullable = false)
     private Embalagem embalagem;
 

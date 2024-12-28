@@ -53,16 +53,12 @@ public class SensorBean {
 
 
     public Sensor updateEstado(int id, SensorDTO sensorDTO) {
-       /*
         Sensor sensor = em.find(Sensor.class, id);
 
         sensor.setEstado(sensorDTO.getEstado());
 
         em.merge(sensor);
         return sensor;// TODO: tratar possiveis erros de o sensor nao existir
-
-        */
-        return null;
     }
 
     public Sensor updateValor(int id, SensorDTO sensorDTO) {

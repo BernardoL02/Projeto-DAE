@@ -13,14 +13,12 @@ import java.util.stream.Collectors;
 public class CreateEncomendaDTO implements Serializable {
 
     private String username;
-    private String estado;
     private LocalDateTime data_expedicao;
     @JsonProperty("volumes")
     private List<VolumeDTO> volumes = new ArrayList<>();
 
-    public CreateEncomendaDTO( String username, String estado, LocalDateTime data_expedicao, List<VolumeDTO> volumes) {
+    public CreateEncomendaDTO( String username, LocalDateTime data_expedicao, List<VolumeDTO> volumes) {
         this.username = username;
-        this.estado = estado;
         this.data_expedicao = data_expedicao;
         this.volumes = volumes;
     }
@@ -35,14 +33,6 @@ public class CreateEncomendaDTO implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
     }
 
     public LocalDateTime getData_expedicao() {
@@ -78,7 +68,6 @@ public class CreateEncomendaDTO implements Serializable {
 
         return new CreateEncomendaDTO(
                 encomenda.getCliente().getUsername(),
-                encomenda.getEstado(),
                 encomenda.getData_expedicao(),
                 volumesDTO
         );
@@ -86,18 +75,6 @@ public class CreateEncomendaDTO implements Serializable {
 
     public static List<CreateEncomendaDTO> from(List<Encomenda> encomendas) {
         return encomendas.stream().map(CreateEncomendaDTO::from).collect(Collectors.toList());
-    }
-
-    public String toString() {
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("Estado: ").append(estado).append("\n");
-        sb.append("Username: ").append(username).append("\n");
-        sb.append("Data de Expedição: ").append(data_expedicao).append("\n");
-        sb.append("Volumes: ").append(volumes.size()).append("\n");
-
-        // Retorna a string concatenada
-        return sb.toString();
     }
 
 
