@@ -34,25 +34,23 @@ public class EncomendaBean {
     @EJB
     private VolumeBean volumeBean;
 
-    public Encomenda create(String client_username, List<Integer> id_produtos, String estado, LocalDateTime data_expedicao, int quantidade_volumes) {
+    public Encomenda create(String client_username, List<VolumeDTO> volumes, String estado, LocalDateTime data_expedicao) {
         //TODO -> se o cliente nao existir
         Cliente cliente = clienteBean.find(client_username);
         Encomenda encomenda = new Encomenda(cliente,estado,data_expedicao);
-
-        while (quantidade_volumes > 0) {
-            Volume volume = volumeBean.create(encomenda.getId());
-
-            for(Integer id_produto : id_produtos){
-                Produto produto = em.find(Produto.class, id_produto);
-
-                Embalagem embalagem = new Embalagem(produto,volume,10);
-            }
-
-            quantidade_volumes--;
-        }
-
         em.persist(encomenda);
-        em.flush();
+
+        for(VolumeDTO volume: volumes) {
+            Volume volume1 = new Volume(encomenda);
+            em.persist(volume1);
+            for (ProdutoDTO produto : volume.getProdutos()) {
+                Produto produto1 = em.find(Produto.class, produto.getId());
+                Embalagem embalagem = new Embalagem(produto1, volume1, produto.getQuantidade_de_produtos_comprados());
+                volume1.addEmbalagem(embalagem);
+                em.persist(embalagem);
+            }
+            encomenda.addVolume(volume1);
+        }
 
         return encomenda;
     }

@@ -1,6 +1,8 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Produto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -10,32 +12,22 @@ import java.util.stream.Collectors;
 
 public class CreateEncomendaDTO implements Serializable {
 
-    private int id;
     private String username;
     private String estado;
     private LocalDateTime data_expedicao;
-    private LocalDateTime data_entrega;
-    private List<ProdutoDTO> produtos = new ArrayList<>();
+    @JsonProperty("volumes")
+    private List<VolumeDTO> volumes = new ArrayList<>();
 
-    public CreateEncomendaDTO(int id, String username, String estado, LocalDateTime data_expedicao, LocalDateTime data_entrega, List<ProdutoDTO> produtos) {
-        this.id = id;
+    public CreateEncomendaDTO( String username, String estado, LocalDateTime data_expedicao, List<VolumeDTO> volumes) {
         this.username = username;
         this.estado = estado;
         this.data_expedicao = data_expedicao;
-        this.data_entrega = data_entrega;
-        this.produtos = produtos;
+        this.volumes = volumes;
     }
 
     public CreateEncomendaDTO() {
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;
@@ -61,38 +53,52 @@ public class CreateEncomendaDTO implements Serializable {
         this.data_expedicao = data_expedicao;
     }
 
-    public LocalDateTime getData_entrega() {
-        return data_entrega;
+
+    public List<VolumeDTO> getVolumes() {
+        return volumes;
     }
 
-    public void setData_entrega(LocalDateTime data_entrega) {
-        this.data_entrega = data_entrega;
-    }
-
-    public List<ProdutoDTO> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(List<ProdutoDTO> produtos) {
-        this.produtos = produtos;
+    public void setVolumes(List<VolumeDTO> volumes) {
+        this.volumes = volumes;
     }
 
     public static CreateEncomendaDTO from(Encomenda encomenda) {
-        List<ProdutoDTO> produtosDTO = encomenda.getProdutos().stream()
-                .map(produto -> new ProdutoDTO(produto.getId(), produto.getNome(), produto.getCategoria().getNome(),produto.getQuantidade_por_volume()))
+        List<VolumeDTO> volumesDTO = encomenda.getVolumes().stream()
+                .map(volume -> {
+                    List<ProdutoDTO> produtosDTO = volume.getEmbalagens().stream()
+                            .map(produto -> new ProdutoDTO(
+                                    produto.getId(),
+                                    produto.getQuantidade()
+                            ))
+                            .collect(Collectors.toList());
+
+                    return new VolumeDTO(produtosDTO);
+                })
                 .collect(Collectors.toList());
 
         return new CreateEncomendaDTO(
-                encomenda.getId(),
                 encomenda.getCliente().getUsername(),
                 encomenda.getEstado(),
                 encomenda.getData_expedicao(),
-                encomenda.getData_entrega(),
-                produtosDTO
+                volumesDTO
         );
     }
 
     public static List<CreateEncomendaDTO> from(List<Encomenda> encomendas) {
         return encomendas.stream().map(CreateEncomendaDTO::from).collect(Collectors.toList());
     }
+
+    public String toString() {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Estado: ").append(estado).append("\n");
+        sb.append("Username: ").append(username).append("\n");
+        sb.append("Data de Expedição: ").append(data_expedicao).append("\n");
+        sb.append("Volumes: ").append(volumes.size()).append("\n");
+
+        // Retorna a string concatenada
+        return sb.toString();
+    }
+
+
 }

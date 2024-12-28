@@ -270,21 +270,33 @@ Content-Type: application/json
 ###Criar uma nova encomenda
 POST http://localhost:3001/backend/api/encomendas
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1Mzk2MzcxLCJleHAiOjE3MzUzOTk5NzF9.xkKI-9vBn5heMk0O4rrQjBXymZRkMtW3yHcHBjXVUjVTxX4FmB5JBO4ISZ4PEVGq
 Content-Type: application/json
 
 {
   "username": "Bernardo",
   "estado": "PorEntregar",
   "data_expedicao": "2024-10-31T10:00:00",
-  "data_entrega": "2024-11-05T10:00:00",
-  "produtos": [
+  "volumes": [
     {
-      "id": 1,
-      "quantidade_por_volume": 10
+      "produtos": [
+        {
+          "id": 1,
+          "quantidade_de_produtos_comprados": 10
+        },
+        {
+          "id": 2,
+          "quantidade_de_produtos_comprados": 10
+        }
+      ]
     },
     {
-      "id": 2,
-      "quantidade_por_volume": 10
+      "produtos": [
+        {
+          "id": 1,
+          "quantidade_de_produtos_comprados": 10
+        }
+      ]
     }
   ]
 }
@@ -317,9 +329,10 @@ Accept: application/json
 GET http://localhost:3001/backend/api/volume/3
 Accept: application/json
 
-###Associar um Sensor a um Volume
-POST http://localhost:3001/backend/api/volume/3/sensor
+###Associar um Sensor a um Embalagem
+POST http://localhost:3001/backend/api/embalagem/1/sensor
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1Mzk2MzcxLCJleHAiOjE3MzUzOTk5NzF9.xkKI-9vBn5heMk0O4rrQjBXymZRkMtW3yHcHBjXVUjVTxX4FmB5JBO4ISZ4PEVGq
 Content-Type: application/json
 
 {
@@ -385,7 +398,7 @@ POST http://localhost:3001/backend/api/auth/login
 Content-Type: application/json
 Accept: application/json
 
-{ "username": "Bernardo", "password": "123" }
+{ "username": "Jose", "password": "123" }
 
 ### GET User Info
 GET http://localhost:3001/backend/api/auth/user
@@ -393,6 +406,6 @@ Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTIyNTg3NiwiZXhwIjoxNzM1MjI5NDc2fQ.D5vp08BndFDGMP2gLTYWbJjKy-CDJDROpK4Tg75FwjHbgmR2HocGg5qSUTK4cbSv
 
 ### Get Encomenda Por Id
-GET http://localhost:3001/backend/api/encomendas/1
+GET http://localhost:3001/backend/api/encomendas
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTI5MzM3OSwiZXhwIjoxNzM1Mjk2OTc5fQ.h26yN2e6XwKqezA-bqEmr4Jn0vwgLrf27jZovbaIJDJrCHPmXd-vrfVkyCogyePs
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTM0MDAzMiwiZXhwIjoxNzM1MzQzNjMyfQ.QkmACWTroG9K8XuAJ1PMgy6hb9aYRLhOe_W9BaERI4hvKijp9q3fxIw1JLaRf3cB

@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 
 public class SensorDTO implements Serializable {
-    /*
+
     private int id;
     private String valor;
     private int tipoId;
@@ -19,11 +19,11 @@ public class SensorDTO implements Serializable {
     private Integer valMax;
     private Integer valMin;
     private LocalDateTime timeStamp;
-    private int volumeId;
+    private int embalagemId;
 
     public SensorDTO() {}
 
-    public SensorDTO(int id, String valor, int tipoId, String tipoNome, String estado, int bateria, Integer valMax, Integer valMin, int volumeId) {
+    public SensorDTO(int id, String valor, int tipoId, String tipoNome, String estado, int bateria, Integer valMax, Integer valMin, int embalagemId) {
         this.id = id;
         this.valor = valor;
         this.tipoId = tipoId;
@@ -33,10 +33,10 @@ public class SensorDTO implements Serializable {
         this.valMax = valMax;
         this.valMin = valMin;
         this.timeStamp = LocalDateTime.now();
-        this.volumeId = volumeId;
+        this.embalagemId = embalagemId;
     }
 
-    public SensorDTO(int id, String valor, int tipoId, String tipoNome, String estado, int bateria, int volumeId) {
+    public SensorDTO(int id, String valor, int tipoId, String tipoNome, String estado, int bateria, int embalagemId) {
         this.id = id;
         this.valor = valor;
         this.tipoId = tipoId;
@@ -46,7 +46,7 @@ public class SensorDTO implements Serializable {
         this.valMax = null;
         this.valMin = null;
         this.timeStamp = LocalDateTime.now();
-        this.volumeId = volumeId;
+        this.embalagemId = embalagemId;
     }
 
     public String getTipoNome() {
@@ -121,12 +121,12 @@ public class SensorDTO implements Serializable {
         this.timeStamp = timeStamp;
     }
 
-    public int getVolumeId() {
-        return volumeId;
+    public int getEmbalagemId() {
+        return embalagemId;
     }
 
-    public void setVolumeId(int volumeId) {
-        this.volumeId = volumeId;
+    public void setEmbalagemId(int embalagemId) {
+        this.embalagemId = embalagemId;
     }
 
     public static SensorDTO from(Sensor sensor) {
@@ -139,7 +139,7 @@ public class SensorDTO implements Serializable {
                 sensor.getBateria(),
                 sensor.getValMax(),
                 sensor.getValMin(),
-                sensor.getVolume().getId()
+                sensor.getEmbalagem().getId()
         );
     }
 
@@ -147,5 +147,5 @@ public class SensorDTO implements Serializable {
     public static List<SensorDTO> from(List<Sensor> sensors) {
         return sensors.stream().map(SensorDTO::from).collect(Collectors.toList());
     }
-*/
+
 }

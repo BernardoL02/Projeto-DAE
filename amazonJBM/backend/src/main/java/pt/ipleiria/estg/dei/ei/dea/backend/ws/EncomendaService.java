@@ -10,10 +10,7 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.SecurityContext;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.*;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Alerta;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Cliente;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Utilizador;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.security.Authenticated;
 
 import java.util.List;
@@ -61,19 +58,20 @@ public class EncomendaService {
     @Path("/")
     @RolesAllowed({"Logista"})
     public Response criarEncomenda(CreateEncomendaDTO encomendasDTO) {
+
         Encomenda encomenda = encomendaBean.create(
                 encomendasDTO.getUsername(),
+                encomendasDTO.getVolumes(),
                 encomendasDTO.getEstado(),
-                encomendasDTO.getData_expedicao(),
-                encomendasDTO.getData_entrega()
-        );
+                encomendasDTO.getData_expedicao()
 
-        encomendaBean.gerarVolumes(encomenda.getId(), encomendasDTO.getProdutos());
+
+        );
 
         return Response.ok("Encomenda criada com sucesso com ID: " + encomenda.getId()).build();
     }
 
-    @GET
+   /* @GET
     @Path("/{id}")
     @RolesAllowed({"Gestor", "Cliente", "Logista"})
     public Response getEncomendasById(@PathParam("id") int id) {
@@ -122,7 +120,7 @@ public class EncomendaService {
                 id_encomenda
         );
         return Response.ok("Volume associado com sucesso").build();
-    }
+    }*/
 
     @GET
     @Path("/alertas")

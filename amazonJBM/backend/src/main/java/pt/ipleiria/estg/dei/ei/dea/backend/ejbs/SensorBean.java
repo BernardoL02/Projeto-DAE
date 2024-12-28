@@ -41,6 +41,8 @@ public class SensorBean {
         if (tipoSensores == null) {
             throw new NoSuchElementException("Tipo_Sensores com ID " + tipoId + " não encontrado.");
         }
+        System.out.println(embalagem.getId());
+        System.out.println(tipoSensores.getTipo());
         var sensor = new Sensor(valor, tipoSensores, estado, bateria, embalagem);
         em.persist(sensor);
     }

@@ -20,13 +20,13 @@ public class Produto {
     @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
 
-    private int quantidade_por_volume;
+    private int quantidade_de_produtos_comprados;
 
-    public Produto(int id, String nome, Categoria categoria, int quantidade_por_volume) {
+    public Produto(int id, String nome, Categoria categoria, int quantidade_de_produtos_comprados) {
         this.id = id;
         this.nome = nome;
         this.categoria = categoria;
-        this.quantidade_por_volume = quantidade_por_volume;
+        this.quantidade_de_produtos_comprados = quantidade_de_produtos_comprados;
     }
 
     public Produto(){
@@ -41,8 +41,12 @@ public class Produto {
         return nome;
     }
 
-    public int getQuantidade_por_volume() {
-        return quantidade_por_volume;
+    public int getQuantidade_de_produtos_comprados() {
+        return quantidade_de_produtos_comprados;
+    }
+
+    public void setQuantidade_de_produtos_comprados(int quantidade_de_produtos_comprados) {
+        this.quantidade_de_produtos_comprados = quantidade_de_produtos_comprados;
     }
 
     public Categoria getCategoria() {
@@ -57,9 +61,7 @@ public class Produto {
         this.nome = nome;
     }
 
-    public void setQuantidade_por_volume(int quantidade_por_volume) {
-        this.quantidade_por_volume = quantidade_por_volume;
-    }
+
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;

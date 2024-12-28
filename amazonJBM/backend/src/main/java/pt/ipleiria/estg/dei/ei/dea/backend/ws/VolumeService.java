@@ -26,34 +26,9 @@ public class VolumeService {
     public Response getDetalhesVolume(@PathParam("id") int id){
         var volume = volumeBean.find(id);
 
-        ResVolumeDetalhesDTO<ResSensorDetalhesDTO> volumeDTO = ResVolumeDetalhesDTO.from(volume,"SL");
-        return Response.ok(volumeDTO).build();
+        //ResVolumeDetalhesDTO<ResSensorDetalhesDTO> volumeDTO = ResVolumeDetalhesDTO.from(volume,"SL");
+        return Response.ok(volume).build();
     }
 
-    @POST
-    @Path("/{id}/sensor")
-    public Response associarSensorAVolume(@PathParam("id") int id, SensorDTO sensorDTO) {
 
-        if(4 == sensorDTO.getTipoId()){
-            sensorBean.create(
-                    sensorDTO.getValor(),
-                    sensorDTO.getTipoId(),
-                    sensorDTO.getEstado(),
-                    sensorDTO.getBateria(),
-                    id
-            );
-        }else{
-            sensorBean.create(
-                    sensorDTO.getValor(),
-                    sensorDTO.getTipoId(),
-                    sensorDTO.getEstado(),
-                    sensorDTO.getBateria(),
-                    sensorDTO.getValMax(),
-                    sensorDTO.getValMin(),
-                    id
-            );
-        }
-
-        return Response.ok("Sensor associado com sucesso").build();
-    }
 }

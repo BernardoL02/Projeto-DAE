@@ -32,11 +32,11 @@ public class SensorService {
     @EJB
     private GestorBean gestorBean;
 
-    @GET
+    /*@GET
     @Path("/")
     public List<ResSensorAllDTO> getAllSensores() {
         return ResSensorAllDTO.from(sensorBean.findAll());
-    }
+    }*/
 
     @POST
     @Path("/")
@@ -58,7 +58,7 @@ public class SensorService {
         return Response.ok(ResSensorValorDTO.from(updatedSensor)).build();
     }
 
-    @PATCH
+   /* @PATCH
     @Path("/{id}/desativar")
     public Response updateEstado(@PathParam("id") int id, SensorDTO sensorDTO) {
         Sensor updatedSensor = sensorBean.updateEstado(id, sensorDTO);
@@ -84,6 +84,6 @@ public class SensorService {
     public Response getAlertasSensor(@PathParam("id") int id) {
         List<Alerta> alertas = sensorBean.getAlertasSensor(id);
         return Response.ok(alertas.stream().map(ResAlertasSensorDTO::from).collect(Collectors.toList())).build();
-    }
+    }*/
 
 }

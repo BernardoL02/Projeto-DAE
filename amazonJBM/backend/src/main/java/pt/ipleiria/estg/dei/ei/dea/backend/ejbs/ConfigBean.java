@@ -4,9 +4,13 @@ import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Categoria;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Embalagem;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Produto;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -43,6 +47,9 @@ public class ConfigBean {
 
     @EJB
     private LogistaBean logistaBean;
+
+    @EJB
+    private EmbalagemBean embalagemBean;
 
     @PostConstruct
     public void populateDB() {
@@ -129,13 +136,12 @@ public class ConfigBean {
         produtoBean.create(35, "Aparafusadora", 12, 10);
         produtoBean.create(36, "Caixote Do Lixo", 12, 4);
 
-
+        /*List<> produtos = new ArrayList<>();
+        produtos.add(produtoBean.find(1));
+        produtos.add(produtoBean.find(2));
+        produtos.add(produtoBean.find(4));
         //Encomenda
-        encomendaBean.create("Bernardo", Arrays.asList(1,4), "PorEntregar", LocalDateTime.of(2024, 10, 29, 15, 30),2);
-
-
-
-
+        encomendaBean.create("Bernardo",produtos , "PorEntregar", LocalDateTime.of(2024, 10, 29, 15, 30),1);
 
 
 
@@ -164,7 +170,7 @@ public class ConfigBean {
 
         encomendaBean.create("Ferreira", "Cancelada", LocalDateTime.of(2023, 10, 29, 15, 30), LocalDateTime.of(2023, 10, 29, 15, 30));
         volumeBean.create(12, 1, 6);
-
+    */
 
         // Tipos de Sensores
         tipoSensoresBean.create(1, "Temperatura");
@@ -172,7 +178,7 @@ public class ConfigBean {
         tipoSensoresBean.create(3, "Pressão Atmosférica");
         tipoSensoresBean.create(4, "GPS");
 
-        // Sensores
+        /*// Sensores
         //Encomenda 1
         sensorBean.create("29.0", 1, "ativo", 100, 30, 10, 1);
         sensorBean.create("39.7344200469475, -8.821063143811228", 4, "ativo", 100, 1);
@@ -208,7 +214,7 @@ public class ConfigBean {
         alertaBean.create("Valor acima do limite máximo (1015) para o sensor Pressão Atmosférica", 4, "1016", 3);
         alertaBean.create("Valor abaixo do limite mínimo (980) para o sensor Pressão Atmosférica", 4, "975", 3);
 
-    */
+*/
     }
 
 }
