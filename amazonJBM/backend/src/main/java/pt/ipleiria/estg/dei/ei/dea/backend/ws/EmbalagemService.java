@@ -23,7 +23,7 @@ public class EmbalagemService {
 
     @POST
     @Path("/{id}/sensor")
-    public Response associarSensorAVolume(@PathParam("id") int id, SensorDTO sensorDTO) {
+    public Response associarSensorAEmbalagem(@PathParam("id") int id, SensorDTO sensorDTO) {
 
         if(4 == sensorDTO.getTipoId()){
             sensorBean.create(

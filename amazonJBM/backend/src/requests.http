@@ -31,17 +31,16 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczN
 ### Get Encomendas Pendentes
 GET http://localhost:3001/backend/api/encomendas/pendentes
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1NDExNjM5LCJleHAiOjE3MzU0MTUyMzl9.6aFCp7xy1PWYaKNVt8flWcg_iP7rtpjSStevnco0q10gItG4adn3sGOWZ3Qih7ai
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1NDIyODg0LCJleHAiOjE3MzU0MjY0ODR9.4U7Qp_PlswKVnqJZCqIPEIf4m9RFO_ZpmcwOApmYWnvgccLO-BeJpWTWLp3PYQeY
 
 ### Alterar estado de uma encomenda #
 PATCH http://localhost:3001/backend/api/encomendas/1
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQyMzc2MCwiZXhwIjoxNzM1NDI3MzYwfQ.AA0WnKqVq6fZHtekVN9ki9_1SFxojQHzYwosGmPzFVH5YQ1hJU-NRojVahKDQ8dt
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0MTQyNDMsImV4cCI6MTczNTQxNzg0M30.LFteKubgp_93R6rMMJlOobvNGvZA9jnjS7krERFEccwIWU5bBAfGq4gg4JbRSrIu
-
 
 {
-  "estado": "PorEntregar"
+  "estado": "Cancelada"
 }
 
 ###Criar uma nova encomenda #
@@ -78,32 +77,39 @@ Content-Type: application/json
 }
 
 ### Associar um volume a uma encomenda
-POST http://localhost:3001/backend/api/encomendas/6/volume
+POST http://localhost:3001/backend/api/encomendas/1/volume
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQyMjQ0NiwiZXhwIjoxNzM1NDI2MDQ2fQ.eTvmtgEOYuJgPxsKIA8D-z5V64NvWxSsxx4QNW0i7sjHpNjdovVwe61wm8oj-mFi
 Content-Type: application/json
 
 {
-  "id_produto": 7,
-  "quantidade": 2
+  "produtos": [
+    {
+      "id": 1,
+      "quantidade_de_produtos_comprados": 10
+    },
+    {
+      "id": 2,
+      "quantidade_de_produtos_comprados": 10
+    }
+  ]
 }
 
 ### Get All Alertas de Encomenda por Id #
 GET http://localhost:3001/backend/api/encomendas/1/alertas
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQxMTQxOCwiZXhwIjoxNzM1NDE1MDE4fQ.ZRynXHlPr67EL-vlIx7cJZYqj2ChXKA91tjRh_f6M37nQUyn6f7oVH0eMVV16dHB
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQyMjkyMCwiZXhwIjoxNzM1NDI2NTIwfQ.ViRhsnlJ7v9zeYfw9gfH10hFa8T-2g5Ky6LG3VR-Kiad6TL4ka0PzlaZObAMOqpS
 
 
 ### GET Ver Alertas de encomendas (PorEntregar) #
 GET http://localhost:3001/backend/api/encomendas/alertas
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0MTIxNDcsImV4cCI6MTczNTQxNTc0N30.RSQg5JxgcXdENeIXLbe_GauYG5FZoQRIY9QbKD8mmXz-v5nqUr0fiiMCyH8tWr0-
-
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0MjI5NzEsImV4cCI6MTczNTQyNjU3MX0.TUPPSpHLRU3TEQ-5fWpXy2nPPci_6LfyNX01A-q8GrzZyH0dQv11-EG2G5hajhFa
 
 ### Get Coordenadas Volumes #
 GET http://localhost:3001/backend/api/encomendas/1/coordenadas
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQxMzI2MywiZXhwIjoxNzM1NDE2ODYzfQ.YOUCQvaUZsQKaKdeapa7mgRApuvCXvt3aeMxVDYHOs174XfnPfHwAVHwO7qz1tKY
-
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0MjI5NzEsImV4cCI6MTczNTQyNjU3MX0.TUPPSpHLRU3TEQ-5fWpXy2nPPci_6LfyNX01A-q8GrzZyH0dQv11-EG2G5hajhFa
 
 ######################### Volume Service ################################
 
@@ -115,7 +121,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczN
 ###Associar um Sensor a um Embalagem
 POST http://localhost:3001/backend/api/embalagem/1/sensor
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQxMzI2MywiZXhwIjoxNzM1NDE2ODYzfQ.YOUCQvaUZsQKaKdeapa7mgRApuvCXvt3aeMxVDYHOs174XfnPfHwAVHwO7qz1tKY
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0MjI5NzEsImV4cCI6MTczNTQyNjU3MX0.TUPPSpHLRU3TEQ-5fWpXy2nPPci_6LfyNX01A-q8GrzZyH0dQv11-EG2G5hajhFa
 Content-Type: application/json
 
 {
@@ -181,7 +187,7 @@ POST http://localhost:3001/backend/api/auth/login
 Content-Type: application/json
 Accept: application/json
 
-{ "username": "Miguel", "password": "123" }
+{ "username": "Bernardo", "password": "123" }
 
 ### GET User Info
 GET http://localhost:3001/backend/api/auth/user

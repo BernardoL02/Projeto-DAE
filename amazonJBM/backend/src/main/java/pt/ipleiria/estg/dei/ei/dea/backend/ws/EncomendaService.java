@@ -126,15 +126,12 @@ public class EncomendaService {
         return Response.ok(ResEncomendaEstadoDTO.from(encomendas)).build();
     }
 
-    //TODO Penso que já não faça sentido porque quando criamos a encomenda já enviamos uma lista de volumes para aquela encomendas
-   /* @POST
+    @POST
     @Path("/{id}/volume")
     public Response associarVolumeEncomenda(@PathParam("id") int id_encomenda, VolumeDTO volumeDTO){
-        volumeBean.create(
-                id_encomenda
-        );
+        volumeBean.associarVolumeEncomenda(id_encomenda, volumeDTO);
         return Response.ok("Volume associado com sucesso").build();
-    }*/
+    }
 
     @GET
     @Path("/alertas")

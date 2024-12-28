@@ -141,19 +141,13 @@ public class EncomendaBean {
             return Response.status(Response.Status.NOT_FOUND).entity("Encomenda não encontrada!").build();
         }
 
-        Utilizador utilizador = em.find(Utilizador.class, user.getUsername());
-
-        if(utilizador.isCliente()) {
-            Cliente cliente = em.find(Cliente.class, user.getUsername());
-
-            Hibernate.initialize(cliente.getEncomendas());
-            Encomenda isMinha = cliente.getEncomenda(id);
-
-            if(isMinha == null) {
-                return Response.status(Response.Status.BAD_REQUEST).entity("A encomenda não te pertence!").build();
-            }
+        if(user.isCliente() && !encomenda.getCliente().getUsername().equals(user.getUsername())) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("A encomenda não te pertence!").build();
         }
 
+        if(user.isCliente() && !encomenda.getEstado().equals("EmProcessamento") &&  estado.equalsIgnoreCase("Cancelada")){
+            return Response.status(Response.Status.BAD_REQUEST).entity("Não é possível cancelar uma encomenda que já não esteja Em Processamento!").build();
+        }
         encomenda.setEstado(estado);
 
         if(estado.equalsIgnoreCase("Entregue") || estado.equalsIgnoreCase("Cancelada")){
@@ -191,14 +185,14 @@ public class EncomendaBean {
         List<Object[]> coordenadasList = new ArrayList<>();
 
         for (Volume volume : encomenda.getVolumes()) {
-            for(Embalagem embalagem : volume.getEmbalagens())
-            for (Sensor sensor : embalagem.getSensores()) {
-                if ("GPS".equals(sensor.getTipo().getTipo())) {
-                    coordenadasList.add(new Object[]{volume.getId(), embalagem.getProduto().getNome(), sensor.getValor()});
+            for(Embalagem embalagem : volume.getEmbalagens()) {
+                for (Sensor sensor : embalagem.getSensores()) {
+                    if ("GPS".equals(sensor.getTipo().getTipo())) {
+                        coordenadasList.add(new Object[]{volume.getId(), embalagem.getProduto().getNome(), sensor.getValor()});
+                    }
                 }
             }
         }
-
         return coordenadasList;
     }
 }

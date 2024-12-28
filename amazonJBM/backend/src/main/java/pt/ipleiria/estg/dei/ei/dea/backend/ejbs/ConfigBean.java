@@ -146,7 +146,7 @@ public class ConfigBean {
         produtoBean.create(35, "Aparafusadora", 12, 10);
         produtoBean.create(36, "Caixote Do Lixo", 12, 4);
 
-        /*
+
         ///////////////////////Criar Encomendas e Volumes
         ///////// Criar Encomenda para Bernardo
             List<VolumeDTO> volumesBernardo1 = new ArrayList<>();
@@ -237,7 +237,7 @@ public class ConfigBean {
                     volumesFerreira.add(volume2Ferreira);
             // Encomenda
             encomendaBean.create("Ferreira", volumesFerreira, LocalDateTime.of(2023, 10, 29, 15, 30));
-*/
+
 
 
         // Tipos de Sensores
