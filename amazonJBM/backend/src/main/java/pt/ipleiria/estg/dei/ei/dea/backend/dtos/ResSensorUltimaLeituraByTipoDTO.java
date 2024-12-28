@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ResSensorUltimaLeituraByTipoDTO implements Serializable {
-    /*
+
     private int id;
     private String valor;
     private String tipoNome;
@@ -18,8 +18,9 @@ public class ResSensorUltimaLeituraByTipoDTO implements Serializable {
     private LocalDateTime timeStamp;
     private int id_encomenda;
     private int id_volume;
+    private int id_embalagem;
 
-    public ResSensorUltimaLeituraByTipoDTO(int id, String valor, String tipoNome, String estado, int bateria, LocalDateTime timeStamp, int id_encomenda, int id_volume) {
+    public ResSensorUltimaLeituraByTipoDTO(int id, String valor, String tipoNome, String estado, int bateria, LocalDateTime timeStamp, int id_encomenda, int id_volume, int id_embalagem) {
         this.id = id;
         this.valor = valor;
         this.tipoNome = tipoNome;
@@ -28,6 +29,7 @@ public class ResSensorUltimaLeituraByTipoDTO implements Serializable {
         this.timeStamp = timeStamp;
         this.id_encomenda = id_encomenda;
         this.id_volume = id_volume;
+        this.id_embalagem = id_embalagem;
     }
 
     public ResSensorUltimaLeituraByTipoDTO(){
@@ -98,6 +100,14 @@ public class ResSensorUltimaLeituraByTipoDTO implements Serializable {
         this.id_volume = id_volume;
     }
 
+    public int getId_embalagem() {
+        return id_embalagem;
+    }
+
+    public void setId_embalagem(int id_embalagem) {
+        this.id_embalagem = id_embalagem;
+    }
+
     public static ResSensorUltimaLeituraByTipoDTO from(Sensor sensor) {
         return new ResSensorUltimaLeituraByTipoDTO(
                 sensor.getId(),
@@ -106,8 +116,9 @@ public class ResSensorUltimaLeituraByTipoDTO implements Serializable {
                 sensor.getEstado(),
                 sensor.getBateria(),
                 sensor.getTimeStamp(),
-                sensor.getVolume().getEncomenda().getId(),
-                sensor.getVolume().getId()
+                sensor.getEmbalagem().getVolume().getEncomenda().getId(),
+                sensor.getEmbalagem().getVolume().getId(),
+                sensor.getEmbalagem().getId()
         );
     }
 
@@ -115,5 +126,5 @@ public class ResSensorUltimaLeituraByTipoDTO implements Serializable {
         return sensors.stream().map(ResSensorUltimaLeituraByTipoDTO::from).collect(Collectors.toList());
     }
 
-     */
+
 }

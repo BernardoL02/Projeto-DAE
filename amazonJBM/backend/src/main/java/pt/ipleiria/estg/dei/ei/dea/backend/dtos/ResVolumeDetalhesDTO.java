@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ResVolumeDetalhesDTO<T> implements Serializable { // Classe parametrizada com T
+public class ResVolumeDetalhesDTO<T> implements Serializable {
 
     private int id;
     private Encomenda encomenda;
-    private List<Embalagem> embalagems = new ArrayList<>(); // Lista tipada com T
+    private List<Embalagem> embalagems = new ArrayList<>();
 
     public ResVolumeDetalhesDTO(int id, Encomenda encomenda, List<Embalagem> embalagems) {
         this.id = id;
@@ -21,7 +21,6 @@ public class ResVolumeDetalhesDTO<T> implements Serializable { // Classe paramet
         this.embalagems = embalagems;
     }
 
-    // Getters e setters
     public int getId() {
         return id;
     }
@@ -52,7 +51,7 @@ public class ResVolumeDetalhesDTO<T> implements Serializable { // Classe paramet
         ResVolumeDetalhesDTO volumeDTO =  new ResVolumeDetalhesDTO(
                 volume.getId(),
                 volume.getEncomenda(),
-                volume.getEmbalagens()
+                volume.getEncomenda().getVolumes()
 
         );
 

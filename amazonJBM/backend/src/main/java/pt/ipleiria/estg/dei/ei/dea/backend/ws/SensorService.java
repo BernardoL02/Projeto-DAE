@@ -72,13 +72,13 @@ public class SensorService {
         return Response.ok(ResTipoSensoresDTO.from(tipoSensores)).build();
     }
 
-    /*
+
     @GET
     @Path("/{tipo_sensor}")
     public Response getUltimaLeituraSensoresByTipo(@PathParam("tipo_sensor") String tipo_sensor) {
         List<Sensor> alertas = sensorBean.getUltimaLeituraSensoresByTipo(tipo_sensor);
         return Response.ok(alertas.stream().map(ResSensorUltimaLeituraByTipoDTO::from).collect(Collectors.toList())).build();
-    }*/
+    }
 
     @GET
     @Path("/{id}/alertas")

@@ -10,6 +10,7 @@ import java.util.List;
 
 
 @Entity
+@Table(name = "Volume")
 public class Volume {
 
     @Id
@@ -18,9 +19,10 @@ public class Volume {
 
     @ManyToOne
     @NotNull
+    @JoinColumn(name = "encomenda_id")
     private Encomenda encomenda;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "volume", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "volume", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Embalagem> embalagens = new ArrayList<>();
 
     public Volume(Encomenda encomenda) {

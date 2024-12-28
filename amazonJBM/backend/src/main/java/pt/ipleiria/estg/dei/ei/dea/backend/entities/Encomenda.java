@@ -38,7 +38,7 @@ public class Encomenda extends Versionable{
 
     private LocalDateTime data_entrega;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy="encomenda")
+    @OneToMany(mappedBy = "encomenda", fetch = FetchType.EAGER)
     private List<Volume> volumes = new ArrayList<>();
 
     public Encomenda(Cliente cliente, LocalDateTime data_expedicao) {

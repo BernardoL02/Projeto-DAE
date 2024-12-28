@@ -139,19 +139,26 @@ public class EncomendaBean {
 
 
     public Response mudarEstadoEncomenda(int id, String estado, Utilizador user) {
-
         var encomenda = this.find(id);
         if (encomenda == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("Encomenda não encontrada!").build();
         }
 
-        Cliente cliente = em.find(Cliente.class, user.getUsername());
-        Hibernate.initialize(cliente.getEncomendas());
-        Encomenda isMinha = cliente.getEncomenda(id);
+        Utilizador utilizador = em.find(Utilizador.class, user.getUsername());
 
-        if(isMinha == null){
-            return Response.status(Response.Status.BAD_REQUEST).entity("A encomenda não te pertence!").build();
+        if(utilizador.isCliente()) {
+            Encomenda isMinha = em.createQuery(
+                            "SELECT e FROM Encomenda e WHERE e.id = :id AND e.cliente.username = :username", Encomenda.class)
+                    .setParameter("id", id)
+                    .setParameter("username", user.getUsername())
+                    .getResultStream()
+                    .findFirst()
+                    .orElse(null);
+            if (isMinha == null) {
+                return Response.status(Response.Status.BAD_REQUEST).entity("A encomenda não te pertence!").build();
+            }
         }
+
         encomenda.setEstado(estado);
 
         if(estado.equalsIgnoreCase("Entregue") || estado.equalsIgnoreCase("Cancelada")){

@@ -34,14 +34,14 @@ Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1NDExNjM5LCJleHAiOjE3MzU0MTUyMzl9.6aFCp7xy1PWYaKNVt8flWcg_iP7rtpjSStevnco0q10gItG4adn3sGOWZ3Qih7ai
 
 ### Alterar estado de uma encomenda #
-PATCH http://localhost:3001/backend/api/encomendas/3
+PATCH http://localhost:3001/backend/api/encomendas/1
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQxMTQxOCwiZXhwIjoxNzM1NDE1MDE4fQ.ZRynXHlPr67EL-vlIx7cJZYqj2ChXKA91tjRh_f6M37nQUyn6f7oVH0eMVV16dHB
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0MTQyNDMsImV4cCI6MTczNTQxNzg0M30.LFteKubgp_93R6rMMJlOobvNGvZA9jnjS7krERFEccwIWU5bBAfGq4gg4JbRSrIu
 
 
 {
-  "estado": "Cancelada"
+  "estado": "PorEntregar"
 }
 
 ###Criar uma nova encomenda #
@@ -93,7 +93,7 @@ Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQxMTQxOCwiZXhwIjoxNzM1NDE1MDE4fQ.ZRynXHlPr67EL-vlIx7cJZYqj2ChXKA91tjRh_f6M37nQUyn6f7oVH0eMVV16dHB
 
 
-### GET Ver Alertas de encomendas (PorEntregar)
+### GET Ver Alertas de encomendas (PorEntregar) #
 GET http://localhost:3001/backend/api/encomendas/alertas
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0MTIxNDcsImV4cCI6MTczNTQxNTc0N30.RSQg5JxgcXdENeIXLbe_GauYG5FZoQRIY9QbKD8mmXz-v5nqUr0fiiMCyH8tWr0-
@@ -108,11 +108,12 @@ Accept: application/json
 ### Get Detalhes Volume
 GET http://localhost:3001/backend/api/volume/3
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQxMzI2MywiZXhwIjoxNzM1NDE2ODYzfQ.YOUCQvaUZsQKaKdeapa7mgRApuvCXvt3aeMxVDYHOs174XfnPfHwAVHwO7qz1tKY
 
 ###Associar um Sensor a um Embalagem
 POST http://localhost:3001/backend/api/embalagem/1/sensor
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDAwMDY2LCJleHAiOjE3MzU0MDM2NjZ9.5r8NHUx_1Qxi3Czj5aLzSowj_HLrfPs8HTXstknNr_OkYG7vZPL9NmzZuNqh4bTZ
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQxMzI2MywiZXhwIjoxNzM1NDE2ODYzfQ.YOUCQvaUZsQKaKdeapa7mgRApuvCXvt3aeMxVDYHOs174XfnPfHwAVHwO7qz1tKY
 Content-Type: application/json
 
 {
@@ -149,7 +150,7 @@ Content-Type: application/json
   "estado": "inativo"
 }
 
-### Patch Sensor Valor
+### Patch Sensor Valor #
 PATCH http://localhost:3001/backend/api/sensor/1
 Accept: application/json
 Content-Type: application/json
@@ -159,15 +160,15 @@ Content-Type: application/json
   "bateria": 72
 }
 
-### Get All Tipos de Sensor
+### Get All Tipos de Sensor #
 GET http://localhost:3001/backend/api/sensor/tipos
 Accept: application/json
 
-### GET All Ultimo Valor dos Sensores por Tipo
+### GET All Ultimo Valor dos Sensores por Tipo #
 GET http://localhost:3001/backend/api/sensor/Temperatura
 Accept: application/json
 
-### GET Ver Alertas de um sensor
+### GET Ver Alertas de um sensor #
 GET http://localhost:3001/backend/api/sensor/1/alertas
 Accept: application/json
 
