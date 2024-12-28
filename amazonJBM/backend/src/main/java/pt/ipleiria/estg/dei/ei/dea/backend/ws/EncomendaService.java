@@ -1,5 +1,6 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.ws;
 
+import io.jsonwebtoken.Jwts;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
@@ -13,6 +14,7 @@ import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.security.Authenticated;
 
+import javax.net.ssl.SSLEngineResult;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,16 +61,14 @@ public class EncomendaService {
     @RolesAllowed({"Logista"})
     public Response criarEncomenda(CreateEncomendaDTO encomendasDTO) {
 
-        Encomenda encomenda = encomendaBean.create(
+        Response encomendaResponse = encomendaBean.create(
                 encomendasDTO.getUsername(),
                 encomendasDTO.getVolumes(),
                 encomendasDTO.getEstado(),
                 encomendasDTO.getData_expedicao()
-
-
         );
 
-        return Response.ok("Encomenda criada com sucesso com ID: " + encomenda.getId()).build();
+        return encomendaResponse;
     }
 
    /* @GET

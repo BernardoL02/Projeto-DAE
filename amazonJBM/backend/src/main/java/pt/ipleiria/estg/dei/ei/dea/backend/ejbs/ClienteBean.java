@@ -30,10 +30,6 @@ public class ClienteBean {
 
         var cliente = em.find(Cliente.class, username);
 
-        if(cliente == null){
-            throw new NoSuchElementException();
-        }
-
         return cliente;
     }
 }

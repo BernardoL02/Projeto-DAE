@@ -21,16 +21,9 @@ public class Tipo_Sensores {
 
     private String tipo;
 
-    @OneToMany(mappedBy = "tipo")
-    private List<Sensor> sensors;
-
     public Tipo_Sensores(int id, String tipo) {
         this.id = id;
         this.tipo = tipo;
-
-        if(sensors == null){
-            sensors = new ArrayList<>();
-        }
 
     }
 
@@ -54,11 +47,4 @@ public class Tipo_Sensores {
         this.tipo = tipo;
     }
 
-    public List<Sensor> getSensors() {
-        return sensors;
-    }
-
-    public void setSensors(List<Sensor> sensors) {
-        this.sensors = sensors;
-    }
 }

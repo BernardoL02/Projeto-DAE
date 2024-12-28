@@ -6,6 +6,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceException;
 import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.core.Response;
 import org.hibernate.Hibernate;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.EncomendasDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoDTO;
@@ -34,25 +35,30 @@ public class EncomendaBean {
     @EJB
     private VolumeBean volumeBean;
 
-    public Encomenda create(String client_username, List<VolumeDTO> volumes, String estado, LocalDateTime data_expedicao) {
-        //TODO -> se o cliente nao existir
+    public Response create(String client_username, List<VolumeDTO> volumes, String estado, LocalDateTime data_expedicao) {
         Cliente cliente = clienteBean.find(client_username);
+
+        if(cliente == null) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Cliente não encontrado!").build();
+
+        }
+
         Encomenda encomenda = new Encomenda(cliente,estado,data_expedicao);
         em.persist(encomenda);
 
-        for(VolumeDTO volume: volumes) {
-            Volume volume1 = new Volume(encomenda);
-            em.persist(volume1);
-            for (ProdutoDTO produto : volume.getProdutos()) {
-                Produto produto1 = em.find(Produto.class, produto.getId());
-                Embalagem embalagem = new Embalagem(produto1, volume1, produto.getQuantidade_de_produtos_comprados());
-                volume1.addEmbalagem(embalagem);
-                em.persist(embalagem);
-            }
-            encomenda.addVolume(volume1);
+            for(VolumeDTO volume: volumes) {
+                Volume volume1 = new Volume(encomenda);
+                em.persist(volume1);
+                for (ProdutoDTO produto : volume.getProdutos()) {
+                    Produto produto1 = em.find(Produto.class, produto.getId());
+                    Embalagem embalagem = new Embalagem(produto1, volume1, produto.getQuantidade_de_produtos_comprados());
+                    volume1.addEmbalagem(embalagem);
+                    em.persist(embalagem);
+                }
+                encomenda.addVolume(volume1);
         }
 
-        return encomenda;
+        return Response.ok("Encomenda criada com sucesso com ID: " + encomenda.getId()).build();
     }
 
     public List<Encomenda> findAll(Utilizador user) {

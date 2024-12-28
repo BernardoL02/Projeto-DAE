@@ -223,10 +223,6 @@ Content-Type: application/json
 
 
 
-
-
-
-
 #########################################################################
 ######################### Novos Endpoints ###############################
 #########################################################################
@@ -270,7 +266,7 @@ Content-Type: application/json
 ###Criar uma nova encomenda
 POST http://localhost:3001/backend/api/encomendas
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1Mzk2MzcxLCJleHAiOjE3MzUzOTk5NzF9.xkKI-9vBn5heMk0O4rrQjBXymZRkMtW3yHcHBjXVUjVTxX4FmB5JBO4ISZ4PEVGq
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDAwNzQ4LCJleHAiOjE3MzU0MDQzNDh9.JywNYqdbSM-jpq7ZTeSIiuOMfiE7T6U9Ti0flb_eGoGbpFo2M1OZs3Mgzth1Nx90
 Content-Type: application/json
 
 {
@@ -332,7 +328,7 @@ Accept: application/json
 ###Associar um Sensor a um Embalagem
 POST http://localhost:3001/backend/api/embalagem/1/sensor
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1Mzk2MzcxLCJleHAiOjE3MzUzOTk5NzF9.xkKI-9vBn5heMk0O4rrQjBXymZRkMtW3yHcHBjXVUjVTxX4FmB5JBO4ISZ4PEVGq
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDAwMDY2LCJleHAiOjE3MzU0MDM2NjZ9.5r8NHUx_1Qxi3Czj5aLzSowj_HLrfPs8HTXstknNr_OkYG7vZPL9NmzZuNqh4bTZ
 Content-Type: application/json
 
 {

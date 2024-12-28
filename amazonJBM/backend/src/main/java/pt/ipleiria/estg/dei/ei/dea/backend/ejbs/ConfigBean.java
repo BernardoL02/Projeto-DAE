@@ -51,6 +51,9 @@ public class ConfigBean {
     @EJB
     private EmbalagemBean embalagemBean;
 
+    @EJB
+    private TipoEmbalagemBean tipoEmbalagemBean;
+
     @PostConstruct
     public void populateDB() {
 
@@ -66,18 +69,23 @@ public class ConfigBean {
         // Gestores
         gestorBean.create("Delgado", "123", "delgado@gmail.com", "José");
 
+        tipoEmbalagemBean.create(1, "Isotérmica");
+        tipoEmbalagemBean.create(2, "Original");
+        tipoEmbalagemBean.create(3, "Metalica");
+        tipoEmbalagemBean.create(4, "Cartao");
+
         // Categorias de Produtos
-        categoriaBean.create(1, "Alimentos", "Isotérmica");
-        categoriaBean.create(2, "Tv e Som", "Original");
-        categoriaBean.create(3, "Ferramentas", "Reforçada");
-        categoriaBean.create(4, "Bebidas", "Isotérmica");
-        categoriaBean.create(5, "Eletrodomésticos", "Reforçada");
-        categoriaBean.create(6, "Vestuário", "Original");
-        categoriaBean.create(7, "Educação", "Original");
-        categoriaBean.create(9, "Esportivo", "Reforçada");
-        categoriaBean.create(10, "Casa", "Reforçada");
-        categoriaBean.create(11, "Beleza", "Original");
-        categoriaBean.create(12, "Ferramentas Elétricas", "Reforçada");
+        categoriaBean.create(1, "Alimentos", 1);
+        categoriaBean.create(2, "Tv e Som", 2);
+        categoriaBean.create(3, "Ferramentas", 3);
+        categoriaBean.create(4, "Bebidas", 1);
+        categoriaBean.create(5, "Eletrodomésticos", 3);
+        categoriaBean.create(6, "Vestuário", 2);
+        categoriaBean.create(7, "Educação", 2);
+        categoriaBean.create(9, "Esportivo", 3);
+        categoriaBean.create(10, "Casa", 3);
+        categoriaBean.create(11, "Beleza", 4);
+        categoriaBean.create(12, "Ferramentas Elétricas", 3);
 
 
         // Produtos
@@ -136,16 +144,6 @@ public class ConfigBean {
         produtoBean.create(35, "Aparafusadora", 12, 10);
         produtoBean.create(36, "Caixote Do Lixo", 12, 4);
 
-        /*List<> produtos = new ArrayList<>();
-        produtos.add(produtoBean.find(1));
-        produtos.add(produtoBean.find(2));
-        produtos.add(produtoBean.find(4));
-        //Encomenda
-        encomendaBean.create("Bernardo",produtos , "PorEntregar", LocalDateTime.of(2024, 10, 29, 15, 30),1);
-
-
-
-
         /*
         // Encomendas e Volumes
         encomendaBean.create("Bernardo", "PorEntregar", LocalDateTime.of(2024, 10, 29, 15, 30), LocalDateTime.of(2024, 10, 29, 15, 30));
@@ -170,7 +168,7 @@ public class ConfigBean {
 
         encomendaBean.create("Ferreira", "Cancelada", LocalDateTime.of(2023, 10, 29, 15, 30), LocalDateTime.of(2023, 10, 29, 15, 30));
         volumeBean.create(12, 1, 6);
-    */
+        */
 
         // Tipos de Sensores
         tipoSensoresBean.create(1, "Temperatura");
