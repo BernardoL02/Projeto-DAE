@@ -170,7 +170,7 @@ public class EncomendaBean {
         }
 
         em.merge(encomenda);
-        return Response.ok("Estado da encomenda " + encomenda.getId() + " modificado para " + estado).build();
+        return Response.ok("Estado da encomenda " + encomenda.getId() + " alterado com sucesso para " + estado).build();
     }
 
     public void gerarVolumes(int id_encomenda,List<ProdutoDTO> produtos){

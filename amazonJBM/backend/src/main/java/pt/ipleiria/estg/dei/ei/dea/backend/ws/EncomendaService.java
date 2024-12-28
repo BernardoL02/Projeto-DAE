@@ -101,36 +101,36 @@ public class EncomendaService {
             return Response.ok("Apenas pode mudar estado de encomendas para cancelada").build();
         }
 
-        encomendaBean.mudarEstadoEncomenda(id, encomendasDTO.getEstado(), user);
+        Response response = encomendaBean.mudarEstadoEncomenda(id, encomendasDTO.getEstado(), user);
 
-        return Response.ok("Estado da encomenda " + id + " alterado com sucesso para " + encomendasDTO.getEstado()).build();
+        Object entity = response.getEntity();
+        return Response.status(response.getStatus()).entity(entity).build();
     }
 
-    /*
+
     @GET
     @Path("estado/{estado}")
     @RolesAllowed({"Gestor", "Cliente", "Logista"})
     public Response getEncomendaByEstado(@PathParam("estado") String estado) {
         Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
-
+        System.out.println(user.getUsername());
         List<Encomenda> encomendas = encomendaBean.findEncomendasByEstado(estado, user);
-        return Response.ok( ResEncomendaEstadoDTO.from(encomendas)).build();
+        return Response.ok(ResEncomendaEstadoDTO.from(encomendas)).build();
     }
 
-    @GET
+     @GET
     @Path("/pendentes")
     @RolesAllowed({"Gestor"})
     public Response getEncomendasPendendes() {
         List<Encomenda> encomendas = encomendaBean.findPendentes();
-        return Response.ok( ResEncomendaEstadoDTO.from(encomendas)).build();
+        return Response.ok(ResEncomendaEstadoDTO.from(encomendas)).build();
     }
 
-    @POST
+    //TODO Penso que já não faça sentido porque quando criamos a encomenda já enviamos uma lista de volumes para aquela encomendas
+   /* @POST
     @Path("/{id}/volume")
     public Response associarVolumeEncomenda(@PathParam("id") int id_encomenda, VolumeDTO volumeDTO){
         volumeBean.create(
-                volumeDTO.getId_produto(),
-                volumeDTO.getQuantidade(),
                 id_encomenda
         );
         return Response.ok("Volume associado com sucesso").build();
