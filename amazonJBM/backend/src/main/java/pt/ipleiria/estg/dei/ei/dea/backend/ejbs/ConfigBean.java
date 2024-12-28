@@ -146,7 +146,7 @@ public class ConfigBean {
         produtoBean.create(35, "Aparafusadora", 12, 10);
         produtoBean.create(36, "Caixote Do Lixo", 12, 4);
 
-
+        /*
         ///////////////////////Criar Encomendas e Volumes
         ///////// Criar Encomenda para Bernardo
             List<VolumeDTO> volumesBernardo1 = new ArrayList<>();
@@ -237,7 +237,7 @@ public class ConfigBean {
                     volumesFerreira.add(volume2Ferreira);
             // Encomenda
             encomendaBean.create("Ferreira", volumesFerreira, LocalDateTime.of(2023, 10, 29, 15, 30));
-
+*/
 
 
         // Tipos de Sensores
@@ -246,7 +246,7 @@ public class ConfigBean {
         tipoSensoresBean.create(3, "Pressão Atmosférica");
         tipoSensoresBean.create(4, "GPS");
 
-        // Sensores
+        /*// Sensores
         //Encomenda 1
         sensorBean.create("29.0", 1, "ativo", 100, 30, 10, 1);
         sensorBean.create("39.7344200469475, -8.821063143811228", 4, "ativo", 100, 3);
@@ -281,7 +281,7 @@ public class ConfigBean {
         // Alerta para Pressão Atmosférica
         alertaBean.create("Valor acima do limite máximo (1015) para o sensor Pressão Atmosférica", 4, "1016", 3);
         alertaBean.create("Valor abaixo do limite mínimo (980) para o sensor Pressão Atmosférica", 4, "975", 3);
-
+*/
     }
 
 }

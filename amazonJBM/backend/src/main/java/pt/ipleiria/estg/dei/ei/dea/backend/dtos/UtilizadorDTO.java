@@ -2,10 +2,11 @@ package pt.ipleiria.estg.dei.ei.dea.backend.dtos;
 
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Utilizador;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UtilizadorDTO {
+public class UtilizadorDTO implements Serializable {
 
     private String username;
     private String name;

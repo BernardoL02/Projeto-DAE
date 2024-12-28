@@ -8,9 +8,7 @@ import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 import org.hibernate.Hibernate;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.EncomendasDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.UtilizadorDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.VolumeDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
 
