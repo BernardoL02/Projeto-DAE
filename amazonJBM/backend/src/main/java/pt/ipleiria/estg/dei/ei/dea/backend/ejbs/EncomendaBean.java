@@ -137,7 +137,6 @@ public class EncomendaBean {
         return encomendasFiltradas;
     }
 
-
     public Response mudarEstadoEncomenda(int id, String estado, Utilizador user) {
         var encomenda = this.find(id);
         if (encomenda == null) {
@@ -147,14 +146,12 @@ public class EncomendaBean {
         Utilizador utilizador = em.find(Utilizador.class, user.getUsername());
 
         if(utilizador.isCliente()) {
-            Encomenda isMinha = em.createQuery(
-                            "SELECT e FROM Encomenda e WHERE e.id = :id AND e.cliente.username = :username", Encomenda.class)
-                    .setParameter("id", id)
-                    .setParameter("username", user.getUsername())
-                    .getResultStream()
-                    .findFirst()
-                    .orElse(null);
-            if (isMinha == null) {
+            Cliente cliente = em.find(Cliente.class, user.getUsername());
+
+            Hibernate.initialize(cliente.getEncomendas());
+            Encomenda isMinha = cliente.getEncomenda(id);
+
+            if(isMinha == null) {
                 return Response.status(Response.Status.BAD_REQUEST).entity("A encomenda não te pertence!").build();
             }
         }

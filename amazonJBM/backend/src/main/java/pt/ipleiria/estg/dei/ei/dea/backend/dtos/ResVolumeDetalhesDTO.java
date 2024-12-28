@@ -52,7 +52,6 @@ public class ResVolumeDetalhesDTO<T> implements Serializable {
                 volume.getId(),
                 volume.getEncomenda(),
                 volume.getEncomenda().getVolumes()
-
         );
 
         return volumeDTO;

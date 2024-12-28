@@ -22,7 +22,7 @@ public class Volume {
     @JoinColumn(name = "encomenda_id")
     private Encomenda encomenda;
 
-    @OneToMany(mappedBy = "volume", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "volume", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Embalagem> embalagens = new ArrayList<>();
 
     public Volume(Encomenda encomenda) {

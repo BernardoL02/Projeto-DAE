@@ -19,7 +19,7 @@ public class Cliente extends Utilizador{
     @Column(name="morada")
     private String morada;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "cliente")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "cliente")
     private List<Encomenda> encomendas = new ArrayList<>();
 
     public Cliente(String username, String password, String email, String nome, String morada) {

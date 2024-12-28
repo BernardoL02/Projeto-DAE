@@ -30,9 +30,7 @@ public class VolumeBean {
     }
 
     public Volume find(int id) {
-        System.out.println("Procurando volume com ID: " + id);
         var volume = em.find(Volume.class, id);
-        System.out.println("Resultado da busca: " + volume);
         if (volume == null) {
             throw new NoSuchElementException("Volume com ID " + id + " não encontrado.");
         }
