@@ -1,12 +1,11 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.ejbs;
 
 import jakarta.ejb.Stateless;
-import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.VolumeDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.VolumeCreateEncomendaDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Embalagem;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Produto;
@@ -36,14 +35,10 @@ public class VolumeBean {
     }
 
     public Volume find(int id) {
-        var volume = em.find(Volume.class, id);
-        if (volume == null) {
-            throw new NoSuchElementException("Volume com ID " + id + " não encontrado.");
-        }
-        return volume;
+        return em.find(Volume.class, id);
     }
 
-    public Response associarVolumeEncomenda(int id_encomenda, VolumeDTO volumeDTO){
+    public Response associarVolumeEncomenda(int id_encomenda, VolumeCreateEncomendaDTO volumeCreateEncomendaDTO){
 
         Encomenda encomenda = em.find(Encomenda.class, id_encomenda);
 
@@ -53,7 +48,7 @@ public class VolumeBean {
 
         List<Produto> produtos = new ArrayList<>();
 
-        for (ProdutoDTO produto : volumeDTO.getProdutos()) {
+        for (ProdutoDTO produto : volumeCreateEncomendaDTO.getProdutos()) {
             Produto produto1 = em.find(Produto.class, produto.getId());
 
             if(produto1 == null){

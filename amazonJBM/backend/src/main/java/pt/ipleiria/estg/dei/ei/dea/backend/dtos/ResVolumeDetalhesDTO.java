@@ -1,6 +1,5 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.dtos;
 
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Embalagem;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Volume;
 
@@ -12,12 +11,10 @@ import java.util.stream.Collectors;
 public class ResVolumeDetalhesDTO<T> implements Serializable {
 
     private int id;
-    private Encomenda encomenda;
-    private List<Embalagem> embalagems = new ArrayList<>();
+    private List<EmbalagemDTO> embalagems = new ArrayList<>();
 
-    public ResVolumeDetalhesDTO(int id, Encomenda encomenda, List<Embalagem> embalagems) {
+    public ResVolumeDetalhesDTO(int id, List<EmbalagemDTO> embalagems) {
         this.id = id;
-        this.encomenda = encomenda;
         this.embalagems = embalagems;
     }
 
@@ -29,31 +26,28 @@ public class ResVolumeDetalhesDTO<T> implements Serializable {
         this.id = id;
     }
 
-    public Encomenda getEncomenda() {
-        return encomenda;
-    }
-
-    public void setEncomenda(Encomenda encomenda) {
-        this.encomenda = encomenda;
-    }
-
-    public List<Embalagem> getEmbalagems() {
+    public List<EmbalagemDTO> getEmbalagems() {
         return embalagems;
     }
 
-    public void setEmbalagems(List<Embalagem> embalagems) {
+    public void setEmbalagems(List<EmbalagemDTO> embalagems) {
         this.embalagems = embalagems;
     }
 
-
     public static ResVolumeDetalhesDTO from(Volume volume, String frontEnd) {
+        System.out.println("Mapping Volume ID: " + volume.getId());
+
+        List<EmbalagemDTO> embalagemDTO = volume.getEmbalagens()
+                .stream()
+                .map(EmbalagemDTO::from)
+                .collect(Collectors.toList());
 
         ResVolumeDetalhesDTO volumeDTO =  new ResVolumeDetalhesDTO(
                 volume.getId(),
-                volume.getEncomenda(),
-                volume.getEncomenda().getVolumes()
+                embalagemDTO
         );
 
+        System.out.println("Mapped VolumeDTO: " + volumeDTO);
         return volumeDTO;
     }
 

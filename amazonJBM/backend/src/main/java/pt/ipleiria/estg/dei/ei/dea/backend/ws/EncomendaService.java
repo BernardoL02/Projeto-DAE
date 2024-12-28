@@ -1,6 +1,5 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.ws;
 
-import io.jsonwebtoken.Jwts;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
@@ -9,13 +8,11 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.SecurityContext;
-import org.hibernate.Hibernate;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.security.Authenticated;
 
-import javax.net.ssl.SSLEngineResult;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -128,8 +125,8 @@ public class EncomendaService {
 
     @POST
     @Path("/{id}/volume")
-    public Response associarVolumeEncomenda(@PathParam("id") int id_encomenda, VolumeDTO volumeDTO){
-        volumeBean.associarVolumeEncomenda(id_encomenda, volumeDTO);
+    public Response associarVolumeEncomenda(@PathParam("id") int id_encomenda, VolumeCreateEncomendaDTO volumeCreateEncomendaDTO){
+        volumeBean.associarVolumeEncomenda(id_encomenda, volumeCreateEncomendaDTO);
         return Response.ok("Volume associado com sucesso").build();
     }
 

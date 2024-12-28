@@ -1,11 +1,6 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.dtos;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Cliente;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Volume;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -91,7 +86,7 @@ public class EncomendasDTO implements Serializable {
 
     public static EncomendasDTO from(Encomenda encomenda) {
 
-        List<VolumeDTO> volumeDTOs = encomenda.getVolumes().stream().map(VolumeDTO::from).collect(Collectors.toList());
+        List<VolumeDTO> volumeCreateEncomendaDTOS = encomenda.getVolumes().stream().map(VolumeDTO::from).collect(Collectors.toList());
 
         EncomendasDTO dto = new EncomendasDTO(
                 encomenda.getId(),
@@ -101,7 +96,7 @@ public class EncomendasDTO implements Serializable {
                 encomenda.getData_entrega()
         );
 
-        dto.setVolumes(volumeDTOs);
+        dto.setVolumes(volumeCreateEncomendaDTOS);
         
         return dto;
     }

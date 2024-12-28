@@ -5,15 +5,10 @@ import jakarta.ejb.EJB;
 import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.VolumeDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Categoria;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Embalagem;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Produto;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.VolumeCreateEncomendaDTO;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Startup
@@ -149,16 +144,16 @@ public class ConfigBean {
 
         ///////////////////////Criar Encomendas e Volumes
         ///////// Criar Encomenda para Bernardo
-            List<VolumeDTO> volumesBernardo1 = new ArrayList<>();
+            List<VolumeCreateEncomendaDTO> volumesBernardo1 = new ArrayList<>();
             // Volume 1
-                    VolumeDTO volume1Bernardo1 = new VolumeDTO();
+                    VolumeCreateEncomendaDTO volume1Bernardo1 = new VolumeCreateEncomendaDTO();
                     List<ProdutoDTO> produtosVolume1Bernardo1 = new ArrayList<>();
                     produtosVolume1Bernardo1.add(new ProdutoDTO(5, 10));
                     produtosVolume1Bernardo1.add(new ProdutoDTO(1, 10));
                     volume1Bernardo1.setProdutos(produtosVolume1Bernardo1);
                     volumesBernardo1.add(volume1Bernardo1);
             // Volume 2
-                    VolumeDTO volume2Bernardo1 = new VolumeDTO();
+                    VolumeCreateEncomendaDTO volume2Bernardo1 = new VolumeCreateEncomendaDTO();
                     List<ProdutoDTO> produtosVolume2Bernardo1 = new ArrayList<>();
                     produtosVolume2Bernardo1.add(new ProdutoDTO(10, 10));
                     volume2Bernardo1.setProdutos(produtosVolume2Bernardo1);
@@ -167,16 +162,16 @@ public class ConfigBean {
                     encomendaBean.create("Bernardo", volumesBernardo1, LocalDateTime.of(2024, 10, 31, 10, 0));
 
         ///////// Criar Encomenda para Tendeiro
-            List<VolumeDTO> volumesTendeiro = new ArrayList<>();
+            List<VolumeCreateEncomendaDTO> volumesTendeiro = new ArrayList<>();
             // Volume 1
-                    VolumeDTO volume1Tendeiro = new VolumeDTO();
+                    VolumeCreateEncomendaDTO volume1Tendeiro = new VolumeCreateEncomendaDTO();
                     List<ProdutoDTO> produtosVolume1Tendeiro = new ArrayList<>();
                     produtosVolume1Tendeiro.add(new ProdutoDTO(1, 10));
                     produtosVolume1Tendeiro.add(new ProdutoDTO(2, 10));
                     volume1Tendeiro.setProdutos(produtosVolume1Tendeiro);
                     volumesTendeiro.add(volume1Tendeiro);
             // Volume 2
-                    VolumeDTO volume2Tendeiro = new VolumeDTO();
+                    VolumeCreateEncomendaDTO volume2Tendeiro = new VolumeCreateEncomendaDTO();
                     List<ProdutoDTO> produtosVolume2Tendeiro = new ArrayList<>();
                     produtosVolume2Tendeiro.add(new ProdutoDTO(1, 10));
                     produtosVolume2Tendeiro.add(new ProdutoDTO(2, 10));
@@ -186,16 +181,16 @@ public class ConfigBean {
             encomendaBean.create("Tendeiro", volumesTendeiro, LocalDateTime.of(2024, 10, 31, 10, 0));
 
         ///////// Criar Encomenda para Sousa
-            List<VolumeDTO> volumesSousa = new ArrayList<>();
+            List<VolumeCreateEncomendaDTO> volumesSousa = new ArrayList<>();
             // Volume 1
-                    VolumeDTO volume1Sousa = new VolumeDTO();
+                    VolumeCreateEncomendaDTO volume1Sousa = new VolumeCreateEncomendaDTO();
                     List<ProdutoDTO> produtosVolume1Sousa = new ArrayList<>();
                     produtosVolume1Sousa.add(new ProdutoDTO(25, 2));
                     volume1Sousa.setProdutos(produtosVolume1Sousa);
                     volumesSousa.add(volume1Sousa);
 
             // Volume 2
-                    VolumeDTO volume2Sousa = new VolumeDTO();
+                    VolumeCreateEncomendaDTO volume2Sousa = new VolumeCreateEncomendaDTO();
                     List<ProdutoDTO> produtosVolume2Sousa = new ArrayList<>();
                     produtosVolume2Sousa.add(new ProdutoDTO(13, 1));
                     volume2Sousa.setProdutos(produtosVolume2Sousa);
@@ -204,16 +199,16 @@ public class ConfigBean {
             encomendaBean.create("Sousa", volumesSousa, LocalDateTime.of(2024, 11, 2, 12, 0));
 
         ///////// Criar Encomenda para Bernardo
-            List<VolumeDTO> volumesBernardo2 = new ArrayList<>();
+            List<VolumeCreateEncomendaDTO> volumesBernardo2 = new ArrayList<>();
             // Volume 1
-                    VolumeDTO volume1Bernardo2 = new VolumeDTO();
+                    VolumeCreateEncomendaDTO volume1Bernardo2 = new VolumeCreateEncomendaDTO();
                     List<ProdutoDTO> produtosVolume1Bernardo2 = new ArrayList<>();
                     produtosVolume1Bernardo2.add(new ProdutoDTO(5, 10));
                     produtosVolume1Bernardo2.add(new ProdutoDTO(1, 10));
                     volume1Bernardo2.setProdutos(produtosVolume1Bernardo2);
                     volumesBernardo2.add(volume1Bernardo2);
             // Volume 2
-                    VolumeDTO volume2Bernardo2 = new VolumeDTO();
+                    VolumeCreateEncomendaDTO volume2Bernardo2 = new VolumeCreateEncomendaDTO();
                     List<ProdutoDTO> produtosVolume2Bernardo2 = new ArrayList<>();
                     produtosVolume2Bernardo2.add(new ProdutoDTO(10, 10));
                     volume2Bernardo2.setProdutos(produtosVolume2Bernardo2);
@@ -222,15 +217,15 @@ public class ConfigBean {
             encomendaBean.create("Bernardo", volumesBernardo2, LocalDateTime.of(2024, 10, 31, 10, 0));
 
         ///////// Criar Encomenda para Ferreira
-            List<VolumeDTO> volumesFerreira = new ArrayList<>();
+            List<VolumeCreateEncomendaDTO> volumesFerreira = new ArrayList<>();
             // Volume 1
-                    VolumeDTO volume1Ferreira = new VolumeDTO();
+                    VolumeCreateEncomendaDTO volume1Ferreira = new VolumeCreateEncomendaDTO();
                     List<ProdutoDTO> produtosVolume1Ferreira = new ArrayList<>();
                     produtosVolume1Ferreira.add(new ProdutoDTO(8, 2));
                     volume1Ferreira.setProdutos(produtosVolume1Ferreira);
                     volumesFerreira.add(volume1Ferreira);
             // Volume 2
-                    VolumeDTO volume2Ferreira = new VolumeDTO();
+                    VolumeCreateEncomendaDTO volume2Ferreira = new VolumeCreateEncomendaDTO();
                     List<ProdutoDTO> produtosVolume2Ferreira = new ArrayList<>();
                     produtosVolume2Ferreira.add(new ProdutoDTO(16, 1));
                     volume2Ferreira.setProdutos(produtosVolume2Ferreira);
@@ -246,7 +241,7 @@ public class ConfigBean {
         tipoSensoresBean.create(3, "Pressão Atmosférica");
         tipoSensoresBean.create(4, "GPS");
 
-        /*// Sensores
+        // Sensores
         //Encomenda 1
         sensorBean.create("29.0", 1, "ativo", 100, 30, 10, 1);
         sensorBean.create("39.7344200469475, -8.821063143811228", 4, "ativo", 100, 3);
@@ -281,7 +276,7 @@ public class ConfigBean {
         // Alerta para Pressão Atmosférica
         alertaBean.create("Valor acima do limite máximo (1015) para o sensor Pressão Atmosférica", 4, "1016", 3);
         alertaBean.create("Valor abaixo do limite mínimo (980) para o sensor Pressão Atmosférica", 4, "975", 3);
-*/
+
     }
 
 }

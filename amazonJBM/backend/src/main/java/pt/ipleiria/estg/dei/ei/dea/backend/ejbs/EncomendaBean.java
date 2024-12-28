@@ -2,21 +2,15 @@ package pt.ipleiria.estg.dei.ei.dea.backend.ejbs;
 
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.PersistenceException;
-import jakarta.ws.rs.PATCH;
-import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
 import org.hibernate.Hibernate;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.VolumeDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.VolumeCreateEncomendaDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -33,14 +27,14 @@ public class EncomendaBean {
     @EJB
     private VolumeBean volumeBean;
 
-    public Response create(String client_username, List<VolumeDTO> volumes, LocalDateTime data_expedicao) {
+    public Response create(String client_username, List<VolumeCreateEncomendaDTO> volumes, LocalDateTime data_expedicao) {
         Cliente cliente = clienteBean.find(client_username);
 
         if(cliente == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("Cliente não encontrado!").build();
         }
 
-        for(VolumeDTO volume: volumes) {
+        for(VolumeCreateEncomendaDTO volume: volumes) {
             for (ProdutoDTO produto : volume.getProdutos()) {
                 Produto produto1 = em.find(Produto.class, produto.getId());
 
@@ -53,7 +47,7 @@ public class EncomendaBean {
         Encomenda encomenda = new Encomenda(cliente,data_expedicao);
         em.persist(encomenda);
 
-        for(VolumeDTO volume: volumes) {
+        for(VolumeCreateEncomendaDTO volume: volumes) {
             Volume volume1 = new Volume(encomenda);
             em.persist(volume1);
 

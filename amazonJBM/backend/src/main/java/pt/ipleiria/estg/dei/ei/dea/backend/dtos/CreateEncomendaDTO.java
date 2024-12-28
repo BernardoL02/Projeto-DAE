@@ -2,7 +2,6 @@ package pt.ipleiria.estg.dei.ei.dea.backend.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Produto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -15,9 +14,9 @@ public class CreateEncomendaDTO implements Serializable {
     private String username;
     private LocalDateTime data_expedicao;
     @JsonProperty("volumes")
-    private List<VolumeDTO> volumes = new ArrayList<>();
+    private List<VolumeCreateEncomendaDTO> volumes = new ArrayList<>();
 
-    public CreateEncomendaDTO( String username, LocalDateTime data_expedicao, List<VolumeDTO> volumes) {
+    public CreateEncomendaDTO( String username, LocalDateTime data_expedicao, List<VolumeCreateEncomendaDTO> volumes) {
         this.username = username;
         this.data_expedicao = data_expedicao;
         this.volumes = volumes;
@@ -44,16 +43,16 @@ public class CreateEncomendaDTO implements Serializable {
     }
 
 
-    public List<VolumeDTO> getVolumes() {
+    public List<VolumeCreateEncomendaDTO> getVolumes() {
         return volumes;
     }
 
-    public void setVolumes(List<VolumeDTO> volumes) {
+    public void setVolumes(List<VolumeCreateEncomendaDTO> volumes) {
         this.volumes = volumes;
     }
 
     public static CreateEncomendaDTO from(Encomenda encomenda) {
-        List<VolumeDTO> volumesDTO = encomenda.getVolumes().stream()
+        List<VolumeCreateEncomendaDTO> volumesDTO = encomenda.getVolumes().stream()
                 .map(volume -> {
                     List<ProdutoDTO> produtosDTO = volume.getEmbalagens().stream()
                             .map(produto -> new ProdutoDTO(
@@ -62,7 +61,7 @@ public class CreateEncomendaDTO implements Serializable {
                             ))
                             .collect(Collectors.toList());
 
-                    return new VolumeDTO(produtosDTO);
+                    return new VolumeCreateEncomendaDTO(produtosDTO);
                 })
                 .collect(Collectors.toList());
 
