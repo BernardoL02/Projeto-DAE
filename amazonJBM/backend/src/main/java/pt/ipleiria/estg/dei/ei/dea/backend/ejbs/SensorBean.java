@@ -25,22 +25,23 @@ public class SensorBean {
     @EJB
     private AlertaBean alertaBean;
 
-    public void create(String valor, int tipoId, String estado, int bateria, int valMax, int valMin, int id_volume) {
+    public void create(String valor, int tipoId, String estado, int bateria, int valMax, int valMin, int id_embalagem) {
         Tipo_Sensores tipoSensores = em.find(Tipo_Sensores.class, tipoId);
-        Volume volume = em.find(Volume.class, id_volume);
+        Embalagem embalagem = em.find(Embalagem.class, id_embalagem);
         if (tipoSensores == null) {
             throw new NoSuchElementException("Tipo_Sensores com ID " + tipoId + " não encontrado.");
         }
-        var sensor = new Sensor(valor, tipoSensores, estado, bateria, valMax, valMin, volume);
+        var sensor = new Sensor(valor, tipoSensores, estado, bateria, valMax, valMin, embalagem);
         em.persist(sensor);
     }
-    public void create(String valor, int tipoId, String estado, int bateria, int id_volume) {
+
+    public void create(String valor, int tipoId, String estado, int bateria, int id_embalagem) {
         Tipo_Sensores tipoSensores = em.find(Tipo_Sensores.class, tipoId);
-        Volume volume = em.find(Volume.class, id_volume);
+        Embalagem embalagem = em.find(Embalagem.class, id_embalagem);
         if (tipoSensores == null) {
             throw new NoSuchElementException("Tipo_Sensores com ID " + tipoId + " não encontrado.");
         }
-        var sensor = new Sensor(valor, tipoSensores, estado, bateria, volume);
+        var sensor = new Sensor(valor, tipoSensores, estado, bateria, embalagem);
         em.persist(sensor);
     }
 
@@ -50,19 +51,23 @@ public class SensorBean {
 
 
     public Sensor updateEstado(int id, SensorDTO sensorDTO) {
+       /*
         Sensor sensor = em.find(Sensor.class, id);
 
         sensor.setEstado(sensorDTO.getEstado());
 
         em.merge(sensor);
         return sensor;// TODO: tratar possiveis erros de o sensor nao existir
+
+        */
+        return null;
     }
 
     public Sensor updateValor(int id, SensorDTO sensorDTO) {
         Sensor sensor = em.find(Sensor.class, id);
 
-        sensor.setValor(sensorDTO.getValor());
-        sensor.setBateria(sensorDTO.getBateria());
+        //sensor.setValor(sensorDTO.getValor());
+        //sensor.setBateria(sensorDTO.getBateria());
 
         em.merge(sensor);
         return sensor;// TODO: tratar possiveis erros de o sensor nao existir

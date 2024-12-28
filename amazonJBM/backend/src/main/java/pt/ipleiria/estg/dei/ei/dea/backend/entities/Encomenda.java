@@ -41,11 +41,10 @@ public class Encomenda extends Versionable{
     @OneToMany( fetch = FetchType.EAGER,mappedBy="encomenda")
     private List<Volume> volumes = new ArrayList<>();
 
-    public Encomenda(Cliente cliente, String estado, LocalDateTime data_expedicao, LocalDateTime data_entrega) {
+    public Encomenda(Cliente cliente, String estado, LocalDateTime data_expedicao) {
         this.cliente = cliente;
         this.estado = estado;
         this.data_expedicao = data_expedicao;
-        this.data_entrega = data_entrega;
 
         if(volumes == null) {
             volumes = new ArrayList<>();
@@ -106,16 +105,16 @@ public class Encomenda extends Versionable{
 
     public void addVolume(Volume volume) {
         volumes.add(volume);
-
     }
 
     public List<Produto> getProdutos(){
         List<Produto> produtos = new ArrayList<>();
 
         for (Volume volume: volumes) {
-            produtos.add(volume.getProduto());
+            for(Embalagem embalagem : volume.getEmbalagens()){
+                produtos.add(embalagem.getProduto());
+            }
         }
-
         return produtos;
     }
 

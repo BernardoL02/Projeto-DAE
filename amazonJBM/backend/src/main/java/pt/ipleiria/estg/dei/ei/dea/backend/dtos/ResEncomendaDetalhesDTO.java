@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 public class ResEncomendaDetalhesDTO implements Serializable {
 
+    /*
     private int id;
 
     private String username;
@@ -106,4 +107,6 @@ public class ResEncomendaDetalhesDTO implements Serializable {
     public static List<EncomendasDTO> from(List<Encomenda> encomendas) {
         return encomendas.stream().map(EncomendasDTO::from).collect(Collectors.toList());
     }
+
+     */
 }

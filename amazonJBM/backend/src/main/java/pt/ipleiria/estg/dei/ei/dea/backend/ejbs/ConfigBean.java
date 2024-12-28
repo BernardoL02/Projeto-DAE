@@ -4,6 +4,8 @@ import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
+
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -72,7 +74,6 @@ public class ConfigBean {
 
 
         // Produtos
-
         // Alimentos
         produtoBean.create(1, "Maçã", 1, 5);
         produtoBean.create(2, "Pão Integral", 1, 10);
@@ -129,7 +130,17 @@ public class ConfigBean {
         produtoBean.create(36, "Caixote Do Lixo", 12, 4);
 
 
+        //Encomenda
+        encomendaBean.create("Bernardo", Arrays.asList(1,4), "PorEntregar", LocalDateTime.of(2024, 10, 29, 15, 30),2);
 
+
+
+
+
+
+
+
+        /*
         // Encomendas e Volumes
         encomendaBean.create("Bernardo", "PorEntregar", LocalDateTime.of(2024, 10, 29, 15, 30), LocalDateTime.of(2024, 10, 29, 15, 30));
         volumeBean.create(3, 5, 1);
@@ -197,7 +208,7 @@ public class ConfigBean {
         alertaBean.create("Valor acima do limite máximo (1015) para o sensor Pressão Atmosférica", 4, "1016", 3);
         alertaBean.create("Valor abaixo do limite mínimo (980) para o sensor Pressão Atmosférica", 4, "975", 3);
 
-
+    */
     }
 
 }

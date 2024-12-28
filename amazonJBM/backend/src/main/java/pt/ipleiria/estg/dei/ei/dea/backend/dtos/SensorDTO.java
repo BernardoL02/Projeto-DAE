@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 
 public class SensorDTO implements Serializable {
+    /*
     private int id;
     private String valor;
     private int tipoId;
@@ -146,6 +147,5 @@ public class SensorDTO implements Serializable {
     public static List<SensorDTO> from(List<Sensor> sensors) {
         return sensors.stream().map(SensorDTO::from).collect(Collectors.toList());
     }
-
-
+*/
 }

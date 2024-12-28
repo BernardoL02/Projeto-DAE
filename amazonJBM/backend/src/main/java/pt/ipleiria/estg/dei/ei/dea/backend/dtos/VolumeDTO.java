@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class VolumeDTO implements Serializable {
-
+    /*
     private int id;
     private int id_produto;
     private String nome_produto;
@@ -100,4 +100,5 @@ public class VolumeDTO implements Serializable {
     public static List<VolumeDTO> from(List<Volume> volumes) {
         return volumes.stream().map(VolumeDTO::from).collect(Collectors.toList());
     }
+     */
 }

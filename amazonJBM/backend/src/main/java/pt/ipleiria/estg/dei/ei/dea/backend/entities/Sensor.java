@@ -4,9 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(
-        name = "sensor"
-)
+@Table(name = "sensor")
 @NamedQueries({
         @NamedQuery(
                 name = "getAllSensores",
@@ -22,55 +20,55 @@ public class Sensor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name="valor")
+    @Column(name = "valor")
     private String valor;
 
     @ManyToOne
     @JoinColumn(name = "id_tipo", nullable = false)
     private Tipo_Sensores tipo;
 
-    @Column(name="estado")
+    @Column(name = "estado")
     private String estado;
 
     @Column(name = "bateria")
     private int bateria;
 
-    @Column(name="Val_Max", nullable = true)
+    @Column(name = "Val_Max", nullable = true)
     private Integer valMax;
 
-    @Column(name="Val_Min", nullable = true)
+    @Column(name = "Val_Min", nullable = true)
     private Integer valMin;
 
-    @Column(name="time_stamp")
+    @Column(name = "time_stamp")
     private LocalDateTime timeStamp;
 
     @ManyToOne
-    @JoinColumn(name = "id_volume", nullable = false)
-    private Volume volume;
+    @JoinColumn(name = "id_embalagem", nullable = false)
+    private Embalagem embalagem;
 
-    public Sensor(String valor, Tipo_Sensores tipo, String estado, int bateria, int valMax, int valMin,Volume volume) {
+    public Sensor(String valor, Tipo_Sensores tipo, String estado, int bateria, int valMax, int valMin, Embalagem embalagem) {
         this.valor = valor;
         this.tipo = tipo;
         this.estado = estado;
         this.bateria = bateria;
         this.valMax = valMax;
         this.valMin = valMin;
-        timeStamp = LocalDateTime.now();
-        this.volume = volume;
+        this.timeStamp = LocalDateTime.now();
+        this.embalagem = embalagem;
     }
-    public Sensor(String valor, Tipo_Sensores tipo, String estado, int bateria, Volume volume) {
+
+    public Sensor(String valor, Tipo_Sensores tipo, String estado, int bateria, Embalagem embalagem) {
         this.valor = valor;
         this.tipo = tipo;
-        this.valMax = null;
-        this.valMin = null;
         this.estado = estado;
         this.bateria = bateria;
-        timeStamp = LocalDateTime.now();
-        this.volume = volume;
+        this.valMax = null;
+        this.valMin = null;
+        this.timeStamp = LocalDateTime.now();
+        this.embalagem = embalagem;
     }
 
     public Sensor() {
-
     }
 
     public int getId() {
@@ -87,7 +85,7 @@ public class Sensor {
 
     public void setValor(String valor) {
         this.valor = valor;
-        timeStamp = LocalDateTime.now();
+        this.timeStamp = LocalDateTime.now();
     }
 
     public Tipo_Sensores getTipo() {
@@ -104,7 +102,7 @@ public class Sensor {
 
     public void setEstado(String estado) {
         this.estado = estado;
-        timeStamp = LocalDateTime.now();
+        this.timeStamp = LocalDateTime.now();
     }
 
     public int getBateria() {
@@ -139,19 +137,11 @@ public class Sensor {
         this.timeStamp = timeStamp;
     }
 
-    public void setValMax(Integer valMax) {
-        this.valMax = valMax;
+    public Embalagem getEmbalagem() {
+        return embalagem;
     }
 
-    public void setValMin(Integer valMin) {
-        this.valMin = valMin;
-    }
-
-    public Volume getVolume() {
-        return volume;
-    }
-
-    public void setVolume(Volume volume) {
-        this.volume = volume;
+    public void setEmbalagem(Embalagem embalagem) {
+        this.embalagem = embalagem;
     }
 }

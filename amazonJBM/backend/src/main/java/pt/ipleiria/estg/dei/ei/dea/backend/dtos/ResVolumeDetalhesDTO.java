@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ResVolumeDetalhesDTO<T> implements Serializable { // Classe parametrizada com T
+    /*
     private int id;
     private String nome_produto;
     private List<T> sensores = new ArrayList<>(); // Lista tipada com T
@@ -74,4 +75,6 @@ public class ResVolumeDetalhesDTO<T> implements Serializable { // Classe paramet
     public static List<ResVolumeDetalhesDTO> from(List<Volume> volumes, String frontEnd) {
         return volumes.stream().map(volume -> from(volume, frontEnd)).collect(Collectors.toList());
     }
+
+     */
 }

@@ -16,14 +16,17 @@ public class VolumeBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(int id_produto, int quantidade, int id_encomenda){
+    public Volume create(int id_encomenda){
 
-        Produto produto = em.find(Produto.class, id_produto);
         Encomenda encomenda = em.find(Encomenda.class, id_encomenda);
-        var volume = new Volume(produto,quantidade, encomenda);
+        Volume volume = new Volume(encomenda);
+
         encomenda.addVolume(volume);
         volume.setEncomenda(encomenda);
-        em.persist(volume); //TODO verificar quantida por volume aquilo das caixas !! quantida_por_volume
+
+        em.persist(volume);
+
+        return volume;
     }
 
     public Volume find(int id) {

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ResSensorUltimaLeituraByTipoDTO implements Serializable {
-
+    /*
     private int id;
     private String valor;
     private String tipoNome;
@@ -114,4 +114,6 @@ public class ResSensorUltimaLeituraByTipoDTO implements Serializable {
     public static List<ResSensorUltimaLeituraByTipoDTO> from(List<Sensor> sensors) {
         return sensors.stream().map(ResSensorUltimaLeituraByTipoDTO::from).collect(Collectors.toList());
     }
+
+     */
 }

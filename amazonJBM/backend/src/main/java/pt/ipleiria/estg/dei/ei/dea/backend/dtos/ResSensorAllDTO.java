@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ResSensorAllDTO implements Serializable {
-
+/*
     private int id;
     private String valor;
     private String tipoNome;
@@ -136,4 +136,5 @@ public class ResSensorAllDTO implements Serializable {
     public static List<ResSensorAllDTO> from(List<Sensor> sensors) {
         return sensors.stream().map(ResSensorAllDTO::from).collect(Collectors.toList());
     }
+    */
 }

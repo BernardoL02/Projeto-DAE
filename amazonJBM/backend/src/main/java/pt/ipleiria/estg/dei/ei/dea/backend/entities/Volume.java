@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Entity
 
+@Entity
 public class Volume {
 
     @Id
@@ -17,27 +17,21 @@ public class Volume {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "id_produto", nullable = false)
-    private Produto produto;
-
-    @ManyToOne
     @NotNull
-    private  Encomenda encomenda;
+    private Encomenda encomenda;
 
-    private int quantidade;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "volume", cascade = CascadeType.ALL)
+    private List<Embalagem> embalagens = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "volume")
-    private List<Sensor> sensores = new ArrayList<>();
-
-    public Volume(Produto produto, int quantidade, Encomenda encomenda) {
-        this.produto = produto;
-        this.quantidade = quantidade;
+    public Volume(Encomenda encomenda) {
         this.encomenda = encomenda;
 
+        if(embalagens == null){
+            embalagens = new ArrayList<>();
+        }
     }
 
-    public Volume(){
-
+    public Volume() {
     }
 
     public int getId() {
@@ -48,22 +42,6 @@ public class Volume {
         this.id = id;
     }
 
-    public Produto getProduto() {
-        return produto;
-    }
-
-    public void setProduto(Produto produto) {
-        this.produto = produto;
-    }
-
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
-
     public @NotNull Encomenda getEncomenda() {
         return encomenda;
     }
@@ -72,13 +50,13 @@ public class Volume {
         this.encomenda = encomenda;
     }
 
-    public void addSensor(Sensor sensor) {
-        sensores.add(sensor);
-
+    public List<Embalagem> getEmbalagens() {
+        return embalagens;
     }
 
-    public List<Sensor> getSensores() {
-        return sensores;
+    public void addEmbalagem(Embalagem embalagem) {
+        embalagens.add(embalagem);
+        embalagem.setVolume(this);
     }
-
 }
+

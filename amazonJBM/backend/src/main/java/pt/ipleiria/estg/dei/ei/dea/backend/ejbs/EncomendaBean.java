@@ -34,11 +34,23 @@ public class EncomendaBean {
     @EJB
     private VolumeBean volumeBean;
 
-    public Encomenda create(String client_username, String estado, LocalDateTime data_expedicao, LocalDateTime data_entrega) {
-
-        Cliente cliente = clienteBean.find(client_username);
+    public Encomenda create(String client_username, List<Integer> id_produtos, String estado, LocalDateTime data_expedicao, int quantidade_volumes) {
         //TODO -> se o cliente nao existir
-        Encomenda encomenda = new Encomenda(cliente,estado,data_expedicao,data_entrega);
+        Cliente cliente = clienteBean.find(client_username);
+        Encomenda encomenda = new Encomenda(cliente,estado,data_expedicao);
+
+        while (quantidade_volumes > 0) {
+            Volume volume = volumeBean.create(encomenda.getId());
+
+            for(Integer id_produto : id_produtos){
+                Produto produto = em.find(Produto.class, id_produto);
+
+                Embalagem embalagem = new Embalagem(produto,volume,10);
+            }
+
+            quantidade_volumes--;
+        }
+
         em.persist(encomenda);
         em.flush();
 
@@ -114,7 +126,8 @@ public class EncomendaBean {
 
 
     public void mudarEstadoEncomenda(int id, String estado) {
-
+        //Todo
+        /*
         var encomenda = this.find(id);
 
         if (encomenda == null) {
@@ -139,14 +152,18 @@ public class EncomendaBean {
         } catch (Exception e) {
             throw new PersistenceException("Erro ao atualizar encomenda.", e);
         }
+        */
     }
 
     public void gerarVolumes(int id_encomenda,List<ProdutoDTO> produtos){
-
+        //TODO
+        /*
         for (ProdutoDTO produto:produtos) {
             volumeBean.create(produto.getId(), produto.getQuantidade_por_volume(), id_encomenda);
         }
+         */
     }
+
 
     public List<Object[]> getCoordenadasEncomenda(int id) {
         Encomenda encomenda = em.find(Encomenda.class, id);
@@ -154,9 +171,10 @@ public class EncomendaBean {
         List<Object[]> coordenadasList = new ArrayList<>();
 
         for (Volume volume : encomenda.getVolumes()) {
-            for (Sensor sensor : volume.getSensores()) {
+            for(Embalagem embalagem : volume.getEmbalagens())
+            for (Sensor sensor : embalagem.getSensores()) {
                 if ("GPS".equals(sensor.getTipo().getTipo())) {
-                    coordenadasList.add(new Object[]{volume.getId(), volume.getProduto().getNome(), sensor.getValor()});
+                    coordenadasList.add(new Object[]{volume.getId(), embalagem.getProduto().getNome(), sensor.getValor()});
                 }
             }
         }
