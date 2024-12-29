@@ -35,7 +35,6 @@ public class ResVolumeDetalhesDTO<T> implements Serializable {
     }
 
     public static ResVolumeDetalhesDTO from(Volume volume, String frontEnd) {
-        System.out.println("Mapping Volume ID: " + volume.getId());
 
         List<EmbalagemDTO> embalagemDTO = volume.getEmbalagens()
                 .stream()
@@ -47,7 +46,6 @@ public class ResVolumeDetalhesDTO<T> implements Serializable {
                 embalagemDTO
         );
 
-        System.out.println("Mapped VolumeDTO: " + volumeDTO);
         return volumeDTO;
     }
 
