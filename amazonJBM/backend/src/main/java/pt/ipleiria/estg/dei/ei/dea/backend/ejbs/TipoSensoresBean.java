@@ -22,9 +22,7 @@ public class TipoSensoresBean {
 
     public Tipo_Sensores find(int id) {
         var tipo = em.find(Tipo_Sensores.class, id);
-        if (tipo == null) {
-            throw new NoSuchElementException("Tipo_Sensores com ID " + id + " não encontrado.");
-        }
+
         return tipo;
     }
 

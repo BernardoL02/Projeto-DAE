@@ -5,11 +5,13 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.ws.rs.core.Response;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResSensorUltimaLeituraByTipoDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResSensorValorDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.SensorDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -67,31 +69,51 @@ public class SensorBean {
     }
 
 
-    public Sensor updateEstado(int id, SensorDTO sensorDTO) {
+    public Response updateEstado(int id, SensorDTO sensorDTO) {
         Sensor sensor = em.find(Sensor.class, id);
+
+        if(sensor == null){
+            return Response.ok(Response.Status.NOT_FOUND).entity("Sensor não encontrado!").build();
+        }
 
         sensor.setEstado(sensorDTO.getEstado());
-
         em.merge(sensor);
-        return sensor;// TODO: tratar possiveis erros de o sensor nao existir
+        return Response.ok(ResSensorValorDTO.from(sensor)).build();
     }
 
-    public Sensor updateValor(int id, SensorDTO sensorDTO) {
+    public Response updateValor(int id, SensorDTO sensorDTO) {
         Sensor sensor = em.find(Sensor.class, id);
 
-        //sensor.setValor(sensorDTO.getValor());
-        //sensor.setBateria(sensorDTO.getBateria());
+        if(sensor == null){
+            return Response.status(Response.Status.NOT_FOUND).entity("Sensor não encontrado!").build();
+        }
+
+        sensor.setValor(sensorDTO.getValor());
+        sensor.setBateria(sensorDTO.getBateria());
 
         em.merge(sensor);
-        return sensor;// TODO: tratar possiveis erros de o sensor nao existir
+        return Response.ok(ResSensorValorDTO.from(sensor)).build();
     }
 
-    public List<Sensor> getUltimaLeituraSensoresByTipo(String tipo_sensor) {
+    public Response getUltimaLeituraSensoresByTipo(String tipo_sensor, Utilizador user) {
+
         Tipo_Sensores tipoSensores = tipoSensoresBean.findAll().stream()
                 .filter(tipo -> tipo.getTipo().equals(tipo_sensor))
                 .findFirst().orElse(null);
 
-        return em.createNamedQuery("Sensor.findByTipoAndEstado", Sensor.class).setParameter("tipoId", tipoSensores.getId()).getResultList();
+        if(tipoSensores == null){
+            return Response.status(Response.Status.NOT_FOUND).entity("Tipo de Sensor não existe!").build();
+        }
+
+        List<Sensor> sensores = new ArrayList<>();
+
+        if(user.isCliente()){
+            sensores = em.createNamedQuery("Sensor.findByTipoAndEstadoByCliente", Sensor.class).setParameter("tipoId", tipoSensores.getId()).setParameter("username", user.getUsername()).getResultList();
+        }else{
+             sensores = em.createNamedQuery("Sensor.findByTipoAndEstado", Sensor.class).setParameter("tipoId", tipoSensores.getId()).getResultList();
+        }
+
+        return Response.ok(sensores.stream().map(ResSensorUltimaLeituraByTipoDTO::from).collect(Collectors.toList())).build();
     }
 
     public List<Alerta> getAlertasSensor(int sensorId) {

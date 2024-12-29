@@ -30,9 +30,7 @@ public class UtilizadorBean {
 
     public Utilizador find(String username) {
         var user = em.find(Utilizador.class, username);
-        if (user == null) {
-            throw new NoSuchElementException("Utilizador com username " + username + " não encontrado.");
-        }
+
         return user;
     }
 

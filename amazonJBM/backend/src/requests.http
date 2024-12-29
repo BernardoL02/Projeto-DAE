@@ -140,8 +140,6 @@ Content-Type: application/json
 ### Get All sensores #
 GET http://localhost:3001/backend/api/sensor/
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDY3NTE5LCJleHAiOjE3MzU0NzExMTl9.SQJBQdNHigkc_1xFi4iIRqHrVlJ5llEvo9vgV-iQ8sppaso8L2Rqy_rNa1egs1mR
-
 
 ### Criar um alerta #
 POST http://localhost:3001/backend/api/sensor/
@@ -165,7 +163,7 @@ Content-Type: application/json
 }
 
 ### Patch Sensor Valor #
-PATCH http://localhost:3001/backend/api/sensor/1
+PATCH http://localhost:3001/backend/api/sensor/2
 Accept: application/json
 Content-Type: application/json
 
@@ -177,12 +175,14 @@ Content-Type: application/json
 ### Get All Tipos de Sensor #
 GET http://localhost:3001/backend/api/sensor/tipos
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDY3NTE5LCJleHAiOjE3MzU0NzExMTl9.SQJBQdNHigkc_1xFi4iIRqHrVlJ5llEvo9vgV-iQ8sppaso8L2Rqy_rNa1egs1mR
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQ3MjEyNiwiZXhwIjoxNzM1NDc1NzI2fQ.HfOFlkJCqj9k4pOXiOW43AbGq1aHK-uQFoQlciOBRQW8DKWnTjl2l6e32WADYabi
 
 
 ### GET All Ultimo Valor dos Sensores por Tipo #
-GET http://localhost:3001/backend/api/sensor/Temperatura
+GET http://localhost:3001/backend/api/sensor/GPS
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQ3Mjk5NSwiZXhwIjoxNzM1NDc2NTk1fQ.JzwH4Jvo0nSIx49rf5A5geIyLeJGPvs8tdZe3v1iLdOV0rx1Po4076c8jSC0Ie8l
+
 
 ### GET Ver Alertas de um sensor #
 GET http://localhost:3001/backend/api/sensor/1/alertas
@@ -195,7 +195,7 @@ POST http://localhost:3001/backend/api/auth/login
 Content-Type: application/json
 Accept: application/json
 
-{ "username": "Miguel", "password": "123" }
+{ "username": "Bernardo", "password": "123" }
 
 ### Bernardo -> Cliente
 ### Miguel -> Logista

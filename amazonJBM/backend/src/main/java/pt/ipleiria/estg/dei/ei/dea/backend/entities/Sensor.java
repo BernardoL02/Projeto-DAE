@@ -13,6 +13,15 @@ import java.time.LocalDateTime;
         @NamedQuery(
                 name = "Sensor.findByTipoAndEstado",
                 query = "SELECT s FROM Sensor s WHERE s.tipo.id = :tipoId AND s.estado = 'ativo'"
+        ),
+
+        @NamedQuery(
+                name = "Sensor.findByTipoAndEstadoByCliente",
+                query = "SELECT s FROM Sensor s JOIN Embalagem em ON s.embalagem.id =  em.id " +
+                        "JOIN Volume v ON em.volume.id = v.id" +
+                        " JOIN Encomenda e ON v.encomenda.id = e.id"+
+                        " JOIN Cliente c ON e.cliente.id = c.id"+
+                        " WHERE s.tipo.id = :tipoId AND s.estado = 'ativo' AND c.username = :username "
         )
 })
 public class Sensor {

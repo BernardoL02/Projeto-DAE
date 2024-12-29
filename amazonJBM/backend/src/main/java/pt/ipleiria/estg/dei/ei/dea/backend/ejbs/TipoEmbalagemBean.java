@@ -16,15 +16,13 @@ public class TipoEmbalagemBean {
     private EntityManager em;
 
     public void create(int id, String tipo) {
-        var tipoEmbalagem = new Tipo_Embalagem(id, tipo);
+        Tipo_Embalagem tipoEmbalagem = new Tipo_Embalagem(id, tipo);
         em.persist(tipoEmbalagem);
     }
 
     public Tipo_Embalagem find(int id) {
-        var tipo = em.find(Tipo_Embalagem.class, id);
-        if (tipo == null) {
-            throw new NoSuchElementException("Tipo_Embalagem com ID " + id + " não encontrado.");
-        }
+        Tipo_Embalagem tipo = em.find(Tipo_Embalagem.class, id);
+
         return tipo;
     }
 

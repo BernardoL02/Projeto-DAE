@@ -24,6 +24,7 @@ public class CategoriaBean {
 
     public void create(int id, String nome, int tipo_caixa){
         Tipo_Embalagem tipocaixa = em.find(Tipo_Embalagem.class, tipo_caixa);
+
         var categoria = new Categoria(id,nome, tipocaixa);
         em.persist(categoria);
     }
