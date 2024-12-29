@@ -26,15 +26,15 @@ public class EmbalagemService {
     public Response associarSensorAEmbalagem(@PathParam("id") int id, SensorDTO sensorDTO) {
 
         if(4 == sensorDTO.getTipoId()){
-            sensorBean.create(
+            return sensorBean.create(
                     sensorDTO.getValor(),
                     sensorDTO.getTipoId(),
                     sensorDTO.getEstado(),
                     sensorDTO.getBateria(),
                     id
             );
-        }else{
-            sensorBean.create(
+        }
+           return sensorBean.create(
                     sensorDTO.getValor(),
                     sensorDTO.getTipoId(),
                     sensorDTO.getEstado(),
@@ -43,8 +43,6 @@ public class EmbalagemService {
                     sensorDTO.getValMin(),
                     id
             );
-        }
 
-        return Response.ok("Sensor associado com sucesso").build();
     }
 }
