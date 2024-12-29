@@ -115,9 +115,9 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczN
 ######################### Volume Service ################################
 
 ### Get Detalhes Volume #
-GET http://localhost:3001/backend/api/volume/1
+GET http://localhost:3001/backend/api/volume/3
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQxMzI2MywiZXhwIjoxNzM1NDE2ODYzfQ.YOUCQvaUZsQKaKdeapa7mgRApuvCXvt3aeMxVDYHOs174XfnPfHwAVHwO7qz1tKY
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDY2OTA2LCJleHAiOjE3MzU0NzA1MDZ9.kkJG1L31zbG-zPzZbrLprZ9YBvTbODf8LWgSW0bb7amm80lN1biGd0JI5LPFyECR
 
 ###Associar um Sensor a um Embalagem #
 POST http://localhost:3001/backend/api/embalagem/1/sensor
@@ -190,7 +190,7 @@ POST http://localhost:3001/backend/api/auth/login
 Content-Type: application/json
 Accept: application/json
 
-{ "username": "Bernardo", "password": "123" }
+{ "username": "Jose", "password": "123" }
 
 ### GET User Info
 GET http://localhost:3001/backend/api/auth/user
