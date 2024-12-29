@@ -30,13 +30,7 @@ public class CategoriaBean {
 
     public Categoria find(int id){
 
-        var categoria = em.find(Categoria.class, id);
-
-        if(categoria == null){
-            throw new NoSuchElementException();
-        }
-
-        return categoria;
+        return em.find(Categoria.class, id);
     }
 
 

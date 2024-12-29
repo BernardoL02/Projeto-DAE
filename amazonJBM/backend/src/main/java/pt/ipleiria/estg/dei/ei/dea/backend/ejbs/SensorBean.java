@@ -4,6 +4,7 @@ import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResSensorValorDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.SensorDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
@@ -25,26 +26,40 @@ public class SensorBean {
     @EJB
     private AlertaBean alertaBean;
 
-    public void create(String valor, int tipoId, String estado, int bateria, int valMax, int valMin, int id_embalagem) {
+    public Response create(String valor, int tipoId, String estado, int bateria, int valMax, int valMin, int id_embalagem) {
         Tipo_Sensores tipoSensores = em.find(Tipo_Sensores.class, tipoId);
-        Embalagem embalagem = em.find(Embalagem.class, id_embalagem);
+
         if (tipoSensores == null) {
-            throw new NoSuchElementException("Tipo_Sensores com ID " + tipoId + " não encontrado.");
+            return Response.status(Response.Status.NOT_FOUND).entity("Tipo de Sensor não encontrado!").build();
         }
+
+        Embalagem embalagem = em.find(Embalagem.class, id_embalagem);
+
+        if (embalagem == null) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Embalagem não encontrada!").build();
+        }
+
         var sensor = new Sensor(valor, tipoSensores, estado, bateria, valMax, valMin, embalagem);
         em.persist(sensor);
+        return Response.ok("Sensor associado com sucesso").build();
     }
 
-    public void create(String valor, int tipoId, String estado, int bateria, int id_embalagem) {
+    public Response create(String valor, int tipoId, String estado, int bateria, int id_embalagem) {
         Tipo_Sensores tipoSensores = em.find(Tipo_Sensores.class, tipoId);
-        Embalagem embalagem = em.find(Embalagem.class, id_embalagem);
+
         if (tipoSensores == null) {
-            throw new NoSuchElementException("Tipo_Sensores com ID " + tipoId + " não encontrado.");
+            return Response.status(Response.Status.NOT_FOUND).entity("Tipo de Sensor não encontrado!").build();
         }
-        System.out.println(embalagem.getId());
-        System.out.println(tipoSensores.getTipo());
+
+        Embalagem embalagem = em.find(Embalagem.class, id_embalagem);
+
+        if (embalagem == null) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Embalagem não encontrada!").build();
+        }
+
         var sensor = new Sensor(valor, tipoSensores, estado, bateria, embalagem);
         em.persist(sensor);
+        return Response.ok("Sensor associado com sucesso").build();
     }
 
     public List<Sensor> findAll() {

@@ -84,7 +84,7 @@ public class EncomendaService {
             return Response.status(Response.Status.FORBIDDEN).entity("Apenas pode ver os detalhes de encomendas que lhe pertencem.").build();
         }
 
-        return Response.ok(ResEncomendaDetalhesDTO.from(encomenda,"SO")).build();
+        return Response.ok(ResEncomendaDetalhesDTO.from(encomenda)).build();
     }
 
 
@@ -104,13 +104,11 @@ public class EncomendaService {
         return Response.status(response.getStatus()).entity(entity).build();
     }
 
-
     @GET
     @Path("estado/{estado}")
     @RolesAllowed({"Gestor", "Cliente", "Logista"})
     public Response getEncomendaByEstado(@PathParam("estado") String estado) {
         Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
-        System.out.println(user.getUsername());
         List<Encomenda> encomendas = encomendaBean.findEncomendasByEstado(estado, user);
         return Response.ok(ResEncomendaEstadoDTO.from(encomendas)).build();
     }

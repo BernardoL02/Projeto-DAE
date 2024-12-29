@@ -6,6 +6,7 @@
 ### GET All Produtos #
 GET http://localhost:3001/backend/api/produtos
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0NjgwNTgsImV4cCI6MTczNTQ3MTY1OH0.4CSt0LihCfh5q3YSSK2vNvFH1zieStYgM_PgVDZ64bcmso7Voz27P6oVIfseB3n5
 
 ######################### Clientes Service ################################
 ### GET All clientes #
@@ -115,14 +116,14 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczN
 ######################### Volume Service ################################
 
 ### Get Detalhes Volume #
-GET http://localhost:3001/backend/api/volume/1
+GET http://localhost:3001/backend/api/volume/3
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQxMzI2MywiZXhwIjoxNzM1NDE2ODYzfQ.YOUCQvaUZsQKaKdeapa7mgRApuvCXvt3aeMxVDYHOs174XfnPfHwAVHwO7qz1tKY
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDY2OTA2LCJleHAiOjE3MzU0NzA1MDZ9.kkJG1L31zbG-zPzZbrLprZ9YBvTbODf8LWgSW0bb7amm80lN1biGd0JI5LPFyECR
 
 ###Associar um Sensor a um Embalagem #
-POST http://localhost:3001/backend/api/embalagem/1/sensor
+POST http://localhost:3001/backend/api/embalagem/7/sensor
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0MjI5NzEsImV4cCI6MTczNTQyNjU3MX0.TUPPSpHLRU3TEQ-5fWpXy2nPPci_6LfyNX01A-q8GrzZyH0dQv11-EG2G5hajhFa
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0Njg3NjYsImV4cCI6MTczNTQ3MjM2Nn0.OyWkWp-S1X7SIznefWYvGS93LuCPXAmOTmnnbJrUFRQ3fS7jXSvX4hJgfzdOZ2MW
 Content-Type: application/json
 
 {
@@ -139,6 +140,8 @@ Content-Type: application/json
 ### Get All sensores #
 GET http://localhost:3001/backend/api/sensor/
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDY3NTE5LCJleHAiOjE3MzU0NzExMTl9.SQJBQdNHigkc_1xFi4iIRqHrVlJ5llEvo9vgV-iQ8sppaso8L2Rqy_rNa1egs1mR
+
 
 ### Criar um alerta #
 POST http://localhost:3001/backend/api/sensor/
@@ -174,6 +177,8 @@ Content-Type: application/json
 ### Get All Tipos de Sensor #
 GET http://localhost:3001/backend/api/sensor/tipos
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDY3NTE5LCJleHAiOjE3MzU0NzExMTl9.SQJBQdNHigkc_1xFi4iIRqHrVlJ5llEvo9vgV-iQ8sppaso8L2Rqy_rNa1egs1mR
+
 
 ### GET All Ultimo Valor dos Sensores por Tipo #
 GET http://localhost:3001/backend/api/sensor/Temperatura
@@ -190,7 +195,11 @@ POST http://localhost:3001/backend/api/auth/login
 Content-Type: application/json
 Accept: application/json
 
-{ "username": "Bernardo", "password": "123" }
+{ "username": "Miguel", "password": "123" }
+
+### Bernardo -> Cliente
+### Miguel -> Logista
+### Delgado -> Gestor
 
 ### GET User Info
 GET http://localhost:3001/backend/api/auth/user
