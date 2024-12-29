@@ -136,7 +136,7 @@ public class EncomendaBean {
         }
 
         if(user.isCliente() && !encomenda.getCliente().getUsername().equals(user.getUsername())) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("A encomenda não te pertence!").build();
+            return Response.status(Response.Status.BAD_REQUEST).entity("Apenas pode cancelar as suas encomendas!").build();
         }
 
         if(user.isCliente() && !encomenda.getEstado().equals("EmProcessamento") &&  estado.equalsIgnoreCase("Cancelada")){

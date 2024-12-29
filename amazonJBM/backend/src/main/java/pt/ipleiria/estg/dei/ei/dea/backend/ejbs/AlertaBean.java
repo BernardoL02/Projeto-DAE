@@ -5,6 +5,8 @@ import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.ws.rs.core.Response;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResAlertasEncomendaDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
 
 import java.util.List;
@@ -44,10 +46,24 @@ public class AlertaBean {
                 .collect(Collectors.toList());
     }
 
-    public List<Alerta> getAlertasEncomenda(int id) {
+    public Response getAlertasEncomenda(int id, Utilizador user) {
+        Encomenda encomenda = encomendaBean.find(id);
+
+        if(encomenda == null){
+            return Response.status(Response.Status.NOT_FOUND).entity("Encomenda não encontrada!").build();
+        }
+
+        if(user.isCliente() && !encomenda.getCliente().getUsername().equals(user.getUsername())){
+            return Response.status(Response.Status.NOT_FOUND).entity("Apenas pode ver alertas das suas encomendas!").build();
+        }
+
         List<Alerta> alertas = findAll();
-        return alertas.stream()
+
+        alertas.stream()
                 .filter(alerta -> alerta.getVolume().getEncomenda().getId() == id)
                 .collect(Collectors.toList());
+
+        return Response.ok(ResAlertasEncomendaDTO.from(alertas)).build();
+
     }
 }

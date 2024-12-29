@@ -98,10 +98,9 @@ Content-Type: application/json
 }
 
 ### Get All Alertas de Encomenda por Id #
-GET http://localhost:3001/backend/api/encomendas/1/alertas
+GET http://localhost:3001/backend/api/encomendas/2/alertas
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQyMjkyMCwiZXhwIjoxNzM1NDI2NTIwfQ.ViRhsnlJ7v9zeYfw9gfH10hFa8T-2g5Ky6LG3VR-Kiad6TL4ka0PzlaZObAMOqpS
-
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1NDgxNDY0LCJleHAiOjE3MzU0ODUwNjR9.0hL1-9RBBob1E9qCTl1sayPO2qf-fN1y-Iz34tS8eoAyIEF6eXbJYKcrfKpImBSb
 
 ### GET Ver Alertas de encomendas (PorEntregar) #
 GET http://localhost:3001/backend/api/encomendas/alertas
@@ -197,7 +196,7 @@ POST http://localhost:3001/backend/api/auth/login
 Content-Type: application/json
 Accept: application/json
 
-{ "username": "Bernardo", "password": "123" }
+{ "username": "Delgado", "password": "123" }
 
 ### Bernardo -> Cliente
 ### Miguel -> Logista

@@ -130,7 +130,7 @@ public class EncomendaService {
 
     @GET
     @Path("/alertas")
-    @RolesAllowed({"Gestor","Cliente"})
+    @RolesAllowed({"Gestor"})
     public Response getEncomendasAlertas() {
         Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
 
@@ -142,9 +142,9 @@ public class EncomendaService {
     @Path("/{id}/alertas")
     @RolesAllowed({"Gestor","Cliente"})
     public Response getAlertasEncomenda(@PathParam("id") int id) {
-        List<Alerta> alertas = alertaBean.getAlertasEncomenda(id);
-        ResAlertasEncomendaDTO responseDto = ResAlertasEncomendaDTO.from(alertas);
-        return Response.ok(responseDto).build();
+        Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
+
+        return alertaBean.getAlertasEncomenda(id, user);
     }
 
     @GET
