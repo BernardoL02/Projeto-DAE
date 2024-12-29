@@ -58,7 +58,7 @@ public class VolumeBean {
         em.persist(volume);
 
         for(Produto produto : produtos){
-            Embalagem embalagem = new Embalagem(produto, volume, produto.getQuantidade_de_produtos_comprados());
+            Embalagem embalagem = new Embalagem(produto, volume, produto.getQuantidade_ultima_encomenda());
             em.persist(embalagem);
 
             volume.addEmbalagem(embalagem);

@@ -88,59 +88,59 @@ public class ConfigBean {
 
         // Produtos
         // Alimentos
-        produtoBean.create(1, "Maçã", 1, 5);
-        produtoBean.create(2, "Pão Integral", 1, 10);
-        produtoBean.create(3, "Gelados", 1, 15);
+        produtoBean.create(1, "Maçã", 1, 0);
+        produtoBean.create(2, "Pão Integral", 1, 0);
+        produtoBean.create(3, "Gelados", 1, 0);
 
         // Tv e Som
-        produtoBean.create(4, "Televisão LED 40\"", 2, 2);
-        produtoBean.create(5, "Sistema de Som", 2, 3);
-        produtoBean.create(6, "Fones", 2, 20);
+        produtoBean.create(4, "Televisão LED 40\"", 2, 0);
+        produtoBean.create(5, "Sistema de Som", 2, 0);
+        produtoBean.create(6, "Fones", 2, 0);
 
         // Ferramentas
-        produtoBean.create(7, "Martelo", 3, 25);
-        produtoBean.create(8, "Chave de Fenda", 3, 30);
-        produtoBean.create(9, "Alicate", 3, 15);
+        produtoBean.create(7, "Martelo", 3, 0);
+        produtoBean.create(8, "Chave de Fenda", 3, 0);
+        produtoBean.create(9, "Alicate", 3, 0);
 
         // Bebidas
-        produtoBean.create(10, "Coca Cola", 4, 20);
-        produtoBean.create(11, "Água Mineral", 4, 30);
-        produtoBean.create(12, "Sumo de Laranja", 4, 25);
+        produtoBean.create(10, "Coca Cola", 4, 0);
+        produtoBean.create(11, "Água Mineral", 4, 0);
+        produtoBean.create(12, "Sumo de Laranja", 4, 0);
 
         // Eletrodomésticos
-        produtoBean.create(13, "Frigorifico", 5, 1);
-        produtoBean.create(14, "Micro-ondas", 5, 5);
-        produtoBean.create(15, "Aspirador de Pó", 5, 10);
+        produtoBean.create(13, "Frigorifico", 5, 0);
+        produtoBean.create(14, "Micro-ondas", 5, 0);
+        produtoBean.create(15, "Aspirador de Pó", 5, 0);
 
         // Vestuário
-        produtoBean.create(16, "Polo", 6, 20);
-        produtoBean.create(17, "Calça Jeans", 6, 15);
-        produtoBean.create(18, "Casaco de Lã", 6, 5);
+        produtoBean.create(16, "Polo", 6, 0);
+        produtoBean.create(17, "Calça Jeans", 6, 0);
+        produtoBean.create(18, "Casaco de Lã", 6, 0);
 
         // Educação
-        produtoBean.create(19, "Livro de Matemática", 7, 10);
-        produtoBean.create(20, "Dicionário", 7, 5);
-        produtoBean.create(21, "Atlas Geográfico", 7, 8);
+        produtoBean.create(19, "Livro de Matemática", 7, 0);
+        produtoBean.create(20, "Dicionário", 7, 0);
+        produtoBean.create(21, "Atlas Geográfico", 7, 0);
 
         // Esportivo
-        produtoBean.create(25, "Bola de Futebol", 9, 10);
-        produtoBean.create(26, "Raquete de Tênis", 9, 5);
-        produtoBean.create(27, "Luvas de Boxe", 9, 8);
+        produtoBean.create(25, "Bola de Futebol", 9, 0);
+        produtoBean.create(26, "Raquete de Tênis", 9, 0);
+        produtoBean.create(27, "Luvas de Boxe", 9, 0);
 
         // Casa
-        produtoBean.create(28, "Sofá de Couro", 10, 1);
-        produtoBean.create(29, "Mesa de Jantar", 10, 1);
-        produtoBean.create(30, "Cadeira de Madeira", 10, 6);
+        produtoBean.create(28, "Sofá de Couro", 10, 0);
+        produtoBean.create(29, "Mesa de Jantar", 10, 0);
+        produtoBean.create(30, "Cadeira de Madeira", 10, 0);
 
         // Beleza
-        produtoBean.create(31, "Perfume", 11, 15);
-        produtoBean.create(32, "Creme Hidratante", 11, 20);
-        produtoBean.create(33, "Shampoo", 11, 30);
+        produtoBean.create(31, "Perfume", 11, 0);
+        produtoBean.create(32, "Creme Hidratante", 11, 0);
+        produtoBean.create(33, "Shampoo", 11, 0);
 
         // Ferramentas Elétricas
-        produtoBean.create(34, "Berbequins", 12, 8);
-        produtoBean.create(35, "Aparafusadora", 12, 10);
-        produtoBean.create(36, "Caixote Do Lixo", 12, 4);
+        produtoBean.create(34, "Berbequins", 12, 0);
+        produtoBean.create(35, "Aparafusadora", 12, 0);
+        produtoBean.create(36, "Caixote Do Lixo", 12, 0);
 
 
         ///////////////////////Criar Encomendas e Volumes
@@ -250,24 +250,24 @@ public class ConfigBean {
 
         // Sensores
         //Encomenda 1
-        sensorBean.create("29.0", 1, "ativo", 100, 30, 10, 1);
-        sensorBean.create("39.7344200469475, -8.821063143811228", 4, "ativo", 100, 3);
-        sensorBean.create("39.73965392397057, -8.818502730615972", 4, "ativo", 100, 2);
-        sensorBean.create("1000", 3, "ativo", 80, 1015, 980, 2);
+        sensorBean.create("29.0", 1, 100, 30, 10, 1);
+        sensorBean.create("39.7344200469475, -8.821063143811228", 4, 100, 3);
+        sensorBean.create("39.73965392397057, -8.818502730615972", 4, 100, 2);
+        sensorBean.create("1000", 3, 80, 1015, 980, 2);
         //Encomenda 2
-        sensorBean.create("39.73513810246074, -8.799701988029124", 4, "ativo", 5, 3);
-        sensorBean.create("1000", 3, "ativo", 100, 1015, 980,3);
-        sensorBean.create("39.74986926478417, -8.808952733780515", 4, "ativo", 88, 4);
-        sensorBean.create("25", 2, "ativo", 88, 30, 5, 4);
+        sensorBean.create("39.73513810246074, -8.799701988029124", 4, 5, 3);
+        sensorBean.create("1000", 3, 100, 1015, 980,3);
+        sensorBean.create("39.74986926478417, -8.808952733780515", 4, 88, 4);
+        sensorBean.create("25", 2, 88, 30, 5, 4);
         //Encomenda 3
-        sensorBean.create("21.0", 1, "ativo", 99, 35, 10, 5);
-        sensorBean.create("1000", 3, "ativo", 80, 1015, 980, 5);
-        sensorBean.create("39.75604230095242, -9.03173385047379", 4, "ativo", 100, 5);
-        sensorBean.create("39.60047246334607, -9.073144176554514", 4, "ativo", 100, 6);
-        sensorBean.create("20", 2, "ativo", 100,30, 5, 6);
+        sensorBean.create("21.0", 1, 99, 35, 10, 5);
+        sensorBean.create("1000", 3, 80, 1015, 980, 5);
+        sensorBean.create("39.75604230095242, -9.03173385047379", 4, 100, 5);
+        sensorBean.create("39.60047246334607, -9.073144176554514", 4, 100, 6);
+        sensorBean.create("20", 2, 100,30, 5, 6);
         //Encomenda 6
-        sensorBean.create("25.0", 1, "ativo", 90, 30, 15, 11);
-        sensorBean.create("39.362060990104126, -9.374644032197038", 4, "ativo", 100, 11);
+        sensorBean.create("25.0", 1, 90, 30, 15, 11);
+        sensorBean.create("39.362060990104126, -9.374644032197038", 4, 100, 11);
 
 
         // Alertas

@@ -131,24 +131,38 @@ public class EncomendaBean {
 
     public Response mudarEstadoEncomenda(int id, String estado, Utilizador user) {
         var encomenda = this.find(id);
+
         if (encomenda == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("Encomenda não encontrada!").build();
         }
 
-        if(user.isCliente() && !encomenda.getCliente().getUsername().equals(user.getUsername())) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Apenas pode cancelar as suas encomendas!").build();
+        if(user.isCliente()){
+            if(!encomenda.getCliente().getUsername().equals(user.getUsername())) {
+                return Response.status(Response.Status.BAD_REQUEST).entity("Apenas pode cancelar as suas encomendas!").build();
+            }
+
+            if(!estado.equals("Cancelada")){
+                return Response.ok("Apenas pode mudar estado de encomendas para cancelada.").build();
+            }
+
+            if(!encomenda.getEstado().equals("EmProcessamento")){
+                return Response.status(Response.Status.BAD_REQUEST).entity("Apenas pode cancelar encomendas que estajam em estado 'Em Processamento'.").build();
+            }
+        }
+        else if(user.getRole().equals("Gestor")){
+
+        }
+        else if(user.getRole().equals("Logista")){
+            //TODO -> Ver os requisitos minimos
+            //Os sensores quando sao associados em embalagems estao inativos e quando a encomenda passar para Por Entregar os sensores passam para ativos
+
         }
 
-        if(user.isCliente() && !encomenda.getEstado().equals("EmProcessamento") &&  estado.equalsIgnoreCase("Cancelada")){
-            return Response.status(Response.Status.BAD_REQUEST).entity("Não é possível cancelar uma encomenda que já não esteja Em Processamento!").build();
-        }
         encomenda.setEstado(estado);
 
-        if(estado.equalsIgnoreCase("Entregue") || estado.equalsIgnoreCase("Cancelada")){
+        if(estado.equalsIgnoreCase("Entregue")){
 
-            if(estado.equalsIgnoreCase("Entregue")){
-                encomenda.setData_entrega(LocalDateTime.now());
-            }
+            encomenda.setData_entrega(LocalDateTime.now());
 
             for(Volume volume : encomenda.getVolumes()){
                 for(Embalagem embalagem : volume.getEmbalagens()){
@@ -160,6 +174,7 @@ public class EncomendaBean {
         }
 
         em.merge(encomenda);
+
         return Response.ok("Estado da encomenda " + encomenda.getId() + " alterado com sucesso para " + estado).build();
     }
 

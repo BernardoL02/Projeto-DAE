@@ -18,7 +18,7 @@ public class ProdutoBean {
     @PersistenceContext
     private EntityManager em;
 
-    public Response create(int id, String nome, int categoria_id, int quantidade_por_volume){
+    public Response create(int id, String nome, int categoria_id, int quantidade_ultima_encomenda){
 
         var categoria = em.find(Categoria.class, categoria_id);
 
@@ -26,7 +26,7 @@ public class ProdutoBean {
             return Response.status(Response.Status.NOT_FOUND).entity("Categoria não encontrada!").build();
         }
 
-        var produto = new Produto(id, nome, categoria, quantidade_por_volume);
+        var produto = new Produto(id, nome, quantidade_ultima_encomenda, categoria);
         em.persist(produto);
 
         return Response.ok("Produto criado com sucesso.").build();

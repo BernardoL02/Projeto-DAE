@@ -46,7 +46,7 @@ public class EmbalagemCreateEncomendaDTO implements Serializable {
         Produto produto = embalagem.getProduto();
         ProdutoCreateEncomendaDTO produtoCreateEncomendaDTO = new ProdutoCreateEncomendaDTO(
                 produto.getId(),
-                produto.getQuantidade_de_produtos_comprados()
+                produto.getQuantidade_ultima_encomenda()
         );
 
         return new EmbalagemCreateEncomendaDTO(
