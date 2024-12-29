@@ -88,59 +88,59 @@ public class ConfigBean {
 
         // Produtos
         // Alimentos
-        produtoBean.create(1, "Maçã", 1, 0);
-        produtoBean.create(2, "Pão Integral", 1, 0);
-        produtoBean.create(3, "Gelados", 1, 0);
+        produtoBean.create(1, "Maçã", 1);
+        produtoBean.create(2, "Pão Integral", 1);
+        produtoBean.create(3, "Gelados", 1);
 
         // Tv e Som
-        produtoBean.create(4, "Televisão LED 40\"", 2, 0);
-        produtoBean.create(5, "Sistema de Som", 2, 0);
-        produtoBean.create(6, "Fones", 2, 0);
+        produtoBean.create(4, "Televisão LED 40\"", 2);
+        produtoBean.create(5, "Sistema de Som", 2);
+        produtoBean.create(6, "Fones", 2);
 
         // Ferramentas
-        produtoBean.create(7, "Martelo", 3, 0);
-        produtoBean.create(8, "Chave de Fenda", 3, 0);
-        produtoBean.create(9, "Alicate", 3, 0);
+        produtoBean.create(7, "Martelo", 3);
+        produtoBean.create(8, "Chave de Fenda", 3);
+        produtoBean.create(9, "Alicate", 3);
 
         // Bebidas
-        produtoBean.create(10, "Coca Cola", 4, 0);
-        produtoBean.create(11, "Água Mineral", 4, 0);
-        produtoBean.create(12, "Sumo de Laranja", 4, 0);
+        produtoBean.create(10, "Coca Cola", 4);
+        produtoBean.create(11, "Água Mineral", 4);
+        produtoBean.create(12, "Sumo de Laranja", 4);
 
         // Eletrodomésticos
-        produtoBean.create(13, "Frigorifico", 5, 0);
-        produtoBean.create(14, "Micro-ondas", 5, 0);
-        produtoBean.create(15, "Aspirador de Pó", 5, 0);
+        produtoBean.create(13, "Frigorifico", 5);
+        produtoBean.create(14, "Micro-ondas", 5);
+        produtoBean.create(15, "Aspirador de Pó", 5);
 
         // Vestuário
-        produtoBean.create(16, "Polo", 6, 0);
-        produtoBean.create(17, "Calça Jeans", 6, 0);
-        produtoBean.create(18, "Casaco de Lã", 6, 0);
+        produtoBean.create(16, "Polo", 6);
+        produtoBean.create(17, "Calça Jeans", 6);
+        produtoBean.create(18, "Casaco de Lã", 6);
 
         // Educação
-        produtoBean.create(19, "Livro de Matemática", 7, 0);
-        produtoBean.create(20, "Dicionário", 7, 0);
-        produtoBean.create(21, "Atlas Geográfico", 7, 0);
+        produtoBean.create(19, "Livro de Matemática", 7);
+        produtoBean.create(20, "Dicionário", 7);
+        produtoBean.create(21, "Atlas Geográfico", 7);
 
         // Esportivo
-        produtoBean.create(25, "Bola de Futebol", 9, 0);
-        produtoBean.create(26, "Raquete de Tênis", 9, 0);
-        produtoBean.create(27, "Luvas de Boxe", 9, 0);
+        produtoBean.create(25, "Bola de Futebol", 9);
+        produtoBean.create(26, "Raquete de Tênis", 9);
+        produtoBean.create(27, "Luvas de Boxe", 9);
 
         // Casa
-        produtoBean.create(28, "Sofá de Couro", 10, 0);
-        produtoBean.create(29, "Mesa de Jantar", 10, 0);
-        produtoBean.create(30, "Cadeira de Madeira", 10, 0);
+        produtoBean.create(28, "Sofá de Couro", 10);
+        produtoBean.create(29, "Mesa de Jantar", 10);
+        produtoBean.create(30, "Cadeira de Madeira", 10);
 
         // Beleza
-        produtoBean.create(31, "Perfume", 11, 0);
-        produtoBean.create(32, "Creme Hidratante", 11, 0);
-        produtoBean.create(33, "Shampoo", 11, 0);
+        produtoBean.create(31, "Perfume", 11);
+        produtoBean.create(32, "Creme Hidratante", 11);
+        produtoBean.create(33, "Shampoo", 11);
 
         // Ferramentas Elétricas
-        produtoBean.create(34, "Berbequins", 12, 0);
-        produtoBean.create(35, "Aparafusadora", 12, 0);
-        produtoBean.create(36, "Caixote Do Lixo", 12, 0);
+        produtoBean.create(34, "Berbequins", 12);
+        produtoBean.create(35, "Aparafusadora", 12);
+        produtoBean.create(36, "Caixote Do Lixo", 12);
 
 
         ///////////////////////Criar Encomendas e Volumes

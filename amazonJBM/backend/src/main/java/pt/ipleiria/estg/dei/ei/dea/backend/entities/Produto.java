@@ -16,22 +16,17 @@ public class Produto {
 
     private String nome;
 
-    private int quantidade_ultima_encomenda;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
-    public Produto(int id, String nome, int quantidade_ultima_encomenda, Categoria categoria) {
+    public Produto(int id, String nome, Categoria categoria) {
         this.id = id;
         this.nome = nome;
-        this.quantidade_ultima_encomenda = quantidade_ultima_encomenda;
         this.categoria = categoria;
     }
-
     public Produto(){
 
     }
-
     public int getId() {
         return id;
     }
@@ -41,15 +36,6 @@ public class Produto {
     public Categoria getCategoria() {
         return categoria;
     }
-
-    public int getQuantidade_ultima_encomenda() {
-        return quantidade_ultima_encomenda;
-    }
-
-    public void setQuantidade_ultima_encomenda(int quantidade_ultima_encomenda) {
-        this.quantidade_ultima_encomenda = quantidade_ultima_encomenda;
-    }
-
     public void setId(int id) {
         this.id = id;
     }

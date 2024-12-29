@@ -37,15 +37,15 @@ public class ProdutoCreateEncomendaDTO implements Serializable {
         this.quantidade_de_produtos_comprados = quantidade_de_produtos_comprados;
     }
 
-    public static ProdutoCreateEncomendaDTO from(Produto produto) {
+    public static ProdutoCreateEncomendaDTO from(ProdutoCreateEncomendaDTO produto) {
 
         return new ProdutoCreateEncomendaDTO(
                 produto.getId(),
-                produto.getQuantidade_ultima_encomenda()
+                produto.getQuantidade_de_produtos_comprados()
         );
     }
 
-    public static List<ProdutoCreateEncomendaDTO> from(List<Produto> produtos) {
+    public static List<ProdutoCreateEncomendaDTO> from(List<ProdutoCreateEncomendaDTO> produtos) {
         return produtos.stream().map(ProdutoCreateEncomendaDTO::from).collect(Collectors.toList());
     }
 }

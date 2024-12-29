@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoCreateEncomendaDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResVolumeDetalhesDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.VolumeCreateEncomendaDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
@@ -44,21 +45,24 @@ public class VolumeBean {
         }
 
         List<Produto> produtos = new ArrayList<>();
+        List<ProdutoCreateEncomendaDTO> produtosDTO = volumeCreateEncomendaDTO.getProdutos();
 
-        for (ProdutoCreateEncomendaDTO produto : volumeCreateEncomendaDTO.getProdutos()) {
+        for (ProdutoCreateEncomendaDTO produto : produtosDTO) {
             Produto produto1 = em.find(Produto.class, produto.getId());
 
             if(produto1 == null){
                 return Response.status(Response.Status.NOT_FOUND).entity("Produto não encontrado!").build();
             }
+
             produtos.add(produto1);
         }
 
         Volume volume = new Volume(encomenda);
         em.persist(volume);
 
+        Integer indice_produto = 0;
         for(Produto produto : produtos){
-            Embalagem embalagem = new Embalagem(produto, volume, produto.getQuantidade_ultima_encomenda());
+            Embalagem embalagem = new Embalagem(produto, volume,  produtosDTO.get(indice_produto++).getQuantidade_de_produtos_comprados());
             em.persist(embalagem);
 
             volume.addEmbalagem(embalagem);
