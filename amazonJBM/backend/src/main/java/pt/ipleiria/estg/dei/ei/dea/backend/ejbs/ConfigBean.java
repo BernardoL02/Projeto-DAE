@@ -272,17 +272,17 @@ public class ConfigBean {
 
         // Alertas
         // Alerta para Temperatura
-        alertaBean.create("Valor acima do limite máximo (35) para o sensor Temperatura", 1, "35", 1);
-        alertaBean.create("Valor abaixo do limite mínimo (15) para o sensor Temperatura", 1, "10", 1);
+        alertaBean.create("Valor acima do limite máximo (35) para o sensor Temperatura", 1, "35", 99,1);
+        alertaBean.create("Valor abaixo do limite mínimo (15) para o sensor Temperatura", 1, "10",70, 1);
 
         // Alerta para Aceleração
-        alertaBean.create("Valor acima do limite máximo (30) para o sensor Aceleração", 6, "32", 4);
-        alertaBean.create("Valor abaixo do limite mínimo (5) para o sensor Aceleração", 6, "3", 4);
-        alertaBean.create("Valor abaixo do limite mínimo (5) para o sensor Aceleração", 10, "3", 6);
+        alertaBean.create("Valor acima do limite máximo (30) para o sensor Aceleração", 6, "32",90, 4);
+        alertaBean.create("Valor abaixo do limite mínimo (5) para o sensor Aceleração", 6, "3",11, 4);
+        alertaBean.create("Valor abaixo do limite mínimo (5) para o sensor Aceleração", 10, "3",60, 6);
 
         // Alerta para Pressão Atmosférica
-        alertaBean.create("Valor acima do limite máximo (1015) para o sensor Pressão Atmosférica", 4, "1016", 3);
-        alertaBean.create("Valor abaixo do limite mínimo (980) para o sensor Pressão Atmosférica", 4, "975", 3);
+        alertaBean.create("Valor acima do limite máximo (1015) para o sensor Pressão Atmosférica", 4, "1016",30, 3);
+        alertaBean.create("Valor abaixo do limite mínimo (980) para o sensor Pressão Atmosférica", 4, "975",50, 3);
 
     }
 

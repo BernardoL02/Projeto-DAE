@@ -147,9 +147,10 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "mensagem": "Temperatura elevada, aaaacomida a estragar-se",
+  "mensagem": "Temperatura elevadaaa, aaaacomida a estragar-se",
   "id_sensor": 5,
   "valor": 40,
+  "bateria": 72,
   "id_volume": 4
 }
 

@@ -30,6 +30,8 @@ public class Alerta {
 
     private String valor;
 
+    private int bateria;
+
     private LocalDateTime time_stamp;
 
     @ManyToOne
@@ -37,11 +39,12 @@ public class Alerta {
     private Volume volume;
 
 
-    public Alerta(String mensagem, Sensor sensor, String valor, Volume volume) {
+    public Alerta(String mensagem, Sensor sensor, String valor, int bateria, Volume volume) {
         this.mensagem = mensagem;
         this.sensor = sensor;
         this.valor = valor;
         this.volume = volume;
+        this.bateria = bateria;
         this.time_stamp = LocalDateTime.now();
     }
 
@@ -79,6 +82,14 @@ public class Alerta {
 
     public void setValor(String valor) {
         this.valor = valor;
+    }
+
+    public int getBateria() {
+        return bateria;
+    }
+
+    public void setBateria(int bateria) {
+        this.bateria = bateria;
     }
 
     public LocalDateTime getTime_stamp() {
