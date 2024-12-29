@@ -163,16 +163,6 @@ public class EncomendaBean {
         return Response.ok("Estado da encomenda " + encomenda.getId() + " alterado com sucesso para " + estado).build();
     }
 
-    public void gerarVolumes(int id_encomenda,List<ProdutoCreateEncomendaDTO> produtos){
-        //TODO
-        /*
-        for (ProdutoDTO produto:produtos) {
-            volumeBean.create(produto.getId(), produto.getQuantidade_por_volume(), id_encomenda);
-        }
-         */
-    }
-
-
     public List<Object[]> getCoordenadasEncomenda(int id) {
         Encomenda encomenda = em.find(Encomenda.class, id);
 

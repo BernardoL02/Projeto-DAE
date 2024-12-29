@@ -87,7 +87,6 @@ public class EncomendaService {
         return Response.ok(ResEncomendaDetalhesDTO.from(encomenda)).build();
     }
 
-
     @PATCH
     @Path("/{id}")
     public Response mudarEstadoEncomenda(@PathParam("id") int id, EncomendasDTO encomendasDTO) {
@@ -123,6 +122,7 @@ public class EncomendaService {
 
     @POST
     @Path("/{id}/volume")
+    @RolesAllowed({"Logista"})
     public Response associarVolumeEncomenda(@PathParam("id") int id_encomenda, VolumeCreateEncomendaDTO volumeCreateEncomendaDTO){
         volumeBean.associarVolumeEncomenda(id_encomenda, volumeCreateEncomendaDTO);
         return Response.ok("Volume associado com sucesso").build();
@@ -130,6 +130,7 @@ public class EncomendaService {
 
     @GET
     @Path("/alertas")
+    @RolesAllowed({"Gestor","Cliente"})
     public Response getEncomendasAlertas() {
         Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
 
@@ -139,6 +140,7 @@ public class EncomendaService {
 
     @GET
     @Path("/{id}/alertas")
+    @RolesAllowed({"Gestor","Cliente"})
     public Response getAlertasEncomenda(@PathParam("id") int id) {
         List<Alerta> alertas = alertaBean.getAlertasEncomenda(id);
         ResAlertasEncomendaDTO responseDto = ResAlertasEncomendaDTO.from(alertas);
@@ -147,6 +149,7 @@ public class EncomendaService {
 
     @GET
     @Path("/{id}/coordenadas")
+    @RolesAllowed({"Gestor","Cliente"})
     public Response getCoordenadasEncomenda(@PathParam("id") int id) {
         List<Object[]> resultados = encomendaBean.getCoordenadasEncomenda(id);
 
