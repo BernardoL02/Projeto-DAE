@@ -8,8 +8,10 @@ import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoCreateEncomendaDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.VolumeCreateEncomendaDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Cliente;
 
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Startup
@@ -67,10 +69,15 @@ public class ConfigBean {
         // Gestores
         gestorBean.create("Delgado", "123", "delgado@gmail.com", "José");
 
-        tipoEmbalagemBean.create(1, "Isotérmica");
-        tipoEmbalagemBean.create(2, "Original");
-        tipoEmbalagemBean.create(3, "Metalica");
-        tipoEmbalagemBean.create(4, "Cartao");
+        tipoSensoresBean.create(1, "Temperatura");
+        tipoSensoresBean.create(2, "Aceleração");
+        tipoSensoresBean.create(3, "Pressão Atmosférica");
+        tipoSensoresBean.create(4, "GPS");
+        
+        tipoEmbalagemBean.create(1, "Isotérmica", Arrays.asList(tipoSensoresBean.find(1)));
+        tipoEmbalagemBean.create(2, "Original", Arrays.asList(tipoSensoresBean.find(4),tipoSensoresBean.find(2)));
+        tipoEmbalagemBean.create(3, "Metalica", Arrays.asList(tipoSensoresBean.find(2), tipoSensoresBean.find(3),tipoSensoresBean.find(4)));
+        tipoEmbalagemBean.create(4, "Cartao", Arrays.asList(tipoSensoresBean.find(4)));
 
         // Categorias de Produtos
         categoriaBean.create(1, "Alimentos", 1);

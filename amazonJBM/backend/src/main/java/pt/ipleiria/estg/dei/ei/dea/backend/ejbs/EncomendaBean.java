@@ -53,7 +53,7 @@ public class EncomendaBean {
 
             for (ProdutoCreateEncomendaDTO produto : volume.getProdutos()) {
                 Produto produto1 = em.find(Produto.class, produto.getId());
-                Embalagem embalagem = new Embalagem(produto1, volume1, produto.getQuantidade_de_produtos_comprados());
+                Embalagem embalagem = new Embalagem(produto1, volume1, produto.getQuantidade_de_produtos_comprados(), produto1.getCategoria().getTipo_caixa());
                 em.persist(embalagem);
 
                 volume1.addEmbalagem(embalagem);
@@ -138,11 +138,11 @@ public class EncomendaBean {
 
         if(user.isCliente()){
             if(!encomenda.getCliente().getUsername().equals(user.getUsername())) {
-                return Response.status(Response.Status.BAD_REQUEST).entity("Apenas pode cancelar as suas encomendas!").build();
+                return Response.status(Response.Status.BAD_REQUEST).entity("Apenas pode cancelar as suas encomendas.").build();
             }
 
             if(!estado.equals("Cancelada")){
-                return Response.ok("Apenas pode mudar estado de encomendas para cancelada.").build();
+                return Response.status(Response.Status.BAD_REQUEST).entity("Apenas pode mudar estado de encomendas para cancelada.").build();
             }
 
             if(!encomenda.getEstado().equals("EmProcessamento")){
@@ -151,28 +151,60 @@ public class EncomendaBean {
         }
         else if(user.getRole().equals("Gestor")){
 
+            if(!estado.equals("Cancelada")){
+                return Response.status(Response.Status.BAD_REQUEST).entity("Gestores apenas podem mudar estado de encomendas para cancelada.").build();
+            }
+
+            if(encomenda.getEstado().equals("Entregue")){
+                return Response.status(Response.Status.BAD_REQUEST).entity("Os Gestores não pode cancelar encomendas já entregues.").build();
+            }
         }
         else if(user.getRole().equals("Logista")){
-            //TODO -> Ver os requisitos minimos
-            //Os sensores quando sao associados em embalagems estao inativos e quando a encomenda passar para Por Entregar os sensores passam para ativos
 
-        }
+            if(estado.equals("Cancelada")){
+                return Response.status(Response.Status.BAD_REQUEST).entity("O Logista não pode cancelar uma ecomenda!").build();
+            }
 
-        encomenda.setEstado(estado);
+            if(estado.equals("PorEntregar") && !encomenda.getEstado().equals("EmProcessamento")){
+                return Response.status(Response.Status.BAD_REQUEST).entity("Não pode expedir uma encomenda que não esteja 'Em Processamento'.").build();
+            }
 
-        if(estado.equalsIgnoreCase("Entregue")){
+            if(estado.equalsIgnoreCase("Entregue")){
 
-            encomenda.setData_entrega(LocalDateTime.now());
+                encomenda.setData_entrega(LocalDateTime.now());
 
-            for(Volume volume : encomenda.getVolumes()){
-                for(Embalagem embalagem : volume.getEmbalagens()){
-                    for(Sensor sensor : embalagem.getSensores()){
-                        sensor.setEstado("inativo");
+                for(Volume volume : encomenda.getVolumes()){
+                    for(Embalagem embalagem : volume.getEmbalagens()){
+                        for(Sensor sensor : embalagem.getSensores()){
+                            sensor.setEstado("inativo");
+                        }
+                    }
+                }
+            }
+
+            if(estado.equals("PorEntregar")){
+                for(Volume volume : encomenda.getVolumes()) {
+                    for (Embalagem embalagem : volume.getEmbalagens()) {
+                         List<Tipo_Sensores> tipoSensores = new ArrayList<>(embalagem.getTipo().getSensores());
+                        System.out.println(tipoSensores.size()+"ola");
+
+                        for(Sensor sensor : embalagem.getSensores()) {
+                            for(Tipo_Sensores tipo : tipoSensores){
+                                if(sensor.getTipo().equals(tipo) ){
+                                    tipoSensores.remove(tipo);
+                                    break;
+                                }
+                            }
+                        }
+                        if(tipoSensores.size()!=0){
+                            return Response.status(Response.Status.BAD_REQUEST).entity("A embalagem não contém os sensores suficientes para seguir viagem.").build();
+                        }
                     }
                 }
             }
         }
 
+        encomenda.setEstado(estado);
         em.merge(encomenda);
 
         return Response.ok("Estado da encomenda " + encomenda.getId() + " alterado com sucesso para " + estado).build();

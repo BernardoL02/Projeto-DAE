@@ -21,6 +21,9 @@ public class Tipo_Sensores {
 
     private String tipo;
 
+    @ManyToMany(mappedBy = "tipoSensores")
+    private List<Tipo_Embalagem> embalagens = new ArrayList<>();
+
     public Tipo_Sensores(int id, String tipo) {
         this.id = id;
         this.tipo = tipo;

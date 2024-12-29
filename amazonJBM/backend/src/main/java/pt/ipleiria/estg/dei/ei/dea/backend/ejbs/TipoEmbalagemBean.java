@@ -3,9 +3,11 @@ package pt.ipleiria.estg.dei.ei.dea.backend.ejbs;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Tipo_Embalagem;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Tipo_Sensores;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -15,8 +17,9 @@ public class TipoEmbalagemBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(int id, String tipo) {
-        Tipo_Embalagem tipoEmbalagem = new Tipo_Embalagem(id, tipo);
+    public void create(int id, String tipo, List<Tipo_Sensores> tipoSensores) {
+
+        Tipo_Embalagem tipoEmbalagem = new Tipo_Embalagem(id, tipo,tipoSensores);
         em.persist(tipoEmbalagem);
     }
 

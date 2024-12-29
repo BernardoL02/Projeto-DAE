@@ -20,7 +20,7 @@ public class EmbalagemBean {
         Produto produto = em.find(Produto.class, id_produto);
         Volume volume = em.find(Volume.class, id_volume);
 
-        Embalagem embalagem = new Embalagem(produto,volume,quantidade_produtos);
+        Embalagem embalagem = new Embalagem(produto,volume,quantidade_produtos, produto.getCategoria().getTipo_caixa());
         for(Integer id_sensor : id_sensores){
             Sensor sensor = em.find(Sensor.class,id_sensor);
 

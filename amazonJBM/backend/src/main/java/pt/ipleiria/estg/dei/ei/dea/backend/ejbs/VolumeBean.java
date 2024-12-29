@@ -62,7 +62,7 @@ public class VolumeBean {
 
         Integer indice_produto = 0;
         for(Produto produto : produtos){
-            Embalagem embalagem = new Embalagem(produto, volume,  produtosDTO.get(indice_produto++).getQuantidade_de_produtos_comprados());
+            Embalagem embalagem = new Embalagem(produto, volume,  produtosDTO.get(indice_produto++).getQuantidade_de_produtos_comprados(), produto.getCategoria().getTipo_caixa());
             em.persist(embalagem);
 
             volume.addEmbalagem(embalagem);

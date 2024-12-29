@@ -36,19 +36,19 @@ Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1NDIyODg0LCJleHAiOjE3MzU0MjY0ODR9.4U7Qp_PlswKVnqJZCqIPEIf4m9RFO_ZpmcwOApmYWnvgccLO-BeJpWTWLp3PYQeY
 
 ### Alterar estado de uma encomenda #
-PATCH http://localhost:3001/backend/api/encomendas/1
+PATCH http://localhost:3001/backend/api/encomendas/7
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQ4Mzk0NSwiZXhwIjoxNzM1NDg3NTQ1fQ.wFtn6xevdT-DJ72yAWDkzYXdv5CSlx2oKYtSf3t9DBaXQzpBItxtJn2y-6EtH4v8
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0OTc0NjIsImV4cCI6MTczNTUwMTA2Mn0.cH4cB9tHJ6qMv0uyuZjzF5pHVwKEi1WdghVod69GjclhulB4uHGcq1OezaGNS-d-
 Content-Type: application/json
 
 {
-  "estado": "Cancelada"
+  "estado": "PorEntregar"
 }
 
 ###Criar uma nova encomenda #
 POST http://localhost:3001/backend/api/encomendas
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0ODg0MTksImV4cCI6MTczNTQ5MjAxOX0.4stdUwOVTE9hjBo7qgYqTIbrvHp_o5-uxWJ1vDF9VL7Klez2Rgl9VVvpW8Ot64zO
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0OTc0NjIsImV4cCI6MTczNTUwMTA2Mn0.cH4cB9tHJ6qMv0uyuZjzF5pHVwKEi1WdghVod69GjclhulB4uHGcq1OezaGNS-d-
 Content-Type: application/json
 
 {
@@ -58,20 +58,8 @@ Content-Type: application/json
     {
       "produtos": [
         {
-          "id": 1,
+          "id": 5,
           "quantidade_de_produtos_comprados": 8
-        },
-        {
-          "id": 2,
-          "quantidade_de_produtos_comprados": 2
-        }
-      ]
-    },
-    {
-      "produtos": [
-        {
-          "id": 1,
-          "quantidade_de_produtos_comprados": 10
         }
       ]
     }
@@ -120,14 +108,14 @@ Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDY2OTA2LCJleHAiOjE3MzU0NzA1MDZ9.kkJG1L31zbG-zPzZbrLprZ9YBvTbODf8LWgSW0bb7amm80lN1biGd0JI5LPFyECR
 
 ###Associar um Sensor a um Embalagem #
-POST http://localhost:3001/backend/api/embalagem/7/sensor
+POST http://localhost:3001/backend/api/embalagem/15/sensor
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0ODcwMzUsImV4cCI6MTczNTQ5MDYzNX0.AErMUjAY0hYm4SWwD-i84nmv1k-SKt1owu8bpMIBE9bPx-P02mo4MKOlXzb_Vgli
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0OTc0NjIsImV4cCI6MTczNTUwMTA2Mn0.cH4cB9tHJ6qMv0uyuZjzF5pHVwKEi1WdghVod69GjclhulB4uHGcq1OezaGNS-d-
 Content-Type: application/json
 
 {
   "valor": 90,
-  "tipoId": 1,
+  "tipoId": 4,
   "valMin": 10,
   "valMax": 40,
   "bateria": 72
@@ -207,5 +195,4 @@ Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTIyNTg3NiwiZXhwIjoxNzM1MjI5NDc2fQ.D5vp08BndFDGMP2gLTYWbJjKy-CDJDROpK4Tg75FwjHbgmR2HocGg5qSUTK4cbSv
 
 //O que falta
-Quantidade de produtos numa embalagem -> Retirar da entidade produto a quantidade e colocar na embalagem
 Mudar estado de encomenda -> Saber quem faz o que

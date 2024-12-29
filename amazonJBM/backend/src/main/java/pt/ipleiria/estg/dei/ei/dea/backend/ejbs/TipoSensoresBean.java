@@ -16,8 +16,16 @@ public class TipoSensoresBean {
     private EntityManager em;
 
     public void create(int id, String tipo) {
-        var tipoSensores = new Tipo_Sensores(id, tipo);
-        em.persist(tipoSensores);
+        Tipo_Sensores tipoSensores = em.find(Tipo_Sensores.class, id);
+
+        if (tipoSensores == null) {
+            tipoSensores = new Tipo_Sensores(id, tipo);
+            em.persist(tipoSensores);
+        } else {
+
+            tipoSensores.setTipo(tipo);
+            em.merge(tipoSensores);
+        }
     }
 
     public Tipo_Sensores find(int id) {
