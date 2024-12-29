@@ -42,6 +42,4 @@ public class VolumeService {
 
         return volumeBean.verDetalhesVolume(id, user);
     }
-
-
 }

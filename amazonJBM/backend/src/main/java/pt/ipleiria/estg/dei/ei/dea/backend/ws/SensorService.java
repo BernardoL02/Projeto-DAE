@@ -1,6 +1,7 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.ws;
 
 import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -12,6 +13,7 @@ import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.SensorBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.TipoSensoresBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Alerta;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Sensor;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Tipo_Sensores;
 import pt.ipleiria.estg.dei.ei.dea.backend.security.Authenticated;
 
 import java.util.List;
@@ -38,6 +40,7 @@ public class SensorService {
 
     @GET
     @Path("/")
+    @RolesAllowed({"Gestor"})
     public List<ResSensorAllDTO> getAllSensores() {
         return ResSensorAllDTO.from(sensorBean.findAll());
     }
@@ -71,11 +74,11 @@ public class SensorService {
 
     @GET
     @Path("tipos")
+    @RolesAllowed({"Gestor", "Logista"})
     public Response getTipoSensores() {
-        var tipoSensores = tipoSensoresBean.findAll();
+        List<Tipo_Sensores> tipoSensores = tipoSensoresBean.findAll();
         return Response.ok(ResTipoSensoresDTO.from(tipoSensores)).build();
     }
-
 
     @GET
     @Path("/{tipo_sensor}")
