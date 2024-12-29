@@ -154,7 +154,7 @@ Content-Type: application/json
 }
 
 ### Patch Sensor Estado #
-PATCH http://localhost:3001/backend/api/sensor/2/desativar
+PATCH http://localhost:3001/backend/api/sensor/4/desativar
 Accept: application/json
 Content-Type: application/json
 
