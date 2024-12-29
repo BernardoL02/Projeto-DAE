@@ -1,5 +1,6 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.ws;
 
+import jakarta.annotation.security.PermitAll;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -11,6 +12,7 @@ import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.SensorBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.TipoSensoresBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Alerta;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Sensor;
+import pt.ipleiria.estg.dei.ei.dea.backend.security.Authenticated;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +20,8 @@ import java.util.stream.Collectors;
 @Path("sensor")
 @Produces({MediaType.APPLICATION_JSON}) // injects header “Content-Type: application/json”
 @Consumes({MediaType.APPLICATION_JSON}) // injects header “Accept: application/json”
+@Authenticated
+@PermitAll
 public class SensorService {
 
     @EJB

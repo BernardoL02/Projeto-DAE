@@ -139,6 +139,8 @@ Content-Type: application/json
 ### Get All sensores #
 GET http://localhost:3001/backend/api/sensor/
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDY3NTE5LCJleHAiOjE3MzU0NzExMTl9.SQJBQdNHigkc_1xFi4iIRqHrVlJ5llEvo9vgV-iQ8sppaso8L2Rqy_rNa1egs1mR
+
 
 ### Criar um alerta #
 POST http://localhost:3001/backend/api/sensor/
@@ -174,6 +176,8 @@ Content-Type: application/json
 ### Get All Tipos de Sensor #
 GET http://localhost:3001/backend/api/sensor/tipos
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDY3NTE5LCJleHAiOjE3MzU0NzExMTl9.SQJBQdNHigkc_1xFi4iIRqHrVlJ5llEvo9vgV-iQ8sppaso8L2Rqy_rNa1egs1mR
+
 
 ### GET All Ultimo Valor dos Sensores por Tipo #
 GET http://localhost:3001/backend/api/sensor/Temperatura

@@ -29,8 +29,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     public void filter(ContainerRequestContext requestContext) {
         var header = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
         if (header == null || !header.startsWith("Bearer ")) {
-            throw new
-                    NotAuthorizedException("Authorization header must be provided");
+            throw new NotAuthorizedException("Authorization header must be provided");
         }
         // Get token from the HTTP Authorization header
         String token = header.substring("Bearer".length()).trim();

@@ -104,7 +104,6 @@ public class EncomendaService {
         return Response.status(response.getStatus()).entity(entity).build();
     }
 
-
     @GET
     @Path("estado/{estado}")
     @RolesAllowed({"Gestor", "Cliente", "Logista"})

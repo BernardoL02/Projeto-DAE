@@ -79,6 +79,6 @@ public class VolumeBean {
             return Response.status(Response.Status.NOT_FOUND).entity("Apenas pode ver os detalhes de volumes que lhe pertencem.").build();
         }
 
-        return Response.ok(ResVolumeDetalhesDTO.from(volume, "SO")).build();
+        return Response.ok(ResVolumeDetalhesDTO.from(volume)).build();
     }
 }

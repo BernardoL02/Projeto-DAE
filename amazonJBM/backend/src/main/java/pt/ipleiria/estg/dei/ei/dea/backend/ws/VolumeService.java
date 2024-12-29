@@ -1,5 +1,6 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.ws;
 
+import jakarta.annotation.security.PermitAll;
 import jakarta.ejb.EJB;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
@@ -19,6 +20,7 @@ import pt.ipleiria.estg.dei.ei.dea.backend.security.Authenticated;
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
 @Authenticated
+@PermitAll
 public class VolumeService {
 
     @Context
