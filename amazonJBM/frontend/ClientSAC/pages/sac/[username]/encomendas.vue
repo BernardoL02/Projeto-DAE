@@ -4,27 +4,43 @@ import Table from '../../table.vue';
 
 import { ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
-import { useAuthStore } from '~/store/auth-store'
 
 const currentPage = "Encomendas";
 
 const route = useRoute()
 const config = useRuntimeConfig()
 const api = config.public.API_URL
-const username = route.params.username;
+const username = route.params.username || sessionStorage.getItem('username');
 
 const tableData = ref([]);
 const tableTitles = ['ID Encomenda', 'Data de Expedição', 'Data de Entrega', 'Estado'];
 const mostrarAlertasModal = ref(false);
 const alertasData = ref([]);
+const estado = ref("Todas");
 
-const authStore = useAuthStore()
+const mostrarTrackingModal = ref(false);
+const trackingData = ref([]);
+let map = null;
+let markers = [];
 
-const { data, error } = await useFetch(`${api}/encomendas`, {
-  headers: {
-    Authorization: `Bearer ${authStore.token}`
-  }
-})
+// Função para obter o token do sessionStorage
+const getToken = () => sessionStorage.getItem('token');
+
+const loadLeafletCSS = () => {
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = 'https://unpkg.com/leaflet/dist/leaflet.css';
+  document.head.appendChild(link);
+};
+
+const loadLeafletJS = () => {
+  return new Promise((resolve) => {
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/leaflet/dist/leaflet.js';
+    script.onload = resolve;
+    document.body.appendChild(script);
+  });
+};
 
 const formateEstado = (estado) => {
 
@@ -39,54 +55,79 @@ const formateEstado = (estado) => {
 };
 
 
-watchEffect(() => {
-  if (data.value) {
+// Função para buscar encomendas
+const fetchEncomendas = async () => {
+  try {
+    const token = getToken();
+    const response = await fetch(`${api}/encomendas`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    });
 
-    const fetchedData = data.value;
+    if (!response.ok) throw new Error("Erro ao buscar encomendas");
 
-    tableData.value = fetchedData.map(order => [
+    const data = await response.json();
+    tableData.value = data.map(order => [
       order.id,
       new Date(order.data_expedicao).toLocaleString(),
-      new Date(order.data_entrega).toLocaleString(),
-      formateEstado(order.estado)
+      order.data_entrega ? new Date(order.data_entrega).toLocaleString() : "Não Entregue",
+      formateEstado(order.estado),
     ]);
+  } catch (error) {
+    console.error("Erro ao buscar encomendas:", error);
   }
-});
+};
 
-
-//Filtros por estado das encomendas
-let estado = ref("Todas");
-watch(
-  estado,
-  async (newValue, oldValue) => {
-    if (newValue !== oldValue) {
-      try {
-
-        let fetchedData;
-
-        if (newValue === "Todas") {
-          fetchedData = await $fetch(`${api}/encomendas`);
-        } else {
-          fetchedData = await $fetch(`${api}/encomendas/estado/${newValue}`);
-        }
-
-        tableData.value = fetchedData.map(order => [
-          order.id,
-          new Date(order.data_expedicao).toLocaleString(),
-          new Date(order.data_entrega).toLocaleString(),
-          formateEstado(order.estado)
-        ]);
-
-      } catch (error) {
-        console.error("Erro ao buscar encomendas!");
-      }
-    }
+// Função para buscar encomendas com filtros
+const fetchEncomendasByEstado = async () => {
+  const token = getToken();
+  if (!token) {
+    console.error("Token não encontrado. Redirecionar para login.");
+    return;
   }
-);
+
+  try {
+    const url = estado.value === "Todas"
+      ? `${api}/encomendas`
+      : `${api}/encomendas/estado/${estado.value}`;
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) throw new Error("Erro ao buscar encomendas por estado");
+
+    const data = await response.json();
+    tableData.value = data.map(order => [
+      order.id,
+      new Date(order.data_expedicao).toLocaleString(),
+      order.data_entrega ? new Date(order.data_entrega).toLocaleString() : "Não Entregue",
+      formateEstado(order.estado),
+    ]);
+  } catch (error) {
+    console.error("Erro ao buscar encomendas por estado:", error);
+  }
+};
+
 
 const verAlertasEncomenda = async (id) => {
   try {
-    const response = await fetch(`${api}/encomendas/${id}/alertas`);
+    const token = getToken();
+    const response = await fetch(`${api}/encomendas/${id}/alertas`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
     if (!response.ok) throw new Error("Erro ao buscar alertas da encomenda");
 
     const data = await response.json();
@@ -108,7 +149,70 @@ const verAlertasEncomenda = async (id) => {
   }
 };
 
+const verTracking = async (id) => {
+  try {
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+      console.error("Token não encontrado. Redirecionar para login.");
+      return;
+    }
 
+    const response = await fetch(`${api}/encomendas/${id}/coordenadas`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) throw new Error("Erro ao buscar coordenadas da encomenda");
+
+    const data = await response.json();
+    trackingData.value = data;
+
+    mostrarTrackingModal.value = true;
+
+    setTimeout(() => {
+      // Reinicializa o mapa e os marcadores ao abrir o modal
+      if (map) {
+        map.remove();
+      }
+      const firstCoord = trackingData.value[0].coordenadas.split(',');
+      map = L.map('map').setView([firstCoord[0], firstCoord[1]], 13);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      markers = trackingData.value.map(coord => {
+        const [lat, lng] = coord.coordenadas.split(',').map(Number);
+        const marker = L.marker([lat, lng]).addTo(map).bindPopup(`Volume ID: ${coord.volumeId}, Produto: ${coord.produtoNome}`);
+        return marker;
+      });
+    }, 0);
+  } catch (error) {
+    console.error("Erro ao buscar coordenadas:", error);
+  }
+};
+
+const goToLocation = (lat, lng) => {
+  if (map) {
+    map.setView([lat, lng], 15);
+    markers.forEach(marker => {
+      if (marker.getLatLng().lat === lat && marker.getLatLng().lng === lng) {
+        marker.openPopup();
+      }
+    });
+  }
+};
+
+
+watch(estado, fetchEncomendasByEstado);
+onMounted(async () => {
+  loadLeafletCSS();
+  await loadLeafletJS();
+  fetchEncomendas();
+});
 </script>
 
 <template>
@@ -134,11 +238,12 @@ const verAlertasEncomenda = async (id) => {
     </div>
   </div>
 
-  <Table @verAlertas="verAlertasEncomenda" :tableTitles="tableTitles" :tableData="tableData" :mostrarOperacoes="true" />
+  <Table @verAlertas="verAlertasEncomenda" @tracking="verTracking" :tableTitles="tableTitles" :tableData="tableData"
+    :mostrarOperacoes="true" :username="username" />
 
   <!-- Modal de Alertas -->
   <div v-if="mostrarAlertasModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white w-1/2 p-6 rounded shadow-lg relative">
+    <div class="bg-white w-1/2 p-6 rounded shadow-lg relative max-h-[90vh] overflow-y-auto">
       <button @click="mostrarAlertasModal = false" class="m-4 absolute top-2 right-2 text-gray-600 hover:text-gray-900">
         <i class="fas fa-times"></i>
       </button>
@@ -162,6 +267,29 @@ const verAlertasEncomenda = async (id) => {
           </ul>
         </div>
       </div>
+    </div>
+  </div>
+
+
+  <!-- Modal de Tracking -->
+  <div v-if="mostrarTrackingModal"
+    class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white w-3/4 p-6 rounded shadow-lg relative">
+      <button @click="mostrarTrackingModal = false" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900">
+        <i class="fas fa-times"></i>
+      </button>
+      <h2 class="text-xl font-semibold mb-4">Tracking da Encomenda</h2>
+      <div class="mb-4 flex items-center space-x-2">
+        <h3 class="text-lg font-semibold">Volumes e Produtos:</h3>
+        <div class="flex space-x-2">
+          <button v-for="(coord, index) in trackingData" :key="index"
+            @click="goToLocation(...coord.coordenadas.split(',').map(Number))"
+            class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-700 transition">
+            {{ coord.produtoNome }}
+          </button>
+        </div>
+      </div>
+      <div id="map" class="w-full h-96"></div>
     </div>
   </div>
 

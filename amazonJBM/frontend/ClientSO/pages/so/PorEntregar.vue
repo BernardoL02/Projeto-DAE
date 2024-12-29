@@ -195,24 +195,33 @@ onMounted(async () => {
 
   <!-- Modal de Alertas -->
   <div v-if="mostrarAlertasModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white w-1/2 p-6 rounded shadow-lg relative">
-      <button @click="mostrarAlertasModal = false" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900">
+    <div class="bg-white w-1/2 p-6 rounded shadow-lg relative max-h-[90vh] overflow-y-auto">
+      <button @click="mostrarAlertasModal = false" class="m-4 absolute top-2 right-2 text-gray-600 hover:text-gray-900">
         <i class="fas fa-times"></i>
       </button>
       <h2 class="text-xl font-semibold mb-4">Alertas da Encomenda</h2>
-      <div v-for="sensor in alertasData" :key="sensor.id" class="mb-4 p-4 bg-gray-100 rounded-lg border">
-        <p class="font-semibold">Sensor ID: {{ sensor.id }} - Tipo: {{ sensor.tipo }}</p>
-        <ul class="mt-2 space-y-2">
-          <li v-for="alerta in sensor.alertas" :key="alerta.id" class="p-3 bg-yellow-100 rounded-lg border">
-            <p><strong>ID do Alerta:</strong> {{ alerta.id }}</p>
-            <p><strong>Data:</strong> {{ new Date(alerta.timeStamp).toLocaleString() }}</p>
-            <p><strong>Mensagem:</strong> {{ alerta.mensagem }}</p>
-            <p><strong>Valor:</strong> {{ alerta.valor }}</p>
-          </li>
-        </ul>
+
+      <div v-if="alertasData.length === 0"
+        class="flex flex-col items-center text-gray-600 p-6 border border-gray-300 bg-gray-50 rounded-lg">
+        <i class="fas fa-info-circle text-3xl text-blue-500 mb-2"></i>
+        <p class="text-lg font-medium">Encomenda sem alertas</p>
+      </div>
+      <div v-else>
+        <div v-for="sensor in alertasData" :key="sensor.id" class="mb-4 p-4 bg-gray-100 rounded-lg border">
+          <p class="font-semibold">Sensor ID: {{ sensor.id }} - Tipo: {{ sensor.tipo }}</p>
+          <ul class="mt-2 space-y-2">
+            <li v-for="alerta in sensor.alertas" :key="alerta.id" class="p-3 bg-yellow-100 rounded-lg border">
+              <p><strong>ID do Alerta:</strong> {{ alerta.id }}</p>
+              <p><strong>Data:</strong> {{ new Date(alerta.timeStamp).toLocaleString() }}</p>
+              <p><strong>Mensagem:</strong> {{ alerta.mensagem }}</p>
+              <p><strong>Valor:</strong> {{ alerta.valor }}</p>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
+
 
   <!-- Modal de Tracking -->
   <div v-if="mostrarTrackingModal"

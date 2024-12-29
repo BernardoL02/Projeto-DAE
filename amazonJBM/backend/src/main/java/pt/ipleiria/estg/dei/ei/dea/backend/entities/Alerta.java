@@ -16,10 +16,8 @@ import java.time.LocalDateTime;
         ),
         @NamedQuery(
                 name = "Alerta.findAllByCliente",
-                query = "SELECT a FROM Alerta a JOIN Volume v ON a.volume.id = v.id " +
-                        "JOIN Encomenda e ON e.id = v.encomenda.id " +
-                        "JOIN Cliente c ON c.id = e.cliente.id " +
-                        "WHERE c.username = :username " +
+                query = "SELECT a FROM Alerta a " +
+                        "WHERE a.sensor.id = :sensor_id " +
                         "ORDER BY a.time_stamp DESC"
         )
 })

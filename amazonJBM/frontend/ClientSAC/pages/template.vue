@@ -1,17 +1,21 @@
 <script setup>
 import { defineProps } from 'vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute()
 
 const icon = '/Images/IconJBM.png';
+const username = route.params.username;
 
 const props = defineProps({
   currentPage: {
     type: String,
     required: true
   },
-  username: {
+   username: {
     type: String,
-    required: true
-  }
+    required: false,
+  },
 });
 
 </script>

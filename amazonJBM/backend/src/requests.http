@@ -22,7 +22,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDI0M
 ### Get Encomenda Por Id #
 GET http://localhost:3001/backend/api/encomendas/1
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQyODc1MSwiZXhwIjoxNzM1NDMyMzUxfQ.m91eC0sUyFJUsL1tFcZC6-idxbp1b9pj5FD0Y7lR1WPTuTqPbc-Cgi7OsrHzDxHM
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1NDgxODg4LCJleHAiOjE3MzU0ODU0ODh9.F1mH1xZjI1sX-NxFxpouuC-IZf4ipckmDzJ9aK7wUmQN6hkYMKUG0ZFZdVaeZjlN
 
 ### Get All Encomendas por um determinado estado "PorEntregar" "Cancelada" "EmProcessamento" "Entregue" #
 GET http://localhost:3001/backend/api/encomendas/estado/EmProcessamento
@@ -110,7 +110,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0M
 ### Get Coordenadas Volumes #
 GET http://localhost:3001/backend/api/encomendas/1/coordenadas
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQyODAxMCwiZXhwIjoxNzM1NDMxNjEwfQ.nIhHgSYS691tuj5xqG8IaKWTAXzLBRQbEn9c1Dn2eTahhiKwaAB_QNrnCeNkYFPY
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQ4NTc2NywiZXhwIjoxNzM1NDg5MzY3fQ.8SP-wg_cV2boWrFVa0dxN55sYRSxB1a5hn9qm0XVuhk-WfQ1Qa3DaaFZhgqXlZBe
 
 ######################### Volume Service ################################
 
@@ -185,9 +185,9 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczN
 
 
 ### GET Ver Alertas de um sensor #
-GET http://localhost:3001/backend/api/sensor/1/alertas
+GET http://localhost:3001/backend/api/sensor/4/alertas
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQ3NTE3NCwiZXhwIjoxNzM1NDc4Nzc0fQ.tKscnrnG9HxrTLhpeatyP8awjpy5tao3rvg9WaLOIWEiKxKuronW_r77AE1ZoZNY
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQ5MzAxOSwiZXhwIjoxNzM1NDk2NjE5fQ.JK0yLg6E4nCKwquIhVo-wefYH8GQcZ63iYamWV6O4UdY8cIT_wpxMnQY4mdA_-xH
 
 ################################ End Points Login ################################
 
@@ -196,7 +196,7 @@ POST http://localhost:3001/backend/api/auth/login
 Content-Type: application/json
 Accept: application/json
 
-{ "username": "Delgado", "password": "123" }
+{ "username": "Bernardo", "password": "123" }
 
 ### Bernardo -> Cliente
 ### Miguel -> Logista
