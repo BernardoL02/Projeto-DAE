@@ -38,7 +38,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1N
 ### Alterar estado de uma encomenda #
 PATCH http://localhost:3001/backend/api/encomendas/1
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQyMzc2MCwiZXhwIjoxNzM1NDI3MzYwfQ.AA0WnKqVq6fZHtekVN9ki9_1SFxojQHzYwosGmPzFVH5YQ1hJU-NRojVahKDQ8dt
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQ4Mzk0NSwiZXhwIjoxNzM1NDg3NTQ1fQ.wFtn6xevdT-DJ72yAWDkzYXdv5CSlx2oKYtSf3t9DBaXQzpBItxtJn2y-6EtH4v8
 Content-Type: application/json
 
 {
@@ -48,7 +48,7 @@ Content-Type: application/json
 ###Criar uma nova encomenda #
 POST http://localhost:3001/backend/api/encomendas
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDI1NjIyLCJleHAiOjE3MzU0MjkyMjJ9.gEgTTOizSaleIyEEFHy5w3pMpM-m1WM3h73pXP8YlaTSliWJLvJXvt0s-NjHUXVx
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0ODg0MTksImV4cCI6MTczNTQ5MjAxOX0.4stdUwOVTE9hjBo7qgYqTIbrvHp_o5-uxWJ1vDF9VL7Klez2Rgl9VVvpW8Ot64zO
 Content-Type: application/json
 
 {
@@ -59,11 +59,11 @@ Content-Type: application/json
       "produtos": [
         {
           "id": 1,
-          "quantidade_de_produtos_comprados": 10
+          "quantidade_de_produtos_comprados": 8
         },
         {
           "id": 2,
-          "quantidade_de_produtos_comprados": 10
+          "quantidade_de_produtos_comprados": 2
         }
       ]
     },
@@ -122,7 +122,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDY2O
 ###Associar um Sensor a um Embalagem #
 POST http://localhost:3001/backend/api/embalagem/7/sensor
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0Njg3NjYsImV4cCI6MTczNTQ3MjM2Nn0.OyWkWp-S1X7SIznefWYvGS93LuCPXAmOTmnnbJrUFRQ3fS7jXSvX4hJgfzdOZ2MW
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0ODcwMzUsImV4cCI6MTczNTQ5MDYzNX0.AErMUjAY0hYm4SWwD-i84nmv1k-SKt1owu8bpMIBE9bPx-P02mo4MKOlXzb_Vgli
 Content-Type: application/json
 
 {
@@ -130,7 +130,6 @@ Content-Type: application/json
   "tipoId": 1,
   "valMin": 10,
   "valMax": 40,
-  "estado": "ativo",
   "bateria": 72
 }
 
@@ -206,3 +205,7 @@ Accept: application/json
 GET http://localhost:3001/backend/api/auth/user
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTIyNTg3NiwiZXhwIjoxNzM1MjI5NDc2fQ.D5vp08BndFDGMP2gLTYWbJjKy-CDJDROpK4Tg75FwjHbgmR2HocGg5qSUTK4cbSv
+
+//O que falta
+Quantidade de produtos numa embalagem -> Retirar da entidade produto a quantidade e colocar na embalagem
+Mudar estado de encomenda -> Saber quem faz o que

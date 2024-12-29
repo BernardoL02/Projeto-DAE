@@ -33,7 +33,7 @@ public class SensorBean {
     @EJB
     private AlertaBean alertaBean;
 
-    public Response create(String valor, int tipoId, String estado, int bateria, int valMax, int valMin, int id_embalagem) {
+    public Response create(String valor, int tipoId, int bateria, int valMax, int valMin, int id_embalagem) {
         Tipo_Sensores tipoSensores = em.find(Tipo_Sensores.class, tipoId);
 
         if (tipoSensores == null) {
@@ -46,12 +46,15 @@ public class SensorBean {
             return Response.status(Response.Status.NOT_FOUND).entity("Embalagem não encontrada!").build();
         }
 
-        var sensor = new Sensor(valor, tipoSensores, estado, bateria, valMax, valMin, embalagem);
+        var sensor = new Sensor(valor, tipoSensores, "ativo", bateria, valMax, valMin, embalagem);
         em.persist(sensor);
+
+        embalagem.addSensor(sensor);
+
         return Response.ok("Sensor associado com sucesso").build();
     }
 
-    public Response create(String valor, int tipoId, String estado, int bateria, int id_embalagem) {
+    public Response create(String valor, int tipoId, int bateria, int id_embalagem) {
         Tipo_Sensores tipoSensores = em.find(Tipo_Sensores.class, tipoId);
 
         if (tipoSensores == null) {
@@ -64,8 +67,11 @@ public class SensorBean {
             return Response.status(Response.Status.NOT_FOUND).entity("Embalagem não encontrada!").build();
         }
 
-        var sensor = new Sensor(valor, tipoSensores, estado, bateria, embalagem);
+        var sensor = new Sensor(valor, tipoSensores, "ativo", bateria, embalagem);
         em.persist(sensor);
+
+        embalagem.addSensor(sensor);
+
         return Response.ok("Sensor associado com sucesso").build();
     }
 
@@ -90,6 +96,7 @@ public class SensorBean {
 
         sensor.setEstado(sensorDTO.getEstado());
         em.merge(sensor);
+
         return Response.ok(ResSensorValorDTO.from(sensor)).build();
     }
 

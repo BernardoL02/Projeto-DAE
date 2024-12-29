@@ -90,17 +90,9 @@ public class EncomendaService {
     @PATCH
     @Path("/{id}")
     public Response mudarEstadoEncomenda(@PathParam("id") int id, EncomendasDTO encomendasDTO) {
-
         Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
 
-        if(user.isCliente() && !encomendasDTO.getEstado().equals("Cancelada")){
-            return Response.ok("Apenas pode mudar estado de encomendas para cancelada").build();
-        }
-
-        Response response = encomendaBean.mudarEstadoEncomenda(id, encomendasDTO.getEstado(), user);
-
-        Object entity = response.getEntity();
-        return Response.status(response.getStatus()).entity(entity).build();
+        return encomendaBean.mudarEstadoEncomenda(id, encomendasDTO.getEstado(), user);
     }
 
     @GET
@@ -112,7 +104,7 @@ public class EncomendaService {
         return Response.ok(ResEncomendaEstadoDTO.from(encomendas)).build();
     }
 
-     @GET
+    @GET
     @Path("/pendentes")
     @RolesAllowed({"Gestor"})
     public Response getEncomendasPendendes() {

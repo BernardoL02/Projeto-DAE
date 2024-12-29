@@ -25,24 +25,22 @@ public class EmbalagemService {
     @Path("/{id}/sensor")
     public Response associarSensorAEmbalagem(@PathParam("id") int id, SensorDTO sensorDTO) {
 
-        if(4 == sensorDTO.getTipoId()){
+        if(sensorDTO.getTipoId() == 4){
             return sensorBean.create(
                     sensorDTO.getValor(),
                     sensorDTO.getTipoId(),
-                    sensorDTO.getEstado(),
                     sensorDTO.getBateria(),
                     id
             );
         }
+
            return sensorBean.create(
                     sensorDTO.getValor(),
                     sensorDTO.getTipoId(),
-                    sensorDTO.getEstado(),
                     sensorDTO.getBateria(),
                     sensorDTO.getValMax(),
                     sensorDTO.getValMin(),
                     id
             );
-
     }
 }

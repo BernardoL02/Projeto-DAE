@@ -58,9 +58,11 @@ public class EmbalagemDTO implements Serializable {
 
         List<SensorDTO> sensorDTO = embalagem.getSensores().stream().map(SensorDTO::from).collect(Collectors.toList());
 
+        ProdutoCreateEncomendaDTO produto = new ProdutoCreateEncomendaDTO(embalagem.getProduto().getId(), embalagem.getQuantidade());
+
         return new EmbalagemDTO(
                 embalagem.getId(),
-                ProdutoCreateEncomendaDTO.from(embalagem.getProduto()),
+                produto,
                 sensorDTO,
                 embalagem.getQuantidade()
         );

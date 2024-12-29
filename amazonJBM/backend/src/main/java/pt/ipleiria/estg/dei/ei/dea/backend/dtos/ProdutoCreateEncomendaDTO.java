@@ -1,5 +1,6 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.dtos;
 
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Embalagem;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Produto;
 
 import java.io.Serializable;
@@ -20,7 +21,6 @@ public class ProdutoCreateEncomendaDTO implements Serializable {
 
     }
 
-
     public int getId() {
         return id;
     }
@@ -37,14 +37,15 @@ public class ProdutoCreateEncomendaDTO implements Serializable {
         this.quantidade_de_produtos_comprados = quantidade_de_produtos_comprados;
     }
 
-    public static ProdutoCreateEncomendaDTO from(Produto produto) {
+    public static ProdutoCreateEncomendaDTO from(ProdutoCreateEncomendaDTO produto) {
+
         return new ProdutoCreateEncomendaDTO(
                 produto.getId(),
                 produto.getQuantidade_de_produtos_comprados()
         );
     }
 
-    public static List<ProdutoCreateEncomendaDTO> from(List<Produto> produtos) {
+    public static List<ProdutoCreateEncomendaDTO> from(List<ProdutoCreateEncomendaDTO> produtos) {
         return produtos.stream().map(ProdutoCreateEncomendaDTO::from).collect(Collectors.toList());
     }
 }
