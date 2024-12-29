@@ -31,7 +31,6 @@ public class AlertaBean {
         return em.createNamedQuery("Alerta.findAll", Alerta.class).getResultList();
     }
 
-
     public List<Alerta> getEncomendasAlertas(Utilizador user) {
         List<Encomenda> encomendasPorEntregar = encomendaBean.findEncomendasByEstado("PorEntregar", user);
 

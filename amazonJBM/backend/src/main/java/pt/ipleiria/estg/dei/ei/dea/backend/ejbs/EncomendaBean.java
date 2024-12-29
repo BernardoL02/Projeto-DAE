@@ -82,7 +82,7 @@ public class EncomendaBean {
     }
 
     public Encomenda find(int id) {
-        var encomenda = em.find(Encomenda.class, id);
+        Encomenda encomenda = em.find(Encomenda.class, id);
         Hibernate.initialize(encomenda);
 
         return encomenda;

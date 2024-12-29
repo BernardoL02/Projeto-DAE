@@ -5,6 +5,8 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.ws.rs.core.Response;
+import org.hibernate.Hibernate;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResAlertasSensorDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResSensorUltimaLeituraByTipoDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResSensorValorDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.SensorDTO;
@@ -21,6 +23,9 @@ public class SensorBean {
 
     @PersistenceContext
     private EntityManager em;
+
+    @EJB
+    private SensorBean sensorBean;
 
     @EJB
     private TipoSensoresBean tipoSensoresBean;
@@ -68,6 +73,9 @@ public class SensorBean {
         return em.createNamedQuery("getAllSensores", Sensor.class).getResultList();
     }
 
+    public Sensor find(int id) {
+        return em.find(Sensor.class, id);
+    }
 
     public Response updateEstado(int id, SensorDTO sensorDTO) {
         Sensor sensor = em.find(Sensor.class, id);
@@ -82,7 +90,7 @@ public class SensorBean {
     }
 
     public Response updateValor(int id, SensorDTO sensorDTO) {
-        Sensor sensor = em.find(Sensor.class, id);
+        Sensor sensor = this.find(id);
 
         if(sensor == null){
             return Response.status(Response.Status.NOT_FOUND).entity("Sensor não encontrado!").build();
@@ -116,8 +124,28 @@ public class SensorBean {
         return Response.ok(sensores.stream().map(ResSensorUltimaLeituraByTipoDTO::from).collect(Collectors.toList())).build();
     }
 
-    public List<Alerta> getAlertasSensor(int sensorId) {
-        List<Alerta> todosAlertas = alertaBean.findAll();
-        return todosAlertas.stream().filter(alerta -> alerta.getSensor().getId() == sensorId).collect(Collectors.toList());
+    public Response getAlertasSensor(int sensorId, Utilizador user) {
+
+        Sensor sensor = this.find(sensorId);
+
+        if(sensor == null){
+            return Response.status(Response.Status.NOT_FOUND).entity("Sensor não encontrado!").build();
+        }
+
+        List<Alerta> alertas = new ArrayList<>();
+
+        if(user.isCliente()){
+
+            if(!sensor.getEmbalagem().getVolume().getEncomenda().getCliente().getUsername().equals(user.getUsername())){
+                return Response.status(Response.Status.NOT_FOUND).entity("Apenas pode ver alertas de sensores que lhe pertencem.").build();
+            }
+
+            alertas = em.createNamedQuery("Alerta.findAllByCliente", Alerta.class).setParameter("username", user.getUsername()).getResultList();
+        }
+        else{
+            alertas = em.createNamedQuery("Alerta.findAll", Alerta.class).getResultList();
+        }
+
+        return Response.ok(alertas.stream().map(ResAlertasSensorDTO::from).collect(Collectors.toList())).build();
     }
 }

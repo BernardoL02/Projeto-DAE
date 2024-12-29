@@ -58,8 +58,8 @@ public class SensorService {
     @GET
     @Path("/{id}/alertas")
     public Response getAlertasSensor(@PathParam("id") int id) {
-        List<Alerta> alertas = sensorBean.getAlertasSensor(id);
-        return Response.ok(alertas.stream().map(ResAlertasSensorDTO::from).collect(Collectors.toList())).build();
-    }
+        Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
 
+        return sensorBean.getAlertasSensor(id, user);
+    }
 }

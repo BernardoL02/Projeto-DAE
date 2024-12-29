@@ -187,6 +187,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczN
 ### GET Ver Alertas de um sensor #
 GET http://localhost:3001/backend/api/sensor/1/alertas
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQ3NTE3NCwiZXhwIjoxNzM1NDc4Nzc0fQ.tKscnrnG9HxrTLhpeatyP8awjpy5tao3rvg9WaLOIWEiKxKuronW_r77AE1ZoZNY
 
 ################################ End Points Login ################################
 

@@ -12,9 +12,18 @@ import java.time.LocalDateTime;
         ),
         @NamedQuery(
                 name = "Alerta.findAll",
-                query = "SELECT a FROM Alerta a ORDER BY a.time_stamp DESC" // Ordena por data, ajuste conforme necessário
+                query = "SELECT a FROM Alerta a ORDER BY a.time_stamp DESC"
+        ),
+        @NamedQuery(
+                name = "Alerta.findAllByCliente",
+                query = "SELECT a FROM Alerta a JOIN Volume v ON a.volume.id = v.id " +
+                        "JOIN Encomenda e ON e.id = v.encomenda.id " +
+                        "JOIN Cliente c ON c.id = e.cliente.id " +
+                        "WHERE c.username = :username " +
+                        "ORDER BY a.time_stamp DESC"
         )
 })
+
 @Entity
 public class Alerta {
 
