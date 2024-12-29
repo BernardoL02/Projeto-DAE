@@ -143,19 +143,11 @@ public class SensorBean {
             return Response.status(Response.Status.NOT_FOUND).entity("Sensor não encontrado!").build();
         }
 
-        List<Alerta> alertas = new ArrayList<>();
-
-        if(user.isCliente()){
-
-            if(!sensor.getEmbalagem().getVolume().getEncomenda().getCliente().getUsername().equals(user.getUsername())){
-                return Response.status(Response.Status.NOT_FOUND).entity("Apenas pode ver alertas de sensores que lhe pertencem.").build();
-            }
-
-            alertas = em.createNamedQuery("Alerta.findAllByCliente", Alerta.class).setParameter("username", user.getUsername()).getResultList();
+        if(user.isCliente() && !sensor.getEmbalagem().getVolume().getEncomenda().getCliente().getUsername().equals(user.getUsername())){
+            return Response.status(Response.Status.NOT_FOUND).entity("Apenas pode ver alertas de sensores que lhe pertencem.").build();
         }
-        else{
-            alertas = em.createNamedQuery("Alerta.findAll", Alerta.class).getResultList();
-        }
+
+        List<Alerta> alertas = em.createNamedQuery("Alerta.findAllByCliente", Alerta.class).setParameter("sensor_id", sensorId).getResultList();
 
         return Response.ok(alertas.stream().map(ResAlertasSensorDTO::from).collect(Collectors.toList())).build();
     }

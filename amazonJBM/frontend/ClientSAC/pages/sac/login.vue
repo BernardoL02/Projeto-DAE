@@ -1,20 +1,51 @@
 <script setup>
-import { useAuthStore } from "~/store/auth-store.js"
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const icon = '/Images/IconJBM.png';
 const title = "Sistema de Apoio ao Cliente"
 
+const config = useRuntimeConfig();
 const router = useRouter()
-const authStore = useAuthStore()
+const api = config.public.API_URL;
+
+const username = ref('');
+const password = ref('');
+const errorMessage = ref('');
 
 const login = async () => {
+  try {
+    errorMessage.value = ''; // Limpa a mensagem de erro antes de tentar login
 
-  await authStore.login();
+    const response = await fetch(`${api}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        username: username.value,
+        password: password.value
+      })
+    });
 
-  if (authStore.token) {
-    router.push(`/sac/${authStore.loginFormData.username}/encomendas`);
+    if (!response.ok) {
+      throw new Error('Nome de usuário ou senha incorretos');
+    }
+
+    const token = await response.text();
+
+    // Armazena o token no localStorage
+    sessionStorage.setItem('token', token);
+    sessionStorage.setItem('username', username.value);
+
+    // Navega para a página de gestão
+    router.push(`/sac/${username.value}/encomendas`);
+  } catch (error) {
+    errorMessage.value = error.message || 'Erro ao fazer login';
+    console.error('Erro ao fazer login:', error);
   }
-}
+};
 
 </script>
 
@@ -29,26 +60,33 @@ const login = async () => {
       <h2 class="text-2xl font-bold text-center mb-6"> {{ title }}</h2>
 
 
-      <div class="mb-4">
-        <input v-model:="authStore.loginFormData.username" type="username" placeholder="Username"
-          class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor" />
-      </div>
+      <form @submit.prevent="login">
+        <div class="mb-4">
+          <input v-model="username" type="text" placeholder="Username"
+            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor" />
+        </div>
 
-      <div class="mb-6">
-        <input v-model:="authStore.loginFormData.password" type="password" placeholder="Password"
-          class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor" />
-      </div>
+        <div class="mb-6">
+          <input v-model="password" type="password" placeholder="Password"
+            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor" />
+        </div>
 
-      <div class="flex justify-center items-center text-sm mb-4 space-x-28 mt-6">
+        <div class="flex justify-center items-center text-sm mb-4 space-x-28 mt-6">
 
-        <a href="#" class="text-gray-800 underline hover:no-underline focus:no-underline focus:outline-none">Track
-          Order</a>
+          <a href="#" class="text-gray-800 underline hover:no-underline focus:no-underline focus:outline-none">Track
+            Order</a>
 
-        <button type="submit" @click="login"
-          class="bg-PrimaryColor hover:bg-SecundaryColor text-white font-semibold py-2 px-8 rounded-full transition duration-300 ease-in-out shadow-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor">
-          Login
-        </button>
-      </div>
+          <button type="submit"
+            class="bg-PrimaryColor hover:bg-SecundaryColor text-white font-semibold py-2 px-8 rounded-full transition duration-300 ease-in-out shadow-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor">
+            Login
+          </button>
+        </div>
+
+        <!-- Exibe a mensagem de erro se houver -->
+        <div v-if="errorMessage" class="text-red-500 text-center mt-4">
+          {{ errorMessage }}
+        </div>
+      </form>
 
     </div>
   </div>
