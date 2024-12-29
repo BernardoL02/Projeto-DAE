@@ -85,7 +85,7 @@ public class ResEncomendaDetalhesDTO implements Serializable {
         this.volumes = volumes;
     }
 
-    public static ResEncomendaDetalhesDTO from(Encomenda encomenda, String frontEnd) {
+    public static ResEncomendaDetalhesDTO from(Encomenda encomenda) {
         
         ResEncomendaDetalhesDTO dto = new ResEncomendaDetalhesDTO(
                 encomenda.getId(),
@@ -96,7 +96,7 @@ public class ResEncomendaDetalhesDTO implements Serializable {
         );
 
         List<ResVolumeDetalhesDTO> volumeDTOs = encomenda.getVolumes().stream()
-                .map(volume -> ResVolumeDetalhesDTO.from(volume, frontEnd)) // Adicionando o parâmetro frontEnd
+                .map(volume -> ResVolumeDetalhesDTO.from(volume))
                 .collect(Collectors.toList());
 
         dto.setVolumes(volumeDTOs);

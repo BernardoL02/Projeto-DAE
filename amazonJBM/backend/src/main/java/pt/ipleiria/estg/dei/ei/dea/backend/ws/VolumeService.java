@@ -26,7 +26,7 @@ public class VolumeService {
     public Response getDetalhesVolume(@PathParam("id") int id){
         Volume volume = volumeBean.find(id);
 
-        return Response.ok(ResVolumeDetalhesDTO.from(volume, "SO")).build();
+        return Response.ok(ResVolumeDetalhesDTO.from(volume)).build();
     }
 
 
