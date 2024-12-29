@@ -6,6 +6,7 @@
 ### GET All Produtos #
 GET http://localhost:3001/backend/api/produtos
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0NjgwNTgsImV4cCI6MTczNTQ3MTY1OH0.4CSt0LihCfh5q3YSSK2vNvFH1zieStYgM_PgVDZ64bcmso7Voz27P6oVIfseB3n5
 
 ######################### Clientes Service ################################
 ### GET All clientes #
@@ -194,7 +195,11 @@ POST http://localhost:3001/backend/api/auth/login
 Content-Type: application/json
 Accept: application/json
 
-{ "username": "Jose", "password": "123" }
+{ "username": "Miguel", "password": "123" }
+
+### Bernardo -> Cliente
+### Miguel -> Logista
+### Delgado -> Gestor
 
 ### GET User Info
 GET http://localhost:3001/backend/api/auth/user
