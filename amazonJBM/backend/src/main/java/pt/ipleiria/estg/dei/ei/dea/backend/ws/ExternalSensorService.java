@@ -39,7 +39,9 @@ public class ExternalSensorService {
                 alertaDTO.getMensagem(),
                 alertaDTO.getId_sensor(),
                 alertaDTO.getValor(),
+                alertaDTO.getBateria(),
                 alertaDTO.getId_volume()
+
         );
 
         return Response.ok("Alerta criado com sucesso").build();

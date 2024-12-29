@@ -177,7 +177,6 @@ const checkAlert = async (sensor) => {
           mensagem: `${mensagem} para o sensor ${sensor.tipoNome}`,
           id_sensor: sensor.id,
           valor: sensor.valor,
-          bateria: sensor.bateria,
           id_volume: sensor.idVolume,
         }),
       });

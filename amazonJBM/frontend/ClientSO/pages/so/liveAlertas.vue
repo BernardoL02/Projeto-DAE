@@ -7,15 +7,26 @@ import { useRuntimeConfig } from '#app';
 const config = useRuntimeConfig();
 const api = config.public.API_URL;
 
-const alertasTableTitles = ['ID Alerta', 'ID Sensor', 'Valor' , 'Mensagem', 'Data' , 'Utilizador' , 'ID Encomenda'];
+const alertasTableTitles = ['ID Alerta', 'ID Sensor', 'Valor', 'Mensagem', 'Data', 'Utilizador', 'ID Encomenda'];
 const alertasTableData = ref([]);
 const currentPage = 'liveAlertas';
 const errorMessages = ref([]);
 
+// Função para obter o token do sessionStorage
+const getToken = () => sessionStorage.getItem('token');
+
 // Função para buscar alertas de encomendas
 const fetchAlertasEncomendas = async () => {
   try {
-    const response = await fetch(`${api}/encomendas/alertas`);
+    const token = getToken(); // Função para obter o token do sessionStorage
+    const response = await fetch(`${api}/encomendas/alertas`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}` // Adiciona o token no cabeçalho
+      }
+    });
+
     if (!response.ok) throw new Error("Erro ao buscar alertas das encomendas");
 
     const data = await response.json();
@@ -33,6 +44,7 @@ const fetchAlertasEncomendas = async () => {
     console.error("Erro ao carregar alertas:", error);
   }
 };
+
 
 // Intervalo para verificar novos alertas a cada 3 segundos
 let alertInterval;
@@ -66,6 +78,7 @@ h1 {
   font-size: 1.5rem;
   font-weight: bold;
 }
+
 .ml-10 {
   margin-left: 2.5rem;
 }

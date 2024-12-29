@@ -37,6 +37,7 @@ const fetchEncomendaDetalhes = async () => {
     if (!response.ok) throw new Error("Erro ao buscar detalhes da encomenda");
 
     const data = await response.json();
+
     encomendaData.value = {
       id: data.id,
       username: data.username,
@@ -47,18 +48,24 @@ const fetchEncomendaDetalhes = async () => {
 
     volumesData.value = data.volumes.map(volume => ({
       id: volume.id,
-      nome_produto: volume.nome_produto,
-      quantidade: volume.quantidade,
-      mostrarSensores: false,
-      sensores: volume.sensores.map(sensor => ({
-        id: sensor.id,
-        tipo: sensor.tipoNome,
-        valor: sensor.valor,
-        bateria: sensor.bateria,
-        estado: sensor.estado,
-        ultimaLeitura: new Date(sensor.timeStamp).toLocaleString(),
-        mostrarAlertas: false
-      }))
+      embalagens: volume.embalagems.map(embalagem => ({
+        id: embalagem.id,
+        produto: {
+          id: embalagem.produto.id,
+          quantidade: embalagem.produto.quantidade_de_produtos_comprados
+        },
+        quantidade: embalagem.quantidade,
+        sensores: embalagem.sensores.map(sensor => ({
+          id: sensor.id,
+          tipo: sensor.tipoNome,
+          valor: sensor.valor,
+          bateria: sensor.bateria,
+          estado: sensor.estado,
+          ultimaLeitura: new Date(sensor.timeStamp).toLocaleString(),
+          mostrarAlertas: false
+        }))
+      })),
+      mostrarSensores: false
     }));
   } catch (error) {
     console.error("Erro ao carregar detalhes da encomenda:", error);
@@ -66,8 +73,8 @@ const fetchEncomendaDetalhes = async () => {
 };
 
 // Função para alternar a exibição de sensores de um volume específico
-const toggleSensores = (volume) => {
-  volume.mostrarSensores = !volume.mostrarSensores;
+const toggleDetalhes = (embalagem) => {
+  embalagem.mostrarDetalhes = !embalagem.mostrarDetalhes;
 };
 
 // Função para buscar e exibir alertas de um sensor específico
@@ -76,7 +83,7 @@ const fetchAlertas = async (sensor) => {
     if (alertasData.value[sensor.id]) {
       sensor.mostrarAlertas = !sensor.mostrarAlertas;
     } else {
-      const token = getToken(); // Função para obter o token
+      const token = getToken();
       const response = await fetch(`${api}/sensor/${sensor.id}/alertas`, {
         method: 'GET',
         headers: {
@@ -118,8 +125,8 @@ onMounted(fetchEncomendaDetalhes);
       <p class="text-gray-700"><strong>Utilizador:</strong> {{ encomendaData.username }}</p>
       <p class="text-gray-700"><strong>Data de Expedição:</strong> {{ new
         Date(encomendaData.data_expedicao).toLocaleString() }}</p>
-      <p class="text-gray-700"><strong>Data de Entrega:</strong> {{ new
-        Date(encomendaData.data_entrega).toLocaleString() }}</p>
+      <p class="text-gray-700"><strong>Data de Entrega:</strong> {{ encomendaData.data_entrega ? new
+        Date(encomendaData.data_entrega).toLocaleString() : 'Não entregue' }}</p>
       <p class="text-gray-700"><strong>Estado:</strong> {{ encomendaData.estado }}</p>
     </div>
 
@@ -127,46 +134,58 @@ onMounted(fetchEncomendaDetalhes);
       <h2 class="text-xl font-semibold mb-4">Volumes</h2>
       <div v-for="volume in volumesData" :key="volume.id"
         class="mb-6 p-4 bg-gray-100 rounded-lg border border-gray-300">
-        <div class="flex justify-between items-center">
-          <div>
-            <h3 class="font-semibold text-lg text-gray-800">Volume ID: {{ volume.id }} - {{ volume.nome_produto }}</h3>
-            <p class="text-gray-600">Quantidade: {{ volume.quantidade }}</p>
+        <h3 class="font-semibold text-lg text-gray-800">Volume ID: {{ volume.id }}</h3>
+
+        <h4 class="font-semibold text-md text-gray-700 mt-4">Embalagens:</h4>
+        <div v-for="embalagem in volume.embalagens" :key="embalagem.id" class="p-4 bg-white my-4 rounded shadow">
+          <div class="flex justify-between items-center">
+            <div>
+              <p><strong>ID da Embalagem:</strong> {{ embalagem.id }}</p>
+              <p><strong>Produto ID:</strong> {{ embalagem.produto.id }}</p>
+              <p><strong>Quantidade:</strong> {{ embalagem.quantidade }}</p>
+            </div>
+            <button @click="toggleDetalhes(embalagem)"
+              class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700 transition">
+              {{ embalagem.mostrarDetalhes ? 'Esconder Detalhes' : 'Mostrar Detalhes' }}
+            </button>
           </div>
-          <button @click="toggleSensores(volume)"
-            class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700 transition">
-            {{ volume.mostrarSensores ? 'Esconder Detalhes' : 'Mostrar Detalhes' }}
-          </button>
-        </div>
 
-        <div v-if="volume.mostrarSensores" class="mt-4">
-          <h4 class="font-semibold text-md text-gray-700">Sensores Associados:</h4>
-          <ul>
-            <li v-for="sensor in volume.sensores" :key="sensor.id" class="p-2 bg-white my-2 rounded shadow">
-              <p><strong>ID do Sensor:</strong> {{ sensor.id }}</p>
-              <p><strong>Tipo:</strong> {{ sensor.tipo }}</p>
-              <p><strong>Valor:</strong> {{ sensor.valor }}</p>
-              <p><strong>Bateria:</strong> {{ sensor.bateria }}%</p>
-              <p><strong>Estado:</strong> {{ sensor.estado }}</p>
-              <p><strong>Última Leitura:</strong> {{ sensor.ultimaLeitura }}</p>
-              <button @click="fetchAlertas(sensor)"
-                class="bg-yellow-500 text-white px-3 py-1 rounded mt-2 hover:bg-yellow-700 transition">
-                {{ sensor.mostrarAlertas ? 'Esconder Alertas' : 'Ver Alertas' }}
-              </button>
+          <div v-if="embalagem.mostrarDetalhes" class="mt-4">
+            <p><strong>Sensores:</strong></p>
 
-              <div v-if="sensor.mostrarAlertas && alertasData[sensor.id]" class="mt-2 p-2 bg-yellow-100 rounded shadow">
-                <h5 class="font-semibold text-sm text-yellow-800 mb-2">Alertas:</h5>
-                <ul>
-                  <li v-for="alerta in alertasData[sensor.id]" :key="alerta.id"
-                    class="mb-2 p-2 border-b border-yellow-300 last:border-none">
-                    <p><strong>ID:</strong> {{ alerta.id }}</p>
-                    <p><strong>Data:</strong> {{ alerta.data }}</p>
-                    <p><strong>Mensagem:</strong> {{ alerta.mensagem }}</p>
-                    <p><strong>Valor:</strong> {{ alerta.valor }}</p>
-                  </li>
-                </ul>
-              </div>
-            </li>
-          </ul>
+            <ul v-if="embalagem.sensores && embalagem.sensores.length > 0">
+              <li v-for="sensor in embalagem.sensores" :key="sensor.id" class="p-2 bg-gray-50 my-2 rounded shadow">
+                <p><strong>ID do Sensor:</strong> {{ sensor.id }}</p>
+                <p><strong>Tipo:</strong> {{ sensor.tipo }}</p>
+                <p><strong>Valor:</strong> {{ sensor.valor }}</p>
+                <p><strong>Bateria:</strong> {{ sensor.bateria }}%</p>
+                <p><strong>Estado:</strong> {{ sensor.estado }}</p>
+                <p><strong>Última Leitura:</strong> {{ sensor.ultimaLeitura }}</p>
+                <button @click="fetchAlertas(sensor)"
+                  class="bg-yellow-500 text-white px-3 py-1 rounded mt-2 hover:bg-yellow-700 transition">
+                  {{ sensor.mostrarAlertas ? 'Esconder Alertas' : 'Ver Alertas' }}
+                </button>
+
+                <div v-if="sensor.mostrarAlertas" class="mt-2 p-2 bg-yellow-100 rounded shadow">
+                  <h5 class="font-semibold text-sm text-yellow-800 mb-2">Alertas:</h5>
+
+                  <ul v-if="alertasData[sensor.id] && alertasData[sensor.id].length > 0">
+                    <li v-for="alerta in alertasData[sensor.id]" :key="alerta.id"
+                      class="mb-2 p-2 border-b border-yellow-300 last:border-none">
+                      <p><strong>ID:</strong> {{ alerta.id }}</p>
+                      <p><strong>Data:</strong> {{ alerta.data }}</p>
+                      <p><strong>Mensagem:</strong> {{ alerta.mensagem }}</p>
+                      <p><strong>Valor:</strong> {{ alerta.valor }}</p>
+                    </li>
+                  </ul>
+
+                  <p v-else class="text-gray-600 italic">Neste momento não há alertas para este sensor.</p>
+                </div>
+              </li>
+            </ul>
+
+            <p v-else class="text-gray-600 italic">Nenhum sensor associado a esta embalagem.</p>
+          </div>
         </div>
       </div>
     </div>

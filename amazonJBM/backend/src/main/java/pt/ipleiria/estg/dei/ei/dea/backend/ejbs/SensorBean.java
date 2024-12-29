@@ -81,7 +81,11 @@ public class SensorBean {
         Sensor sensor = em.find(Sensor.class, id);
 
         if(sensor == null){
-            return Response.ok(Response.Status.NOT_FOUND).entity("Sensor não encontrado!").build();
+            return Response.status(Response.Status.NOT_FOUND).entity("Sensor não encontrado!").build();
+        }
+
+        if(sensor.getEstado().equals("inativo")){
+            return Response.status(Response.Status.NOT_FOUND).entity("Só se podem desativar sensores que estejam ativos!").build();
         }
 
         sensor.setEstado(sensorDTO.getEstado());

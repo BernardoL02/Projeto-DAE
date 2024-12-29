@@ -18,12 +18,12 @@ public class AlertaBean {
     @EJB
     private EncomendaBean encomendaBean;
 
-    public void create(String mensagem, int id_sensor, String valor, int id_volume){
+    public void create(String mensagem, int id_sensor, String valor,int bateria,int id_volume){
 
         Volume volume = em.find(Volume.class, id_volume);
         Sensor sensor = em.find(Sensor.class, id_sensor);
 
-        var alerta = new Alerta(mensagem, sensor, valor, volume);
+        var alerta = new Alerta(mensagem, sensor, valor,bateria, volume);
         em.persist(alerta);
     }
 
