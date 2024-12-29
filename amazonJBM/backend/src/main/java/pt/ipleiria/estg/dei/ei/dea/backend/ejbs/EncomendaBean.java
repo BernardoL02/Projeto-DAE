@@ -4,7 +4,7 @@ import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import jakarta.ws.rs.core.Response;
 import org.hibernate.Hibernate;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoCreateEncomendaDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.VolumeCreateEncomendaDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
 
@@ -35,7 +35,7 @@ public class EncomendaBean {
         }
 
         for(VolumeCreateEncomendaDTO volume: volumes) {
-            for (ProdutoDTO produto : volume.getProdutos()) {
+            for (ProdutoCreateEncomendaDTO produto : volume.getProdutos()) {
                 Produto produto1 = em.find(Produto.class, produto.getId());
 
                 if(produto1 == null){
@@ -51,7 +51,7 @@ public class EncomendaBean {
             Volume volume1 = new Volume(encomenda);
             em.persist(volume1);
 
-            for (ProdutoDTO produto : volume.getProdutos()) {
+            for (ProdutoCreateEncomendaDTO produto : volume.getProdutos()) {
                 Produto produto1 = em.find(Produto.class, produto.getId());
                 Embalagem embalagem = new Embalagem(produto1, volume1, produto.getQuantidade_de_produtos_comprados());
                 em.persist(embalagem);
@@ -163,7 +163,7 @@ public class EncomendaBean {
         return Response.ok("Estado da encomenda " + encomenda.getId() + " alterado com sucesso para " + estado).build();
     }
 
-    public void gerarVolumes(int id_encomenda,List<ProdutoDTO> produtos){
+    public void gerarVolumes(int id_encomenda,List<ProdutoCreateEncomendaDTO> produtos){
         //TODO
         /*
         for (ProdutoDTO produto:produtos) {

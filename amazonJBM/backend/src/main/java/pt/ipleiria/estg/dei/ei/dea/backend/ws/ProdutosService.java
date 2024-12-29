@@ -7,9 +7,9 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoCreateEncomendaDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.ProdutoBean;
-import pt.ipleiria.estg.dei.ei.dea.backend.security.Authenticated;
 
 @Path("produtos")
 @Produces({MediaType.APPLICATION_JSON})

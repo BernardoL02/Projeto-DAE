@@ -7,10 +7,10 @@ import java.io.Serializable;
 
 public class EmbalagemCreateEncomendaDTO implements Serializable {
     private int id;
-    private ProdutoDTO produto;
+    private ProdutoCreateEncomendaDTO produto;
     private int quantidade;
 
-    public EmbalagemCreateEncomendaDTO(int id, ProdutoDTO produto, int quantidade) {
+    public EmbalagemCreateEncomendaDTO(int id, ProdutoCreateEncomendaDTO produto, int quantidade) {
         this.id = id;
         this.produto = produto;
         this.quantidade = quantidade;
@@ -26,11 +26,11 @@ public class EmbalagemCreateEncomendaDTO implements Serializable {
         this.id = id;
     }
 
-    public ProdutoDTO getProduto() {
+    public ProdutoCreateEncomendaDTO getProduto() {
         return produto;
     }
 
-    public void setProduto(ProdutoDTO produto) {
+    public void setProduto(ProdutoCreateEncomendaDTO produto) {
         this.produto = produto;
     }
 
@@ -44,14 +44,14 @@ public class EmbalagemCreateEncomendaDTO implements Serializable {
 
     public static EmbalagemCreateEncomendaDTO from(Embalagem embalagem) {
         Produto produto = embalagem.getProduto();
-        ProdutoDTO produtoDTO = new ProdutoDTO(
+        ProdutoCreateEncomendaDTO produtoCreateEncomendaDTO = new ProdutoCreateEncomendaDTO(
                 produto.getId(),
                 produto.getQuantidade_de_produtos_comprados()
         );
 
         return new EmbalagemCreateEncomendaDTO(
                 embalagem.getId(),
-                produtoDTO,
+                produtoCreateEncomendaDTO,
                 embalagem.getQuantidade()
         );
     }

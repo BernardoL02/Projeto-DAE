@@ -1,9 +1,6 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.dtos;
 
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Embalagem;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Produto;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Sensor;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Volume;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,11 +9,11 @@ import java.util.stream.Collectors;
 
 public class EmbalagemDTO implements Serializable {
     private int id;
-    private ProdutoDTO produto;
+    private ProdutoCreateEncomendaDTO produto;
     private List<SensorDTO> sensores = new ArrayList<>();
     private int quantidade;
 
-    public EmbalagemDTO(int id,ProdutoDTO produto, List<SensorDTO> sensores, int quantidade) {
+    public EmbalagemDTO(int id, ProdutoCreateEncomendaDTO produto, List<SensorDTO> sensores, int quantidade) {
         this.id = id;
         this.produto = produto;
         this.sensores = sensores;
@@ -33,11 +30,11 @@ public class EmbalagemDTO implements Serializable {
         this.id = id;
     }
 
-    public ProdutoDTO getProduto() {
+    public ProdutoCreateEncomendaDTO getProduto() {
         return produto;
     }
 
-    public void setProduto(ProdutoDTO produto) {
+    public void setProduto(ProdutoCreateEncomendaDTO produto) {
         this.produto = produto;
     }
 
@@ -63,7 +60,7 @@ public class EmbalagemDTO implements Serializable {
 
         return new EmbalagemDTO(
                 embalagem.getId(),
-                ProdutoDTO.from(embalagem.getProduto()),
+                ProdutoCreateEncomendaDTO.from(embalagem.getProduto()),
                 sensorDTO,
                 embalagem.getQuantidade()
         );

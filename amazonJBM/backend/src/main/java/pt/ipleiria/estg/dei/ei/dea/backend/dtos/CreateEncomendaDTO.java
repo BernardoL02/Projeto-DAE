@@ -54,8 +54,8 @@ public class CreateEncomendaDTO implements Serializable {
     public static CreateEncomendaDTO from(Encomenda encomenda) {
         List<VolumeCreateEncomendaDTO> volumesDTO = encomenda.getVolumes().stream()
                 .map(volume -> {
-                    List<ProdutoDTO> produtosDTO = volume.getEmbalagens().stream()
-                            .map(produto -> new ProdutoDTO(
+                    List<ProdutoCreateEncomendaDTO> produtosDTO = volume.getEmbalagens().stream()
+                            .map(produto -> new ProdutoCreateEncomendaDTO(
                                     produto.getId(),
                                     produto.getQuantidade()
                             ))

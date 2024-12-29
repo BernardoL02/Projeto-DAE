@@ -3,7 +3,7 @@
 #########################################################################
 
 ######################### Produtos Service ################################
-### GET All Ultimo Valor dos Sensores por Tipo
+### GET All Produtos #
 GET http://localhost:3001/backend/api/produtos
 Accept: application/json
 

@@ -4,7 +4,7 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.ws.rs.core.Response;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoCreateEncomendaDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.VolumeCreateEncomendaDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Embalagem;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
@@ -13,7 +13,6 @@ import pt.ipleiria.estg.dei.ei.dea.backend.entities.Volume;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Stateless
 public class VolumeBean {
@@ -48,7 +47,7 @@ public class VolumeBean {
 
         List<Produto> produtos = new ArrayList<>();
 
-        for (ProdutoDTO produto : volumeCreateEncomendaDTO.getProdutos()) {
+        for (ProdutoCreateEncomendaDTO produto : volumeCreateEncomendaDTO.getProdutos()) {
             Produto produto1 = em.find(Produto.class, produto.getId());
 
             if(produto1 == null){
