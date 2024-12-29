@@ -4,10 +4,7 @@
   <div class="flex justify-center items-center mr-24 mt-20 space-x-4">
     <h1>Sensores</h1>
     <!-- Botão para controlar o intervalo de atualização dos valores -->
-    <button
-      @click="toggleValueUpdate"
-      class="bg-blue-500 text-white py-1 px-4 rounded hover:bg-blue-700 transition"
-    >
+    <button @click="toggleValueUpdate" class="bg-blue-500 text-white py-1 px-4 rounded hover:bg-blue-700 transition">
       {{ isValueUpdateRunning ? "Stop" : "Start" }}
     </button>
   </div>
@@ -19,61 +16,67 @@
     </ul>
   </div>
 
-  <div
-    v-if="successMessage"
+  <div v-if="successMessage"
     class="fixed top-0 left-0 w-full flex justify-center mt-4 z-50 transition-transform transform-gpu"
-    :class="{ 'animate-slide-down': successMessage, 'animate-slide-up': !successMessage }"
-  >
+    :class="{ 'animate-slide-down': successMessage, 'animate-slide-up': !successMessage }">
     <div class="bg-green-500 text-white py-2 px-4 mr-28 rounded shadow-md">
       {{ successMessage }}
     </div>
   </div>
 
-  <Table :tableTitles="tableTitles" :tableData="tableData" @update="confirmUpdateSensor" @cancel="handleCancelSensorClick" />
+  <Table :tableTitles="tableTitles" :tableData="tableData" @update="confirmUpdateSensor"
+    @cancel="handleCancelSensorClick" />
 
   <!-- Modal de Confirmação de Cancelamento -->
-  <div v-if="showCancelSensorConfirmModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+  <div v-if="showCancelSensorConfirmModal"
+    class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white w-1/3 p-6 rounded shadow-lg">
       <h2 class="text-xl font-semibold mb-4">Confirmar Cancelamento</h2>
       <p>Tem certeza que deseja cancelar o sensor ID {{ selectedSensor?.id }}?</p>
       <div class="mt-4 flex justify-end space-x-2">
-        <button @click="showCancelSensorConfirmModal = false" class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-700">Cancelar</button>
-        <button @click="confirmCancelSensor" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700">Confirmar</button>
+        <button @click="showCancelSensorConfirmModal = false"
+          class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-700">Cancelar</button>
+        <button @click="confirmCancelSensor"
+          class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700">Confirmar</button>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-  h1 {
-    font-size: 1.5rem;
-    font-weight: bold;
+h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
   }
 
-  @keyframes slideDown {
-    0% {
-      transform: translateY(-100%);
-      opacity: 0;
-    }
-    50% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
+  50% {
+    transform: translateY(0);
+    opacity: 1;
   }
-  @keyframes slideUp {
-    0% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-    100% {
-      transform: translateY(-100%);
-      opacity: 0;
-    }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
   }
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
 </style>
 
 <script setup>

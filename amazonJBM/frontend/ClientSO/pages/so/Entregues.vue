@@ -16,6 +16,9 @@ const mostrarAlertasModal = ref(false); // Controla a exibição do modal de ale
 const alertasData = ref([]); // Dados dos alertas para o modal
 const errorMessages = ref([]); // Mensagens de erro
 
+// Função para obter o token do sessionStorage
+const getToken = () => sessionStorage.getItem('token');
+
 // Função para formatar o estado
 const formatEstado = (estado) => {
   switch (estado) {
@@ -31,13 +34,21 @@ const formatEstado = (estado) => {
 };
 
 const formatDate = (dateString) => {
-  return dateString.replace('T', ' '); 
+  return dateString.replace('T', ' ');
 };
 
 // Função para buscar encomendas entregues
 const fetchEncomendasEntregues = async () => {
   try {
-    const response = await fetch(`${api}/encomendas/estado/Entregue`);
+    const token = getToken(); // Função para obter o token
+    const response = await fetch(`${api}/encomendas/estado/Entregue`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
     if (!response.ok) throw new Error("Erro ao buscar encomendas entregues");
 
     const data = await response.json();
@@ -99,11 +110,7 @@ onMounted(fetchEncomendasEntregues);
   </div>
 
   <!-- Tabela para Encomendas Entregues com botão de ver alertas -->
-  <Table 
-    :tableTitles="encomendasTableTitles" 
-    :tableData="encomendasTableData" 
-    @verAlertas="verAlertasEncomenda"
-  />
+  <Table :tableTitles="encomendasTableTitles" :tableData="encomendasTableData" @verAlertas="verAlertasEncomenda" />
 
   <!-- Modal de Alertas -->
   <div v-if="mostrarAlertasModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
@@ -112,9 +119,10 @@ onMounted(fetchEncomendasEntregues);
         <i class="fas fa-times"></i> <!-- Botão de fechar -->
       </button>
       <h2 class="text-xl font-semibold mb-4">Alertas da Encomenda</h2>
-      <div v-if="alertasData.length === 0" class="flex flex-col items-center text-gray-600 p-6 border border-gray-300 bg-gray-50 rounded-lg">
-          <i class="fas fa-info-circle text-3xl text-blue-500 mb-2"></i>
-          <p class="text-lg font-medium">Encomenda sem alertas</p>
+      <div v-if="alertasData.length === 0"
+        class="flex flex-col items-center text-gray-600 p-6 border border-gray-300 bg-gray-50 rounded-lg">
+        <i class="fas fa-info-circle text-3xl text-blue-500 mb-2"></i>
+        <p class="text-lg font-medium">Encomenda sem alertas</p>
       </div>
       <div v-for="sensor in alertasData" :key="sensor.id" class="mb-4 p-4 bg-gray-100 rounded-lg border">
         <p class="font-semibold">Sensor ID: {{ sensor.id }} - Tipo: {{ sensor.tipo }}</p>
@@ -136,6 +144,7 @@ h1 {
   font-size: 1.5rem;
   font-weight: bold;
 }
+
 .ml-10 {
   margin-left: 2.5rem;
 }
@@ -145,20 +154,24 @@ h1 {
     transform: translateY(-100%);
     opacity: 0;
   }
+
   50% {
     transform: translateY(0);
     opacity: 1;
   }
+
   100% {
     transform: translateY(0);
     opacity: 1;
   }
 }
+
 @keyframes slideUp {
   0% {
     transform: translateY(0);
     opacity: 1;
   }
+
   100% {
     transform: translateY(-100%);
     opacity: 0;
@@ -168,6 +181,7 @@ h1 {
 .animate-slide-down {
   animation: slideDown 0.5s forwards;
 }
+
 .animate-slide-up {
   animation: slideUp 0.5s forwards;
 }

@@ -86,7 +86,7 @@ const cancelarEncomenda = async (id) => {
       body: JSON.stringify({ estado: "Cancelada" })
     });
     if (!response.ok) throw new Error(`Erro ao cancelar encomenda ${id}`);
-    
+
     successMessage.value = `Encomenda ${id} cancelada com sucesso!`;
     setTimeout(() => { successMessage.value = ''; }, 3000);
 
@@ -112,7 +112,7 @@ const verAlertasEncomenda = async (id) => {
         valor: alerta.valor
       }))
     }));
-    
+
     mostrarAlertasModal.value = true;
   } catch (error) {
     console.error("Erro ao buscar alertas da encomenda:", error);
@@ -126,7 +126,7 @@ const verTracking = async (id) => {
 
     const data = await response.json();
     trackingData.value = data;
-    
+
     mostrarTrackingModal.value = true;
 
     setTimeout(() => {
@@ -193,46 +193,44 @@ onMounted(async () => {
     </div>
 
     <!-- Mensagem de Sucesso -->
-    <div
-      v-if="successMessage"
+    <div v-if="successMessage"
       class="fixed top-0 left-0 w-full flex justify-center mt-4 z-50 transition-transform transform-gpu"
-      :class="{ 'animate-slide-down': successMessage, 'animate-slide-up': !successMessage }"
-    >
+      :class="{ 'animate-slide-down': successMessage, 'animate-slide-up': !successMessage }">
       <div class="bg-green-500 text-white py-2 px-4 mr-28 rounded shadow-md">
         {{ successMessage }}
       </div>
     </div>
 
     <!-- Tabela para Encomendas Pendentes com botão de ver alertas e tracking -->
-    <Table 
-      :tableTitles="encomendasTableTitles" 
-      :tableData="encomendasTableData" 
-      @cancelar="handleCancelClick"
-      @verAlertas="verAlertasEncomenda"
-      @tracking="verTracking"
-    />
+    <Table :tableTitles="encomendasTableTitles" :tableData="encomendasTableData" @cancelar="handleCancelClick"
+      @verAlertas="verAlertasEncomenda" @tracking="verTracking" />
 
     <!-- Modal de Confirmação de Cancelamento -->
-    <div v-if="showCancelConfirmModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+    <div v-if="showCancelConfirmModal"
+      class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white w-1/3 p-6 rounded shadow-lg">
         <h2 class="text-xl font-semibold mb-4">Confirmar Cancelamento</h2>
         <p>Tem certeza que deseja cancelar a encomenda ID {{ selectedEncomendaId }}?</p>
         <div class="mt-4 flex justify-end space-x-2">
-          <button @click="showCancelConfirmModal = false" class="bg-gray-500 text-white py-1 px-4 rounded hover:bg-gray-700">Cancelar</button>
-          <button @click="confirmCancel" class="bg-red-500 text-white py-1 px-4 rounded hover:bg-red-700">Confirmar</button>
+          <button @click="showCancelConfirmModal = false"
+            class="bg-gray-500 text-white py-1 px-4 rounded hover:bg-gray-700">Cancelar</button>
+          <button @click="confirmCancel"
+            class="bg-red-500 text-white py-1 px-4 rounded hover:bg-red-700">Confirmar</button>
         </div>
       </div>
     </div>
 
 
     <!-- Modal de Alertas -->
-    <div v-if="mostrarAlertasModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+    <div v-if="mostrarAlertasModal"
+      class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white w-1/2 p-6 rounded shadow-lg relative">
         <button @click="mostrarAlertasModal = false" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900">
           <i class="fas fa-times"></i>
         </button>
         <h2 class="text-xl font-semibold mb-4">Alertas da Encomenda</h2>
-        <div v-if="alertasData.length === 0" class="flex flex-col items-center text-gray-600 p-6 border border-gray-300 bg-gray-50 rounded-lg">
+        <div v-if="alertasData.length === 0"
+          class="flex flex-col items-center text-gray-600 p-6 border border-gray-300 bg-gray-50 rounded-lg">
           <i class="fas fa-info-circle text-3xl text-blue-500 mb-2"></i>
           <p class="text-lg font-medium">Encomenda sem alertas</p>
         </div>
@@ -251,7 +249,8 @@ onMounted(async () => {
     </div>
 
     <!-- Modal de Tracking -->
-    <div v-if="mostrarTrackingModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+    <div v-if="mostrarTrackingModal"
+      class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white w-3/4 p-6 rounded shadow-lg relative">
         <button @click="mostrarTrackingModal = false" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900">
           <i class="fas fa-times"></i>
@@ -260,9 +259,9 @@ onMounted(async () => {
         <div class="mb-4 flex items-center space-x-2">
           <h3 class="text-lg font-semibold">Volumes e Produtos:</h3>
           <div class="flex space-x-2">
-            <button v-for="(coord, index) in trackingData" :key="index" 
-                    @click="goToLocation(...coord.coordenadas.split(',').map(Number))" 
-                    class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-700 transition">
+            <button v-for="(coord, index) in trackingData" :key="index"
+              @click="goToLocation(...coord.coordenadas.split(',').map(Number))"
+              class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-700 transition">
               {{ coord.produtoNome }}
             </button>
           </div>
@@ -279,6 +278,7 @@ h1 {
   font-size: 1.5rem;
   font-weight: bold;
 }
+
 .ml-10 {
   margin-left: 2.5rem;
 }
@@ -288,20 +288,24 @@ h1 {
     transform: translateY(-100%);
     opacity: 0;
   }
+
   50% {
     transform: translateY(0);
     opacity: 1;
   }
+
   100% {
     transform: translateY(0);
     opacity: 1;
   }
 }
+
 @keyframes slideUp {
   0% {
     transform: translateY(0);
     opacity: 1;
   }
+
   100% {
     transform: translateY(-100%);
     opacity: 0;
@@ -311,6 +315,7 @@ h1 {
 .animate-slide-down {
   animation: slideDown 0.5s forwards;
 }
+
 .animate-slide-up {
   animation: slideUp 0.5s forwards;
 }

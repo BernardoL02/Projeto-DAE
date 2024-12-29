@@ -14,6 +14,9 @@ const encomendaData = ref(null);
 const volumesData = ref([]);
 const alertasData = ref({});
 
+// Função para obter o token do sessionStorage
+const getToken = () => sessionStorage.getItem('token');
+
 // Função para formatar o estado da encomenda
 const formateEstado = (estado) => {
   return estado === "EmProcessamento" ? "Em Processamento" : estado === "PorEntregar" ? "Por Entregar" : estado || "Indefinido";
@@ -22,7 +25,15 @@ const formateEstado = (estado) => {
 // Função para buscar detalhes da encomenda e volumes associados
 const fetchEncomendaDetalhes = async () => {
   try {
-    const response = await fetch(`${api}/encomendas/${encomendaId}`);
+    const token = getToken(); // Função para obter o token
+    const response = await fetch(`${api}/encomendas/${encomendaId}`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
     if (!response.ok) throw new Error("Erro ao buscar detalhes da encomenda");
 
     const data = await response.json();
@@ -65,7 +76,15 @@ const fetchAlertas = async (sensor) => {
     if (alertasData.value[sensor.id]) {
       sensor.mostrarAlertas = !sensor.mostrarAlertas;
     } else {
-      const response = await fetch(`${api}/sensor/${sensor.id}/alertas`);
+      const token = getToken(); // Função para obter o token
+      const response = await fetch(`${api}/sensor/${sensor.id}/alertas`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
       if (!response.ok) throw new Error(`Erro ao buscar alertas do sensor ${sensor.id}`);
       const alertas = await response.json();
       alertasData.value[sensor.id] = alertas.map(alerta => ({
@@ -76,12 +95,13 @@ const fetchAlertas = async (sensor) => {
       }));
       sensor.mostrarAlertas = true;
 
-      console.log(alertas)
+      console.log(alertas);
     }
   } catch (error) {
     console.error(`Erro ao buscar alertas do sensor ${sensor.id}:`, error);
   }
 };
+
 
 onMounted(fetchEncomendaDetalhes);
 
@@ -90,28 +110,30 @@ onMounted(fetchEncomendaDetalhes);
 <template>
   <Template />
 
-  <div v-if="encomendaData" class="flex flex-col justify-center mx-auto mt-10 p-6 mb-10 bg-white shadow-md rounded-lg border border-gray-300 w-full max-w-5xl">
+  <div v-if="encomendaData"
+    class="flex flex-col justify-center mx-auto mt-10 p-6 mb-10 bg-white shadow-md rounded-lg border border-gray-300 w-full max-w-5xl">
     <div class="mb-8">
       <h1 class="text-center text-2xl font-semibold mb-4">Detalhes da Encomenda</h1>
       <p class="text-gray-700"><strong>ID:</strong> {{ encomendaData.id }}</p>
       <p class="text-gray-700"><strong>Utilizador:</strong> {{ encomendaData.username }}</p>
-      <p class="text-gray-700"><strong>Data de Expedição:</strong> {{ new Date(encomendaData.data_expedicao).toLocaleString() }}</p>
-      <p class="text-gray-700"><strong>Data de Entrega:</strong> {{ new Date(encomendaData.data_entrega).toLocaleString() }}</p>
+      <p class="text-gray-700"><strong>Data de Expedição:</strong> {{ new
+        Date(encomendaData.data_expedicao).toLocaleString() }}</p>
+      <p class="text-gray-700"><strong>Data de Entrega:</strong> {{ new
+        Date(encomendaData.data_entrega).toLocaleString() }}</p>
       <p class="text-gray-700"><strong>Estado:</strong> {{ encomendaData.estado }}</p>
     </div>
 
     <div>
       <h2 class="text-xl font-semibold mb-4">Volumes</h2>
-      <div v-for="volume in volumesData" :key="volume.id" class="mb-6 p-4 bg-gray-100 rounded-lg border border-gray-300">
+      <div v-for="volume in volumesData" :key="volume.id"
+        class="mb-6 p-4 bg-gray-100 rounded-lg border border-gray-300">
         <div class="flex justify-between items-center">
           <div>
             <h3 class="font-semibold text-lg text-gray-800">Volume ID: {{ volume.id }} - {{ volume.nome_produto }}</h3>
             <p class="text-gray-600">Quantidade: {{ volume.quantidade }}</p>
           </div>
-          <button 
-            @click="toggleSensores(volume)" 
-            class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
-          >
+          <button @click="toggleSensores(volume)"
+            class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700 transition">
             {{ volume.mostrarSensores ? 'Esconder Detalhes' : 'Mostrar Detalhes' }}
           </button>
         </div>
@@ -126,17 +148,16 @@ onMounted(fetchEncomendaDetalhes);
               <p><strong>Bateria:</strong> {{ sensor.bateria }}%</p>
               <p><strong>Estado:</strong> {{ sensor.estado }}</p>
               <p><strong>Última Leitura:</strong> {{ sensor.ultimaLeitura }}</p>
-              <button
-                @click="fetchAlertas(sensor)"
-                class="bg-yellow-500 text-white px-3 py-1 rounded mt-2 hover:bg-yellow-700 transition"
-              >
+              <button @click="fetchAlertas(sensor)"
+                class="bg-yellow-500 text-white px-3 py-1 rounded mt-2 hover:bg-yellow-700 transition">
                 {{ sensor.mostrarAlertas ? 'Esconder Alertas' : 'Ver Alertas' }}
               </button>
 
               <div v-if="sensor.mostrarAlertas && alertasData[sensor.id]" class="mt-2 p-2 bg-yellow-100 rounded shadow">
                 <h5 class="font-semibold text-sm text-yellow-800 mb-2">Alertas:</h5>
                 <ul>
-                  <li v-for="alerta in alertasData[sensor.id]" :key="alerta.id" class="mb-2 p-2 border-b border-yellow-300 last:border-none">
+                  <li v-for="alerta in alertasData[sensor.id]" :key="alerta.id"
+                    class="mb-2 p-2 border-b border-yellow-300 last:border-none">
                     <p><strong>ID:</strong> {{ alerta.id }}</p>
                     <p><strong>Data:</strong> {{ alerta.data }}</p>
                     <p><strong>Mensagem:</strong> {{ alerta.mensagem }}</p>

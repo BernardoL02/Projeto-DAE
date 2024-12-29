@@ -6,6 +6,7 @@ import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoCreateEncomendaDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.VolumeCreateEncomendaDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Cliente;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -160,6 +161,8 @@ public class ConfigBean {
                     volumesBernardo1.add(volume2Bernardo1);
             // Encomenda
                     encomendaBean.create("Bernardo", volumesBernardo1, LocalDateTime.of(2024, 10, 31, 10, 0));
+                    Cliente bernardo = clienteBean.find("Bernardo");
+                    encomendaBean.mudarEstadoEncomenda(1, "PorEntregar", bernardo);
 
         ///////// Criar Encomenda para Tendeiro
             List<VolumeCreateEncomendaDTO> volumesTendeiro = new ArrayList<>();
@@ -179,6 +182,8 @@ public class ConfigBean {
                     volumesTendeiro.add(volume2Tendeiro);
             // Encomenda
             encomendaBean.create("Tendeiro", volumesTendeiro, LocalDateTime.of(2024, 10, 31, 10, 0));
+            Cliente tendeiro = clienteBean.find("Tendeiro");
+            encomendaBean.mudarEstadoEncomenda(2, "Cancelada", tendeiro);
 
         ///////// Criar Encomenda para Sousa
             List<VolumeCreateEncomendaDTO> volumesSousa = new ArrayList<>();
@@ -197,6 +202,8 @@ public class ConfigBean {
                     volumesSousa.add(volume2Sousa);
             // Encomenda
             encomendaBean.create("Sousa", volumesSousa, LocalDateTime.of(2024, 11, 2, 12, 0));
+            Cliente sousa = clienteBean.find("Sousa");
+            encomendaBean.mudarEstadoEncomenda(3, "Entregue", sousa);
 
         ///////// Criar Encomenda para Bernardo
             List<VolumeCreateEncomendaDTO> volumesBernardo2 = new ArrayList<>();

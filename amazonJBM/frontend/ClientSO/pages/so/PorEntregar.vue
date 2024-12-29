@@ -21,6 +21,9 @@ const errorMessages = ref([]); // Mensagens de erro
 let map = null;
 let markers = [];
 
+// Função para obter o token do sessionStorage
+const getToken = () => sessionStorage.getItem('token');
+
 const loadLeafletCSS = () => {
   const link = document.createElement('link');
   link.rel = 'stylesheet';
@@ -50,7 +53,15 @@ const formatEstado = (estado) => {
 
 const fetchEncomendasPendentes = async () => {
   try {
-    const response = await fetch(`${api}/encomendas/estado/PorEntregar`);
+    const token = getToken(); // Função para obter o token
+    const response = await fetch(`${api}/encomendas/estado/PorEntregar`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
     if (!response.ok) throw new Error("Erro ao buscar encomendas 'Por Entregar'");
 
     const data = await response.json();
@@ -63,12 +74,22 @@ const fetchEncomendasPendentes = async () => {
     }));
   } catch (error) {
     errorMessages.value.push(`Erro ao carregar encomendas 'Por Entregar': ${error.message}`);
+    console.error("Erro ao carregar encomendas 'Por Entregar':", error);
   }
 };
 
+
 const verAlertasEncomenda = async (id) => {
   try {
-    const response = await fetch(`${api}/encomendas/${id}/alertas`);
+    const token = getToken(); // Função para obter o token
+    const response = await fetch(`${api}/encomendas/${id}/alertas`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
     if (!response.ok) throw new Error("Erro ao buscar alertas da encomenda");
 
     const data = await response.json();
@@ -92,17 +113,27 @@ const verAlertasEncomenda = async (id) => {
     mostrarAlertasModal.value = true;
   } catch (error) {
     errorMessages.value.push(`Erro ao buscar alertas da encomenda ${id}: ${error.message}`);
+    console.error(`Erro ao buscar alertas da encomenda ${id}:`, error);
   }
 };
 
+
 const verTracking = async (id) => {
   try {
-    const response = await fetch(`${api}/encomendas/${id}/coordenadas`);
+    const token = getToken(); // Função para obter o token
+    const response = await fetch(`${api}/encomendas/${id}/coordenadas`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
     if (!response.ok) throw new Error("Erro ao buscar coordenadas da encomenda");
 
     const data = await response.json();
     trackingData.value = data;
-    
+
     mostrarTrackingModal.value = true;
 
     setTimeout(() => {
@@ -124,8 +155,10 @@ const verTracking = async (id) => {
     }, 0);
   } catch (error) {
     errorMessages.value.push(`Erro ao buscar coordenadas da encomenda ${id}: ${error.message}`);
+    console.error(`Erro ao buscar coordenadas da encomenda ${id}:`, error);
   }
 };
+
 
 const goToLocation = (lat, lng) => {
   if (map) {
@@ -157,12 +190,8 @@ onMounted(async () => {
   </div>
 
   <!-- Tabela para Encomendas "Por Entregar" com botões de ver alertas e tracking -->
-  <Table 
-    :tableTitles="encomendasTableTitles" 
-    :tableData="encomendasTableData" 
-    @verAlertas="verAlertasEncomenda"
-    @tracking="verTracking"
-  />
+  <Table :tableTitles="encomendasTableTitles" :tableData="encomendasTableData" @verAlertas="verAlertasEncomenda"
+    @tracking="verTracking" />
 
   <!-- Modal de Alertas -->
   <div v-if="mostrarAlertasModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
@@ -186,7 +215,8 @@ onMounted(async () => {
   </div>
 
   <!-- Modal de Tracking -->
-  <div v-if="mostrarTrackingModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+  <div v-if="mostrarTrackingModal"
+    class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white w-3/4 p-6 rounded shadow-lg relative">
       <button @click="mostrarTrackingModal = false" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900">
         <i class="fas fa-times"></i>
@@ -195,9 +225,9 @@ onMounted(async () => {
       <div class="mb-4 flex items-center space-x-2">
         <h3 class="text-lg font-semibold">Volumes e Produtos:</h3>
         <div class="flex space-x-2">
-          <button v-for="(coord, index) in trackingData" :key="index" 
-                  @click="goToLocation(...coord.coordenadas.split(',').map(Number))" 
-                  class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-700 transition">
+          <button v-for="(coord, index) in trackingData" :key="index"
+            @click="goToLocation(...coord.coordenadas.split(',').map(Number))"
+            class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-700 transition">
             {{ coord.produtoNome }}
           </button>
         </div>
@@ -212,6 +242,7 @@ h1 {
   font-size: 1.5rem;
   font-weight: bold;
 }
+
 .ml-10 {
   margin-left: 2.5rem;
 }
