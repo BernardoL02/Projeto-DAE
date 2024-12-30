@@ -96,67 +96,67 @@ public class ConfigBean {
         categoriaBean.create(5, "Eletrodomésticos");
         categoriaBean.create(6, "Vestuário");
         categoriaBean.create(7, "Educação");
-        categoriaBean.create(9, "Esportivo");
+        categoriaBean.create(9, "Desporto");
         categoriaBean.create(10, "Casa");
         categoriaBean.create(11, "Beleza");
         categoriaBean.create(12, "Ferramentas Elétricas");
-
+        categoriaBean.create(13, "Outro");
 
         // Produtos
         // Alimentos
-        produtoBean.create(1, "Maçã", 1);
-        produtoBean.create(2, "Pão Integral", 1);
-        produtoBean.create(3, "Gelados", 1);
+        produtoBean.create("Maçã", 1);
+        produtoBean.create ("Pão Integral", 1);
+        produtoBean.create("Gelados", 1);
 
         // Tv e Som
-        produtoBean.create(4, "Televisão LED 40\"", 2);
-        produtoBean.create(5, "Sistema de Som", 2);
-        produtoBean.create(6, "Fones", 2);
+        produtoBean.create( "Televisão LED 40\"", 2);
+        produtoBean.create( "Sistema de Som", 2);
+        produtoBean.create( "Fones", 2);
 
         // Ferramentas
-        produtoBean.create(7, "Martelo", 3);
-        produtoBean.create(8, "Chave de Fenda", 3);
-        produtoBean.create(9, "Alicate", 3);
+        produtoBean.create( "Martelo", 3);
+        produtoBean.create( "Chave de Fenda", 3);
+        produtoBean.create( "Alicate", 3);
 
         // Bebidas
-        produtoBean.create(10, "Coca Cola", 4);
-        produtoBean.create(11, "Água Mineral", 4);
-        produtoBean.create(12, "Sumo de Laranja", 4);
+        produtoBean.create( "Coca Cola", 4);
+        produtoBean.create( "Água Mineral", 4);
+        produtoBean.create( "Sumo de Laranja", 4);
 
         // Eletrodomésticos
-        produtoBean.create(13, "Frigorifico", 5);
-        produtoBean.create(14, "Micro-ondas", 5);
-        produtoBean.create(15, "Aspirador de Pó", 5);
+        produtoBean.create( "Frigorifico", 5);
+        produtoBean.create( "Micro-ondas", 5);
+        produtoBean.create( "Aspirador de Pó", 5);
 
         // Vestuário
-        produtoBean.create(16, "Polo", 6);
-        produtoBean.create(17, "Calça Jeans", 6);
-        produtoBean.create(18, "Casaco de Lã", 6);
+        produtoBean.create( "Polo", 6);
+        produtoBean.create( "Calça Jeans", 6);
+        produtoBean.create( "Casaco de Lã", 6);
 
         // Educação
-        produtoBean.create(19, "Livro de Matemática", 7);
-        produtoBean.create(20, "Dicionário", 7);
-        produtoBean.create(21, "Atlas Geográfico", 7);
+        produtoBean.create( "Livro de Matemática", 7);
+        produtoBean.create( "Dicionário", 7);
+        produtoBean.create( "Atlas Geográfico", 7);
 
         // Esportivo
-        produtoBean.create(25, "Bola de Futebol", 9);
-        produtoBean.create(26, "Raquete de Tênis", 9);
-        produtoBean.create(27, "Luvas de Boxe", 9);
+        produtoBean.create( "Bola de Futebol", 9);
+        produtoBean.create( "Raquete de Tênis", 9);
+        produtoBean.create( "Luvas de Boxe", 9);
 
         // Casa
-        produtoBean.create(28, "Sofá de Couro", 10);
-        produtoBean.create(29, "Mesa de Jantar", 10);
-        produtoBean.create(30, "Cadeira de Madeira", 10);
+        produtoBean.create( "Sofá de Couro", 10);
+        produtoBean.create( "Mesa de Jantar", 10);
+        produtoBean.create( "Cadeira de Madeira", 10);
 
         // Beleza
-        produtoBean.create(31, "Perfume", 11);
-        produtoBean.create(32, "Creme Hidratante", 11);
-        produtoBean.create(33, "Shampoo", 11);
+        produtoBean.create( "Perfume", 11);
+        produtoBean.create( "Creme Hidratante", 11);
+        produtoBean.create( "Shampoo", 11);
 
         // Ferramentas Elétricas
-        produtoBean.create(34, "Berbequins", 12);
-        produtoBean.create(35, "Aparafusadora", 12);
-        produtoBean.create(36, "Caixote Do Lixo", 12);
+        produtoBean.create( "Berbequins", 12);
+        produtoBean.create( "Aparafusadora", 12);
+        produtoBean.create( "Caixote Do Lixo", 12);
 
 
         ///////////////////////Criar Encomendas e Volumes

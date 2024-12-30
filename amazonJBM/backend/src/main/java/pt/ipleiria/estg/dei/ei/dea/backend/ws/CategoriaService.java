@@ -9,24 +9,23 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResCategoriaDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResClienteDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.CategoriaBean;
-import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.ClienteBean;
+import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.ProdutoBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.security.Authenticated;
-@Path("clientes")
+
+@Path("categoria")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
 @Authenticated
 @RolesAllowed({"Logista"})
-public class ClientesService {
+public class CategoriaService {
 
     @EJB
-    private ClienteBean clienteBean;
+    private CategoriaBean categoriaBean;
 
     @GET
     @Path("/")
-    public Response getClientes() {
-        var clientes = clienteBean.findAll();
-        return Response.ok(ResClienteDTO.from(clientes)).build();
+    public Response getCategorias() {;
+        return Response.ok(ResCategoriaDTO.from(categoriaBean.findAll())).build();
     }
 }
