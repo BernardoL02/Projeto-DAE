@@ -17,6 +17,14 @@ const tiposSensores = ref([]);
 const selectedTipo = ref('');
 const isDropdownOpen = ref(false); // Controle do estado de abertura do dropdown
 
+const router = useRouter();
+
+// Função de logout
+const logout = () => {
+  sessionStorage.removeItem('token');
+  router.push('/');
+};
+
 // Função para obter o token do sessionStorage
 const getToken = () => sessionStorage.getItem('token');
 
@@ -131,11 +139,19 @@ onMounted(() => {
           </div>
         </div>
       </div>
+      <!-- Nome do sistema e botão de logout -->
+      <div class="flex flex-col items-end space-y-2">
+        <!-- Nome do sistema -->
+        <div>
+          <div class="text-white font-bold">Amazon JBM</div>
+          <div class="text-white">Sistema Operacional</div>
+        </div>
 
-      <!-- Nome do sistema -->
-      <div class="text-right">
-        <div class="text-white font-bold">Amazon JBM</div>
-        <div class="text-white">Sistema Operacional</div>
+        <!-- Botão de logout menor -->
+        <button @click="logout"
+          class="flex items-center bg-red-500 text-white font-semibold px-3 py-1 text-sm rounded-full hover:bg-red-700 transition shadow-md">
+          <i class="fas fa-sign-out-alt mr-2"></i> Logout
+        </button>
       </div>
     </div>
   </nav>

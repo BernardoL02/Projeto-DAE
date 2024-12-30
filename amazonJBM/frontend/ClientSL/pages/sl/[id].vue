@@ -25,6 +25,7 @@ const errorMessages = ref([]);
 const embalagemSelecionada = ref(null);
 const tiposEmbalagem = ref([]);
 const embalagens = ref([]);
+const tipoSensorSelecionado = ref(null);
 
 // Função para obter o token do sessionStorage
 const getToken = () => sessionStorage.getItem('token');
@@ -119,6 +120,7 @@ const fetchEncomendaDetalhes = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
+
     if (!response.ok) {
       const errorData = await response.text();
       throw new Error(errorData);
@@ -138,12 +140,14 @@ const fetchEncomendaDetalhes = async () => {
     volumesData.value = data.volumes.map((volume) => ({
       id: volume.id,
       entregue: volume.entregue,
+      mostrarDetalhes: true, // Exibir detalhes do volume automaticamente
       embalagens: volume.embalagems.map((embalagem) => ({
         id: embalagem.id,
         produtoId: embalagem.produto.id,
         produtoName: embalagem.produto.nome,
         quantidade: embalagem.quantidade,
         tipoEmbalagem: embalagem.tipoEmbalagem,
+        mostrarSensores: false, // Não exibir detalhes dos sensores inicialmente
         sensores: embalagem.sensores.map((sensor) => ({
           id: sensor.id,
           tipo: sensor.tipoNome,
@@ -199,7 +203,7 @@ const getRandomValueInRange = (min, max) => {
 
 // Função para associar um sensor a um volume
 const associarSensor = async () => {
-  if (!tipoSelecionado.value) {
+  if (!tipoSensorSelecionado.value) {
     showError("Selecione um tipo de sensor.");
     return;
   }
@@ -211,14 +215,13 @@ const associarSensor = async () => {
 
   try {
     let valor = null;
-    if (tipoSelecionado.value.id === 4) {
+    if (tipoSensorSelecionado.value.id === 4) {
       // Coordenadas para tipo GPS
       const coordenadas = ["39.73440231964457, -8.821080620077632", "39.74906316836962, -8.81280859823362"];
       valor = coordenadas[Math.floor(Math.random() * coordenadas.length)];
     } else {
       if (valMax.value === null || valMin.value === null) {
-        errorMessage.value = "Digite os valores máximo e mínimo.";
-        setTimeout(() => (errorMessage.value = ""), 3000);
+        showError("Digite os valores máximo e mínimo.");
         return;
       }
       valor = getRandomValueInRange(valMin.value, valMax.value);
@@ -226,11 +229,11 @@ const associarSensor = async () => {
 
     const sensorData = {
       valor,
-      tipoId: tipoSelecionado.value.id,
-      tipoNome: tipoSelecionado.value.tipo,
+      tipoId: tipoSensorSelecionado.value.id,
+      tipoNome: tipoSensorSelecionado.value.tipo,
       estado: "ativo",
       bateria: 100,
-      ...(tipoSelecionado.value.id !== 4 && { valMax: valMax.value, valMin: valMin.value }),
+      ...(tipoSensorSelecionado.value.id !== 4 && { valMax: valMax.value, valMin: valMin.value }),
     };
 
     const token = getToken();
@@ -257,10 +260,10 @@ const associarSensor = async () => {
     // Atualiza os sensores da embalagem após a associação
     await fetchEncomendaDetalhes();
   } catch (error) {
-    errorMessage.value = "Erro ao associar sensor.";
-    setTimeout(() => (errorMessage.value = ""), 3000);
+    showError("Erro ao associar sensor.");
   }
 };
+
 
 // Buscar Tipos de Embalagem
 const fetchTiposEmbalagem = async () => {
@@ -481,7 +484,7 @@ onMounted(() => {
     <div class="bg-white w-1/3 p-6 rounded shadow-lg">
       <h2 class="text-xl font-semibold mb-4">Associar Sensor</h2>
       <p>Escolha o tipo de sensor para associar à Embalagem ID {{ embalagemSelecionada?.id }}:</p>
-      <select v-model="tipoSelecionado" class="w-full p-2 border border-gray-300 rounded mb-4">
+      <select v-model="tipoSensorSelecionado" class="w-full p-2 border border-gray-300 rounded mb-4">
         <option v-for="tipo in tiposSensores" :key="tipo.id" :value="tipo">{{ tipo.tipo }}</option>
       </select>
       <div v-if="tipoSelecionado && tipoSelecionado.id !== 4" class="mb-4">
