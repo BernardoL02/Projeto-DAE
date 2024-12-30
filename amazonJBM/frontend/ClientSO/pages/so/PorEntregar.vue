@@ -224,14 +224,14 @@ onMounted(async () => {
 
   <!-- Modal de Alertas -->
   <div v-if="mostrarAlertasModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-    <!-- Botão de fechar fora do modal -->
-    <button @click="mostrarAlertasModal = false"
-      class="absolute top-3 right-[calc(50%-25%)] w-8 h-8 bg-gray-200 text-gray-600 hover:text-gray-900 hover:bg-white rounded-full flex items-center justify-center z-50 shadow">
-      <i class="fas fa-times"></i>
-    </button>
-
     <!-- Conteúdo do Modal -->
     <div class="bg-white w-1/2 p-0 rounded shadow-lg relative max-h-[90vh] overflow-y-auto">
+      <!-- Botão de fechar dentro do modal e posicionado corretamente -->
+      <button @click="mostrarAlertasModal = false"
+        class="absolute top-3 right-3 w-8 h-8 bg-gray-200 text-gray-600 hover:text-gray-900 hover:bg-white rounded-full flex items-center justify-center z-50 shadow">
+        <i class="fas fa-times"></i>
+      </button>
+
       <!-- Cabeçalho fixo preenchido -->
       <div class="sticky top-0 bg-white z-10 p-4 border-b border-gray-300">
         <h2 class="text-xl font-semibold">Alertas da Encomenda</h2>
