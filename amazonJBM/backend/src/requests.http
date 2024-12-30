@@ -207,7 +207,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczN
 
 ################################ EMBALAGENS ###################################
 
-### Get All Tipos de Sensor #
+### Get All Tipos de Embalagens #
 GET http://localhost:3001/backend/api/embalagem/tipos
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1NTkxMDIsImV4cCI6MTczNTU2MjcwMn0.soGmmFdXoivsyBUEJeQUa9-F4LDKbq0Ylxz3b2KUUZ612ZkQAv7WKvR9PGY5cUFC

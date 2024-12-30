@@ -9,84 +9,159 @@ const api = config.public.API_URL;
 const router = useRouter();
 
 const clientes = ref([]);
+const searchCliente = ref("");
+const showSuggestions = ref(false);
+
 const produtos = ref([]);
+const tiposEmbalagem = ref([]); // Tipos de embalagem
 const selectedCliente = ref(null);
-const produtoSelecionado = ref(null);
 const volumes = reactive([]);
 const volumeAtual = ref(null);
 const successMessage = ref('');
 const errorMessage = ref('');
-const dropdownAberto = ref(false);
 
 const currentPage = 'CriarEncomenda';
 
 // Função para obter o token do sessionStorage
 const getToken = () => sessionStorage.getItem('token');
 
-// Função para buscar todos os clientes
+// Buscar todos os clientes
 const fetchClientes = async () => {
   try {
     const token = getToken();
     const response = await fetch(`${api}/clientes`, {
       method: 'GET',
       headers: {
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
     });
-    if (!response.ok) throw new Error("Erro ao buscar clientes");
-
+    if (!response.ok) throw new Error('Erro ao buscar clientes');
     clientes.value = await response.json();
   } catch (error) {
-    console.error("Erro ao carregar clientes:", error);
+    console.error('Erro ao carregar clientes:', error);
   }
 };
 
-// Função para buscar todos os produtos
+// Computed para filtrar clientes com base no `searchCliente`
+const filteredClientes = computed(() => {
+  if (!searchCliente.value) {
+    return clientes.value;
+  }
+  return clientes.value.filter((cliente) =>
+    cliente.username.toLowerCase().includes(searchCliente.value.toLowerCase())
+  );
+});
+
+// Função para selecionar o cliente e definir no modelo
+const selectCliente = (username) => {
+  selectedCliente.value = username;
+  searchCliente.value = username;
+  showSuggestions.value = false;
+};
+
+// Função para esconder sugestões ao perder o foco
+const hideSuggestions = () => {
+  setTimeout(() => {
+    showSuggestions.value = false;
+  }, 200);
+};
+
+// Buscar todos os produtos
 const fetchProdutos = async () => {
   try {
     const token = getToken();
     const response = await fetch(`${api}/produtos`, {
       method: 'GET',
       headers: {
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
     });
-    if (!response.ok) throw new Error("Erro ao buscar produtos");
-
+    if (!response.ok) throw new Error('Erro ao buscar produtos');
     produtos.value = await response.json();
   } catch (error) {
-    console.error("Erro ao carregar produtos:", error);
+    console.error('Erro ao carregar produtos:', error);
   }
+};
+
+const filteredProdutos = (searchTerm) => {
+  if (!searchTerm) {
+    return produtos.value;
+  }
+  return produtos.value.filter((produto) =>
+    produto.nome.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+};
+
+const selectProduto = (produto, embalagem) => {
+  embalagem.produto = produto;
+  embalagem.searchProduto = produto.nome;
+  embalagem.showSuggestions = false;
+};
+
+const hideProdutoSuggestions = (embalagem) => {
+  setTimeout(() => {
+    embalagem.showSuggestions = false;
+  }, 200);
+};
+
+// Buscar tipos de embalagem
+const fetchTiposEmbalagem = async () => {
+  try {
+    const token = getToken();
+    const response = await fetch(`${api}/embalagem/tipos`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) throw new Error('Erro ao buscar tipos de embalagem');
+    tiposEmbalagem.value = await response.json();
+  } catch (error) {
+    console.error('Erro ao carregar tipos de embalagem:', error);
+  }
+};
+
+const filteredTiposEmbalagem = (searchTerm) => {
+  if (!searchTerm) {
+    return tiposEmbalagem.value;
+  }
+  return tiposEmbalagem.value.filter((tipo) =>
+    tipo.tipo.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+};
+
+const selectTipo = (tipo, embalagem) => {
+  embalagem.tipo = tipo.id;
+  embalagem.searchTipo = tipo.tipo;
+  embalagem.showTipoSuggestions = false;
+};
+
+const hideTipoSuggestions = (embalagem) => {
+  setTimeout(() => {
+    embalagem.showTipoSuggestions = false;
+  }, 200);
 };
 
 // Função para adicionar um novo volume
 let volumeCounter = 1;
-
 const adicionarVolume = () => {
   const novoVolume = {
     id: volumeCounter,
-    produtos: [],
+    embalagens: [], // Contém embalagens
   };
   volumes.push(novoVolume);
-
   volumeCounter++;
-
   volumeAtual.value = novoVolume.id;
 };
 
-// Função para selecionar um volume
-const selecionarVolume = (id) => {
-  volumeAtual.value = id;
-};
-
-// Função para remover um volume
+// Função para remover um novo volume
 const removerVolume = (id) => {
   const index = volumes.findIndex((v) => v.id === id);
   if (index !== -1) {
     volumes.splice(index, 1);
-
     volumes.forEach((volume, idx) => {
       volume.id = idx + 1;
     });
@@ -97,44 +172,53 @@ const removerVolume = (id) => {
   }
 };
 
-// Função para adicionar um produto ao volume selecionado
-const adicionarProdutoAoVolume = (produto) => {
-  if (!produto || !volumeAtual.value) {
-    errorMessage.value = "Selecione um volume antes de adicionar produtos.";
+
+// Adicionar uma embalagem ao volume selecionado
+const adicionarEmbalagemAoVolume = (volumeId) => {
+  const volume = volumes.find((v) => v.id === volumeId);
+  if (!volume) {
+    errorMessage.value = "Volume não encontrado.";
     setTimeout(() => (errorMessage.value = ""), 3000);
     return;
   }
-  const volume = volumes.find((v) => v.id === volumeAtual.value);
-  if (!volume) return;
 
-  const produtoExistente = volume.produtos.find((p) => p.id === produto.id);
-  if (!produtoExistente) {
-    volume.produtos.push({ ...produto, quantidade: 1 });
-  }
-  produtoSelecionado.value = null; // Resetar o dropdown
+  const novaEmbalagem = {
+    id: Date.now(),
+    produto: null,
+    searchProduto: "",
+    showSuggestions: false,
+    quantidade: 1,
+    tipo: null,
+    searchTipo: "",
+    showTipoSuggestions: false,
+  };
+
+  volume.embalagens.push(novaEmbalagem);
 };
 
-// Função para remover um produto de um volume
-const removerProdutoDoVolume = (produtoId, volumeId) => {
+
+
+// Remover uma embalagem de um volume
+const removerEmbalagemDoVolume = (embalagemId, volumeId) => {
   const volume = volumes.find((v) => v.id === volumeId);
   if (!volume) return;
 
-  const index = volume.produtos.findIndex((p) => p.id === produtoId);
+  const index = volume.embalagens.findIndex((e) => e.id === embalagemId);
   if (index !== -1) {
-    volume.produtos.splice(index, 1);
+    volume.embalagens.splice(index, 1);
   }
 };
 
-// Função para criar uma nova encomenda
+// Função para criar a encomenda
 const criarEncomenda = async () => {
   if (!selectedCliente.value) {
-    errorMessage.value = "Selecione um cliente.";
+    errorMessage.value = 'Selecione um cliente.';
     setTimeout(() => (errorMessage.value = ''), 3000);
     return;
   }
 
-  if (volumes.length === 0 || volumes.every((v) => v.produtos.length === 0)) {
-    errorMessage.value = "Adicione ao menos um produto a um volume.";
+  if (volumes.length === 0 || volumes.every((v) => v.embalagens.length === 0)) {
+    errorMessage.value = 'Adicione ao menos uma embalagem a um volume.';
     setTimeout(() => (errorMessage.value = ''), 3000);
     return;
   }
@@ -145,30 +229,31 @@ const criarEncomenda = async () => {
     username: selectedCliente.value,
     data_expedicao: dataExpedicao,
     volumes: volumes.map((v) => ({
-      produtos: v.produtos.map((p) => ({
-        id: p.id,
-        quantidade_de_produtos_comprados: p.quantidade,
+      embalagens: v.embalagens.map((e) => ({
+        tipo: e.tipo,
+        produto: { id: e.produto.id },
+        quantidade: e.quantidade,
       })),
     })),
   };
 
-  console.log("Enviando JSON:", encomendaData);
+  console.log('Enviando JSON:', encomendaData);
 
   try {
     const token = getToken();
     const response = await fetch(`${api}/encomendas`, {
       method: 'POST',
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(encomendaData),
     });
 
-    if (!response.ok) throw new Error("Erro ao criar encomenda");
+    if (!response.ok) throw new Error('Erro ao criar encomenda');
 
-    successMessage.value = "Encomenda criada com sucesso!";
+    successMessage.value = 'Encomenda criada com sucesso!';
     setTimeout(() => {
       successMessage.value = '';
       router.push('./gestao');
@@ -178,17 +263,18 @@ const criarEncomenda = async () => {
     selectedCliente.value = null;
     volumes.splice(0);
   } catch (error) {
-    errorMessage.value = "Erro ao criar encomenda.";
+    errorMessage.value = 'Erro ao criar encomenda.';
     setTimeout(() => (errorMessage.value = ''), 3000);
   }
 };
 
-
 onMounted(() => {
   fetchClientes();
   fetchProdutos();
+  fetchTiposEmbalagem();
 });
 </script>
+
 
 <template>
   <Template :currentPage="currentPage" />
@@ -212,77 +298,96 @@ onMounted(() => {
 
       <div class="mb-4">
         <label class="block text-gray-700 font-semibold mb-1">Cliente:</label>
-        <select v-model="selectedCliente" class="w-full p-2 border border-gray-300 rounded">
-          <option value="" disabled>Selecione um cliente</option>
-          <option v-for="cliente in clientes" :key="cliente.username" :value="cliente.username">
-            {{ cliente.username }}
-          </option>
-        </select>
+        <input type="text" v-model="searchCliente" @focus="showSuggestions = true" @blur="hideSuggestions"
+          placeholder="Pesquisar cliente pelo username"
+          class="w-full p-2 border border-gray-300 rounded mb-2 focus:ring-green-500 focus:border-green-500" />
+        <div v-if="showSuggestions && filteredClientes.length > 0" class="relative">
+          <ul class="absolute z-10 w-full bg-white border border-gray-300 rounded max-h-48 overflow-y-auto shadow-lg">
+            <li v-for="cliente in filteredClientes" :key="cliente.username" @mousedown="selectCliente(cliente.username)"
+              class="p-2 hover:bg-gray-100 cursor-pointer">
+              {{ cliente.username }}
+            </li>
+          </ul>
+        </div>
       </div>
 
       <div class="mb-4">
-        <h3 class="text-lg font-semibold">Volumes</h3>
+        <h3 class="text-lg font-semibold mb-4 text-gray-700">Volumes</h3>
         <button @click="adicionarVolume"
-          class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700 transition">
+          class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">
           Adicionar Volume
         </button>
 
-        <div v-for="volume in volumes" :key="volume.id" class="p-4 bg-gray-100 rounded my-4 border">
-          <div class="flex justify-between items-center">
-            <h4 class="text-md font-semibold">
-              Volume {{ volume.id }}
-              <span v-if="volumeAtual === volume.id" class="text-sm text-blue-500">(Selecionado)</span>
-            </h4>
-            <div>
-              <button v-if="volumeAtual !== volume.id" @click="selecionarVolume(volume.id)"
-                class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700 transition">
-                Selecionar
+        <div v-for="volume in volumes" :key="volume.id" class="p-4 bg-gray-50 rounded-lg shadow border mt-4">
+          <div class="flex justify-between items-center mb-4">
+            <h4 class="text-md font-semibold text-gray-700">Volume {{ volume.id }}</h4>
+            <div class="space-x-2">
+              <button @click="adicionarEmbalagemAoVolume(volume.id)"
+                class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition">
+                Adicionar Embalagem
               </button>
               <button @click="removerVolume(volume.id)"
-                class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700 transition ml-2">
-                Remover
+                class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition">
+                Remover Volume
               </button>
             </div>
           </div>
 
-          <ul v-if="volume.produtos.length > 0" class="mt-2">
-            <li v-for="produto in volume.produtos" :key="produto.id"
-              class="flex justify-between items-center p-2 bg-white rounded my-2">
-              <div>
-                <strong>{{ produto.nome }}</strong> - Quantidade:
-                <input v-model="produto.quantidade" type="number" min="1"
-                  class="w-16 p-1 border border-gray-300 rounded text-center" />
+          <ul v-if="volume.embalagens.length > 0" class="space-y-4">
+            <li v-for="embalagem in volume.embalagens" :key="embalagem.id"
+              class="p-4 bg-white rounded-lg shadow border">
+              <div class="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Produto:</label>
+                  <input type="text" v-model="embalagem.searchProduto" @focus="embalagem.showSuggestions = true"
+                    @blur="hideProdutoSuggestions(embalagem)" placeholder="Pesquisar produto"
+                    class="block w-full border border-gray-300 rounded px-2 py-1 focus:ring-green-500 focus:border-green-500" />
+                  <div v-if="embalagem.showSuggestions && filteredProdutos(embalagem.searchProduto).length > 0"
+                    class="relative">
+                    <ul
+                      class="absolute z-10 w-full bg-white border border-gray-300 rounded max-h-48 overflow-y-auto shadow-lg">
+                      <li v-for="produto in filteredProdutos(embalagem.searchProduto)" :key="produto.id"
+                        @mousedown="selectProduto(produto, embalagem)" class="p-2 hover:bg-gray-100 cursor-pointer">
+                        {{ produto.nome }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de Embalagem:</label>
+                  <input type="text" v-model="embalagem.searchTipo" @focus="embalagem.showTipoSuggestions = true"
+                    @blur="hideTipoSuggestions(embalagem)" placeholder="Pesquisar tipo de embalagem"
+                    class="block w-full border border-gray-300 rounded px-2 py-1 focus:ring-green-500 focus:border-green-500" />
+                  <div v-if="embalagem.showTipoSuggestions && filteredTiposEmbalagem(embalagem.searchTipo).length > 0"
+                    class="relative">
+                    <ul
+                      class="absolute z-10 w-full bg-white border border-gray-300 rounded max-h-48 overflow-y-auto shadow-lg">
+                      <li v-for="tipo in filteredTiposEmbalagem(embalagem.searchTipo)" :key="tipo.tipo"
+                        @mousedown="selectTipo(tipo, embalagem)" class="p-2 hover:bg-gray-100 cursor-pointer">
+                        {{ tipo.tipo }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
-              <button @click="removerProdutoDoVolume(produto.id, volume.id)"
-                class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700 transition">
-                Remover
-              </button>
+
+              <div class="flex justify-between items-center">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">Quantidade:</label>
+                  <input v-model="embalagem.quantidade" type="number" min="1"
+                    class="border border-gray-300 rounded px-2 py-1 w-24 text-center focus:ring-green-500 focus:border-green-500" />
+                </div>
+                <button @click="removerEmbalagemDoVolume(embalagem.id, volume.id)"
+                  class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition">
+                  Remover Embalagem
+                </button>
+              </div>
             </li>
           </ul>
         </div>
       </div>
 
-      <div class="mb-4">
-        <label class="block text-gray-700 font-semibold mb-1">Produtos:</label>
-        <div class="relative">
-          <button @click="dropdownAberto = !dropdownAberto"
-            class="w-full p-2 border border-gray-300 rounded bg-white text-left">
-            {{ produtoSelecionado?.nome || 'Selecione um produto' }}
-          </button>
-          <ul v-show="dropdownAberto"
-            class="absolute z-10 w-full bg-white border border-gray-300 rounded max-h-48 overflow-y-auto shadow-lg">
-            <li v-for="produto in produtos" :key="produto.id"
-              @click="produtoSelecionado = produto; dropdownAberto = false"
-              class="p-2 hover:bg-gray-100 cursor-pointer">
-              {{ produto.nome }}
-            </li>
-          </ul>
-        </div>
-        <button @click="adicionarProdutoAoVolume(produtoSelecionado)" :disabled="!volumeAtual"
-          class="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700 transition disabled:bg-gray-400">
-          Adicionar ao Volume
-        </button>
-      </div>
+
 
       <button @click="criarEncomenda" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
         Criar Encomenda
