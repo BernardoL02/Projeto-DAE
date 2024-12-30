@@ -26,10 +26,15 @@ public class Embalagem {
 
     private int quantidade;
 
-    public Embalagem(Produto produto, Volume volume, int quantidade) {
+    @ManyToOne
+    @JoinColumn(name = "id_tipo", nullable = false)
+    private Tipo_Embalagem tipo;
+
+    public Embalagem(Produto produto, Volume volume, int quantidade, Tipo_Embalagem tipo) {
         this.produto = produto;
         this.volume = volume;
         this.quantidade = quantidade;
+        this.tipo = tipo;
     }
 
     public Embalagem() {
@@ -74,5 +79,13 @@ public class Embalagem {
     public void addSensor(Sensor sensor) {
         sensores.add(sensor);
         sensor.setEmbalagem(this);
+    }
+
+    public Tipo_Embalagem getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Tipo_Embalagem tipo) {
+        this.tipo = tipo;
     }
 }

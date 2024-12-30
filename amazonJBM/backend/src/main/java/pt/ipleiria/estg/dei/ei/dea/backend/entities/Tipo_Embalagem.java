@@ -21,10 +21,18 @@ public class Tipo_Embalagem {
 
         private String tipo;
 
+        @ManyToMany
+        @JoinTable(
+                name = "tipo_embalagem_tipo_sensores",
+                joinColumns = @JoinColumn(name = "id_TipoEmbalabem", referencedColumnName = "id"),
+                inverseJoinColumns = @JoinColumn(name = "id_TipoSensor", referencedColumnName = "id")
+        )
+        private List<Tipo_Sensores> tipoSensores = new ArrayList<>();
 
-        public Tipo_Embalagem(int id, String tipo) {
+        public Tipo_Embalagem(int id, String tipo, List<Tipo_Sensores> tipoSensores) {
                 this.id = id;
                 this.tipo = tipo;
+                this.tipoSensores = tipoSensores;
         }
 
         public Tipo_Embalagem() {}
@@ -45,4 +53,11 @@ public class Tipo_Embalagem {
                 this.tipo = tipo;
         }
 
+        public List<Tipo_Sensores> getSensores() {
+                return tipoSensores;
+        }
+
+        public void addSensor(Tipo_Sensores idTipo) {
+                tipoSensores.add(idTipo);
+        }
 }
