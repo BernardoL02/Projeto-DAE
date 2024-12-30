@@ -56,16 +56,16 @@ const logout = () => {
       </div>
 
       <!-- Nome do sistema e botão de logout -->
-      <div class="flex justify-between items-center">
+      <div class="flex flex-col items-end space-y-2">
         <!-- Nome do sistema -->
         <div>
           <div class="text-white font-bold text-xl">Amazon JBM</div>
           <div class="text-white text-sm">Sistema de Logística</div>
         </div>
 
-        <!-- Botão de logout estilizado com margem -->
+        <!-- Botão de logout menor -->
         <button @click="logout"
-          class="flex items-center bg-red-500 text-white font-semibold px-4 py-2 rounded-full hover:bg-red-700 transition shadow-md ml-8">
+          class="flex items-center bg-red-500 text-white font-semibold px-3 py-1 text-sm rounded-full hover:bg-red-700 transition shadow-md">
           <i class="fas fa-sign-out-alt mr-2"></i> Logout
         </button>
       </div>

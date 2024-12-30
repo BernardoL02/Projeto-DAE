@@ -18,12 +18,22 @@ const selectedCliente = ref(null);
 const volumes = reactive([]);
 const volumeAtual = ref(null);
 const successMessage = ref('');
-const errorMessage = ref('');
+const errorMessages = ref([]);
 
 const currentPage = 'CriarEncomenda';
 
 // Função para obter o token do sessionStorage
 const getToken = () => sessionStorage.getItem('token');
+
+// Função para exibir a mensagem de erro como um alerta estilizado
+const showError = (message) => {
+  errorMessages.value.push(message);
+
+  // Remove o erro automaticamente após 5 segundos
+  setTimeout(() => {
+    errorMessages.value.shift();
+  }, 5000);
+};
 
 // Buscar todos os clientes
 const fetchClientes = async () => {
@@ -36,10 +46,13 @@ const fetchClientes = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (!response.ok) throw new Error('Erro ao buscar clientes');
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
     clientes.value = await response.json();
   } catch (error) {
-    console.error('Erro ao carregar clientes:', error);
+    showError(error.message);
   }
 };
 
@@ -78,10 +91,13 @@ const fetchProdutos = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (!response.ok) throw new Error('Erro ao buscar produtos');
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
     produtos.value = await response.json();
   } catch (error) {
-    console.error('Erro ao carregar produtos:', error);
+    showError(error.message);
   }
 };
 
@@ -117,10 +133,13 @@ const fetchTiposEmbalagem = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (!response.ok) throw new Error('Erro ao buscar tipos de embalagem');
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
     tiposEmbalagem.value = await response.json();
   } catch (error) {
-    console.error('Erro ao carregar tipos de embalagem:', error);
+    showError(error.message);
   }
 };
 
@@ -177,8 +196,7 @@ const removerVolume = (id) => {
 const adicionarEmbalagemAoVolume = (volumeId) => {
   const volume = volumes.find((v) => v.id === volumeId);
   if (!volume) {
-    errorMessage.value = "Volume não encontrado.";
-    setTimeout(() => (errorMessage.value = ""), 3000);
+    showError("Volume não encontrado.");
     return;
   }
 
@@ -212,15 +230,27 @@ const removerEmbalagemDoVolume = (embalagemId, volumeId) => {
 // Função para criar a encomenda
 const criarEncomenda = async () => {
   if (!selectedCliente.value) {
-    errorMessage.value = 'Selecione um cliente.';
-    setTimeout(() => (errorMessage.value = ''), 3000);
+    showError('Selecione um cliente.');
     return;
   }
 
   if (volumes.length === 0 || volumes.every((v) => v.embalagens.length === 0)) {
-    errorMessage.value = 'Adicione ao menos uma embalagem a um volume.';
-    setTimeout(() => (errorMessage.value = ''), 3000);
+    showError('Adicione ao menos uma embalagem a um volume.');
     return;
+  }
+
+  // Verificar se todas as embalagens possuem tipo e produto selecionados
+  for (const volume of volumes) {
+    for (const embalagem of volume.embalagens) {
+      if (!embalagem.tipo) {
+        showError('Selecione um tipo de embalagem para todas as embalagens.');
+        return;
+      }
+      if (!embalagem.produto) {
+        showError('Selecione um produto para todas as embalagens.');
+        return;
+      }
+    }
   }
 
   const dataExpedicao = new Date().toISOString();
@@ -237,8 +267,6 @@ const criarEncomenda = async () => {
     })),
   };
 
-  console.log('Enviando JSON:', encomendaData);
-
   try {
     const token = getToken();
     const response = await fetch(`${api}/encomendas`, {
@@ -251,7 +279,10 @@ const criarEncomenda = async () => {
       body: JSON.stringify(encomendaData),
     });
 
-    if (!response.ok) throw new Error('Erro ao criar encomenda');
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
 
     successMessage.value = 'Encomenda criada com sucesso!';
     setTimeout(() => {
@@ -259,12 +290,10 @@ const criarEncomenda = async () => {
       router.push('./gestao');
     }, 1000);
 
-    // Resetar formulário
     selectedCliente.value = null;
     volumes.splice(0);
   } catch (error) {
-    errorMessage.value = 'Erro ao criar encomenda.';
-    setTimeout(() => (errorMessage.value = ''), 3000);
+    showError(error.message);
   }
 };
 
@@ -285,9 +314,12 @@ onMounted(() => {
     </div>
   </div>
 
-  <div v-if="errorMessage" class="fixed top-0 left-0 w-full flex justify-center mt-4 z-50">
-    <div class="bg-red-500 text-white py-2 px-4 rounded shadow-md">
-      {{ errorMessage }}
+  <!-- Mensagens de erro estilizadas -->
+  <div v-if="errorMessages.length" class="fixed bottom-4 right-4 space-y-2 z-50">
+    <div v-for="(error, index) in errorMessages" :key="index"
+      class="bg-red-500 text-white py-4 px-6 rounded shadow-lg w-96">
+      <h3 class="font-semibold text-lg mb-2">Erro</h3>
+      <p>{{ error }}</p>
     </div>
   </div>
 
@@ -411,5 +443,21 @@ h1 {
 .custom-select {
   max-height: 150px;
   overflow-y: auto;
+}
+
+.fixed div {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

@@ -22,7 +22,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDI0M
 ### Get Encomenda Por Id #
 GET http://localhost:3001/backend/api/encomendas/1
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1NjI1NzAsImV4cCI6MTczNTU2NjE3MH0.8WjZdwadRY2_BVoWfPslXWhDk76sg92tlk9Tfi8IhUQyROy3FToOxR7MZ-RrGYZR
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1NjYxODEsImV4cCI6MTczNTU2OTc4MX0.4RjrLNFY5GPQTf8YNwhm9Nsd8g8_g5XhDOk5wQS2I7XnxWa35-1mMeGtvF9OdDpG
 
 ### Get All Encomendas por um determinado estado "PorEntregar" "Cancelada" "EmProcessamento" "Entregue" #
 GET http://localhost:3001/backend/api/encomendas/estado/EmProcessamento
@@ -36,9 +36,9 @@ Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1NDIyODg0LCJleHAiOjE3MzU0MjY0ODR9.4U7Qp_PlswKVnqJZCqIPEIf4m9RFO_ZpmcwOApmYWnvgccLO-BeJpWTWLp3PYQeY
 
 ### Alterar estado de uma encomenda #
-PATCH http://localhost:3001/backend/api/encomendas/1
+PATCH http://localhost:3001/backend/api/encomendas/2
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1NjEwODMsImV4cCI6MTczNTU2NDY4M30.LBOWLNW9by_fz3aFoiUsHEMAhM1joxvETzB6kHNYbAHcSdYlPmaeVrbWxpItHbjp
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1NjYxODEsImV4cCI6MTczNTU2OTc4MX0.4RjrLNFY5GPQTf8YNwhm9Nsd8g8_g5XhDOk5wQS2I7XnxWa35-1mMeGtvF9OdDpG
 Content-Type: application/json
 
 {
@@ -97,20 +97,26 @@ Content-Type: application/json
 ### Associar um volume a uma encomenda #
 POST http://localhost:3001/backend/api/encomendas/1/volume
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDI1NjIyLCJleHAiOjE3MzU0MjkyMjJ9.gEgTTOizSaleIyEEFHy5w3pMpM-m1WM3h73pXP8YlaTSliWJLvJXvt0s-NjHUXVx
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1NjYxODEsImV4cCI6MTczNTU2OTc4MX0.4RjrLNFY5GPQTf8YNwhm9Nsd8g8_g5XhDOk5wQS2I7XnxWa35-1mMeGtvF9OdDpG
 Content-Type: application/json
 
 {
-  "produtos": [
-    {
-      "id": 1,
-      "quantidade_de_produtos_comprados": 10
-    },
-    {
-      "id": 2,
-      "quantidade_de_produtos_comprados": 10
-    }
-  ]
+      "embalagens": [
+        {
+          "produto": {
+            "id": 1
+          },
+          "tipo" : 1,
+          "quantidade": 8
+        },
+        {
+          "produto": {
+            "id": 5
+          },
+          "tipo" : 2,
+          "quantidade": 8
+        }
+      ]
 }
 
 ### Get All Alertas de Encomenda por Id #

@@ -18,6 +18,18 @@ const selectedEncomendaId = ref(null);
 // Função para obter o token do sessionStorage
 const getToken = () => sessionStorage.getItem('token');
 
+const errorMessages = ref([]);
+// Função para exibir a mensagem de erro como um alerta estilizado
+const showError = (message) => {
+  errorMessages.value.push(message);
+
+  // Remove o erro automaticamente após 5 segundos
+  setTimeout(() => {
+    errorMessages.value.shift();
+  }, 5000);
+};
+
+
 const formatEstado = (estado) => {
   switch (estado) {
     case 'EmProcessamento':
@@ -39,7 +51,10 @@ const fetchEncomendasEmProcessamento = async () => {
         'Authorization': `Bearer ${token}`
       }
     });
-    if (!response.ok) throw new Error("Erro ao buscar encomendas Em Processamento");
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
 
     const data = await response.json();
     encomendasTableData.value = data.map(encomenda => ({
@@ -59,7 +74,7 @@ const fetchEncomendasEmProcessamento = async () => {
       estado: formatEstado(encomenda.estado)
     }));
   } catch (error) {
-    console.error("Erro ao carregar encomendas Em Processamento:", error);
+    showError(error.message);
   }
 };
 
@@ -79,13 +94,14 @@ const expedirEncomenda = async (id) => {
     });
 
     if (!response.ok) {
-      throw new Error(`Erro ao entregar encomenda ${id}`);
+      const errorData = await response.text();
+      throw new Error(errorData);
     }
 
     // Atualiza a lista de encomendas após sucesso
     fetchEncomendasEmProcessamento();
   } catch (error) {
-    console.error(`Erro ao entregar encomenda ${id}:`, error);
+    showError(error.message);
   }
 };
 
@@ -105,6 +121,15 @@ onMounted(async () => {
 
   <div class="flex justify-center mr-24 mt-20">
     <h1>Sistema de Logistica - Encomendas Em Processamento</h1>
+  </div>
+
+  <!-- Mensagens de erro estilizadas -->
+  <div v-if="errorMessages.length" class="fixed bottom-4 right-4 space-y-2 z-50">
+    <div v-for="(error, index) in errorMessages" :key="index"
+      class="bg-red-500 text-white py-4 px-6 rounded shadow-lg w-96">
+      <h3 class="font-semibold text-lg mb-2">Erro</h3>
+      <p>{{ error }}</p>
+    </div>
   </div>
 
   <Table :tableTitles="encomendasTableTitles" :tableData="encomendasTableData"
@@ -128,5 +153,21 @@ onMounted(async () => {
 h1 {
   font-size: 1.5rem;
   font-weight: bold;
+}
+
+.fixed div {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>
