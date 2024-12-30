@@ -26,10 +26,13 @@ public class ProdutosService {
 
     @EJB
     private ProdutoBean produtoBean;
-
     @GET
     @Path("/")
     public Response getProdutos() {
         return Response.ok(ProdutoDTO.from(produtoBean.findAll())).build();
     }
+
+    
+
+
 }
