@@ -9,15 +9,17 @@ import java.util.stream.Collectors;
 
 public class EmbalagemDTO implements Serializable {
     private int id;
-    private ProdutoCreateEncomendaDTO produto;
+    private ResProdutoDTO produto;
     private List<SensorDTO> sensores = new ArrayList<>();
     private int quantidade;
+    private String tipoEmbalagem;
 
-    public EmbalagemDTO(int id, ProdutoCreateEncomendaDTO produto, List<SensorDTO> sensores, int quantidade) {
+    public EmbalagemDTO(int id, ResProdutoDTO produto, List<SensorDTO> sensores, int quantidade, String tipoEmbalagem) {
         this.id = id;
         this.produto = produto;
         this.sensores = sensores;
         this.quantidade = quantidade;
+        this.tipoEmbalagem = tipoEmbalagem;
     }
 
     public EmbalagemDTO() {}
@@ -30,11 +32,11 @@ public class EmbalagemDTO implements Serializable {
         this.id = id;
     }
 
-    public ProdutoCreateEncomendaDTO getProduto() {
+    public ResProdutoDTO getProduto() {
         return produto;
     }
 
-    public void setProduto(ProdutoCreateEncomendaDTO produto) {
+    public void setProduto(ResProdutoDTO produto) {
         this.produto = produto;
     }
 
@@ -54,17 +56,26 @@ public class EmbalagemDTO implements Serializable {
         this.quantidade = quantidade;
     }
 
+    public String getTipoEmbalagem() {
+        return tipoEmbalagem;
+    }
+
+    public void setTipoEmbalagem(String tipoEmbalagem) {
+        this.tipoEmbalagem = tipoEmbalagem;
+    }
+
     public static EmbalagemDTO from(Embalagem embalagem) {
 
         List<SensorDTO> sensorDTO = embalagem.getSensores().stream().map(SensorDTO::from).collect(Collectors.toList());
 
-        ProdutoCreateEncomendaDTO produto = new ProdutoCreateEncomendaDTO(embalagem.getProduto().getId());
+        ResProdutoDTO produto = new ResProdutoDTO(embalagem.getProduto().getId(), embalagem.getProduto().getNome());
 
         return new EmbalagemDTO(
                 embalagem.getId(),
                 produto,
                 sensorDTO,
-                embalagem.getQuantidade()
+                embalagem.getQuantidade(),
+                embalagem.getTipo().getTipo()
         );
     }
 }

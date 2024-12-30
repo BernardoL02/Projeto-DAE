@@ -60,4 +60,11 @@ public class EmbalagemService {
         List<Tipo_Embalagem> tipoEmbalagens = tipoEmbalagemBean.findAll();
         return Response.ok(ResTipoEmbalagemDTO.from(tipoEmbalagens)).build();
     }
+
+    @POST
+    @Path("/")
+    public Response createTipoEmbalagem() {
+        List<Tipo_Embalagem> tipoEmbalagens = tipoEmbalagemBean.findAll();
+        return Response.ok(ResTipoEmbalagemDTO.from(tipoEmbalagens)).build();
+    }
 }
