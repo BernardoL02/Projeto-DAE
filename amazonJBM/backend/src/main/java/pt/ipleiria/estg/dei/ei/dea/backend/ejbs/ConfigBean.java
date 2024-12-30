@@ -181,7 +181,6 @@ public class ConfigBean {
                     Cliente bernardo = clienteBean.find("Bernardo");
                     encomendaBean.mudarEstadoEncomenda(1, "PorEntregar", bernardo);
 
-
         // Tipos de Sensores
         tipoSensoresBean.create(1, "Temperatura");
         tipoSensoresBean.create(2, "Aceleração");

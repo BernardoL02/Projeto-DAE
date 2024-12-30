@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ResSacSensorDetalhesDTO implements Serializable {
+/*public class ResSacSensorDetalhesDTO implements Serializable {
 
     private String valor;
     private String tipoNome;
@@ -55,4 +55,4 @@ public class ResSacSensorDetalhesDTO implements Serializable {
         return sensors.stream().map(ResSacSensorDetalhesDTO::from).collect(Collectors.toList());
     }
 
-}
+}*/

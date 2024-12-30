@@ -10,10 +10,14 @@ import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResTipoEmbalagemDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResTipoSensoresDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.SensorDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.EmbalagemBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.SensorBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.TipoEmbalagemBean;
+import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.VolumeBean;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Embalagem;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Tipo_Embalagem;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Tipo_Sensores;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Volume;
 import pt.ipleiria.estg.dei.ei.dea.backend.security.Authenticated;
 
 import java.util.List;
@@ -30,11 +34,10 @@ public class EmbalagemService {
 
     @EJB
     TipoEmbalagemBean tipoEmbalagemBean;
-
+    
     @POST
     @Path("/{id}/sensor")
     public Response associarSensorAEmbalagem(@PathParam("id") int id, SensorDTO sensorDTO) {
-
         if(sensorDTO.getTipoId() == 4){
             return sensorBean.create(
                     sensorDTO.getValor(),

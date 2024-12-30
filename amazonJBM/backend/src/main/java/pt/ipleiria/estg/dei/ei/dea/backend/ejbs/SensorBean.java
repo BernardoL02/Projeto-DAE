@@ -46,7 +46,13 @@ public class SensorBean {
             return Response.status(Response.Status.NOT_FOUND).entity("Embalagem não encontrada!").build();
         }
 
-        var sensor = new Sensor(valor, tipoSensores, "ativo", bateria, valMax, valMin, embalagem);
+        Volume volume = em.find(Volume.class,embalagem.getVolume().getId());
+
+        if(!volume.getEncomenda().getEstado().equals("EmProcessamento")){
+            return Response.status(Response.Status.NOT_FOUND).entity("Só é possível associar sensores a encomendas que estejam 'Em Processamento'.").build();
+        }
+
+        Sensor sensor = new Sensor(valor, tipoSensores, "ativo", bateria, valMax, valMin, embalagem);
         em.persist(sensor);
 
         embalagem.addSensor(sensor);
@@ -67,7 +73,13 @@ public class SensorBean {
             return Response.status(Response.Status.NOT_FOUND).entity("Embalagem não encontrada!").build();
         }
 
-        var sensor = new Sensor(valor, tipoSensores, "ativo", bateria, embalagem);
+        Volume volume = em.find(Volume.class,embalagem.getVolume().getId());
+
+        if(!volume.getEncomenda().getEstado().equals("EmProcessamento")){
+            return Response.status(Response.Status.NOT_FOUND).entity("Só é possível associar sensores a encomendas que estejam 'Em Processamento'.").build();
+        }
+
+        Sensor sensor = new Sensor(valor, tipoSensores, "ativo", bateria, embalagem);
         em.persist(sensor);
 
         embalagem.addSensor(sensor);

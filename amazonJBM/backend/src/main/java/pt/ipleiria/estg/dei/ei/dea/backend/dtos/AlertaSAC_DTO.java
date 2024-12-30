@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AlertaSAC_DTO implements Serializable {
+/*public class AlertaSAC_DTO implements Serializable {
 
     private int id;
 
@@ -98,4 +98,4 @@ public class AlertaSAC_DTO implements Serializable {
     public static List<AlertaSAC_DTO> from(List<Alerta> alerta) {
         return alerta.stream().map(AlertaSAC_DTO::from).collect(Collectors.toList());
     }
-}
+}*/
