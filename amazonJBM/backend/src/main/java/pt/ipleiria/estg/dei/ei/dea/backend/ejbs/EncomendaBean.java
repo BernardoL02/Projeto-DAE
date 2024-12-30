@@ -180,6 +180,12 @@ public class EncomendaBean {
 
             if(estado.equalsIgnoreCase("Entregue")){
 
+                for(Volume volume : encomenda.getVolumes()){
+                    if(!volume.getEntregue()){
+                        return Response.status(Response.Status.BAD_REQUEST).entity("Os volumes dessa encomenda ainda não foram todos entregues.").build();
+                    }
+                }
+
                 encomenda.setData_entrega(LocalDateTime.now());
 
                 for(Volume volume : encomenda.getVolumes()){

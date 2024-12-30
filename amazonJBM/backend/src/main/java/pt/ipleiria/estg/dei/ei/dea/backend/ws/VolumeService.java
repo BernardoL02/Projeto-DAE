@@ -42,4 +42,11 @@ public class VolumeService {
 
         return volumeBean.verDetalhesVolume(id, user);
     }
+
+    @PATCH
+    @Path("/{id}/entregar")
+    public Response updateEstado(@PathParam("id") int id) {
+        return volumeBean.entregarVolume(id);
+    }
+
 }

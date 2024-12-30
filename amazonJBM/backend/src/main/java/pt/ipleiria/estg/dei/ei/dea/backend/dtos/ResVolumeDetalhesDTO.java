@@ -8,13 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ResVolumeDetalhesDTO<T> implements Serializable {
+public class ResVolumeDetalhesDTO implements Serializable {
 
     private int id;
+    private boolean entregue;
     private List<EmbalagemDTO> embalagems = new ArrayList<>();
 
-    public ResVolumeDetalhesDTO(int id, List<EmbalagemDTO> embalagems) {
+    public ResVolumeDetalhesDTO(int id, boolean entregue,List<EmbalagemDTO> embalagems) {
         this.id = id;
+        this.entregue = entregue;
         this.embalagems = embalagems;
     }
 
@@ -24,6 +26,14 @@ public class ResVolumeDetalhesDTO<T> implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean getEntregue() {
+        return entregue;
+    }
+
+    public void setEntregue(boolean entregue) {
+        this.entregue = entregue;
     }
 
     public List<EmbalagemDTO> getEmbalagems() {
@@ -43,6 +53,7 @@ public class ResVolumeDetalhesDTO<T> implements Serializable {
 
         ResVolumeDetalhesDTO volumeDTO =  new ResVolumeDetalhesDTO(
                 volume.getId(),
+                volume.getEntregue(),
                 embalagemDTO
         );
 
