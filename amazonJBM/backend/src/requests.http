@@ -22,13 +22,12 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDI0M
 ### Get Encomenda Por Id #
 GET http://localhost:3001/backend/api/encomendas/1
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1NDgxODg4LCJleHAiOjE3MzU0ODU0ODh9.F1mH1xZjI1sX-NxFxpouuC-IZf4ipckmDzJ9aK7wUmQN6hkYMKUG0ZFZdVaeZjlN
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1NjY3MDIsImV4cCI6MTczNTU3MDMwMn0.DSZbBj6rwHL_wJkTOiR_AdCctvacqIlBaLOXh_1mup3f-_0AWADUeli6-3iKM6wr
 
 ### Get All Encomendas por um determinado estado "PorEntregar" "Cancelada" "EmProcessamento" "Entregue" #
 GET http://localhost:3001/backend/api/encomendas/estado/EmProcessamento
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDI0MzQ2LCJleHAiOjE3MzU0Mjc5NDZ9.Oci5ykM3yFWiVYs99419cNOlKbedkW5trzitlHsdPxkwpHokPO9aC3JuLYf0o9hM
-
 
 ### Get Encomendas Pendentes #
 GET http://localhost:3001/backend/api/encomendas/pendentes
@@ -48,7 +47,7 @@ Content-Type: application/json
 ###Criar uma nova encomenda #
 POST http://localhost:3001/backend/api/encomendas
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1NTU4ODQsImV4cCI6MTczNTU1OTQ4NH0.qXytV7CulQt8uP8t1wHY4FCnSrpyNgyllXTPlLdo6td99CEyhrheaCrDIPzHOvzN
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1NjY3MDIsImV4cCI6MTczNTU3MDMwMn0.DSZbBj6rwHL_wJkTOiR_AdCctvacqIlBaLOXh_1mup3f-_0AWADUeli6-3iKM6wr
 Content-Type: application/json
 
 {

@@ -11,6 +11,8 @@ public class ProdutoCreateEncomendaDTO implements Serializable {
 
     private int id;
 
+    private String nome;
+
     public ProdutoCreateEncomendaDTO(int id) {
         this.id = id;
     }
