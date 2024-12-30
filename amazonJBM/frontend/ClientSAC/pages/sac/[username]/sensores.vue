@@ -20,6 +20,15 @@ const selectedTipo = ref('Temperatura');
 
 const getToken = () => sessionStorage.getItem('token');
 
+const errorMessages = ref([]);
+const showError = (message) => {
+  errorMessages.value.push(message);
+
+  setTimeout(() => {
+    errorMessages.value.shift();
+  }, 5000);
+};
+
 // Função para buscar os tipos de sensores
 const fetchTiposSensores = async () => {
   try {
@@ -34,12 +43,15 @@ const fetchTiposSensores = async () => {
       }
     });
 
-    if (!response.ok) throw new Error("Erro ao buscar tipos de sensores");
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
 
     const data = await response.json();
     tiposSensores.value = data.map(sensor => sensor.tipo);
   } catch (error) {
-    console.error("Erro ao carregar tipos de sensores:", error);
+    showError(error.message);
   }
 };
 
@@ -67,7 +79,7 @@ const fetchSensorData = async (tipoSensor) => {
     ]);
 
   } catch (error) {
-    console.error("Erro ao buscar encomendas! " + error);
+    showError(error.message);
   }
 };
 
@@ -87,6 +99,15 @@ watch(
 <template>
 
   <Template :username="username" :currentPage="currentPage"></Template> <!-- Importar o Template -->
+
+  <!-- Mensagens de erro estilizadas -->
+  <div v-if="errorMessages.length" class="fixed bottom-4 right-4 space-y-2 z-[100]">
+    <div v-for="(error, index) in errorMessages" :key="index"
+      class="bg-red-500 text-white py-4 px-6 rounded shadow-lg w-96">
+      <h3 class="font-semibold text-lg mb-2">Erro</h3>
+      <p>{{ error }}</p>
+    </div>
+  </div>
 
   <div class="flex justify-between items-center ml-28 mr-28 mt-20">
     <div>

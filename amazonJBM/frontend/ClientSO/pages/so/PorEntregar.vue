@@ -16,13 +16,23 @@ const mostrarAlertasModal = ref(false); // Controla a exibição do modal de ale
 const alertasData = ref([]); // Dados dos alertas para o modal
 const mostrarTrackingModal = ref(false); // Controla a exibição do modal de tracking
 const trackingData = ref([]); // Dados de coordenadas para o mapa
-const errorMessages = ref([]); // Mensagens de erro
+
 
 let map = null;
 let markers = [];
 
 // Função para obter o token do sessionStorage
 const getToken = () => sessionStorage.getItem('token');
+
+// Mensagens de erro
+const errorMessages = ref([]);
+const showError = (message) => {
+  errorMessages.value.push(message);
+
+  setTimeout(() => {
+    errorMessages.value.shift();
+  }, 5000);
+};
 
 const loadLeafletCSS = () => {
   const link = document.createElement('link');
@@ -62,26 +72,37 @@ const fetchEncomendasPendentes = async () => {
       }
     });
 
-    if (!response.ok) throw new Error("Erro ao buscar encomendas 'Por Entregar'");
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
 
     const data = await response.json();
     encomendasTableData.value = data.map(encomenda => ({
       id: encomenda.id,
       username: encomenda.username,
       dataExpedicao: new Date(encomenda.data_expedicao).toLocaleString(),
-      dataEntrega: new Date(encomenda.data_entrega).toLocaleString(),
+      dataEntrega: encomenda.data_entrega
+        ? new Date(encomenda.data_entrega).toLocaleString("pt-PT", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
+        : "Não definido",
       estado: formatEstado(encomenda.estado)
     }));
   } catch (error) {
-    errorMessages.value.push(`Erro ao carregar encomendas 'Por Entregar': ${error.message}`);
-    console.error("Erro ao carregar encomendas 'Por Entregar':", error);
+    showError(error.message);
   }
 };
 
 
 const verAlertasEncomenda = async (id) => {
   try {
-    const token = getToken(); // Função para obter o token
+    const token = getToken();
     const response = await fetch(`${api}/encomendas/${id}/alertas`, {
       method: 'GET',
       headers: {
@@ -90,10 +111,12 @@ const verAlertasEncomenda = async (id) => {
       }
     });
 
-    if (!response.ok) throw new Error("Erro ao buscar alertas da encomenda");
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
 
     const data = await response.json();
-    console.log("Dados de alerta recebidos:", data);
 
     if (data.sensores && Array.isArray(data.sensores)) {
       alertasData.value = data.sensores.map(sensor => ({
@@ -112,8 +135,7 @@ const verAlertasEncomenda = async (id) => {
 
     mostrarAlertasModal.value = true;
   } catch (error) {
-    errorMessages.value.push(`Erro ao buscar alertas da encomenda ${id}: ${error.message}`);
-    console.error(`Erro ao buscar alertas da encomenda ${id}:`, error);
+    showError(error.message);
   }
 };
 
@@ -129,7 +151,10 @@ const verTracking = async (id) => {
       }
     });
 
-    if (!response.ok) throw new Error("Erro ao buscar coordenadas da encomenda");
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
 
     const data = await response.json();
     trackingData.value = data;
@@ -154,8 +179,7 @@ const verTracking = async (id) => {
       });
     }, 0);
   } catch (error) {
-    errorMessages.value.push(`Erro ao buscar coordenadas da encomenda ${id}: ${error.message}`);
-    console.error(`Erro ao buscar coordenadas da encomenda ${id}:`, error);
+    showError(error.message);
   }
 };
 
@@ -185,8 +209,13 @@ onMounted(async () => {
     <h1>Sistema de Gestão - Encomendas Por Entregar</h1>
   </div>
 
-  <div v-if="errorMessages.length" class="text-red-500 text-center mt-4">
-    <p v-for="(error, index) in errorMessages" :key="index">{{ error }}</p>
+  <!-- Mensagens de erro estilizadas -->
+  <div v-if="errorMessages.length" class="fixed bottom-4 right-4 space-y-2 z-[100]">
+    <div v-for="(error, index) in errorMessages" :key="index"
+      class="bg-red-500 text-white py-4 px-6 rounded shadow-lg w-96">
+      <h3 class="font-semibold text-lg mb-2">Erro</h3>
+      <p>{{ error }}</p>
+    </div>
   </div>
 
   <!-- Tabela para Encomendas "Por Entregar" com botões de ver alertas e tracking -->
@@ -195,14 +224,14 @@ onMounted(async () => {
 
   <!-- Modal de Alertas -->
   <div v-if="mostrarAlertasModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-    <!-- Botão de fechar fora do modal -->
-    <button @click="mostrarAlertasModal = false"
-      class="absolute top-3 right-[calc(50%-25%)] w-8 h-8 bg-gray-200 text-gray-600 hover:text-gray-900 hover:bg-white rounded-full flex items-center justify-center z-50 shadow">
-      <i class="fas fa-times"></i>
-    </button>
-
     <!-- Conteúdo do Modal -->
     <div class="bg-white w-1/2 p-0 rounded shadow-lg relative max-h-[90vh] overflow-y-auto">
+      <!-- Botão de fechar dentro do modal e posicionado corretamente -->
+      <button @click="mostrarAlertasModal = false"
+        class="absolute top-3 right-3 w-8 h-8 bg-gray-200 text-gray-600 hover:text-gray-900 hover:bg-white rounded-full flex items-center justify-center z-50 shadow">
+        <i class="fas fa-times"></i>
+      </button>
+
       <!-- Cabeçalho fixo preenchido -->
       <div class="sticky top-0 bg-white z-10 p-4 border-b border-gray-300">
         <h2 class="text-xl font-semibold">Alertas da Encomenda</h2>
@@ -241,19 +270,31 @@ onMounted(async () => {
         <i class="fas fa-times"></i>
       </button>
       <h2 class="text-xl font-semibold mb-4">Tracking da Encomenda</h2>
-      <div class="mb-4 flex items-center space-x-2">
-        <h3 class="text-lg font-semibold">Volumes e Produtos:</h3>
-        <div class="flex space-x-2">
-          <button v-for="(coord, index) in trackingData" :key="index"
-            @click="goToLocation(...coord.coordenadas.split(',').map(Number))"
-            class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-700 transition">
-            {{ coord.produtoNome }}
-          </button>
+
+      <div v-if="trackingData.length > 0">
+        <!-- Renderiza botões e mapa se houver dados -->
+        <div class="mb-4 flex items-center space-x-2">
+          <h3 class="text-lg font-semibold">Volumes e Produtos:</h3>
+          <div class="flex space-x-2">
+            <button v-for="(coord, index) in trackingData" :key="index"
+              @click="goToLocation(...coord.coordenadas.split(',').map(Number))"
+              class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-700 transition">
+              {{ coord.produtoNome }}
+            </button>
+          </div>
         </div>
+        <div id="map" class="w-full h-96"></div>
       </div>
-      <div id="map" class="w-full h-96"></div>
+
+      <div v-else class="text-center">
+        <!-- Exibe mensagem quando não há dados -->
+        <p class="text-gray-600 font-semibold text-lg">
+          Não existe nenhum sensor de GPS associado a esta encomenda.
+        </p>
+      </div>
     </div>
   </div>
+
 </template>
 
 <style scoped>

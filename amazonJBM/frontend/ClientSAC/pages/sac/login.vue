@@ -11,11 +11,18 @@ const api = config.public.API_URL;
 
 const username = ref('');
 const password = ref('');
-const errorMessage = ref('');
 
+const errorMessages = ref([]);
+const showError = (message) => {
+  errorMessages.value.push(message);
+
+  setTimeout(() => {
+    errorMessages.value.shift();
+  }, 5000);
+};
 const login = async () => {
   try {
-    errorMessage.value = ''; // Limpa a mensagem de erro antes de tentar login
+    errorMessages.value.shift();
 
     const response = await fetch(`${api}/auth/login`, {
       method: 'POST',
@@ -30,7 +37,8 @@ const login = async () => {
     });
 
     if (!response.ok) {
-      throw new Error('Nome de usuário ou senha incorretos');
+      const errorData = await response.text();
+      throw new Error(errorData);
     }
 
     const token = await response.text();
@@ -42,14 +50,22 @@ const login = async () => {
     // Navega para a página de gestão
     router.push(`/sac/${username.value}/encomendas`);
   } catch (error) {
-    errorMessage.value = error.message || 'Erro ao fazer login';
-    console.error('Erro ao fazer login:', error);
+    showError("Nome de utilizador ou password incorretos");
   }
 };
 
 </script>
 
 <template>
+  <!-- Mensagens de erro estilizadas -->
+  <div v-if="errorMessages.length" class="fixed bottom-4 right-4 space-y-2 z-[100]">
+    <div v-for="(error, index) in errorMessages" :key="index"
+      class="bg-red-500 text-white py-4 px-6 rounded shadow-lg w-96">
+      <h3 class="font-semibold text-lg mb-2">Erro</h3>
+      <p>{{ error }}</p>
+    </div>
+  </div>
+
   <div class="login-container h-screen flex items-center justify-center">
     <div class="bg-white rounded-lg shadow-3xl p-8 w-96">
 
@@ -72,10 +88,6 @@ const login = async () => {
         </div>
 
         <div class="flex justify-center items-center text-sm mb-4 space-x-28 mt-6">
-
-          <a href="#" class="text-gray-800 underline hover:no-underline focus:no-underline focus:outline-none">Track
-            Order</a>
-
           <button type="submit"
             class="bg-PrimaryColor hover:bg-SecundaryColor text-white font-semibold py-2 px-8 rounded-full transition duration-300 ease-in-out shadow-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor">
             Login

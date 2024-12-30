@@ -10,10 +10,18 @@ const api = config.public.API_URL;
 const alertasTableTitles = ['ID Alerta', 'ID Sensor', 'Valor', 'Mensagem', 'Data', 'Utilizador', 'ID Encomenda'];
 const alertasTableData = ref([]);
 const currentPage = 'liveAlertas';
-const errorMessages = ref([]);
 
 // Função para obter o token do sessionStorage
 const getToken = () => sessionStorage.getItem('token');
+
+const errorMessages = ref([]);
+const showError = (message) => {
+  errorMessages.value.push(message);
+
+  setTimeout(() => {
+    errorMessages.value.shift();
+  }, 5000);
+};
 
 // Função para buscar alertas de encomendas
 const fetchAlertasEncomendas = async () => {
@@ -27,7 +35,10 @@ const fetchAlertasEncomendas = async () => {
       }
     });
 
-    if (!response.ok) throw new Error("Erro ao buscar alertas das encomendas");
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
 
     const data = await response.json();
     alertasTableData.value = data.map(alerta => ({
@@ -40,8 +51,7 @@ const fetchAlertasEncomendas = async () => {
       idEncomenda: alerta.id_encomenda
     }));
   } catch (error) {
-    errorMessages.value.push("Erro ao buscar alertas das encomendas.");
-    console.error("Erro ao carregar alertas:", error);
+    showError(error.message);
   }
 };
 
@@ -65,8 +75,13 @@ onUnmounted(() => {
     <h1>Alertas de Encomendas Por Entregar</h1>
   </div>
 
-  <div v-if="errorMessages.length" class="text-red-500 text-center mt-4">
-    <p v-for="(error, index) in errorMessages" :key="index">{{ error }}</p>
+  <!-- Mensagens de erro estilizadas -->
+  <div v-if="errorMessages.length" class="fixed bottom-4 right-4 space-y-2 z-[100]">
+    <div v-for="(error, index) in errorMessages" :key="index"
+      class="bg-red-500 text-white py-4 px-6 rounded shadow-lg w-96">
+      <h3 class="font-semibold text-lg mb-2">Erro</h3>
+      <p>{{ error }}</p>
+    </div>
   </div>
 
   <!-- Tabela para exibir os alertas das encomendas sem a coluna de ações -->

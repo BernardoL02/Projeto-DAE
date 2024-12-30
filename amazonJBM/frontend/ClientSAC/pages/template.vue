@@ -1,8 +1,6 @@
 <script setup>
 import { defineProps } from 'vue';
-import { useRoute } from 'vue-router';
-
-const route = useRoute()
+import { useRouter } from 'vue-router';
 
 const icon = '/Images/IconJBM.png';
 
@@ -16,6 +14,15 @@ const props = defineProps({
     required: false,
   },
 });
+
+const router = useRouter();
+
+// Função de logout
+const logout = () => {
+  sessionStorage.removeItem('token');
+  router.push('/');
+};
+
 
 </script>
 
@@ -54,12 +61,21 @@ const props = defineProps({
         </nuxt-link>
       </div>
   
+      <!-- Nome do sistema e botão de logout -->
+      <div class="flex flex-col items-end space-y-2">
         <!-- Nome do sistema -->
-        <div class="text-right">
+        <div>
           <div class="text-white font-bold">Amazon JBM</div>
           <div class="text-white">Sistema de Apoio ao Cliente</div>
         </div>
+
+        <!-- Botão de logout menor -->
+        <button @click="logout"
+          class="flex items-center bg-red-500 text-white font-semibold px-3 py-1 text-sm rounded-full hover:bg-red-700 transition shadow-md">
+          <i class="fas fa-sign-out-alt mr-2"></i> Logout
+        </button>
       </div>
+    </div>
     </nav>
 
     <div>

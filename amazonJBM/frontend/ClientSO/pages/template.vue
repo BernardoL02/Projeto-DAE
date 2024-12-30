@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRuntimeConfig } from '#app';
+import { useRouter } from 'vue-router';
 
 const icon = '/Images/IconJBM.png';
 

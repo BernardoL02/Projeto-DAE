@@ -12,7 +12,6 @@ const encomendasTableTitles = ['ID Encomenda', 'Utilizador', 'Data de Expediçã
 const encomendasTableData = ref([]);
 const currentPage = 'Pendentes';
 const successMessage = ref('');
-const errorMessages = ref([]);
 const mostrarAlertasModal = ref(false);
 const alertasData = ref([]);
 const mostrarTrackingModal = ref(false);
@@ -22,6 +21,16 @@ let markers = [];
 
 // Função para obter o token do sessionStorage
 const getToken = () => sessionStorage.getItem('token');
+
+// Função para exibir a mensagem de erro como um alerta estilizado
+const errorMessages = ref([]);
+const showError = (message) => {
+  errorMessages.value.push(message);
+
+  setTimeout(() => {
+    errorMessages.value.shift();
+  }, 5000);
+};
 
 const loadLeafletCSS = () => {
   const link = document.createElement('link');
@@ -60,46 +69,68 @@ const fetchEncomendasPendentes = async () => {
         'Authorization': `Bearer ${token}`
       }
     });
-    if (!response.ok) throw new Error("Erro ao buscar encomendas pendentes");
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
 
     const data = await response.json();
     encomendasTableData.value = data.map(encomenda => ({
       id: encomenda.id,
       username: encomenda.username,
       dataExpedicao: new Date(encomenda.data_expedicao).toLocaleString(),
-      dataEntrega: new Date(encomenda.data_entrega).toLocaleString(),
+      dataEntrega: encomenda.data_entrega
+        ? new Date(encomenda.data_entrega).toLocaleString("pt-PT", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
+        : "Não definido",
       estado: formatEstado(encomenda.estado)
     }));
   } catch (error) {
-    console.error("Erro ao carregar encomendas pendentes:", error);
+    showError(error.message);
   }
 };
 
 const cancelarEncomenda = async (id) => {
   try {
+    const token = getToken();
     const response = await fetch(`${api}/encomendas/${id}`, {
       method: 'PATCH',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({ estado: "Cancelada" })
     });
-    if (!response.ok) throw new Error(`Erro ao cancelar encomenda ${id}`);
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
 
     successMessage.value = `Encomenda ${id} cancelada com sucesso!`;
     setTimeout(() => { successMessage.value = ''; }, 3000);
 
     await fetchEncomendasPendentes();
   } catch (error) {
-    errorMessages.value.push(`Erro ao cancelar encomenda ${id}: ${error.message}`);
+    showError(error.message);
   }
 };
 
 const verAlertasEncomenda = async (id) => {
   try {
     const response = await fetch(`${api}/encomendas/${id}/alertas`);
-    if (!response.ok) throw new Error("Erro ao buscar alertas da encomenda");
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
 
     const data = await response.json();
     alertasData.value = data.sensores.map(sensor => ({
@@ -115,14 +146,17 @@ const verAlertasEncomenda = async (id) => {
 
     mostrarAlertasModal.value = true;
   } catch (error) {
-    console.error("Erro ao buscar alertas da encomenda:", error);
+    showError(error.message);
   }
 };
 
 const verTracking = async (id) => {
   try {
     const response = await fetch(`${api}/encomendas/${id}/coordenadas`);
-    if (!response.ok) throw new Error("Erro ao buscar coordenadas da encomenda");
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
 
     const data = await response.json();
     trackingData.value = data;
@@ -148,7 +182,7 @@ const verTracking = async (id) => {
       });
     }, 0);
   } catch (error) {
-    console.error("Erro ao buscar coordenadas:", error);
+    showError(error.message);
   }
 };
 
@@ -198,6 +232,15 @@ onMounted(async () => {
       :class="{ 'animate-slide-down': successMessage, 'animate-slide-up': !successMessage }">
       <div class="bg-green-500 text-white py-2 px-4 mr-28 rounded shadow-md">
         {{ successMessage }}
+      </div>
+    </div>
+
+    <!-- Mensagens de erro estilizadas -->
+    <div v-if="errorMessages.length" class="fixed bottom-4 right-4 space-y-2 z-[100]">
+      <div v-for="(error, index) in errorMessages" :key="index"
+        class="bg-red-500 text-white py-4 px-6 rounded shadow-lg w-96">
+        <h3 class="font-semibold text-lg mb-2">Erro</h3>
+        <p>{{ error }}</p>
       </div>
     </div>
 
