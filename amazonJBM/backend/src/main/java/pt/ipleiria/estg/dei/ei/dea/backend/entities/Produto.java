@@ -8,10 +8,15 @@ import jakarta.persistence.*;
                 name = "getAllProdutos",
                 query = "SELECT p FROM Produto p"
         ),
+        @NamedQuery(
+                name = "existsProdutoByNomeAndCategoria",
+                query = "SELECT COUNT(p) FROM Produto p WHERE p.nome = :nome AND p.categoria.id = :categoriaId"
+        )
 })
 public class Produto {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String nome;
@@ -19,14 +24,15 @@ public class Produto {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
-    public Produto(int id, String nome, Categoria categoria) {
-        this.id = id;
+    public Produto(String nome, Categoria categoria) {
         this.nome = nome;
         this.categoria = categoria;
     }
+
     public Produto(){
 
     }
+
     public int getId() {
         return id;
     }

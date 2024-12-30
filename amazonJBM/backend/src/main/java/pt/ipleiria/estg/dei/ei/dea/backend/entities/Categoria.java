@@ -7,9 +7,9 @@ import jakarta.persistence.*;
 
 @NamedQueries({
         @NamedQuery(
-                name = "getcategoriaById",
+                name = "getAllCategorias",
                 query = "SELECT c FROM Categoria c"
-        ),
+        )
 })
 public class Categoria {
 

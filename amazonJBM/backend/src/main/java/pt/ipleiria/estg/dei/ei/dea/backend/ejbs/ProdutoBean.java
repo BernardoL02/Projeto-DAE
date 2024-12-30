@@ -18,7 +18,7 @@ public class ProdutoBean {
     @PersistenceContext
     private EntityManager em;
 
-    public Response create(int id, String nome, int categoria_id){
+    public Response create(String nome, int categoria_id){
 
         var categoria = em.find(Categoria.class, categoria_id);
 
@@ -26,7 +26,12 @@ public class ProdutoBean {
             return Response.status(Response.Status.NOT_FOUND).entity("Categoria não encontrada!").build();
         }
 
-        var produto = new Produto(id, nome, categoria);
+        if (em.createNamedQuery("existsProdutoByNomeAndCategoria", Long.class).setParameter("nome", nome).setParameter("categoriaId", categoria_id).getSingleResult() > 0) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Já existe um produto com o mesmo nome nesta categoria!").build();
+        }
+
+        Produto produto = new Produto(nome, categoria);
+
         em.persist(produto);
 
         return Response.ok("Produto criado com sucesso.").build();

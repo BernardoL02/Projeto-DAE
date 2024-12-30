@@ -11,6 +11,7 @@ import pt.ipleiria.estg.dei.ei.dea.backend.entities.Cliente;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Tipo_Embalagem;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Tipo_Sensores;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Stateless
@@ -28,9 +29,10 @@ public class CategoriaBean {
     }
 
     public Categoria find(int id){
-
         return em.find(Categoria.class, id);
     }
 
-
+    public List<Categoria> findAll() {
+        return em.createNamedQuery("getAllCategorias", Categoria.class).getResultList();
+    }
 }
