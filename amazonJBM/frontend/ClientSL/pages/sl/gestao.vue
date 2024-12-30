@@ -30,7 +30,7 @@ const formatEstado = (estado) => {
 };
 
 const formatDate = (dateString) => {
-  return dateString.replace('T', ' '); 
+  return dateString.replace('T', ' ');
 };
 
 const fetchEncomendasEmProcessamento = async () => {
@@ -93,24 +93,27 @@ onMounted(async () => {
   <div class="flex justify-center mr-24 mt-20">
     <h1>Sistema de Logistica - Encomendas Em Processamento</h1>
   </div>
-  
-  <Table :tableTitles="encomendasTableTitles" :tableData="encomendasTableData" @expedirEncomenda="handleExpedirEncomenda"/>
+
+  <Table :tableTitles="encomendasTableTitles" :tableData="encomendasTableData"
+    @expedirEncomenda="handleExpedirEncomenda" />
 
   <div v-if="showConfirmModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white w-1/3 p-6 rounded shadow-lg">
       <h2 class="text-xl font-semibold mb-4">Confirmar Entrega</h2>
       <p>Tem certeza que deseja marcar a encomenda ID {{ selectedEncomendaId }} como "Por Entregar"?</p>
       <div class="mt-4 flex justify-end space-x-2">
-        <button @click="showConfirmModal = false" class="bg-gray-500 text-white py-1 px-4 rounded hover:bg-gray-700">Cancelar</button>
-        <button @click="expedirEncomenda(selectedEncomendaId); showConfirmModal = false" class="bg-green-500 text-white py-1 px-4 rounded hover:bg-green-700">Confirmar</button>
+        <button @click="showConfirmModal = false"
+          class="bg-gray-500 text-white py-1 px-4 rounded hover:bg-gray-700">Cancelar</button>
+        <button @click="expedirEncomenda(selectedEncomendaId); showConfirmModal = false"
+          class="bg-green-500 text-white py-1 px-4 rounded hover:bg-green-700">Confirmar</button>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-  h1 {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
+h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
 </style>

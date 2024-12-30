@@ -46,7 +46,7 @@ let successMessage = ref("")
 
 async function refresh() {
   try {
-    const token = sessionStorage.getItem('token');
+    const token = getToken();
     if (!token) {
       console.error("Token não encontrado. Redirecionar para login.");
       return;
@@ -80,12 +80,7 @@ async function refresh() {
 
 
 async function cancelar(id) {
-  const token = sessionStorage.getItem('token');
-  if (!token) {
-    console.error("Token não encontrado. Redirecionar para login.");
-    return;
-  }
-
+  const token = getToken();
   const requestOptions = {
     method: 'PATCH',
     headers: {

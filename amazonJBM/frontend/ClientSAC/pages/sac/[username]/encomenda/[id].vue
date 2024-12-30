@@ -125,7 +125,7 @@ onMounted(fetchEncomendaDetalhes);
 </script>
 
 <template>
-  <Template />
+  <Template :username="username" :currentPage="currentPage" />
 
   <div v-if="encomendaData"
     class="flex flex-col justify-center mx-auto mt-10 p-6 mb-10 bg-white shadow-md rounded-lg border border-gray-300 w-full max-w-5xl">
