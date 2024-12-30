@@ -10,13 +10,22 @@ const route = useRoute();
 
 const sensorTableTitles = ['ID Sensor', 'Data', 'Valor', 'Bateria', 'Estado', 'ID Encomenda', 'ID Volume'];
 const sensorTableData = ref([]);
-const errorMessages = ref([]);
 const tiposSensores = ref([]);
 const selectedTipo = ref(route.params.tipo || ''); // Tipo do sensor selecionado
 const currentPage = 'Ultimos Valores';
 
 // Função para obter o token do sessionStorage
 const getToken = () => sessionStorage.getItem('token');
+
+
+const errorMessages = ref([]);
+const showError = (message) => {
+  errorMessages.value.push(message);
+
+  setTimeout(() => {
+    errorMessages.value.shift();
+  }, 5000);
+};
 
 // Função para buscar tipos de sensores para o dropdown
 const fetchTiposSensores = async () => {
@@ -30,12 +39,15 @@ const fetchTiposSensores = async () => {
       }
     });
 
-    if (!response.ok) throw new Error("Erro ao buscar tipos de sensores");
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
 
     const data = await response.json();
     tiposSensores.value = data.map(sensor => sensor.tipo);
   } catch (error) {
-    console.error("Erro ao carregar tipos de sensores:", error);
+    showError(error.message);
   }
 };
 
@@ -53,7 +65,10 @@ const fetchUltimoValor = async () => {
       }
     });
 
-    if (!response.ok) throw new Error("Erro ao buscar último valor do sensor");
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
 
     const data = await response.json();
     sensorTableData.value = data.map(sensor => ({
@@ -67,8 +82,7 @@ const fetchUltimoValor = async () => {
     }));
 
   } catch (error) {
-    errorMessages.value.push(`Erro ao carregar dados do sensor ${selectedTipo.value}`);
-    console.error("Erro ao carregar último valor do sensor:", error);
+    showError(error.message);
   }
 };
 
@@ -100,9 +114,13 @@ watch(selectedTipo, fetchUltimoValor);
     </h1>
   </div>
 
-  <!-- Mensagem de erro, caso ocorra -->
-  <div v-if="errorMessages.length" class="text-red-500 text-center mt-4">
-    <p v-for="(error, index) in errorMessages" :key="index">{{ error }}</p>
+  <!-- Mensagens de erro estilizadas -->
+  <div v-if="errorMessages.length" class="fixed bottom-4 right-4 space-y-2 z-[100]">
+    <div v-for="(error, index) in errorMessages" :key="index"
+      class="bg-red-500 text-white py-4 px-6 rounded shadow-lg w-96">
+      <h3 class="font-semibold text-lg mb-2">Erro</h3>
+      <p>{{ error }}</p>
+    </div>
   </div>
 
   <!-- Tabela com os valores dos sensores -->

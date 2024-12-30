@@ -537,7 +537,7 @@ onMounted(() => {
       <select v-model="tipoSensorSelecionado" class="w-full p-2 border border-gray-300 rounded mb-4">
         <option v-for="tipo in tiposSensores" :key="tipo.id" :value="tipo">{{ tipo.tipo }}</option>
       </select>
-      <div v-if="tipoSelecionado && tipoSelecionado.id !== 4" class="mb-4">
+      <div v-if="tipoSensorSelecionado && tipoSensorSelecionado.id !== 4" class="mb-4">
         <label class="block text-gray-700 font-semibold mb-1">Valor Máximo:</label>
         <input v-model="valMax" type="number" class="w-full p-2 border border-gray-300 rounded mb-2"
           placeholder="Digite o valor máximo" />

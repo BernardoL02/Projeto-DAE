@@ -26,6 +26,15 @@ let markers = [];
 // Função para obter o token do sessionStorage
 const getToken = () => sessionStorage.getItem('token');
 
+const errorMessages = ref([]);
+const showError = (message) => {
+  errorMessages.value.push(message);
+
+  setTimeout(() => {
+    errorMessages.value.shift();
+  }, 5000);
+};
+
 const loadLeafletCSS = () => {
   const link = document.createElement('link');
   link.rel = 'stylesheet';
@@ -67,7 +76,10 @@ const fetchEncomendas = async () => {
       },
     });
 
-    if (!response.ok) throw new Error("Erro ao buscar encomendas");
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
 
     const data = await response.json();
     tableData.value = data.map(order => [
@@ -77,18 +89,13 @@ const fetchEncomendas = async () => {
       formateEstado(order.estado),
     ]);
   } catch (error) {
-    console.error("Erro ao buscar encomendas:", error);
+    showError(error.message);
   }
 };
 
 // Função para buscar encomendas com filtros
 const fetchEncomendasByEstado = async () => {
   const token = getToken();
-  if (!token) {
-    console.error("Token não encontrado. Redirecionar para login.");
-    return;
-  }
-
   try {
     const url = estado.value === "Todas"
       ? `${api}/encomendas`
@@ -102,7 +109,10 @@ const fetchEncomendasByEstado = async () => {
       },
     });
 
-    if (!response.ok) throw new Error("Erro ao buscar encomendas por estado");
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
 
     const data = await response.json();
     tableData.value = data.map(order => [
@@ -112,7 +122,7 @@ const fetchEncomendasByEstado = async () => {
       formateEstado(order.estado),
     ]);
   } catch (error) {
-    console.error("Erro ao buscar encomendas por estado:", error);
+    showError(error.message);
   }
 };
 
@@ -128,7 +138,10 @@ const verAlertasEncomenda = async (id) => {
       }
     });
 
-    if (!response.ok) throw new Error("Erro ao buscar alertas da encomenda");
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
 
     const data = await response.json();
     alertasData.value = data.sensores.map(sensor => ({
@@ -145,18 +158,13 @@ const verAlertasEncomenda = async (id) => {
     mostrarAlertasModal.value = true;
 
   } catch (error) {
-    console.error("Erro ao buscar alertas da encomenda:", error);
+    showError(error.message);
   }
 };
 
 const verTracking = async (id) => {
   try {
     const token = sessionStorage.getItem('token');
-    if (!token) {
-      console.error("Token não encontrado. Redirecionar para login.");
-      return;
-    }
-
     const response = await fetch(`${api}/encomendas/${id}/coordenadas`, {
       method: 'GET',
       headers: {
@@ -165,7 +173,10 @@ const verTracking = async (id) => {
       }
     });
 
-    if (!response.ok) throw new Error("Erro ao buscar coordenadas da encomenda");
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
 
     const data = await response.json();
     trackingData.value = data;
@@ -191,7 +202,7 @@ const verTracking = async (id) => {
       });
     }, 0);
   } catch (error) {
-    console.error("Erro ao buscar coordenadas:", error);
+    showError(error.message);
   }
 };
 
@@ -217,7 +228,16 @@ onMounted(async () => {
 
 <template>
 
-  <Template :username="username" :currentPage="currentPage"></Template> <!-- Importar o Template -->
+  <Template :username="username" :currentPage="currentPage"></Template>
+
+  <!-- Mensagens de erro estilizadas -->
+  <div v-if="errorMessages.length" class="fixed bottom-4 right-4 space-y-2 z-[100]">
+    <div v-for="(error, index) in errorMessages" :key="index"
+      class="bg-red-500 text-white py-4 px-6 rounded shadow-lg w-96">
+      <h3 class="font-semibold text-lg mb-2">Erro</h3>
+      <p>{{ error }}</p>
+    </div>
+  </div>
 
   <div class="flex justify-between items-center ml-28 mr-28 mt-20">
     <div>
@@ -291,7 +311,7 @@ onMounted(async () => {
         <i class="fas fa-times"></i>
       </button>
       <h2 class="text-xl font-semibold mb-4">Tracking da Encomenda</h2>
-      <div class="mb-4 flex items-center space-x-2">
+      <div v-if="trackingData.length > 0" class="mb-4 flex flex-col space-y-4">
         <h3 class="text-lg font-semibold">Volumes e Produtos:</h3>
         <div class="flex space-x-2">
           <button v-for="(coord, index) in trackingData" :key="index"
@@ -300,10 +320,14 @@ onMounted(async () => {
             {{ coord.produtoNome }}
           </button>
         </div>
+        <div id="map" class="w-full h-96"></div>
       </div>
-      <div id="map" class="w-full h-96"></div>
+      <div v-else class="text-center">
+        <p class="text-gray-600 font-semibold text-lg">Não existe nenhum sensor de GPS associado a esta encomenda.</p>
+      </div>
     </div>
   </div>
+
 
 </template>
 
