@@ -9,6 +9,7 @@ import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResAlertasEncomendaDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,6 +42,7 @@ public class AlertaBean {
                 .collect(Collectors.toList());
 
         List<Alerta> todosAlertas = findAll();
+
         return todosAlertas.stream()
                 .filter(alerta -> encomendaIds.contains(alerta.getVolume().getEncomenda().getId()))
                 .collect(Collectors.toList());
@@ -57,11 +59,9 @@ public class AlertaBean {
             return Response.status(Response.Status.NOT_FOUND).entity("Apenas pode ver alertas das suas encomendas!").build();
         }
 
-        List<Alerta> alertas = findAll();
-
-        alertas.stream()
-                .filter(alerta -> alerta.getVolume().getEncomenda().getId() == id)
-                .collect(Collectors.toList());
+        List<Alerta> alertas = em.createNamedQuery("getAlertasByEncomendaId", Alerta.class)
+                .setParameter("encomendaId", encomenda.getId())
+                .getResultList();
 
         return Response.ok(ResAlertasEncomendaDTO.from(alertas)).build();
 

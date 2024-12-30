@@ -70,10 +70,10 @@ public class ConfigBean {
         // Gestores
         gestorBean.create("Delgado", "123", "delgado@gmail.com", "José");
 
-        tipoSensoresBean.create(1, "Temperatura");
-        tipoSensoresBean.create(2, "Aceleração");
-        tipoSensoresBean.create(3, "Pressão Atmosférica");
-        tipoSensoresBean.create(4, "GPS");
+        tipoSensoresBean.create("Temperatura");
+        tipoSensoresBean.create("Aceleração");
+        tipoSensoresBean.create("Pressão Atmosférica");
+        tipoSensoresBean.create("GPS");
         
         tipoEmbalagemBean.create(1, "Isotérmica", Arrays.asList(tipoSensoresBean.find(1)));
         tipoEmbalagemBean.create(2, "Original", Arrays.asList(tipoSensoresBean.find(4),tipoSensoresBean.find(2)));
@@ -180,12 +180,6 @@ public class ConfigBean {
                     encomendaBean.create("Bernardo", volumesBernardo1, LocalDateTime.of(2024, 10, 31, 10, 0));
                     Cliente bernardo = clienteBean.find("Bernardo");
                     encomendaBean.mudarEstadoEncomenda(1, "PorEntregar", bernardo);
-
-        // Tipos de Sensores
-        tipoSensoresBean.create(1, "Temperatura");
-        tipoSensoresBean.create(2, "Aceleração");
-        tipoSensoresBean.create(3, "Pressão Atmosférica");
-        tipoSensoresBean.create(4, "GPS");
 
         // Sensores
         //Encomenda 1

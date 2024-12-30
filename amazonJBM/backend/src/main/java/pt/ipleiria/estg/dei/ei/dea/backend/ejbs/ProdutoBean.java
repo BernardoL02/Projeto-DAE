@@ -20,7 +20,7 @@ public class ProdutoBean {
 
     public Response create(String nome, int categoria_id){
 
-        var categoria = em.find(Categoria.class, categoria_id);
+        Categoria categoria = em.find(Categoria.class, categoria_id);
 
         if(categoria == null){
             return Response.status(Response.Status.NOT_FOUND).entity("Categoria não encontrada!").build();

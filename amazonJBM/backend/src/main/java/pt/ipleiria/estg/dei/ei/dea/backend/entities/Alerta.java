@@ -8,7 +8,9 @@ import java.time.LocalDateTime;
 @NamedQueries({
         @NamedQuery(
                 name = "getAlertasByEncomendaId",
-                query = "SELECT a FROM Alerta a JOIN a.volume v JOIN v.encomenda e WHERE e.id = :encomendaId"
+                query = "SELECT a FROM Alerta a " +
+                        "JOIN Volume v ON v.id = a.volume.id " +
+                        "JOIN Encomenda e ON e.id = v.encomenda.id WHERE e.id = :encomendaId"
         ),
         @NamedQuery(
                 name = "Alerta.findAll",

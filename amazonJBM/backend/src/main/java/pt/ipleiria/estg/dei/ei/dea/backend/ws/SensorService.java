@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Path("sensor")
-@Produces({MediaType.APPLICATION_JSON}) // injects header “Content-Type: application/json”
-@Consumes({MediaType.APPLICATION_JSON}) // injects header “Accept: application/json”
+@Produces({MediaType.APPLICATION_JSON})
+@Consumes({MediaType.APPLICATION_JSON})
 @Authenticated
 @PermitAll
 public class SensorService {
@@ -37,6 +37,13 @@ public class SensorService {
 
     @EJB
     private UtilizadorBean utilizadorBean;
+
+    @POST
+    @Path("/tipo")
+    @RolesAllowed({"Logista"})
+    public Response criarProduto(CreateTipoSensorDTO createTipoSensorDTO) {
+        return tipoSensoresBean.create(createTipoSensorDTO.getTipo());
+    }
 
     @GET
     @Path("tipos")
@@ -63,4 +70,5 @@ public class SensorService {
 
         return sensorBean.getAlertasSensor(id, user);
     }
+
 }

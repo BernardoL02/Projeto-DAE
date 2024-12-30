@@ -47,7 +47,7 @@ Content-Type: application/json
 ###Criar uma nova encomenda #
 POST http://localhost:3001/backend/api/encomendas
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1Nzg0MTMsImV4cCI6MTczNTU4MjAxM30.tYbpGxkKHfE9gFfWGv-4Nzl-JLigeUO7VagPuPUWufcAFPeKOWXJIYKRsrwE38ZE
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1ODI2OTQsImV4cCI6MTczNTU4NjI5NH0.43mBXoOrATEHq2omTY6EkUlyYEYDg_0bffgA9lMLFlaS4qe8xci1tLRRk-zzg57y
 Content-Type: application/json
 
 {
@@ -119,9 +119,9 @@ Content-Type: application/json
 }
 
 ### Get All Alertas de Encomenda por Id #
-GET http://localhost:3001/backend/api/encomendas/2/alertas
+GET http://localhost:3001/backend/api/encomendas/1/alertas
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1NDgxNDY0LCJleHAiOjE3MzU0ODUwNjR9.0hL1-9RBBob1E9qCTl1sayPO2qf-fN1y-Iz34tS8eoAyIEF6eXbJYKcrfKpImBSb
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1NTgyNjE3LCJleHAiOjE3MzU1ODYyMTd9.MNqzFQfOGPUIoA4dXc3XHbz7uTka-YZQ5pBBbbGyGIA7JaRxlKr8Hjhb9Q870rLk
 
 ### GET Ver Alertas de encomendas (PorEntregar) #
 GET http://localhost:3001/backend/api/encomendas/alertas
@@ -241,6 +241,7 @@ GET http://localhost:3001/backend/api/auth/user
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTIyNTg3NiwiZXhwIjoxNzM1MjI5NDc2fQ.D5vp08BndFDGMP2gLTYWbJjKy-CDJDROpK4Tg75FwjHbgmR2HocGg5qSUTK4cbSv
 
+
 ################################ Endpoints Extra  ################################
 ### Criar um novo produto
 POST http://localhost:3001/backend/api/produtos
@@ -251,7 +252,7 @@ Accept: application/json
 
 {
    "nome": "Sapatos",
-   "id_categoria": "122"
+   "id_categoria": "6"
 }
 
 ### Get Categorias
@@ -259,5 +260,13 @@ GET http://localhost:3001/backend/api/categoria
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1Nzk1MzIsImV4cCI6MTczNTU4MzEzMn0.UwuN2_Nqmcperm4_FnpqQRff4LDubrTc2DyIb6tj2CjSPSpp4NT7YkerGTgwWtVC
 
+### Criar novo tipo de sensor
+POST http://localhost:3001/backend/api/sensor/tipo
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1ODAxNDcsImV4cCI6MTczNTU4Mzc0N30.dl_Bkf_3PGecsXWYmfxhVMCZ882uzYp8FRmLCE2XTl9MWaxR8eSMb7XTN34h4ynP
+Content-Type: application/json
+Accept: application/json
 
-
+{
+  "tipo": "Umidade"
+}
