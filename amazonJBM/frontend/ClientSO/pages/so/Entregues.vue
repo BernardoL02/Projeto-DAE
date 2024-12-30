@@ -14,10 +14,18 @@ const api = config.public.API_URL;
 
 const mostrarAlertasModal = ref(false); // Controla a exibição do modal de alertas
 const alertasData = ref([]); // Dados dos alertas para o modal
-const errorMessages = ref([]); // Mensagens de erro
 
 // Função para obter o token do sessionStorage
 const getToken = () => sessionStorage.getItem('token');
+
+const errorMessages = ref([]);
+const showError = (message) => {
+  errorMessages.value.push(message);
+
+  setTimeout(() => {
+    errorMessages.value.shift();
+  }, 5000);
+};
 
 // Função para formatar o estado
 const formatEstado = (estado) => {
@@ -33,10 +41,6 @@ const formatEstado = (estado) => {
   }
 };
 
-const formatDate = (dateString) => {
-  return dateString.replace('T', ' ');
-};
-
 // Função para buscar encomendas entregues
 const fetchEncomendasEntregues = async () => {
   try {
@@ -49,7 +53,10 @@ const fetchEncomendasEntregues = async () => {
       }
     });
 
-    if (!response.ok) throw new Error("Erro ao buscar encomendas entregues");
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
 
     const data = await response.json();
     encomendasTableData.value = data.map(encomenda => ({
@@ -60,7 +67,7 @@ const fetchEncomendasEntregues = async () => {
       estado: formatEstado(encomenda.estado)
     }));
   } catch (error) {
-    console.error("Erro ao carregar encomendas entregues:", error);
+    showError(error.message);
   }
 };
 
@@ -68,7 +75,10 @@ const fetchEncomendasEntregues = async () => {
 const verAlertasEncomenda = async (id) => {
   try {
     const response = await fetch(`${api}/encomendas/${id}/alertas`);
-    if (!response.ok) throw new Error("Erro ao buscar alertas da encomenda");
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
 
     const data = await response.json();
 
@@ -90,7 +100,7 @@ const verAlertasEncomenda = async (id) => {
 
     mostrarAlertasModal.value = true;
   } catch (error) {
-    errorMessages.value.push(`Erro ao buscar alertas da encomenda ${id}: ${error.message}`);
+    showError(error.message);
   }
 };
 
@@ -105,8 +115,13 @@ onMounted(fetchEncomendasEntregues);
     <h1>Sistema de Gestão - Encomendas Entregues</h1>
   </div>
 
-  <div v-if="errorMessages.length" class="text-red-500 text-center mt-4">
-    <p v-for="(error, index) in errorMessages" :key="index">{{ error }}</p>
+  <!-- Mensagens de erro estilizadas -->
+  <div v-if="errorMessages.length" class="fixed bottom-4 right-4 space-y-2 z-[100]">
+    <div v-for="(error, index) in errorMessages" :key="index"
+      class="bg-red-500 text-white py-4 px-6 rounded shadow-lg w-96">
+      <h3 class="font-semibold text-lg mb-2">Erro</h3>
+      <p>{{ error }}</p>
+    </div>
   </div>
 
   <!-- Tabela para Encomendas Entregues com botão de ver alertas -->

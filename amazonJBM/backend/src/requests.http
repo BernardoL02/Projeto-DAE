@@ -22,7 +22,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDI0M
 ### Get Encomenda Por Id #
 GET http://localhost:3001/backend/api/encomendas/1
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1NjYxODEsImV4cCI6MTczNTU2OTc4MX0.4RjrLNFY5GPQTf8YNwhm9Nsd8g8_g5XhDOk5wQS2I7XnxWa35-1mMeGtvF9OdDpG
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTU3OTcxOSwiZXhwIjoxNzM1NTgzMzE5fQ.4t2zSFOGU12mvuBphlUN5_b2ZTlXfVShwCe0Y0PIi19RBZwLPf879yetgWsvlUQA
 
 ### Get All Encomendas por um determinado estado "PorEntregar" "Cancelada" "EmProcessamento" "Entregue" #
 GET http://localhost:3001/backend/api/encomendas/estado/EmProcessamento
@@ -119,14 +119,14 @@ Content-Type: application/json
 }
 
 ### Get All Alertas de Encomenda por Id #
-GET http://localhost:3001/backend/api/encomendas/2/alertas
+GET http://localhost:3001/backend/api/encomendas/4/alertas
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1NDgxNDY0LCJleHAiOjE3MzU0ODUwNjR9.0hL1-9RBBob1E9qCTl1sayPO2qf-fN1y-Iz34tS8eoAyIEF6eXbJYKcrfKpImBSb
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1NTgxODkyLCJleHAiOjE3MzU1ODU0OTJ9.7_WdrKQej8l5kzVwkPwutBefC4ELWt20MThEHbtrcDJTm5qnvvRXy7SK31FWPfos
 
 ### GET Ver Alertas de encomendas (PorEntregar) #
 GET http://localhost:3001/backend/api/encomendas/alertas
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0MjI5NzEsImV4cCI6MTczNTQyNjU3MX0.TUPPSpHLRU3TEQ-5fWpXy2nPPci_6LfyNX01A-q8GrzZyH0dQv11-EG2G5hajhFa
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1NTgxODkyLCJleHAiOjE3MzU1ODU0OTJ9.7_WdrKQej8l5kzVwkPwutBefC4ELWt20MThEHbtrcDJTm5qnvvRXy7SK31FWPfos
 
 ### Get Coordenadas Volumes #
 GET http://localhost:3001/backend/api/encomendas/1/coordenadas
@@ -211,9 +211,9 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczN
 
 
 ### GET Ver Alertas de um sensor #
-GET http://localhost:3001/backend/api/sensor/4/alertas
+GET http://localhost:3001/backend/api/sensor/1/alertas
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQ5MzAxOSwiZXhwIjoxNzM1NDk2NjE5fQ.JK0yLg6E4nCKwquIhVo-wefYH8GQcZ63iYamWV6O4UdY8cIT_wpxMnQY4mdA_-xH
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1NTgxODkyLCJleHAiOjE3MzU1ODU0OTJ9.7_WdrKQej8l5kzVwkPwutBefC4ELWt20MThEHbtrcDJTm5qnvvRXy7SK31FWPfos
 
 
 ################################ EMBALAGENS ###################################
