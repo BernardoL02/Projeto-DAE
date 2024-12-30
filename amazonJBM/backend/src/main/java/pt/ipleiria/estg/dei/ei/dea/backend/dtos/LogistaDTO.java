@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class LogistaDTO implements Serializable {
+/*public class LogistaDTO implements Serializable {
 
     private String username;
     private String password;
@@ -68,4 +68,4 @@ public class LogistaDTO implements Serializable {
     public static List<LogistaDTO> from(List<Logista> logista) {
         return logista.stream().map(LogistaDTO::from).collect(Collectors.toList());
     }
-}
+}*/

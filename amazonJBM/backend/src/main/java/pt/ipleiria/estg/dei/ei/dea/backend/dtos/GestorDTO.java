@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GestorDTO implements Serializable {
+/*public class GestorDTO implements Serializable {
 
     private String username;
     private String password;
@@ -70,4 +70,4 @@ public class GestorDTO implements Serializable {
     }
 
 
-}
+}*/

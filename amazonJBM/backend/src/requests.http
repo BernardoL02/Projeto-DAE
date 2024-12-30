@@ -146,11 +146,10 @@ Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1NjAxNjMsImV4cCI6MTczNTU2Mzc2M30.Y-4pIC7vVgU83jHJ8YiK4V5tQT0wJ4UWqwoCaHMS6J0bgyDSwdG5owpiYebifA5R
 
 
-
 ###Associar um Sensor a um Embalagem #
-POST http://localhost:3001/backend/api/embalagem/15/sensor
+POST http://localhost:3001/backend/api/embalagem/5/sensor
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0OTc0NjIsImV4cCI6MTczNTUwMTA2Mn0.cH4cB9tHJ6qMv0uyuZjzF5pHVwKEi1WdghVod69GjclhulB4uHGcq1OezaGNS-d-
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1NzU1ODIsImV4cCI6MTczNTU3OTE4Mn0.T7lU2ZqJO56cEKWd3iuCWk8j9OD7qzjOpXWFbP0YAmmswAaGateWMWoah7J6gYDs
 Content-Type: application/json
 
 {
