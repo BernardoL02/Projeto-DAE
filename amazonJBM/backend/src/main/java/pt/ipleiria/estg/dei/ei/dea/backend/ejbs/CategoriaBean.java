@@ -22,10 +22,8 @@ public class CategoriaBean {
     @EJB
     private TipoEmbalagemBean tipoEmbalagemBean;
 
-    public void create(int id, String nome, int tipo_caixa){
-        Tipo_Embalagem tipocaixa = em.find(Tipo_Embalagem.class, tipo_caixa);
-
-        var categoria = new Categoria(id,nome, tipocaixa);
+    public void create(int id, String nome){
+        Categoria categoria = new Categoria(id,nome);
         em.persist(categoria);
     }
 

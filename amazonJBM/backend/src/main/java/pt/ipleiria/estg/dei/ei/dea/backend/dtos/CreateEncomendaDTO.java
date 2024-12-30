@@ -52,23 +52,12 @@ public class CreateEncomendaDTO implements Serializable {
     }
 
     public static CreateEncomendaDTO from(Encomenda encomenda) {
-        List<VolumeCreateEncomendaDTO> volumesDTO = encomenda.getVolumes().stream()
-                .map(volume -> {
-                    List<ProdutoCreateEncomendaDTO> produtosDTO = volume.getEmbalagens().stream()
-                            .map(produto -> new ProdutoCreateEncomendaDTO(
-                                    produto.getId(),
-                                    produto.getQuantidade()
-                            ))
-                            .collect(Collectors.toList());
-
-                    return new VolumeCreateEncomendaDTO(produtosDTO);
-                })
-                .collect(Collectors.toList());
 
         return new CreateEncomendaDTO(
                 encomenda.getCliente().getUsername(),
                 encomenda.getData_expedicao(),
-                volumesDTO
+                VolumeCreateEncomendaDTO.from(encomenda.getVolumes())
+
         );
     }
 

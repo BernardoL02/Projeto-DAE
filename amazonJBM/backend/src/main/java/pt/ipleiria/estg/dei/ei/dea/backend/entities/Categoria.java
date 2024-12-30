@@ -18,14 +18,10 @@ public class Categoria {
 
     private String nome;
 
-    @ManyToOne
-    @JoinColumn(name = "tipo_caixa", nullable = false)
-    private Tipo_Embalagem tipo_caixa;
 
-    public Categoria(int id,String nome, Tipo_Embalagem tipo_caixa) {
+    public Categoria(int id,String nome) {
         this.id = id;
         this.nome = nome;
-        this.tipo_caixa = tipo_caixa;
     }
 
     public Categoria() {
@@ -48,11 +44,4 @@ public class Categoria {
         this.nome = nome;
     }
 
-    public Tipo_Embalagem getTipo_caixa() {
-        return tipo_caixa;
-    }
-
-    public void setTipo_caixa(Tipo_Embalagem tipo_caixa) {
-        this.tipo_caixa = tipo_caixa;
-    }
 }

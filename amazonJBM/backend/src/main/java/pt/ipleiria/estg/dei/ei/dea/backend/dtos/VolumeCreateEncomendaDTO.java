@@ -7,42 +7,35 @@ import pt.ipleiria.estg.dei.ei.dea.backend.entities.Volume;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class VolumeCreateEncomendaDTO implements Serializable {
 
-    private List<ProdutoCreateEncomendaDTO> produtos = new ArrayList<>();
+    private List<EmbalagemCreateEncomendaDTO> embalagens = new ArrayList<>();
 
-
-    public VolumeCreateEncomendaDTO(List<ProdutoCreateEncomendaDTO> produtos) {
-        this.produtos = produtos;
+    public VolumeCreateEncomendaDTO(List<EmbalagemCreateEncomendaDTO> embalagens) {
+        this.embalagens = embalagens;
     }
 
     public VolumeCreateEncomendaDTO() {
 
     }
 
-    public List<ProdutoCreateEncomendaDTO> getProdutos() {
-        return produtos;
+    public List<EmbalagemCreateEncomendaDTO> getEmbalagens() {
+        return embalagens;
     }
 
-    public void setProdutos(List<ProdutoCreateEncomendaDTO> produtos) {
-        this.produtos = produtos;
+    public void setEmbalagens(List<EmbalagemCreateEncomendaDTO> embalagens) {
+        this.embalagens = embalagens;
     }
 
     public static VolumeCreateEncomendaDTO from(Volume volume) {
-        List<ProdutoCreateEncomendaDTO> produtos = new ArrayList<>();
 
-        for (Embalagem embalagem : volume.getEmbalagens()) {
-            Produto produto = embalagem.getProduto();
-            ProdutoCreateEncomendaDTO produtoCreateEncomendaDTO = new ProdutoCreateEncomendaDTO(
-                    produto.getId(),
-                    embalagem.getQuantidade()
-            );
-            produtos.add(produtoCreateEncomendaDTO);
-        }
+        return new VolumeCreateEncomendaDTO(EmbalagemCreateEncomendaDTO.from(volume.getEmbalagens()));
 
-        VolumeCreateEncomendaDTO volumeCreateEncomendaDTO = new VolumeCreateEncomendaDTO(produtos);
+    }
 
-        return volumeCreateEncomendaDTO;
+    public static List<VolumeCreateEncomendaDTO> from(List<Volume> volumes) {
+        return volumes.stream().map(VolumeCreateEncomendaDTO::from).collect(Collectors.toList());
     }
 }

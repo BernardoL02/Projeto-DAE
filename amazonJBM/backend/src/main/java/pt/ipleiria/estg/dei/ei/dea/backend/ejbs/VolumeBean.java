@@ -1,13 +1,11 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.ejbs;
 
+import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.ws.rs.core.Response;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoCreateEncomendaDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResVolumeDetalhesDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.VolumeCreateEncomendaDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
 
 import java.util.ArrayList;
@@ -18,6 +16,12 @@ public class VolumeBean {
 
     @PersistenceContext
     private EntityManager em;
+
+    @EJB
+    private EmbalagemBean embalagemBean;
+
+    @EJB
+    private TipoEmbalagemBean tipoEmbalagemBean;
 
     public Volume create(int id_encomenda){
 
@@ -44,30 +48,36 @@ public class VolumeBean {
             return Response.status(Response.Status.NOT_FOUND).entity("Encomenda não encontrada!").build();
         }
 
+        List<EmbalagemCreateEncomendaDTO> embalagensDTO = volumeCreateEncomendaDTO.getEmbalagens();
         List<Produto> produtos = new ArrayList<>();
-        List<ProdutoCreateEncomendaDTO> produtosDTO = volumeCreateEncomendaDTO.getProdutos();
+        List<Tipo_Embalagem> tiposEmbalagem = new ArrayList<>();
 
-        for (ProdutoCreateEncomendaDTO produto : produtosDTO) {
-            Produto produto1 = em.find(Produto.class, produto.getId());
+        for (EmbalagemCreateEncomendaDTO embalagem : embalagensDTO) {
 
+            Tipo_Embalagem tipoEmbalagem = tipoEmbalagemBean.find(embalagem.getTipo());
+
+            if(tipoEmbalagem == null){
+                return Response.status(Response.Status.NOT_FOUND).entity("Tipo de embalagem não encontrada!").build();
+            }
+
+            Produto produto1 = em.find(Produto.class, embalagem.getProduto().getId());
             if(produto1 == null){
                 return Response.status(Response.Status.NOT_FOUND).entity("Produto não encontrado!").build();
             }
 
+            tiposEmbalagem.add(tipoEmbalagem);
             produtos.add(produto1);
         }
 
         Volume volume = new Volume(encomenda);
         em.persist(volume);
 
-        Integer indice_produto = 0;
-        for(Produto produto : produtos){
-            Embalagem embalagem = new Embalagem(produto, volume,  produtosDTO.get(indice_produto++).getQuantidade_de_produtos_comprados(), produto.getCategoria().getTipo_caixa());
+        for(int i = 0 ; i < tiposEmbalagem.size(); i++){
+            Embalagem embalagem = new Embalagem(produtos.get(i), volume, embalagensDTO.get(i).getQuantidade(), tiposEmbalagem.get(i));
             em.persist(embalagem);
 
             volume.addEmbalagem(embalagem);
         }
-
         return Response.status(Response.Status.OK).entity("Volume associado à encomenda com sucesso!").build();
     }
 

@@ -4,6 +4,7 @@ import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import jakarta.ws.rs.core.Response;
 import org.hibernate.Hibernate;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.EmbalagemCreateEncomendaDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoCreateEncomendaDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.VolumeCreateEncomendaDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
@@ -27,6 +28,9 @@ public class EncomendaBean {
     @EJB
     private VolumeBean volumeBean;
 
+    @EJB
+    private TipoEmbalagemBean tipoEmbalagemBean;
+
     public Response create(String client_username, List<VolumeCreateEncomendaDTO> volumes, LocalDateTime data_expedicao) {
         Cliente cliente = clienteBean.find(client_username);
 
@@ -35,10 +39,12 @@ public class EncomendaBean {
         }
 
         for(VolumeCreateEncomendaDTO volume: volumes) {
-            for (ProdutoCreateEncomendaDTO produto : volume.getProdutos()) {
-                Produto produto1 = em.find(Produto.class, produto.getId());
+            for (EmbalagemCreateEncomendaDTO embalagem : volume.getEmbalagens()) {
+                if(tipoEmbalagemBean.find(embalagem.getTipo()) == null){
+                    return Response.status(Response.Status.NOT_FOUND).entity("Tipo de embalagem não encontrada!").build();
+                }
 
-                if(produto1 == null){
+                if(em.find(Produto.class, embalagem.getProduto().getId()) == null){
                     return Response.status(Response.Status.NOT_FOUND).entity("Produto não encontrado!").build();
                 }
             }
@@ -51,12 +57,15 @@ public class EncomendaBean {
             Volume volume1 = new Volume(encomenda);
             em.persist(volume1);
 
-            for (ProdutoCreateEncomendaDTO produto : volume.getProdutos()) {
-                Produto produto1 = em.find(Produto.class, produto.getId());
-                Embalagem embalagem = new Embalagem(produto1, volume1, produto.getQuantidade_de_produtos_comprados(), produto1.getCategoria().getTipo_caixa());
-                em.persist(embalagem);
+            for (EmbalagemCreateEncomendaDTO embalagem : volume.getEmbalagens()) {
 
-                volume1.addEmbalagem(embalagem);
+                Produto produto1 = em.find(Produto.class, embalagem.getProduto().getId());
+                Tipo_Embalagem tipoEmbalagem = em.find(Tipo_Embalagem.class, embalagem.getTipo());
+
+                Embalagem embalagem1 = new Embalagem(produto1, volume1, embalagem.getQuantidade(), tipoEmbalagem);
+                em.persist(embalagem1);
+
+                volume1.addEmbalagem(embalagem1);
             }
 
             encomenda.addVolume(volume1);

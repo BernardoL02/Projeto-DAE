@@ -10,11 +10,9 @@ import java.util.stream.Collectors;
 public class ProdutoCreateEncomendaDTO implements Serializable {
 
     private int id;
-    private int quantidade_de_produtos_comprados;
 
-    public ProdutoCreateEncomendaDTO(int id, int quantidade_de_produtos_comprados) {
+    public ProdutoCreateEncomendaDTO(int id) {
         this.id = id;
-        this.quantidade_de_produtos_comprados = quantidade_de_produtos_comprados;
     }
 
     public ProdutoCreateEncomendaDTO(){
@@ -29,23 +27,15 @@ public class ProdutoCreateEncomendaDTO implements Serializable {
         this.id = id;
     }
 
-    public int getQuantidade_de_produtos_comprados() {
-        return quantidade_de_produtos_comprados;
-    }
 
-    public void setQuantidade_de_produtos_comprados(int quantidade_de_produtos_comprados) {
-        this.quantidade_de_produtos_comprados = quantidade_de_produtos_comprados;
-    }
-
-    public static ProdutoCreateEncomendaDTO from(ProdutoCreateEncomendaDTO produto) {
+    public static ProdutoCreateEncomendaDTO from(Produto produto) {
 
         return new ProdutoCreateEncomendaDTO(
-                produto.getId(),
-                produto.getQuantidade_de_produtos_comprados()
+                produto.getId()
         );
     }
 
-    public static List<ProdutoCreateEncomendaDTO> from(List<ProdutoCreateEncomendaDTO> produtos) {
+    public static List<ProdutoCreateEncomendaDTO> from(List<Produto> produtos) {
         return produtos.stream().map(ProdutoCreateEncomendaDTO::from).collect(Collectors.toList());
     }
 }

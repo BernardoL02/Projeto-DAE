@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.EmbalagemCreateEncomendaDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoCreateEncomendaDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.VolumeCreateEncomendaDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Cliente;
@@ -78,19 +79,27 @@ public class ConfigBean {
         tipoEmbalagemBean.create(2, "Original", Arrays.asList(tipoSensoresBean.find(4),tipoSensoresBean.find(2)));
         tipoEmbalagemBean.create(3, "Metalica", Arrays.asList(tipoSensoresBean.find(2), tipoSensoresBean.find(3),tipoSensoresBean.find(4)));
         tipoEmbalagemBean.create(4, "Cartao", Arrays.asList(tipoSensoresBean.find(4)));
+        tipoEmbalagemBean.create(5, "E_TA", Arrays.asList(tipoSensoresBean.find(1),tipoSensoresBean.find(2)));
+        tipoEmbalagemBean.create(6, "E_TG", Arrays.asList(tipoSensoresBean.find(1),tipoSensoresBean.find(4)));
+        tipoEmbalagemBean.create(7, "E_TPG", Arrays.asList(tipoSensoresBean.find(1),tipoSensoresBean.find(3),tipoSensoresBean.find(4)));
+        tipoEmbalagemBean.create(8, "E_TAP", Arrays.asList(tipoSensoresBean.find(1),tipoSensoresBean.find(2),tipoSensoresBean.find(3)));
+        tipoEmbalagemBean.create(9, "E_AG", Arrays.asList(tipoSensoresBean.find(2),tipoSensoresBean.find(4)));
+        tipoEmbalagemBean.create(10, "E_PG", Arrays.asList(tipoSensoresBean.find(3),tipoSensoresBean.find(4)));
+        tipoEmbalagemBean.create(11, "E_AP", Arrays.asList(tipoSensoresBean.find(2),tipoSensoresBean.find(3)));
+        tipoEmbalagemBean.create(12, "E_TAPG", Arrays.asList(tipoSensoresBean.find(1),tipoSensoresBean.find(2),tipoSensoresBean.find(3),tipoSensoresBean.find(4)));
 
         // Categorias de Produtos
-        categoriaBean.create(1, "Alimentos", 1);
-        categoriaBean.create(2, "Tv e Som", 2);
-        categoriaBean.create(3, "Ferramentas", 3);
-        categoriaBean.create(4, "Bebidas", 1);
-        categoriaBean.create(5, "Eletrodomésticos", 3);
-        categoriaBean.create(6, "Vestuário", 2);
-        categoriaBean.create(7, "Educação", 2);
-        categoriaBean.create(9, "Esportivo", 3);
-        categoriaBean.create(10, "Casa", 3);
-        categoriaBean.create(11, "Beleza", 4);
-        categoriaBean.create(12, "Ferramentas Elétricas", 3);
+        categoriaBean.create(1, "Alimentos");
+        categoriaBean.create(2, "Tv e Som");
+        categoriaBean.create(3, "Ferramentas");
+        categoriaBean.create(4, "Bebidas");
+        categoriaBean.create(5, "Eletrodomésticos");
+        categoriaBean.create(6, "Vestuário");
+        categoriaBean.create(7, "Educação");
+        categoriaBean.create(9, "Esportivo");
+        categoriaBean.create(10, "Casa");
+        categoriaBean.create(11, "Beleza");
+        categoriaBean.create(12, "Ferramentas Elétricas");
 
 
         // Produtos
@@ -153,100 +162,24 @@ public class ConfigBean {
         ///////////////////////Criar Encomendas e Volumes
         ///////// Criar Encomenda para Bernardo
             List<VolumeCreateEncomendaDTO> volumesBernardo1 = new ArrayList<>();
+            List<EmbalagemCreateEncomendaDTO> embalagensBernardo1 = new ArrayList<>();
+            List<EmbalagemCreateEncomendaDTO> embalagensBernardo2 = new ArrayList<>();
             // Volume 1
                     VolumeCreateEncomendaDTO volume1Bernardo1 = new VolumeCreateEncomendaDTO();
-                    List<ProdutoCreateEncomendaDTO> produtosVolume1Bernardo1 = new ArrayList<>();
-                    produtosVolume1Bernardo1.add(new ProdutoCreateEncomendaDTO(5, 10));
-                    produtosVolume1Bernardo1.add(new ProdutoCreateEncomendaDTO(1, 10));
-                    volume1Bernardo1.setProdutos(produtosVolume1Bernardo1);
+                    embalagensBernardo1.add(new EmbalagemCreateEncomendaDTO(12,new ProdutoCreateEncomendaDTO(5),2));
+                    embalagensBernardo1.add(new EmbalagemCreateEncomendaDTO(1,new ProdutoCreateEncomendaDTO(3),10));
+                    volume1Bernardo1.setEmbalagens(embalagensBernardo1);
                     volumesBernardo1.add(volume1Bernardo1);
             // Volume 2
                     VolumeCreateEncomendaDTO volume2Bernardo1 = new VolumeCreateEncomendaDTO();
-                    List<ProdutoCreateEncomendaDTO> produtosVolume2Bernardo1 = new ArrayList<>();
-                    produtosVolume2Bernardo1.add(new ProdutoCreateEncomendaDTO(10, 10));
-                    volume2Bernardo1.setProdutos(produtosVolume2Bernardo1);
+                    embalagensBernardo2.add(new EmbalagemCreateEncomendaDTO(10,new ProdutoCreateEncomendaDTO(4),2));
+                    embalagensBernardo2.add(new EmbalagemCreateEncomendaDTO(2,new ProdutoCreateEncomendaDTO(10),15));
+                    volume2Bernardo1.setEmbalagens(embalagensBernardo2);
                     volumesBernardo1.add(volume2Bernardo1);
             // Encomenda
                     encomendaBean.create("Bernardo", volumesBernardo1, LocalDateTime.of(2024, 10, 31, 10, 0));
                     Cliente bernardo = clienteBean.find("Bernardo");
                     encomendaBean.mudarEstadoEncomenda(1, "PorEntregar", bernardo);
-
-        ///////// Criar Encomenda para Tendeiro
-            List<VolumeCreateEncomendaDTO> volumesTendeiro = new ArrayList<>();
-            // Volume 1
-                    VolumeCreateEncomendaDTO volume1Tendeiro = new VolumeCreateEncomendaDTO();
-                    List<ProdutoCreateEncomendaDTO> produtosVolume1Tendeiro = new ArrayList<>();
-                    produtosVolume1Tendeiro.add(new ProdutoCreateEncomendaDTO(1, 10));
-                    produtosVolume1Tendeiro.add(new ProdutoCreateEncomendaDTO(2, 10));
-                    volume1Tendeiro.setProdutos(produtosVolume1Tendeiro);
-                    volumesTendeiro.add(volume1Tendeiro);
-            // Volume 2
-                    VolumeCreateEncomendaDTO volume2Tendeiro = new VolumeCreateEncomendaDTO();
-                    List<ProdutoCreateEncomendaDTO> produtosVolume2Tendeiro = new ArrayList<>();
-                    produtosVolume2Tendeiro.add(new ProdutoCreateEncomendaDTO(1, 10));
-                    produtosVolume2Tendeiro.add(new ProdutoCreateEncomendaDTO(2, 10));
-                    volume2Tendeiro.setProdutos(produtosVolume2Tendeiro);
-                    volumesTendeiro.add(volume2Tendeiro);
-            // Encomenda
-            encomendaBean.create("Tendeiro", volumesTendeiro, LocalDateTime.of(2024, 10, 31, 10, 0));
-            Cliente tendeiro = clienteBean.find("Tendeiro");
-            encomendaBean.mudarEstadoEncomenda(2, "Cancelada", tendeiro);
-
-        ///////// Criar Encomenda para Sousa
-            List<VolumeCreateEncomendaDTO> volumesSousa = new ArrayList<>();
-            // Volume 1
-                    VolumeCreateEncomendaDTO volume1Sousa = new VolumeCreateEncomendaDTO();
-                    List<ProdutoCreateEncomendaDTO> produtosVolume1Sousa = new ArrayList<>();
-                    produtosVolume1Sousa.add(new ProdutoCreateEncomendaDTO(25, 2));
-                    volume1Sousa.setProdutos(produtosVolume1Sousa);
-                    volumesSousa.add(volume1Sousa);
-
-            // Volume 2
-                    VolumeCreateEncomendaDTO volume2Sousa = new VolumeCreateEncomendaDTO();
-                    List<ProdutoCreateEncomendaDTO> produtosVolume2Sousa = new ArrayList<>();
-                    produtosVolume2Sousa.add(new ProdutoCreateEncomendaDTO(13, 1));
-                    volume2Sousa.setProdutos(produtosVolume2Sousa);
-                    volumesSousa.add(volume2Sousa);
-            // Encomenda
-            encomendaBean.create("Sousa", volumesSousa, LocalDateTime.of(2024, 11, 2, 12, 0));
-            Cliente sousa = clienteBean.find("Sousa");
-            encomendaBean.mudarEstadoEncomenda(3, "Entregue", sousa);
-
-        ///////// Criar Encomenda para Bernardo
-            List<VolumeCreateEncomendaDTO> volumesBernardo2 = new ArrayList<>();
-            // Volume 1
-                    VolumeCreateEncomendaDTO volume1Bernardo2 = new VolumeCreateEncomendaDTO();
-                    List<ProdutoCreateEncomendaDTO> produtosVolume1Bernardo2 = new ArrayList<>();
-                    produtosVolume1Bernardo2.add(new ProdutoCreateEncomendaDTO(5, 10));
-                    produtosVolume1Bernardo2.add(new ProdutoCreateEncomendaDTO(1, 10));
-                    volume1Bernardo2.setProdutos(produtosVolume1Bernardo2);
-                    volumesBernardo2.add(volume1Bernardo2);
-            // Volume 2
-                    VolumeCreateEncomendaDTO volume2Bernardo2 = new VolumeCreateEncomendaDTO();
-                    List<ProdutoCreateEncomendaDTO> produtosVolume2Bernardo2 = new ArrayList<>();
-                    produtosVolume2Bernardo2.add(new ProdutoCreateEncomendaDTO(10, 10));
-                    volume2Bernardo2.setProdutos(produtosVolume2Bernardo2);
-                    volumesBernardo2.add(volume2Bernardo2);
-            // Encomenda
-            encomendaBean.create("Bernardo", volumesBernardo2, LocalDateTime.of(2024, 10, 31, 10, 0));
-
-        ///////// Criar Encomenda para Ferreira
-            List<VolumeCreateEncomendaDTO> volumesFerreira = new ArrayList<>();
-            // Volume 1
-                    VolumeCreateEncomendaDTO volume1Ferreira = new VolumeCreateEncomendaDTO();
-                    List<ProdutoCreateEncomendaDTO> produtosVolume1Ferreira = new ArrayList<>();
-                    produtosVolume1Ferreira.add(new ProdutoCreateEncomendaDTO(8, 2));
-                    volume1Ferreira.setProdutos(produtosVolume1Ferreira);
-                    volumesFerreira.add(volume1Ferreira);
-            // Volume 2
-                    VolumeCreateEncomendaDTO volume2Ferreira = new VolumeCreateEncomendaDTO();
-                    List<ProdutoCreateEncomendaDTO> produtosVolume2Ferreira = new ArrayList<>();
-                    produtosVolume2Ferreira.add(new ProdutoCreateEncomendaDTO(16, 1));
-                    volume2Ferreira.setProdutos(produtosVolume2Ferreira);
-                    volumesFerreira.add(volume2Ferreira);
-            // Encomenda
-            encomendaBean.create("Ferreira", volumesFerreira, LocalDateTime.of(2023, 10, 29, 15, 30));
-
 
 
         // Tipos de Sensores
@@ -267,7 +200,7 @@ public class ConfigBean {
         sensorBean.create("39.74986926478417, -8.808952733780515", 4, 88, 4);
         sensorBean.create("25", 2, 88, 30, 5, 4);
         //Encomenda 3
-        sensorBean.create("21.0", 1, 99, 35, 10, 5);
+        /*sensorBean.create("21.0", 1, 99, 35, 10, 5);
         sensorBean.create("1000", 3, 80, 1015, 980, 5);
         sensorBean.create("39.75604230095242, -9.03173385047379", 4, 100, 5);
         sensorBean.create("39.60047246334607, -9.073144176554514", 4, 100, 6);
@@ -276,20 +209,20 @@ public class ConfigBean {
         sensorBean.create("25.0", 1, 90, 30, 15, 11);
         sensorBean.create("39.362060990104126, -9.374644032197038", 4, 100, 11);
 
-
+*/
         // Alertas
         // Alerta para Temperatura
         alertaBean.create("Valor acima do limite máximo (35) para o sensor Temperatura", 1, "35", 99,1);
-        alertaBean.create("Valor abaixo do limite mínimo (15) para o sensor Temperatura", 1, "10",70, 1);
+        alertaBean.create("Valor abaixo do limite mínimo (15) para o sensor Temperatura", 1, "10",70, 2);
 
         // Alerta para Aceleração
-        alertaBean.create("Valor acima do limite máximo (30) para o sensor Aceleração", 6, "32",90, 4);
-        alertaBean.create("Valor abaixo do limite mínimo (5) para o sensor Aceleração", 6, "3",11, 4);
-        alertaBean.create("Valor abaixo do limite mínimo (5) para o sensor Aceleração", 10, "3",60, 6);
+        alertaBean.create("Valor acima do limite máximo (30) para o sensor Aceleração", 6, "32",90, 1);
+        alertaBean.create("Valor abaixo do limite mínimo (5) para o sensor Aceleração", 6, "3",11, 2);
+        alertaBean.create("Valor abaixo do limite mínimo (5) para o sensor Aceleração", 5, "3",60, 1);
 
         // Alerta para Pressão Atmosférica
-        alertaBean.create("Valor acima do limite máximo (1015) para o sensor Pressão Atmosférica", 4, "1016",30, 3);
-        alertaBean.create("Valor abaixo do limite mínimo (980) para o sensor Pressão Atmosférica", 4, "975",50, 3);
+        alertaBean.create("Valor acima do limite máximo (1015) para o sensor Pressão Atmosférica", 4, "1016",30, 2);
+        alertaBean.create("Valor abaixo do limite mínimo (980) para o sensor Pressão Atmosférica", 4, "975",50, 1);
 
     }
 

@@ -48,7 +48,7 @@ Content-Type: application/json
 ###Criar uma nova encomenda #
 POST http://localhost:3001/backend/api/encomendas
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0OTc0NjIsImV4cCI6MTczNTUwMTA2Mn0.cH4cB9tHJ6qMv0uyuZjzF5pHVwKEi1WdghVod69GjclhulB4uHGcq1OezaGNS-d-
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1NTU4ODQsImV4cCI6MTczNTU1OTQ4NH0.qXytV7CulQt8uP8t1wHY4FCnSrpyNgyllXTPlLdo6td99CEyhrheaCrDIPzHOvzN
 Content-Type: application/json
 
 {
@@ -56,10 +56,38 @@ Content-Type: application/json
   "data_expedicao": "2024-10-31T10:00:00",
   "volumes": [
     {
-      "produtos": [
+      "embalagens": [
         {
-          "id": 5,
-          "quantidade_de_produtos_comprados": 8
+          "produto": {
+            "id": 1
+          },
+          "tipo" : 1,
+          "quantidade": 8
+        },
+        {
+          "produto": {
+            "id": 5
+          },
+          "tipo" : 2,
+          "quantidade": 8
+        }
+      ]
+    },
+    {
+      "embalagens": [
+        {
+          "produto": {
+            "id": 1
+          },
+          "tipo" : 1,
+          "quantidade": 8
+        },
+        {
+          "produto": {
+            "id": 5
+          },
+          "tipo" : 2,
+          "quantidade": 8
         }
       ]
     }
@@ -176,6 +204,15 @@ GET http://localhost:3001/backend/api/sensor/4/alertas
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQ5MzAxOSwiZXhwIjoxNzM1NDk2NjE5fQ.JK0yLg6E4nCKwquIhVo-wefYH8GQcZ63iYamWV6O4UdY8cIT_wpxMnQY4mdA_-xH
 
+
+################################ EMBALAGENS ###################################
+
+### Get All Tipos de Sensor #
+GET http://localhost:3001/backend/api/embalagem/tipos
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1NTkxMDIsImV4cCI6MTczNTU2MjcwMn0.soGmmFdXoivsyBUEJeQUa9-F4LDKbq0Ylxz3b2KUUZ612ZkQAv7WKvR9PGY5cUFC
+
+
 ################################ End Points Login ################################
 
 ### REQUEST JWT TOKEN
@@ -183,7 +220,7 @@ POST http://localhost:3001/backend/api/auth/login
 Content-Type: application/json
 Accept: application/json
 
-{ "username": "Bernardo", "password": "123" }
+{ "username": "Miguel", "password": "123" }
 
 ### Bernardo -> Cliente
 ### Miguel -> Logista

@@ -56,6 +56,7 @@ public class Volume {
         return embalagens;
     }
 
+
     public void addEmbalagem(Embalagem embalagem) {
         embalagens.add(embalagem);
         embalagem.setVolume(this);
