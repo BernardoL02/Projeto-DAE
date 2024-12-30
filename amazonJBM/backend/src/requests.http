@@ -36,13 +36,13 @@ Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1NDIyODg0LCJleHAiOjE3MzU0MjY0ODR9.4U7Qp_PlswKVnqJZCqIPEIf4m9RFO_ZpmcwOApmYWnvgccLO-BeJpWTWLp3PYQeY
 
 ### Alterar estado de uma encomenda #
-PATCH http://localhost:3001/backend/api/encomendas/7
+PATCH http://localhost:3001/backend/api/encomendas/1
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0OTc0NjIsImV4cCI6MTczNTUwMTA2Mn0.cH4cB9tHJ6qMv0uyuZjzF5pHVwKEi1WdghVod69GjclhulB4uHGcq1OezaGNS-d-
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1NjEwODMsImV4cCI6MTczNTU2NDY4M30.LBOWLNW9by_fz3aFoiUsHEMAhM1joxvETzB6kHNYbAHcSdYlPmaeVrbWxpItHbjp
 Content-Type: application/json
 
 {
-  "estado": "PorEntregar"
+  "estado": "Entregue"
 }
 
 ###Criar uma nova encomenda #
@@ -131,9 +131,16 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczN
 ######################### Volume Service ################################
 
 ### Get Detalhes Volume #
-GET http://localhost:3001/backend/api/volume/3
+GET http://localhost:3001/backend/api/volume/1
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDY2OTA2LCJleHAiOjE3MzU0NzA1MDZ9.kkJG1L31zbG-zPzZbrLprZ9YBvTbODf8LWgSW0bb7amm80lN1biGd0JI5LPFyECR
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1NjAxNjMsImV4cCI6MTczNTU2Mzc2M30.Y-4pIC7vVgU83jHJ8YiK4V5tQT0wJ4UWqwoCaHMS6J0bgyDSwdG5owpiYebifA5R
+
+### Entregar Volume
+PATCH http://localhost:3001/backend/api/volume/2/entregar
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1NjAxNjMsImV4cCI6MTczNTU2Mzc2M30.Y-4pIC7vVgU83jHJ8YiK4V5tQT0wJ4UWqwoCaHMS6J0bgyDSwdG5owpiYebifA5R
+
+
 
 ###Associar um Sensor a um Embalagem #
 POST http://localhost:3001/backend/api/embalagem/15/sensor
@@ -231,5 +238,3 @@ GET http://localhost:3001/backend/api/auth/user
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTIyNTg3NiwiZXhwIjoxNzM1MjI5NDc2fQ.D5vp08BndFDGMP2gLTYWbJjKy-CDJDROpK4Tg75FwjHbgmR2HocGg5qSUTK4cbSv
 
-//O que falta
-Mudar estado de encomenda -> Saber quem faz o que

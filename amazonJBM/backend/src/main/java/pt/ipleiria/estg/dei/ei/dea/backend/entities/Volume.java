@@ -17,6 +17,8 @@ public class Volume {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private boolean entregue = false;
+
     @ManyToOne
     @NotNull
     @JoinColumn(name = "encomenda_id")
@@ -42,6 +44,14 @@ public class Volume {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean getEntregue() {
+        return entregue;
+    }
+
+    public void setEntregue(boolean entregue) {
+        this.entregue = entregue;
     }
 
     public @NotNull Encomenda getEncomenda() {

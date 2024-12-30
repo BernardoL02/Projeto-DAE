@@ -95,4 +95,14 @@ public class VolumeBean {
 
         return Response.ok(ResVolumeDetalhesDTO.from(volume)).build();
     }
+
+    public Response entregarVolume(int id_volume){
+        Volume volume = this.find(id_volume);
+        if(volume == null){
+            return Response.status(Response.Status.NOT_FOUND).entity("Volume não encontrado!").build();
+        }
+
+        volume.setEntregue(true);
+        return Response.ok(ResVolumeDetalhesDTO.from(volume)).build();
+    }
 }
