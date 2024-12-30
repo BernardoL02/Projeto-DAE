@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact name="Dados">
+    <output-path>$PROJECT_DIR$/out/artifacts/Dados</output-path>
+    <root id="root">
+      <element id="dir-copy" path="$PROJECT_DIR$/src/main/java/pt/ipleiria/estg/dei/ei/dea/backend/dados" />
+    </root>
+  </artifact>
+</component>

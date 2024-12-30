@@ -4,20 +4,25 @@ import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.EmbalagemCreateEncomendaDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoCreateEncomendaDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.VolumeCreateEncomendaDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.entities.Cliente;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Encomenda;
 
-import java.lang.reflect.Array;
+import java.io.BufferedReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Startup
 @Singleton
 public class ConfigBean {
+
+    @PersistenceContext
+    private EntityManager em;
 
     @EJB
     private EncomendaBean encomendaBean;
@@ -55,6 +60,9 @@ public class ConfigBean {
     @EJB
     private TipoEmbalagemBean tipoEmbalagemBean;
 
+    private static final String CSV_FILE_PATH = "pt/ipleiria/estg/dei/ei/dea/backend/dados/encomendas.csv";
+
+
     @PostConstruct
     public void populateDB() {
 
@@ -70,7 +78,7 @@ public class ConfigBean {
         // Gestores
         gestorBean.create("Delgado", "123", "delgado@gmail.com", "José");
 
-        tipoSensoresBean.create(1, "Temperatura");
+        /*tipoSensoresBean.create(1, "Temperatura");
         tipoSensoresBean.create(2, "Aceleração");
         tipoSensoresBean.create(3, "Pressão Atmosférica");
         tipoSensoresBean.create(4, "GPS");
@@ -199,7 +207,7 @@ public class ConfigBean {
         sensorBean.create("39.74986926478417, -8.808952733780515", 4, 88, 4);
         sensorBean.create("25", 2, 88, 30, 5, 4);
         //Encomenda 3
-        /*sensorBean.create("21.0", 1, 99, 35, 10, 5);
+        sensorBean.create("21.0", 1, 99, 35, 10, 5);
         sensorBean.create("1000", 3, 80, 1015, 980, 5);
         sensorBean.create("39.75604230095242, -9.03173385047379", 4, 100, 5);
         sensorBean.create("39.60047246334607, -9.073144176554514", 4, 100, 6);
@@ -208,7 +216,7 @@ public class ConfigBean {
         sensorBean.create("25.0", 1, 90, 30, 15, 11);
         sensorBean.create("39.362060990104126, -9.374644032197038", 4, 100, 11);
 
-*/
+
         // Alertas
         // Alerta para Temperatura
         alertaBean.create("Valor acima do limite máximo (35) para o sensor Temperatura", 1, "35", 99,1);
@@ -223,6 +231,43 @@ public class ConfigBean {
         alertaBean.create("Valor acima do limite máximo (1015) para o sensor Pressão Atmosférica", 4, "1016",30, 2);
         alertaBean.create("Valor abaixo do limite mínimo (980) para o sensor Pressão Atmosférica", 4, "975",50, 1);
 
+     */
+        List<Encomenda> encomendas = carregarDadosDoCsv(CSV_FILE_PATH);
+        inserirDadosNaBD(encomendas);
     }
 
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private List<Encomenda> carregarDadosDoCsv(String filePath) {
+        List<Encomenda> encomendas = new ArrayList<>();
+
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get(filePath), StandardCharsets.UTF_8)) {
+            String linha;
+            reader.readLine();
+            while ((linha = reader.readLine()) != null) {
+                String[] campos = linha.split(",");
+                if (campos.length == 4) {
+                    Encomenda encomenda = new Encomenda();
+                    encomenda.setData_entrega(LocalDateTime.parse(campos[0].trim(), DATE_TIME_FORMATTER));
+                    encomenda.setData_expedicao(LocalDateTime.parse(campos[1].trim(), DATE_TIME_FORMATTER));
+                    encomenda.setEstado(campos[2].trim());
+                    encomenda.setId((Integer.parseInt(campos[3].trim())));
+                    encomendas.add(encomenda);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(encomendas.size()+"ola");
+        return encomendas;
+    }
+
+    private void inserirDadosNaBD(List<Encomenda> encomendas) {
+        for (Encomenda encomenda : encomendas) {
+            try {
+                em.persist(encomenda);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

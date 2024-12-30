@@ -1,0 +1,3 @@
+data_entrega,data_expedicao,estado,cliente_id
+2024-01-01 12:00:00,2023-12-31 15:30:00,Entregue,123
+2024-02-01 09:00:00,2024-01-15 08:45:00,Pendente,124
