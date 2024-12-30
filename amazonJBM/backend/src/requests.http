@@ -246,7 +246,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczN
 ### Criar um novo produto
 POST http://localhost:3001/backend/api/produtos
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1ODAxNDcsImV4cCI6MTczNTU4Mzc0N30.dl_Bkf_3PGecsXWYmfxhVMCZ882uzYp8FRmLCE2XTl9MWaxR8eSMb7XTN34h4ynP
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1ODU5NzUsImV4cCI6MTczNTU4OTU3NX0.JBrmXuNVpC94dpzBDh-rGTiENh_uBF7cGsOfClA3gh4V-3LzdRZUuInmcp2czqQL
 Content-Type: application/json
 Accept: application/json
 
@@ -263,10 +263,25 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1N
 ### Criar novo tipo de sensor
 POST http://localhost:3001/backend/api/sensor/tipo
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1ODAxNDcsImV4cCI6MTczNTU4Mzc0N30.dl_Bkf_3PGecsXWYmfxhVMCZ882uzYp8FRmLCE2XTl9MWaxR8eSMb7XTN34h4ynP
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1ODU5NzUsImV4cCI6MTczNTU4OTU3NX0.JBrmXuNVpC94dpzBDh-rGTiENh_uBF7cGsOfClA3gh4V-3LzdRZUuInmcp2czqQL
 Content-Type: application/json
 Accept: application/json
 
 {
   "tipo": "Umidade"
+}
+
+### Criar novo tipo de embalagem
+POST http://localhost:3001/backend/api/embalagem
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1ODU5NzUsImV4cCI6MTczNTU4OTU3NX0.JBrmXuNVpC94dpzBDh-rGTiENh_uBF7cGsOfClA3gh4V-3LzdRZUuInmcp2czqQL
+Content-Type: application/json
+Accept: application/json
+
+{
+  "tipo": "E_TP",
+  "tipos_sensores": [
+    { "id": 1 },
+    { "id": 3 }
+  ]
 }

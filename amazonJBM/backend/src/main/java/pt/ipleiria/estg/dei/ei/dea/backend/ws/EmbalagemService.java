@@ -7,9 +7,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResTipoEmbalagemDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResTipoSensoresDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.SensorDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.EmbalagemBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.SensorBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.TipoEmbalagemBean;
@@ -34,7 +32,7 @@ public class EmbalagemService {
 
     @EJB
     TipoEmbalagemBean tipoEmbalagemBean;
-    
+
     @POST
     @Path("/{id}/sensor")
     public Response associarSensorAEmbalagem(@PathParam("id") int id, SensorDTO sensorDTO) {
@@ -65,9 +63,8 @@ public class EmbalagemService {
     }
 
     @POST
-    @Path("/")
-    public Response createTipoEmbalagem() {
-        List<Tipo_Embalagem> tipoEmbalagens = tipoEmbalagemBean.findAll();
-        return Response.ok(ResTipoEmbalagemDTO.from(tipoEmbalagens)).build();
+    @Path("/tipo")
+    public Response criarTipoEmbalagem(CreateTipoEmbalagemDTO createTipoEmbalagemDTO) {
+        return tipoEmbalagemBean.create(createTipoEmbalagemDTO.getTipo(), createTipoEmbalagemDTO.getTipos_sensores());
     }
 }

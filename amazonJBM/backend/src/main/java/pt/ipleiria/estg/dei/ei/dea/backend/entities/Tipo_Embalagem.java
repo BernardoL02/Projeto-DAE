@@ -14,9 +14,15 @@ import java.util.List;
                 name = "getTipoEmbalagem",
                 query = "SELECT t FROM Tipo_Embalagem t "
         ),
+        @NamedQuery(
+                name = "existsTipoEmbalagem",
+                query = "SELECT COUNT(e) FROM Tipo_Embalagem e WHERE e.tipo = :tipo"
+        ),
 })
 public class Tipo_Embalagem {
+
         @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         private int id;
 
         private String tipo;
@@ -29,8 +35,7 @@ public class Tipo_Embalagem {
         )
         private List<Tipo_Sensores> tipoSensores = new ArrayList<>();
 
-        public Tipo_Embalagem(int id, String tipo, List<Tipo_Sensores> tipoSensores) {
-                this.id = id;
+        public Tipo_Embalagem(String tipo, List<Tipo_Sensores> tipoSensores) {
                 this.tipo = tipo;
                 this.tipoSensores = tipoSensores;
         }

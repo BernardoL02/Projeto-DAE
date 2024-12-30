@@ -182,7 +182,7 @@ public class EncomendaBean {
 
                 for(Volume volume : encomenda.getVolumes()){
                     if(!volume.getEntregue()){
-                        return Response.status(Response.Status.BAD_REQUEST).entity("Os volumes dessa encomenda ainda não foram todos entregues.").build();
+                        return Response.status(Response.Status.BAD_REQUEST).entity("Os volumes desta encomenda ainda não foram todos entregues.").build();
                     }
                 }
 
@@ -201,7 +201,6 @@ public class EncomendaBean {
                 for(Volume volume : encomenda.getVolumes()) {
                     for (Embalagem embalagem : volume.getEmbalagens()) {
                          List<Tipo_Sensores> tipoSensores = new ArrayList<>(embalagem.getTipo().getSensores());
-                        System.out.println(tipoSensores.size()+"ola");
 
                         for(Sensor sensor : embalagem.getSensores()) {
                             for(Tipo_Sensores tipo : tipoSensores){
@@ -211,7 +210,8 @@ public class EncomendaBean {
                                 }
                             }
                         }
-                        if(tipoSensores.size()!=0){
+
+                        if(tipoSensores.size() != 0){
                             return Response.status(Response.Status.BAD_REQUEST).entity("A embalagem não contém os sensores suficientes para seguir viagem.").build();
                         }
                     }

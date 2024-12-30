@@ -6,6 +6,7 @@ import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.EmbalagemCreateEncomendaDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ProdutoCreateEncomendaDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.TipoSensorDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.VolumeCreateEncomendaDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Cliente;
 
@@ -75,18 +76,18 @@ public class ConfigBean {
         tipoSensoresBean.create("Pressão Atmosférica");
         tipoSensoresBean.create("GPS");
         
-        tipoEmbalagemBean.create(1, "Isotérmica", Arrays.asList(tipoSensoresBean.find(1)));
-        tipoEmbalagemBean.create(2, "Original", Arrays.asList(tipoSensoresBean.find(4),tipoSensoresBean.find(2)));
-        tipoEmbalagemBean.create(3, "Metalica", Arrays.asList(tipoSensoresBean.find(2), tipoSensoresBean.find(3),tipoSensoresBean.find(4)));
-        tipoEmbalagemBean.create(4, "Cartao", Arrays.asList(tipoSensoresBean.find(4)));
-        tipoEmbalagemBean.create(5, "E_TA", Arrays.asList(tipoSensoresBean.find(1),tipoSensoresBean.find(2)));
-        tipoEmbalagemBean.create(6, "E_TG", Arrays.asList(tipoSensoresBean.find(1),tipoSensoresBean.find(4)));
-        tipoEmbalagemBean.create(7, "E_TPG", Arrays.asList(tipoSensoresBean.find(1),tipoSensoresBean.find(3),tipoSensoresBean.find(4)));
-        tipoEmbalagemBean.create(8, "E_TAP", Arrays.asList(tipoSensoresBean.find(1),tipoSensoresBean.find(2),tipoSensoresBean.find(3)));
-        tipoEmbalagemBean.create(9, "E_AG", Arrays.asList(tipoSensoresBean.find(2),tipoSensoresBean.find(4)));
-        tipoEmbalagemBean.create(10, "E_PG", Arrays.asList(tipoSensoresBean.find(3),tipoSensoresBean.find(4)));
-        tipoEmbalagemBean.create(11, "E_AP", Arrays.asList(tipoSensoresBean.find(2),tipoSensoresBean.find(3)));
-        tipoEmbalagemBean.create(12, "E_TAPG", Arrays.asList(tipoSensoresBean.find(1),tipoSensoresBean.find(2),tipoSensoresBean.find(3),tipoSensoresBean.find(4)));
+        tipoEmbalagemBean.create( "Isotérmica", TipoSensorDTO.from(Arrays.asList(tipoSensoresBean.find(1))));
+        tipoEmbalagemBean.create("Original", TipoSensorDTO.from(Arrays.asList(tipoSensoresBean.find(4),tipoSensoresBean.find(2))));
+        tipoEmbalagemBean.create( "Metalica",  TipoSensorDTO.from(Arrays.asList(tipoSensoresBean.find(2), tipoSensoresBean.find(3),tipoSensoresBean.find(4))));
+        tipoEmbalagemBean.create( "Cartao", TipoSensorDTO.from( Arrays.asList(tipoSensoresBean.find(4))));
+        tipoEmbalagemBean.create( "E_TA",  TipoSensorDTO.from(Arrays.asList(tipoSensoresBean.find(1),tipoSensoresBean.find(2))));
+        tipoEmbalagemBean.create( "E_TG",  TipoSensorDTO.from(Arrays.asList(tipoSensoresBean.find(1),tipoSensoresBean.find(4))));
+        tipoEmbalagemBean.create( "E_TPG",  TipoSensorDTO.from(Arrays.asList(tipoSensoresBean.find(1),tipoSensoresBean.find(3),tipoSensoresBean.find(4))));
+        tipoEmbalagemBean.create( "E_TAP",  TipoSensorDTO.from(Arrays.asList(tipoSensoresBean.find(1),tipoSensoresBean.find(2),tipoSensoresBean.find(3))));
+        tipoEmbalagemBean.create( "E_AG",  TipoSensorDTO.from(Arrays.asList(tipoSensoresBean.find(2),tipoSensoresBean.find(4))));
+        tipoEmbalagemBean.create( "E_PG",  TipoSensorDTO.from(Arrays.asList(tipoSensoresBean.find(3),tipoSensoresBean.find(4))));
+        tipoEmbalagemBean.create( "E_AP",  TipoSensorDTO.from(Arrays.asList(tipoSensoresBean.find(2),tipoSensoresBean.find(3))));
+        tipoEmbalagemBean.create( "E_TAPG",  TipoSensorDTO.from(Arrays.asList(tipoSensoresBean.find(1),tipoSensoresBean.find(2),tipoSensoresBean.find(3),tipoSensoresBean.find(4))));
 
         // Categorias de Produtos
         categoriaBean.create(1, "Alimentos");
