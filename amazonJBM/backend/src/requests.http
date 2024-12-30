@@ -22,7 +22,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDI0M
 ### Get Encomenda Por Id #
 GET http://localhost:3001/backend/api/encomendas/1
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1NjY3MDIsImV4cCI6MTczNTU3MDMwMn0.DSZbBj6rwHL_wJkTOiR_AdCctvacqIlBaLOXh_1mup3f-_0AWADUeli6-3iKM6wr
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1NjI1NzAsImV4cCI6MTczNTU2NjE3MH0.8WjZdwadRY2_BVoWfPslXWhDk76sg92tlk9Tfi8IhUQyROy3FToOxR7MZ-RrGYZR
 
 ### Get All Encomendas por um determinado estado "PorEntregar" "Cancelada" "EmProcessamento" "Entregue" #
 GET http://localhost:3001/backend/api/encomendas/estado/EmProcessamento
