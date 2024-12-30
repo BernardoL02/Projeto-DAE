@@ -96,11 +96,6 @@ const fetchEncomendaDetalhes = async () => {
   }
 };
 
-// Função para alternar a exibição de sensores de um volume específico
-const toggleDetalhes = (embalagem) => {
-  embalagem.mostrarDetalhes = !embalagem.mostrarDetalhes;
-};
-
 // Função para buscar e exibir alertas de um sensor específico
 const fetchAlertas = async (sensor) => {
   try {
@@ -116,7 +111,11 @@ const fetchAlertas = async (sensor) => {
         }
       });
 
-      if (!response.ok) throw new Error(`Erro ao buscar alertas do sensor ${sensor.id}`);
+      if (!response.ok) {
+        const errorData = await response.text();
+        throw new Error(errorData);
+      }
+
       const alertas = await response.json();
       alertasData.value[sensor.id] = alertas.map(alerta => ({
         id: alerta.id,
@@ -129,7 +128,7 @@ const fetchAlertas = async (sensor) => {
       console.log(alertas);
     }
   } catch (error) {
-    console.error(`Erro ao buscar alertas do sensor ${sensor.id}:`, error);
+    showError(error.message);
   }
 };
 
@@ -166,11 +165,20 @@ onMounted(fetchEncomendaDetalhes);
       <div v-for="volume in volumesData" :key="volume.id"
         class="mb-6 p-4 bg-gray-100 rounded-lg border border-gray-300">
         <div class="flex justify-between items-center">
-          <h3 class="font-semibold text-lg text-gray-800">Volume ID: {{ volume.id }}</h3>
-          <button @click="toggleVolume(volume)"
-            class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700 transition">
-            {{ volume.mostrarDetalhes ? 'Esconder Detalhes do Volume' : 'Mostrar Detalhes do Volume' }}
-          </button>
+          <div>
+            <h3 class="font-semibold text-lg text-gray-800">
+              Volume ID: {{ volume.id }}
+            </h3>
+            <p v-if="encomendaData.estado !== 'Em Processamento'" class="text-sm text-gray-600">
+              Estado do Volume: {{ volume.entregue ? 'Entregue' : 'Não Entregue' }}
+            </p>
+          </div>
+          <div class="flex space-x-4">
+            <button @click="toggleVolume(volume)"
+              class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700 transition">
+              {{ volume.mostrarDetalhes ? 'Esconder Detalhes do Volume' : 'Mostrar Detalhes do Volume' }}
+            </button>
+          </div>
         </div>
 
         <div v-if="volume.mostrarDetalhes" class="mt-4">
@@ -198,7 +206,7 @@ onMounted(fetchEncomendaDetalhes);
                   <p><strong>Bateria:</strong> {{ sensor.bateria }}%</p>
                   <p><strong>Estado:</strong> {{ sensor.estado }}</p>
                   <p><strong>Última Leitura:</strong> {{ sensor.ultimaLeitura }}</p>
-                  <button @click="fetchAlertas(sensor)"
+                  <button v-if="encomendaData.estado !== 'Em Processamento'" @click="fetchAlertas(sensor)"
                     class="bg-yellow-500 text-white px-3 py-1 rounded mt-2 hover:bg-yellow-700 transition">
                     {{ sensor.mostrarAlertas ? 'Esconder Alertas' : 'Ver Alertas' }}
                   </button>
