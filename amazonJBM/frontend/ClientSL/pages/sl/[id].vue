@@ -382,6 +382,31 @@ const adicionarVolume = async () => {
   }
 };
 
+const VolumeEntregue = async (volume) => {
+  try {
+    const token = sessionStorage.getItem('token');
+    const response = await fetch(`${api}/volume/${volume.id}/entregar`, {
+      method: 'PATCH',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
+
+    successMessage.value = `Volume ${volume.id} entregue com sucesso!`;
+
+
+    await fetchEncomendaDetalhes();
+  } catch (error) {
+    showError(error.message);
+  }
+};
+
 
 onMounted(() => {
   fetchEncomendaDetalhes();
@@ -429,12 +454,35 @@ onMounted(() => {
       <div v-for="volume in volumesData" :key="volume.id"
         class="mb-6 p-4 bg-gray-100 rounded-lg border border-gray-300">
         <div class="flex justify-between items-center">
-          <h3 class="font-semibold text-lg text-gray-800">Volume ID: {{ volume.id }}</h3>
-          <button @click="toggleVolume(volume)"
-            class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700 transition">
-            {{ volume.mostrarDetalhes ? 'Esconder Detalhes do Volume' : 'Mostrar Detalhes do Volume' }}
-          </button>
+          <div>
+            <h3 class="font-semibold text-lg text-gray-800">
+              Volume ID: {{ volume.id }}
+            </h3>
+            <p v-if="encomendaData.estado === 'Por Entregar'" class="text-sm text-gray-600">
+              Estado do Volume: {{ volume.entregue ? 'Entregue' : 'Não Entregue' }}
+            </p>
+          </div>
+          <div class="flex space-x-4">
+            <div>
+              <!-- Botão para Entregar Volume -->
+              <button v-if="!volume.entregue && encomendaData.estado === 'Por Entregar'" @click="VolumeEntregue(volume)"
+                class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-700 transition">
+                Entregar Volume
+              </button>
+
+              <!-- Botão para Volume já Entregue -->
+              <button v-else-if="encomendaData.estado === 'Por Entregar'" disabled
+                class="bg-gray-400 text-white px-3 py-1 rounded cursor-not-allowed">
+                Volume Entregue
+              </button>
+            </div>
+            <button @click="toggleVolume(volume)"
+              class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-700 transition">
+              {{ volume.mostrarDetalhes ? 'Esconder Detalhes do Volume' : 'Mostrar Detalhes do Volume' }}
+            </button>
+          </div>
         </div>
+
 
         <div v-if="volume.mostrarDetalhes" class="mt-4">
           <div v-for="embalagem in volume.embalagens" :key="embalagem.id" class="mt-4 p-4 bg-white rounded-lg border">
@@ -445,13 +493,15 @@ onMounted(() => {
                 <p><strong>Produto:</strong> {{ embalagem.produtoName }}</p>
                 <p><strong>Quantidade:</strong> {{ embalagem.quantidade }}</p>
               </div>
-              <button @click="toggleEmbalagem(embalagem)"
-                class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-700 transition">
+              <button @click="toggleEmbalagem(embalagem)" class="text-white px-3 py-1 rounded transition"
+                :class="embalagem.mostrarSensores ? 'bg-[#202c38] hover:bg-[#1b2530]' : 'bg-[#202c38] hover:bg-[#1b2530]'">
                 {{ embalagem.mostrarSensores ? 'Esconder Sensores' : 'Mostrar Sensores' }}
               </button>
+
             </div>
-            <button @click="handleAssociarSensor(embalagem)"
-              class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-700 transition">
+            <button v-if="encomendaData.estado === 'Em Processamento'" @click="handleAssociarSensor(embalagem)"
+              class="text-white px-3 py-1 rounded transition"
+              :class="embalagem.mostrarSensores ? 'bg-[#202c38] hover:bg-[#1b2530]' : 'bg-[#202c38] hover:bg-[#1b2530]'">
               Associar Sensor
             </button>
 

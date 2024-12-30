@@ -35,13 +35,13 @@ Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1NDIyODg0LCJleHAiOjE3MzU0MjY0ODR9.4U7Qp_PlswKVnqJZCqIPEIf4m9RFO_ZpmcwOApmYWnvgccLO-BeJpWTWLp3PYQeY
 
 ### Alterar estado de uma encomenda #
-PATCH http://localhost:3001/backend/api/encomendas/2
+PATCH http://localhost:3001/backend/api/encomendas/1
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1NjYxODEsImV4cCI6MTczNTU2OTc4MX0.4RjrLNFY5GPQTf8YNwhm9Nsd8g8_g5XhDOk5wQS2I7XnxWa35-1mMeGtvF9OdDpG
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1NTc1MTg2LCJleHAiOjE3MzU1Nzg3ODZ9.zIIIFVEKQzfVI4OzewVeUNtoRPpRhB4LgCnbUFoW0HcQCHQEYSK1l3IihWYN9YN0
 Content-Type: application/json
 
 {
-  "estado": "Entregue"
+  "estado": "Cancelada"
 }
 
 ###Criar uma nova encomenda #
@@ -232,7 +232,7 @@ POST http://localhost:3001/backend/api/auth/login
 Content-Type: application/json
 Accept: application/json
 
-{ "username": "Miguel", "password": "123" }
+{ "username": "Delgado", "password": "123" }
 
 ### Bernardo -> Cliente
 ### Miguel -> Logista
