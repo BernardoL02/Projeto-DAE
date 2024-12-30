@@ -17,17 +17,81 @@ const produtos = ref([]);
 const mostrarAssociarSensorModal = ref(false);
 const mostrarAdicionarProdutoModal = ref(false);
 const volumeSelecionado = ref(null);
-const produtoSelecionado = ref(null);
-const tipoSelecionado = ref(null);
 const quantidade = ref(1);
 const valMax = ref(null);
 const valMin = ref(null);
 const successMessage = ref('');
-const errorMessage = ref('');
+const errorMessages = ref([]);
 const embalagemSelecionada = ref(null);
+const tiposEmbalagem = ref([]);
+const embalagens = ref([]);
 
 // Função para obter o token do sessionStorage
 const getToken = () => sessionStorage.getItem('token');
+
+// Função para exibir a mensagem de erro como um alerta estilizado
+const showError = (message) => {
+  errorMessages.value.push(message);
+
+  setTimeout(() => {
+    errorMessages.value.shift();
+  }, 5000);
+};
+
+const produtoSelecionado = reactive({
+  searchTerm: "",
+  showSuggestions: false,
+  produto: null,
+});
+
+const filteredProdutos = (searchTerm) => {
+  if (!searchTerm) {
+    return produtos.value;
+  }
+  return produtos.value.filter((produto) =>
+    produto.nome.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+};
+
+const selectProduto = (produto) => {
+  produtoSelecionado.produto = produto;
+  produtoSelecionado.searchTerm = produto.nome;
+  produtoSelecionado.showSuggestions = false;
+};
+
+const hideProdutoSuggestions = () => {
+  setTimeout(() => {
+    produtoSelecionado.showSuggestions = false;
+  }, 200);
+};
+
+
+const tipoSelecionado = reactive({
+  searchTerm: "",
+  showSuggestions: false,
+  tipo: null,
+});
+
+const filteredTiposEmbalagem = (searchTerm) => {
+  if (!searchTerm) {
+    return tiposEmbalagem.value;
+  }
+  return tiposEmbalagem.value.filter((tipo) =>
+    tipo.tipo.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+};
+
+const selectTipo = (tipo) => {
+  tipoSelecionado.tipo = tipo;
+  tipoSelecionado.searchTerm = tipo.tipo;
+  tipoSelecionado.showSuggestions = false;
+};
+
+const hideTipoSuggestions = () => {
+  setTimeout(() => {
+    tipoSelecionado.showSuggestions = false;
+  }, 200);
+};
 
 // Função para formatar o estado da encomenda
 const formateEstado = (estado) => {
@@ -55,7 +119,10 @@ const fetchEncomendaDetalhes = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    if (!response.ok) throw new Error('Erro ao buscar detalhes da encomenda');
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
 
     const data = await response.json();
     encomendaData.value = {
@@ -70,10 +137,13 @@ const fetchEncomendaDetalhes = async () => {
 
     volumesData.value = data.volumes.map((volume) => ({
       id: volume.id,
+      entregue: volume.entregue,
       embalagens: volume.embalagems.map((embalagem) => ({
         id: embalagem.id,
         produtoId: embalagem.produto.id,
+        produtoName: embalagem.produto.nome,
         quantidade: embalagem.quantidade,
+        tipoEmbalagem: embalagem.tipoEmbalagem,
         sensores: embalagem.sensores.map((sensor) => ({
           id: sensor.id,
           tipo: sensor.tipoNome,
@@ -85,7 +155,7 @@ const fetchEncomendaDetalhes = async () => {
       })),
     }));
   } catch (error) {
-    console.error('Erro ao carregar detalhes da encomenda:', error);
+    showError(error.message);
   }
 };
 
@@ -100,45 +170,14 @@ const fetchTiposSensores = async () => {
         'Authorization': `Bearer ${token}`
       }
     });
-    if (!response.ok) throw new Error("Erro ao buscar tipos de sensores");
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
 
     tiposSensores.value = await response.json();
   } catch (error) {
-    console.error("Erro ao carregar tipos de sensores:", error);
-  }
-};
-
-// Função para buscar detalhes do volume
-const fetchVolumeDetails = async (volumeId) => {
-  try {
-    const token = getToken();
-    const response = await fetch(`${api}/volume/${volumeId}`, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-    });
-    if (!response.ok) throw new Error("Erro ao buscar detalhes do volume");
-
-    const volumeData = await response.json();
-    const volumeIndex = volumesData.value.findIndex(volume => volume.id === volumeId);
-    if (volumeIndex !== -1) {
-      volumesData.value[volumeIndex] = {
-        ...volumeData,
-        mostrarSensores: true,
-        sensores: volumeData.sensores.map(sensor => ({
-          id: sensor.id,
-          tipo: sensor.tipoNome,
-          valor: sensor.valor,
-          bateria: sensor.bateria,
-          estado: sensor.estado,
-          ultimaLeitura: new Date(sensor.timeStamp).toLocaleString(),
-        }))
-      };
-    }
-  } catch (error) {
-    console.error("Erro ao atualizar detalhes do volume:", error);
+    showError(error.message);
   }
 };
 
@@ -161,14 +200,12 @@ const getRandomValueInRange = (min, max) => {
 // Função para associar um sensor a um volume
 const associarSensor = async () => {
   if (!tipoSelecionado.value) {
-    errorMessage.value = "Selecione um tipo de sensor.";
-    setTimeout(() => (errorMessage.value = ""), 3000);
+    showError("Selecione um tipo de sensor.");
     return;
   }
 
   if (!embalagemSelecionada.value) {
-    errorMessage.value = "Nenhuma embalagem selecionada.";
-    setTimeout(() => (errorMessage.value = ""), 3000);
+    showError("Nenhuma embalagem selecionada.");
     return;
   }
 
@@ -207,7 +244,10 @@ const associarSensor = async () => {
       body: JSON.stringify(sensorData),
     });
 
-    if (!response.ok) throw new Error("Erro ao associar sensor");
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
 
     successMessage.value = "Sensor associado com sucesso!";
     setTimeout(() => (successMessage.value = ""), 3000);
@@ -222,39 +262,26 @@ const associarSensor = async () => {
   }
 };
 
-// Função para adicionar um volume à encomenda
-const adicionarProduto = () => {
-  if (!produtoSelecionado || !quantidade || quantidade <= 0) {
-    errorMessage.value = 'Por favor, selecione um produto e insira uma quantidade válida.';
-    setTimeout(() => (errorMessage.value = ''), 3000);
-    return;
+// Buscar Tipos de Embalagem
+const fetchTiposEmbalagem = async () => {
+  try {
+    const token = getToken();
+    const response = await fetch(`${api}/embalagem/tipos`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
+    tiposEmbalagem.value = await response.json();
+  } catch (error) {
+    showError(error.message);
   }
-
-  // Adiciona o produto no primeiro volume (ou modifica a lógica para escolher um volume específico)
-  if (volumesData.value.length === 0) {
-    errorMessage.value = 'Nenhum volume disponível para adicionar o produto.';
-    setTimeout(() => (errorMessage.value = ''), 3000);
-    return;
-  }
-
-  // Adiciona o produto ao primeiro volume como exemplo
-  const volume = volumesData.value[0];
-  volume.embalagens.push({
-    id: Date.now(), // Um ID temporário para controle local
-    produtoId: produtoSelecionado.id,
-    quantidade,
-    sensores: [], // Sensores inicialmente vazios
-  });
-
-  successMessage.value = 'Produto adicionado com sucesso!';
-  setTimeout(() => (successMessage.value = ''), 3000);
-  mostrarAdicionarProdutoModal.value = false;
-
-  // Reseta os campos do modal
-  produtoSelecionado = null;
-  quantidade = null;
 };
-
 
 // Função para buscar produtos disponíveis
 const fetchProdutos = async () => {
@@ -267,21 +294,97 @@ const fetchProdutos = async () => {
         'Authorization': `Bearer ${token}`
       }
     });
-    if (!response.ok) throw new Error("Erro ao buscar produtos");
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
 
     produtos.value = await response.json();
   } catch (error) {
-    console.error("Erro ao carregar produtos:", error);
+    showError(error.message);
   }
 };
 
+// Adicionar Embalagem à Lista
+const adicionarEmbalagem = () => {
+  if (!produtoSelecionado.produto || !tipoSelecionado.tipo || quantidade.value <= 0) {
+    showError("Selecione um produto, um tipo de embalagem e insira uma quantidade válida.");
+    return;
+  }
 
+  embalagens.value.push({
+    produto: { id: produtoSelecionado.produto.id },
+    tipo: tipoSelecionado.tipo.id,
+    quantidade: quantidade.value,
+    produtoNome: produtoSelecionado.produto.nome,
+    tipoNome: tipoSelecionado.tipo.tipo,
+  });
+
+
+  // Resetar campos
+  produtoSelecionado.produto = null;
+  produtoSelecionado.searchTerm = "";
+  tipoSelecionado.tipo = null;
+  tipoSelecionado.searchTerm = "";
+  quantidade.value = 1;
+};
+
+
+
+// Remover Embalagem
+const removerEmbalagem = (index) => {
+  embalagens.value.splice(index, 1);
+};
+
+// Enviar Volume com Embalagens
+const adicionarVolume = async () => {
+  if (embalagens.value.length === 0) {
+    showError("Adicione ao menos uma embalagem ao volume.");
+    return;
+  }
+
+  // Cria um array filtrado apenas com os campos necessários
+  const embalagensParaEnviar = embalagens.value.map(({ produto, tipo, quantidade }) => ({
+    produto,
+    tipo,
+    quantidade,
+  }));
+
+  try {
+    const token = getToken();
+    const response = await fetch(`${api}/encomendas/${encomendaId}/volume`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ embalagens: embalagensParaEnviar }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
+
+    successMessage.value = "Volume adicionado com sucesso!";
+    setTimeout(() => (successMessage.value = ""), 3000);
+
+    await fetchEncomendaDetalhes();
+
+    mostrarAdicionarProdutoModal.value = false;
+    embalagens.value = [];
+  } catch (error) {
+    showError(error.message);
+  }
+};
 
 
 onMounted(() => {
   fetchEncomendaDetalhes();
   fetchTiposSensores();
   fetchProdutos();
+  fetchTiposEmbalagem();
 });
 </script>
 
@@ -294,9 +397,12 @@ onMounted(() => {
     </div>
   </div>
 
-  <div v-if="errorMessage" class="fixed top-0 left-0 w-full flex justify-center mt-4 z-50">
-    <div class="bg-red-500 text-white py-2 px-4 rounded shadow-md">
-      {{ errorMessage }}
+  <!-- Mensagens de erro estilizadas -->
+  <div v-if="errorMessages.length" class="fixed bottom-4 right-4 space-y-2 z-[100]">
+    <div v-for="(error, index) in errorMessages" :key="index"
+      class="bg-red-500 text-white py-4 px-6 rounded shadow-lg w-96">
+      <h3 class="font-semibold text-lg mb-2">Erro</h3>
+      <p>{{ error }}</p>
     </div>
   </div>
 
@@ -332,7 +438,8 @@ onMounted(() => {
             <div class="flex justify-between items-center">
               <div>
                 <p><strong>Embalagem ID:</strong> {{ embalagem.id }}</p>
-                <p><strong>Produto ID:</strong> {{ embalagem.produtoId }}</p>
+                <p><strong>Tipo Embalagem:</strong> {{ embalagem.tipoEmbalagem }}</p>
+                <p><strong>Produto:</strong> {{ embalagem.produtoName }}</p>
                 <p><strong>Quantidade:</strong> {{ embalagem.quantidade }}</p>
               </div>
               <button @click="toggleEmbalagem(embalagem)"
@@ -392,23 +499,78 @@ onMounted(() => {
     </div>
   </div>
 
-  <!-- Modal de Adicionar Produto -->
+  <!-- Modal de Adicionar Volume -->
   <div v-if="mostrarAdicionarProdutoModal"
-    class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white w-1/3 p-6 rounded shadow-lg">
-      <h2 class="text-xl font-semibold mb-4">Adicionar Produto</h2>
-      <p>Escolha um produto para adicionar à encomenda:</p>
-      <select v-model="produtoSelecionado"
-        class="w-full p-2 border border-gray-300 rounded max-h-52 overflow-y-auto mt-2 mb-2">
-        <option v-for="produto in produtos" :key="produto.id" :value="produto">{{ produto.nome }}</option>
-      </select>
-      <label class="block text-gray-700 font-semibold mb-1">Quantidade:</label>
-      <input v-model="quantidade" type="number" min="1" class="w-full p-2 border border-gray-300 rounded mb-4"
-        placeholder="Digite a quantidade">
-      <button @click="adicionarProduto"
-        class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">Adicionar</button>
-      <button @click="mostrarAdicionarProdutoModal = false"
-        class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700">Cancelar</button>
+    class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-[60]">
+    <div class="bg-white w-1/3 p-6 rounded shadow-lg z-[70]">
+      <h2 class="text-xl font-bold mb-4">Adicionar Volume</h2>
+
+      <!-- Lista de Embalagens -->
+      <div class="mb-4">
+        <h3 class="font-semibold mb-2">Embalagens no Volume</h3>
+        <!-- Adicionando altura máxima e scroll -->
+        <ul class="max-h-48 overflow-y-auto border border-gray-300 rounded">
+          <li v-for="(embalagem, index) in embalagens" :key="index"
+            class="p-2 bg-gray-100 rounded mb-2 flex justify-between items-center">
+            <div>
+              <p><strong>Produto:</strong> {{ embalagem.produtoNome }}</p>
+              <p><strong>Tipo:</strong> {{ embalagem.tipoNome }}</p>
+              <p><strong>Quantidade:</strong> {{ embalagem.quantidade }}</p>
+            </div>
+            <button @click="removerEmbalagem(index)" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">
+              Remover
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Formulário para Adicionar Embalagem -->
+      <div class="mb-4">
+        <label class="block mb-2">Produto:</label>
+        <input type="text" v-model="produtoSelecionado.searchTerm" @focus="produtoSelecionado.showSuggestions = true"
+          @blur="hideProdutoSuggestions" placeholder="Pesquisar produto"
+          class="w-full p-2 border rounded focus:ring-green-500 focus:border-green-500" />
+        <div v-if="produtoSelecionado.showSuggestions && filteredProdutos(produtoSelecionado.searchTerm).length > 0"
+          class="relative">
+          <ul class="absolute z-10 w-full bg-white border border-gray-300 rounded max-h-48 overflow-y-auto shadow-lg">
+            <li v-for="produto in filteredProdutos(produtoSelecionado.searchTerm)" :key="produto.id"
+              @mousedown="selectProduto(produto)" class="p-2 hover:bg-gray-100 cursor-pointer">
+              {{ produto.nome }}
+            </li>
+          </ul>
+        </div>
+
+        <label class="block mb-2 mt-4">Tipo de Embalagem:</label>
+        <input type="text" v-model="tipoSelecionado.searchTerm" @focus="tipoSelecionado.showSuggestions = true"
+          @blur="hideTipoSuggestions" placeholder="Pesquisar tipo de embalagem"
+          class="w-full p-2 border rounded focus:ring-green-500 focus:border-green-500" />
+        <div v-if="tipoSelecionado.showSuggestions && filteredTiposEmbalagem(tipoSelecionado.searchTerm).length > 0"
+          class="relative">
+          <ul class="absolute z-10 w-full bg-white border border-gray-300 rounded max-h-48 overflow-y-auto shadow-lg">
+            <li v-for="tipo in filteredTiposEmbalagem(tipoSelecionado.searchTerm)" :key="tipo.id"
+              @mousedown="selectTipo(tipo)" class="p-2 hover:bg-gray-100 cursor-pointer">
+              {{ tipo.tipo }}
+            </li>
+          </ul>
+        </div>
+
+        <label class="block mb-2">Quantidade:</label>
+        <input v-model="quantidade" type="number" min="1" class="w-full p-2 border rounded mb-4" />
+
+        <button @click="adicionarEmbalagem" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">
+          Adicionar Embalagem
+        </button>
+      </div>
+
+      <div class="flex justify-end">
+        <button @click="adicionarVolume" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+          Finalizar Volume
+        </button>
+        <button @click="mostrarAdicionarProdutoModal = false"
+          class="bg-gray-500 text-white px-4 py-2 ml-2 rounded hover:bg-gray-700">
+          Cancelar
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -423,5 +585,31 @@ body {
 h1 {
   font-size: 1.5rem;
   font-weight: bold;
+}
+
+
+.max-h-48 {
+  max-height: 12rem;
+  /* Define altura máxima */
+  overflow-y: auto;
+  /* Adiciona scroll vertical */
+  scrollbar-width: thin;
+  /* Personaliza barra no Firefox */
+}
+
+.max-h-48::-webkit-scrollbar {
+  width: 6px;
+  /* Personaliza largura no Chrome/Edge */
+}
+
+.max-h-48::-webkit-scrollbar-thumb {
+  background-color: #9ca3af;
+  /* Cor da barra de rolagem */
+  border-radius: 4px;
+}
+
+.max-h-48::-webkit-scrollbar-thumb:hover {
+  background-color: #6b7280;
+  /* Cor ao passar o mouse */
 }
 </style>
