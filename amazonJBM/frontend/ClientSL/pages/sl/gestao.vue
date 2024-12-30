@@ -46,15 +46,15 @@ const fetchEncomendasEmProcessamento = async () => {
       id: encomenda.id,
       username: encomenda.username,
       dataExpedicao: new Date(encomenda.data_expedicao).toLocaleString(),
-      dataEntrega: encomenda.data_entrega 
+      dataEntrega: encomenda.data_entrega
         ? new Date(encomenda.data_entrega).toLocaleString("pt-PT", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-          })
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
         : "Não definido",
       estado: formatEstado(encomenda.estado)
     }));
@@ -66,6 +66,8 @@ const fetchEncomendasEmProcessamento = async () => {
 const expedirEncomenda = async (id) => {
   try {
     const token = getToken();
+    const payload = { estado: "PorEntregar" };
+
     const response = await fetch(`${api}/encomendas/${id}`, {
       method: 'PATCH',
       headers: {
@@ -73,14 +75,20 @@ const expedirEncomenda = async (id) => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify({ estado: "PorEntregar" })
+      body: JSON.stringify(payload)
     });
-    if (!response.ok) throw new Error(`Erro ao entregar encomenda ${id}`);
+
+    if (!response.ok) {
+      throw new Error(`Erro ao entregar encomenda ${id}`);
+    }
+
+    // Atualiza a lista de encomendas após sucesso
     fetchEncomendasEmProcessamento();
   } catch (error) {
     console.error(`Erro ao entregar encomenda ${id}:`, error);
   }
 };
+
 
 const handleExpedirEncomenda = (id) => {
   selectedEncomendaId.value = id;
@@ -93,7 +101,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <Template :currentPage="currentPage"></Template> <!-- Importar o Template -->
+  <Template :currentPage="currentPage"></Template>
 
   <div class="flex justify-center mr-24 mt-20">
     <h1>Sistema de Logistica - Encomendas Em Processamento</h1>
