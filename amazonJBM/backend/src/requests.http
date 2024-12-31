@@ -278,9 +278,9 @@ Accept: application/json
 }
 
 ### Criar novo tipo de embalagem
-POST http://localhost:3001/backend/api/embalagem
+POST http://localhost:3001/backend/api/embalagem/tipo
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU2NTg5MzgsImV4cCI6MTczNTY2MjUzOH0.6P794k851WLA6nldpOCU_-f2rPteqeXfVjIdjgPHypDD2jVb2i_uOTOnG8QOU0yM
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU2NjgxODUsImV4cCI6MTczNTY3MTc4NX0.hsGpjiBtUWVZQdJ6-rmzmeHhn_vdMYzhj9O4EM4YysX1eUvl4j_ayJsALuhjTww7
 Content-Type: application/json
 Accept: application/json
 
