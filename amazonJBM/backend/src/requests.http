@@ -229,7 +229,6 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1N
                       #Colocar no pdf a atualização do JSON criar encomenda#
                       #Remover data expedição json frontEnd#
                       #Nas coordenadas do fron end mudar o separador de "," para ":"
-                      #Adicionar mais volumes nas encomendas no ficheiro csv volumes/embalagens"#
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
 
 ### REQUEST JWT TOKEN
