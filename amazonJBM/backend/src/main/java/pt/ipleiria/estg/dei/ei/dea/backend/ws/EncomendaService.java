@@ -61,8 +61,7 @@ public class EncomendaService {
 
         Response encomendaResponse = encomendaBean.create(
                 encomendasDTO.getUsername(),
-                encomendasDTO.getVolumes(),
-                encomendasDTO.getData_expedicao()
+                encomendasDTO.getVolumes()
         );
 
         return encomendaResponse;
