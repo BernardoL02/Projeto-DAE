@@ -135,7 +135,7 @@ const updateSensorValues = async () => {
     if (sensor.tipoNome === 'GPS') {
       const lat = (40 + Math.random()).toFixed(5);
       const long = (-74 - Math.random()).toFixed(5);
-      sensor.valor = `${lat}, ${long}`;
+      sensor.valor = `${lat}: ${long}`;
     } else {
       let randomValue = Math.random() * (sensor.valMax - sensor.valMin) + sensor.valMin;
       if (Math.random() < 0.2) {
@@ -164,6 +164,11 @@ const updateSensorValues = async () => {
 
 // Função para verificar e criar alertas
 const checkAlert = async (sensor) => {
+
+  if (sensor.estado !== 'ativo') {
+    return;
+  }
+
   if (sensor.tipoNome !== 'GPS' && (sensor.valor > sensor.valMax || sensor.valor < sensor.valMin)) {
     const mensagem = sensor.valor > sensor.valMax
       ? `Valor acima do limite máximo (${sensor.valMax})`

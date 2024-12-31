@@ -53,6 +53,13 @@ const logout = () => {
             class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"
             :class="currentPage === 'CriarEncomenda' ? 'w-full' : ''"></span>
         </a>
+        <a href="DashBoard" :class="currentPage === 'DashBoard' ? 'highlighted' : ''"
+          class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
+          DashBoard
+          <span
+            class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"
+            :class="currentPage === 'DashBoard' ? 'w-full' : ''"></span>
+        </a>
       </div>
 
       <!-- Nome do sistema e botão de logout -->

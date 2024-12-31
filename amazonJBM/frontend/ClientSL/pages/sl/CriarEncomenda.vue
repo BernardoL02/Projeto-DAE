@@ -253,11 +253,8 @@ const criarEncomenda = async () => {
     }
   }
 
-  const dataExpedicao = new Date().toISOString();
-
   const encomendaData = {
     username: selectedCliente.value,
-    data_expedicao: dataExpedicao,
     volumes: volumes.map((v) => ({
       embalagens: v.embalagens.map((e) => ({
         tipo: e.tipo,

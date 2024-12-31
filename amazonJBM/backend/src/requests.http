@@ -6,7 +6,7 @@
 ### GET All Produtos #
 GET http://localhost:3001/backend/api/produtos
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU0NjgwNTgsImV4cCI6MTczNTQ3MTY1OH0.4CSt0LihCfh5q3YSSK2vNvFH1zieStYgM_PgVDZ64bcmso7Voz27P6oVIfseB3n5
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU2NTQ4MDgsImV4cCI6MTczNTY1ODQwOH0.jhxJRikLHX286IRn4EEjrDvSoD1_8SfSYRFWjsD2QoXtHyRT9AtbneWqHRdQ8hmQ
 
 ######################### Clientes Service ################################
 ### GET All clientes #
@@ -20,9 +20,9 @@ Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDI0MzQ2LCJleHAiOjE3MzU0Mjc5NDZ9.Oci5ykM3yFWiVYs99419cNOlKbedkW5trzitlHsdPxkwpHokPO9aC3JuLYf0o9hM
 
 ### Get Encomenda Por Id #
-GET http://localhost:3001/backend/api/encomendas/1
+GET http://localhost:3001/backend/api/encomendas/3
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTU3OTcxOSwiZXhwIjoxNzM1NTgzMzE5fQ.4t2zSFOGU12mvuBphlUN5_b2ZTlXfVShwCe0Y0PIi19RBZwLPf879yetgWsvlUQA
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU2NTQ4MDgsImV4cCI6MTczNTY1ODQwOH0.jhxJRikLHX286IRn4EEjrDvSoD1_8SfSYRFWjsD2QoXtHyRT9AtbneWqHRdQ8hmQ
 
 ### Get All Encomendas por um determinado estado "PorEntregar" "Cancelada" "EmProcessamento" "Entregue" #
 GET http://localhost:3001/backend/api/encomendas/estado/EmProcessamento
@@ -200,7 +200,7 @@ Content-Type: application/json
 ### Get All Tipos de Sensor #
 GET http://localhost:3001/backend/api/sensor/tipos
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQ3MjEyNiwiZXhwIjoxNzM1NDc1NzI2fQ.HfOFlkJCqj9k4pOXiOW43AbGq1aHK-uQFoQlciOBRQW8DKWnTjl2l6e32WADYabi
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU2NTg5MzgsImV4cCI6MTczNTY2MjUzOH0.6P794k851WLA6nldpOCU_-f2rPteqeXfVjIdjgPHypDD2jVb2i_uOTOnG8QOU0yM
 
 
 ### GET All Ultimo Valor dos Sensores por Tipo #
@@ -220,15 +220,15 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1N
 ### Get All Tipos de Embalagens #
 GET http://localhost:3001/backend/api/embalagem/tipos
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1NTkxMDIsImV4cCI6MTczNTU2MjcwMn0.soGmmFdXoivsyBUEJeQUa9-F4LDKbq0Ylxz3b2KUUZ612ZkQAv7WKvR9PGY5cUFC
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU2NTg5MzgsImV4cCI6MTczNTY2MjUzOH0.6P794k851WLA6nldpOCU_-f2rPteqeXfVjIdjgPHypDD2jVb2i_uOTOnG8QOU0yM
 
 ################################ End Points Login ################################
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
                       #TODO Retirar plural dos EndPoints#
                       #Colocar no pdf a atualização do JSON criar encomenda#
-                      #Remover data expedição json frontEnd#
-                      #Nas coordenadas do fron end mudar o separador de "," para ":"
+                      #Remover data expedição json frontEnd#                          -- FEITO
+                      #Nas coordenadas do fron end mudar o separador de "," para ":"  -- FEITO
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
 
 ### REQUEST JWT TOKEN
@@ -264,7 +264,7 @@ Accept: application/json
 ### Get Categorias
 GET http://localhost:3001/backend/api/categoria
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1Nzk1MzIsImV4cCI6MTczNTU4MzEzMn0.UwuN2_Nqmcperm4_FnpqQRff4LDubrTc2DyIb6tj2CjSPSpp4NT7YkerGTgwWtVC
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU2NTQ4MDgsImV4cCI6MTczNTY1ODQwOH0.jhxJRikLHX286IRn4EEjrDvSoD1_8SfSYRFWjsD2QoXtHyRT9AtbneWqHRdQ8hmQ
 
 ### Criar novo tipo de sensor
 POST http://localhost:3001/backend/api/sensor/tipo
@@ -280,12 +280,12 @@ Accept: application/json
 ### Criar novo tipo de embalagem
 POST http://localhost:3001/backend/api/embalagem
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1ODU5NzUsImV4cCI6MTczNTU4OTU3NX0.JBrmXuNVpC94dpzBDh-rGTiENh_uBF7cGsOfClA3gh4V-3LzdRZUuInmcp2czqQL
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU2NTg5MzgsImV4cCI6MTczNTY2MjUzOH0.6P794k851WLA6nldpOCU_-f2rPteqeXfVjIdjgPHypDD2jVb2i_uOTOnG8QOU0yM
 Content-Type: application/json
 Accept: application/json
 
 {
-  "tipo": "E_TP",
+  "tipo": "E_TPP",
   "tipos_sensores": [
     { "id": 1 },
     { "id": 3 }

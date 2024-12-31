@@ -84,8 +84,26 @@ const fetchEncomendas = async () => {
     const data = await response.json();
     tableData.value = data.map(order => [
       order.id,
-      new Date(order.data_expedicao).toLocaleString(),
-      order.data_entrega ? new Date(order.data_entrega).toLocaleString() : "Não Entregue",
+      order.data_expedicao
+        ? new Date(order.data_expedicao).toLocaleString("pt-PT", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
+        : "Não definido",
+      order.data_entrega
+        ? new Date(order.data_entrega).toLocaleString("pt-PT", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
+        : "Não definido",
       formateEstado(order.estado),
     ]);
   } catch (error) {
@@ -117,8 +135,26 @@ const fetchEncomendasByEstado = async () => {
     const data = await response.json();
     tableData.value = data.map(order => [
       order.id,
-      new Date(order.data_expedicao).toLocaleString(),
-      order.data_entrega ? new Date(order.data_entrega).toLocaleString() : "Não Entregue",
+      order.data_expedicao
+        ? new Date(order.data_expedicao).toLocaleString("pt-PT", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
+        : "Não definido",
+      order.data_entrega
+        ? new Date(order.data_entrega).toLocaleString("pt-PT", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
+        : "Não definido",
       formateEstado(order.estado),
     ]);
   } catch (error) {
@@ -188,7 +224,7 @@ const verTracking = async (id) => {
       if (map) {
         map.remove();
       }
-      const firstCoord = trackingData.value[0].coordenadas.split(',');
+      const firstCoord = trackingData.value[0].coordenadas.split(':');
       map = L.map('map').setView([firstCoord[0], firstCoord[1]], 13);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -196,7 +232,7 @@ const verTracking = async (id) => {
       }).addTo(map);
 
       markers = trackingData.value.map(coord => {
-        const [lat, lng] = coord.coordenadas.split(',').map(Number);
+        const [lat, lng] = coord.coordenadas.split(':').map(Number);
         const marker = L.marker([lat, lng]).addTo(map).bindPopup(`Volume ID: ${coord.volumeId}, Produto: ${coord.produtoNome}`);
         return marker;
       });
@@ -263,17 +299,16 @@ onMounted(async () => {
 
   <!-- Modal de Alertas -->
   <div v-if="mostrarAlertasModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-    <!-- Botão de fechar fora do modal -->
-    <button @click="mostrarAlertasModal = false"
-      class="absolute top-3 right-[calc(50%-25%)] w-8 h-8 bg-gray-200 text-gray-600 hover:text-gray-900 hover:bg-white rounded-full flex items-center justify-center z-50 shadow">
-      <i class="fas fa-times"></i>
-    </button>
-
     <!-- Conteúdo do Modal -->
     <div class="bg-white w-1/2 p-0 rounded shadow-lg relative max-h-[90vh] overflow-y-auto">
       <!-- Cabeçalho fixo preenchido -->
-      <div class="sticky top-0 bg-white z-10 p-4 border-b border-gray-300">
+      <div class="sticky top-0 bg-white z-10 p-4 border-b border-gray-300 flex justify-between items-center">
         <h2 class="text-xl font-semibold">Alertas da Encomenda</h2>
+        <!-- Botão de fechar dentro do cabeçalho -->
+        <button @click="mostrarAlertasModal = false"
+          class="w-8 h-8 bg-gray-200 text-gray-600 hover:text-gray-900 hover:bg-white rounded-full flex items-center justify-center shadow">
+          <i class="fas fa-times"></i>
+        </button>
       </div>
 
       <!-- Conteúdo rolável -->
@@ -300,9 +335,6 @@ onMounted(async () => {
     </div>
   </div>
 
-
-
-
   <!-- Modal de Tracking -->
   <div v-if="mostrarTrackingModal"
     class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
@@ -315,7 +347,7 @@ onMounted(async () => {
         <h3 class="text-lg font-semibold">Volumes e Produtos:</h3>
         <div class="flex space-x-2">
           <button v-for="(coord, index) in trackingData" :key="index"
-            @click="goToLocation(...coord.coordenadas.split(',').map(Number))"
+            @click="goToLocation(...coord.coordenadas.split(':').map(Number))"
             class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-700 transition">
             {{ coord.produtoNome }}
           </button>

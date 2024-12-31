@@ -189,7 +189,7 @@ const fetchTiposSensores = async () => {
 const handleAssociarSensor = (embalagem) => {
   volumeSelecionado.value = null;
   embalagemSelecionada.value = embalagem;
-  tipoSelecionado.value = null;
+  tipoSensorSelecionado.value = null;
   valMax.value = null;
   valMin.value = null;
   mostrarAssociarSensorModal.value = true;
@@ -217,7 +217,7 @@ const associarSensor = async () => {
     let valor = null;
     if (tipoSensorSelecionado.value.id === 4) {
       // Coordenadas para tipo GPS
-      const coordenadas = ["39.73440231964457, -8.821080620077632", "39.74906316836962, -8.81280859823362"];
+      const coordenadas = ["39.73440231964457: -8.821080620077632", "39.74906316836962: -8.81280859823362"];
       valor = coordenadas[Math.floor(Math.random() * coordenadas.length)];
     } else {
       if (valMax.value === null || valMin.value === null) {
