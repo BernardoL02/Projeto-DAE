@@ -125,14 +125,10 @@ public class ConfigBean {
                     statement.executeUpdate();
                 }
             }
-
-            System.out.println("Dados importados com sucesso!");
-
         } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
     }
-
 
     private boolean isNumeric(String str) {
         try {
