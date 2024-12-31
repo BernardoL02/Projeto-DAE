@@ -47,12 +47,11 @@ Content-Type: application/json
 ###Criar uma nova encomenda #
 POST http://localhost:3001/backend/api/encomendas
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1ODI2OTQsImV4cCI6MTczNTU4NjI5NH0.43mBXoOrATEHq2omTY6EkUlyYEYDg_0bffgA9lMLFlaS4qe8xci1tLRRk-zzg57y
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1OTk2MzcsImV4cCI6MTczNTYwMzIzN30.9jJfjZDpazRYfIfJRNWup2nk0fzDsja1VDAW6dMbHX5c1V4oTFk_4KCKqJYToVWZ
 Content-Type: application/json
 
 {
   "username": "Bernardo",
-  "data_expedicao": "2024-10-31T10:00:00",
   "volumes": [
     {
       "embalagens": [
@@ -225,6 +224,15 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1N
 
 ################################ End Points Login ################################
 
+
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
+                      #TODO Retirar plural dos EndPoints#
+                      #Colocar no pdf a atualização do JSON criar encomenda#
+                      #Remover data expedição json frontEnd#
+                      #Nas coordenadas do fron end mudar o separador de "," para ":"
+                      #Adicionar mais volumes nas encomendas no ficheiro csv volumes/embalagens"#
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
+
 ### REQUEST JWT TOKEN
 POST http://localhost:3001/backend/api/auth/login
 Content-Type: application/json
@@ -268,7 +276,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "tipo": "Umidade"
+  "tipo": "humidade"
 }
 
 ### Criar novo tipo de embalagem

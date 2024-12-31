@@ -13,14 +13,25 @@ import pt.ipleiria.estg.dei.ei.dea.backend.dtos.TipoSensorDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.VolumeCreateEncomendaDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Cliente;
 
-import java.io.BufferedReader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 @Startup
 @Singleton
@@ -65,208 +76,82 @@ public class ConfigBean {
     @EJB
     private TipoEmbalagemBean tipoEmbalagemBean;
 
-    private static final String CSV_FILE_PATH = "pt/ipleiria/estg/dei/ei/dea/backend/dados/encomendas.csv";
-
-
     @PostConstruct
     public void populateDB() {
 
-        // Clientes
-        clienteBean.create("Bernardo", "123", "bernas@gmail.com", "Bernardo1", "Leiria");
-        clienteBean.create("Tendeiro", "123", "tendeiro@gmail.com", "ten", "Leiria");
-        clienteBean.create("Sousa", "123", "sousa@gmail.com", "SousaX", "Porto");
-        clienteBean.create("Ferreira", "123", "ferreira@gmail.com", "Fer", "Lisboa");
-        clienteBean.create("Carvalho", "123", "carvalho@gmail.com", "Carva", "Coimbra");
-        // Logistas
-        logistaBean.create("Miguel", "123", "miguel@gmail.com", "Smigueli");
-        logistaBean.create("Jose", "123", "jose@gmail.com", "JoseD");
-        // Gestores
-        gestorBean.create("Delgado", "123", "delgado@gmail.com", "José");
-
-        tipoSensoresBean.create("Temperatura");
-        tipoSensoresBean.create("Aceleração");
-        tipoSensoresBean.create("Pressão Atmosférica");
-        tipoSensoresBean.create("GPS");
-        
-        tipoEmbalagemBean.create( "Isotérmica", TipoSensorDTO.from(Arrays.asList(tipoSensoresBean.find(1))));
-        tipoEmbalagemBean.create("Original", TipoSensorDTO.from(Arrays.asList(tipoSensoresBean.find(4),tipoSensoresBean.find(2))));
-        tipoEmbalagemBean.create( "Metalica",  TipoSensorDTO.from(Arrays.asList(tipoSensoresBean.find(2), tipoSensoresBean.find(3),tipoSensoresBean.find(4))));
-        tipoEmbalagemBean.create( "Cartao", TipoSensorDTO.from( Arrays.asList(tipoSensoresBean.find(4))));
-        tipoEmbalagemBean.create( "E_TA",  TipoSensorDTO.from(Arrays.asList(tipoSensoresBean.find(1),tipoSensoresBean.find(2))));
-        tipoEmbalagemBean.create( "E_TG",  TipoSensorDTO.from(Arrays.asList(tipoSensoresBean.find(1),tipoSensoresBean.find(4))));
-        tipoEmbalagemBean.create( "E_TPG",  TipoSensorDTO.from(Arrays.asList(tipoSensoresBean.find(1),tipoSensoresBean.find(3),tipoSensoresBean.find(4))));
-        tipoEmbalagemBean.create( "E_TAP",  TipoSensorDTO.from(Arrays.asList(tipoSensoresBean.find(1),tipoSensoresBean.find(2),tipoSensoresBean.find(3))));
-        tipoEmbalagemBean.create( "E_AG",  TipoSensorDTO.from(Arrays.asList(tipoSensoresBean.find(2),tipoSensoresBean.find(4))));
-        tipoEmbalagemBean.create( "E_PG",  TipoSensorDTO.from(Arrays.asList(tipoSensoresBean.find(3),tipoSensoresBean.find(4))));
-        tipoEmbalagemBean.create( "E_AP",  TipoSensorDTO.from(Arrays.asList(tipoSensoresBean.find(2),tipoSensoresBean.find(3))));
-        tipoEmbalagemBean.create( "E_TAPG",  TipoSensorDTO.from(Arrays.asList(tipoSensoresBean.find(1),tipoSensoresBean.find(2),tipoSensoresBean.find(3),tipoSensoresBean.find(4))));
-
-        // Categorias de Produtos
-        categoriaBean.create(1, "Alimentos");
-        categoriaBean.create(2, "Tv e Som");
-        categoriaBean.create(3, "Ferramentas");
-        categoriaBean.create(4, "Bebidas");
-        categoriaBean.create(5, "Eletrodomésticos");
-        categoriaBean.create(6, "Vestuário");
-        categoriaBean.create(7, "Educação");
-        categoriaBean.create(9, "Desporto");
-        categoriaBean.create(10, "Casa");
-        categoriaBean.create(11, "Beleza");
-        categoriaBean.create(12, "Ferramentas Elétricas");
-        categoriaBean.create(13, "Outro");
-
-        // Produtos
-        // Alimentos
-        produtoBean.create("Maçã", 1);
-        produtoBean.create ("Pão Integral", 1);
-        produtoBean.create("Gelados", 1);
-
-        // Tv e Som
-        produtoBean.create( "Televisão LED 40\"", 2);
-        produtoBean.create( "Sistema de Som", 2);
-        produtoBean.create( "Fones", 2);
-
-        // Ferramentas
-        produtoBean.create( "Martelo", 3);
-        produtoBean.create( "Chave de Fenda", 3);
-        produtoBean.create( "Alicate", 3);
-
-        // Bebidas
-        produtoBean.create( "Coca Cola", 4);
-        produtoBean.create( "Água Mineral", 4);
-        produtoBean.create( "Sumo de Laranja", 4);
-
-        // Eletrodomésticos
-        produtoBean.create( "Frigorifico", 5);
-        produtoBean.create( "Micro-ondas", 5);
-        produtoBean.create( "Aspirador de Pó", 5);
-
-        // Vestuário
-        produtoBean.create( "Polo", 6);
-        produtoBean.create( "Calça Jeans", 6);
-        produtoBean.create( "Casaco de Lã", 6);
-
-        // Educação
-        produtoBean.create( "Livro de Matemática", 7);
-        produtoBean.create( "Dicionário", 7);
-        produtoBean.create( "Atlas Geográfico", 7);
-
-        // Esportivo
-        produtoBean.create( "Bola de Futebol", 9);
-        produtoBean.create( "Raquete de Tênis", 9);
-        produtoBean.create( "Luvas de Boxe", 9);
-
-        // Casa
-        produtoBean.create( "Sofá de Couro", 10);
-        produtoBean.create( "Mesa de Jantar", 10);
-        produtoBean.create( "Cadeira de Madeira", 10);
-
-        // Beleza
-        produtoBean.create( "Perfume", 11);
-        produtoBean.create( "Creme Hidratante", 11);
-        produtoBean.create( "Shampoo", 11);
-
-        // Ferramentas Elétricas
-        produtoBean.create( "Berbequins", 12);
-        produtoBean.create( "Aparafusadora", 12);
-        produtoBean.create( "Caixote Do Lixo", 12);
-
-
-        ///////////////////////Criar Encomendas e Volumes
-        ///////// Criar Encomenda para Bernardo
-            List<VolumeCreateEncomendaDTO> volumesBernardo1 = new ArrayList<>();
-            List<EmbalagemCreateEncomendaDTO> embalagensBernardo1 = new ArrayList<>();
-            List<EmbalagemCreateEncomendaDTO> embalagensBernardo2 = new ArrayList<>();
-            // Volume 1
-                    VolumeCreateEncomendaDTO volume1Bernardo1 = new VolumeCreateEncomendaDTO();
-                    embalagensBernardo1.add(new EmbalagemCreateEncomendaDTO(12,new ProdutoCreateEncomendaDTO(5),2));
-                    embalagensBernardo1.add(new EmbalagemCreateEncomendaDTO(1,new ProdutoCreateEncomendaDTO(3),10));
-                    volume1Bernardo1.setEmbalagens(embalagensBernardo1);
-                    volumesBernardo1.add(volume1Bernardo1);
-            // Volume 2
-                    VolumeCreateEncomendaDTO volume2Bernardo1 = new VolumeCreateEncomendaDTO();
-                    embalagensBernardo2.add(new EmbalagemCreateEncomendaDTO(10,new ProdutoCreateEncomendaDTO(4),2));
-                    embalagensBernardo2.add(new EmbalagemCreateEncomendaDTO(2,new ProdutoCreateEncomendaDTO(10),15));
-                    volume2Bernardo1.setEmbalagens(embalagensBernardo2);
-                    volumesBernardo1.add(volume2Bernardo1);
-            // Encomenda
-                    encomendaBean.create("Bernardo", volumesBernardo1, LocalDateTime.of(2024, 10, 31, 10, 0));
-                    Cliente bernardo = clienteBean.find("Bernardo");
-                    encomendaBean.mudarEstadoEncomenda(1, "PorEntregar", bernardo);
-
-        // Sensores
-        //Encomenda 1
-        sensorBean.create("29.0", 1, 100, 30, 10, 1);
-        sensorBean.create("39.7344200469475, -8.821063143811228", 4, 100, 3);
-        sensorBean.create("39.73965392397057, -8.818502730615972", 4, 100, 2);
-        sensorBean.create("1000", 3, 80, 1015, 980, 2);
-        //Encomenda 2
-        sensorBean.create("39.73513810246074, -8.799701988029124", 4, 5, 3);
-        sensorBean.create("1000", 3, 100, 1015, 980,3);
-        sensorBean.create("39.74986926478417, -8.808952733780515", 4, 88, 4);
-        sensorBean.create("25", 2, 88, 30, 5, 4);
-        //Encomenda 3
-        sensorBean.create("21.0", 1, 99, 35, 10, 5);
-        sensorBean.create("1000", 3, 80, 1015, 980, 5);
-        sensorBean.create("39.75604230095242, -9.03173385047379", 4, 100, 5);
-        sensorBean.create("39.60047246334607, -9.073144176554514", 4, 100, 6);
-        sensorBean.create("20", 2, 100,30, 5, 6);
-        //Encomenda 6
-        sensorBean.create("25.0", 1, 90, 30, 15, 11);
-        sensorBean.create("39.362060990104126, -9.374644032197038", 4, 100, 11);
-
-
-        // Alertas
-        // Alerta para Temperatura
-        alertaBean.create("Valor acima do limite máximo (35) para o sensor Temperatura", 1, "35", 99,1);
-        alertaBean.create("Valor abaixo do limite mínimo (15) para o sensor Temperatura", 1, "10",70, 2);
-
-        // Alerta para Aceleração
-        alertaBean.create("Valor acima do limite máximo (30) para o sensor Aceleração", 6, "32",90, 1);
-        alertaBean.create("Valor abaixo do limite mínimo (5) para o sensor Aceleração", 6, "3",11, 2);
-        alertaBean.create("Valor abaixo do limite mínimo (5) para o sensor Aceleração", 5, "3",60, 1);
-
-        // Alerta para Pressão Atmosférica
-        alertaBean.create("Valor acima do limite máximo (1015) para o sensor Pressão Atmosférica", 4, "1016",30, 2);
-        alertaBean.create("Valor abaixo do limite mínimo (980) para o sensor Pressão Atmosférica", 4, "975",50, 1);
-
-     
-        List<Encomenda> encomendas = carregarDadosDoCsv(CSV_FILE_PATH);
-        inserirDadosNaBD(encomendas);
+        ImportCSVDynamic("utilizadores", "utilizadores.csv", "dtype,username,email,nome,password,morada", "?,?,?,?,?,?");
+        ImportCSVDynamic("tipo_sensores", "tiposSensor.csv", "tipo", "?");
+        ImportCSVDynamic("tipo_embalagem", "tipoEmbalagem.csv", "tipo", "?");
+        ImportCSVDynamic("tipo_embalagem_tipo_sensores", "tiposEmbalagemTiposSensor.csv", "id_tipoembalagem,id_tiposensor", "?,?");
+        ImportCSVDynamic("categoria", "categorias.csv", "nome", "?");
+        ImportCSVDynamic("produto", "produtos.csv", "nome, categoria_id", "?,?");
+        ImportCSVDynamic("encomendas", "encomendas.csv", "version,data_entrega,data_expedicao,estado,cliente_id", "?,?,?,?,?");
+        ImportCSVDynamic("volume", "volumes.csv", "entregue, encomenda_id", "?,?");
+        ImportCSVDynamic("embalagem", "embalagens.csv", "quantidade,produto_id,id_tipo,id_volume", "?,?,?,?");
+        ImportCSVDynamic("sensor", "sensores.csv", "bateria,estado,time_stamp,val_max,val_min,valor,id_embalagem,id_tipo", "?,?,?,?,?,?,?,?");
+        ImportCSVDynamic("alerta", "alertas.csv", "bateria,mensagem,time_stamp,valor,id_sensor,id_volume", "?,?,?,?,?,?");
     }
 
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    private List<Encomenda> carregarDadosDoCsv(String filePath) {
-        List<Encomenda> encomendas = new ArrayList<>();
+    private void ImportCSVDynamic(String tableName, String fileName, String colunas, String placeholders) {
 
-        try (BufferedReader reader = Files.newBufferedReader(Paths.get(filePath), StandardCharsets.UTF_8)) {
-            String linha;
-            reader.readLine();
-            while ((linha = reader.readLine()) != null) {
-                String[] campos = linha.split(",");
-                if (campos.length == 4) {
-                    Encomenda encomenda = new Encomenda();
-                    encomenda.setData_entrega(LocalDateTime.parse(campos[0].trim(), DATE_TIME_FORMATTER));
-                    encomenda.setData_expedicao(LocalDateTime.parse(campos[1].trim(), DATE_TIME_FORMATTER));
-                    encomenda.setEstado(campos[2].trim());
-                    encomenda.setId((Integer.parseInt(campos[3].trim())));
-                    encomendas.add(encomenda);
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("dados/" + fileName);
+        String jdbcURL = "jdbc:postgresql://db:5432/backend";
+        String username = "postgres";
+        String password = "dbsecret";
+
+        String sql = String.format("INSERT INTO %s (%s) VALUES (%s)", tableName, colunas, placeholders);
+
+        try (Connection connection = DriverManager.getConnection(jdbcURL, username, password);
+             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+
+            String line = br.readLine();
+            while ((line = br.readLine()) != null) {
+                String[] valuesArray = line.split(",");
+
+                try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                    for (int i = 0; i < valuesArray.length; i++) {
+                        if (isNumeric(valuesArray[i])) {
+                            statement.setInt(i + 1, Integer.parseInt(valuesArray[i]));
+                        } else if (isBoolean(valuesArray[i])) {
+                            statement.setBoolean(i + 1, Boolean.parseBoolean(valuesArray[i]));
+                        } else if (isTimestamp(valuesArray[i])) {
+                            statement.setTimestamp(i + 1, Timestamp.valueOf(valuesArray[i]));
+                        } else {
+                            statement.setString(i + 1, valuesArray[i]);
+                        }
+                    }
+                    statement.executeUpdate();
                 }
             }
-        } catch (Exception e) {
+
+            System.out.println("Dados importados com sucesso!");
+
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(encomendas.size()+"ola");
-        return encomendas;
     }
 
-    private void inserirDadosNaBD(List<Encomenda> encomendas) {
-        for (Encomenda encomenda : encomendas) {
-            try {
-                em.persist(encomenda);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+
+    private boolean isNumeric(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
     }
+
+    private boolean isTimestamp(String str) {
+        try {
+            Timestamp.valueOf(str);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    private boolean isBoolean(String str) {
+        return "true".equalsIgnoreCase(str) || "false".equalsIgnoreCase(str);
+    }
+
 }

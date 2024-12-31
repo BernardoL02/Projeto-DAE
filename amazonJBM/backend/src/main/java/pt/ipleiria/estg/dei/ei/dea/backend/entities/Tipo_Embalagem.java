@@ -30,7 +30,7 @@ public class Tipo_Embalagem {
         @ManyToMany
         @JoinTable(
                 name = "tipo_embalagem_tipo_sensores",
-                joinColumns = @JoinColumn(name = "id_TipoEmbalabem", referencedColumnName = "id"),
+                joinColumns = @JoinColumn(name = "id_TipoEmbalagem", referencedColumnName = "id"),
                 inverseJoinColumns = @JoinColumn(name = "id_TipoSensor", referencedColumnName = "id")
         )
         private List<Tipo_Sensores> tipoSensores = new ArrayList<>();

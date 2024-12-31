@@ -29,7 +29,7 @@ public class Encomenda extends Versionable{
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cliente_id", nullable = false)
+    @JoinColumn(name = "cliente_id",referencedColumnName = "username", nullable = false)
     private Cliente cliente;
 
     private String estado;

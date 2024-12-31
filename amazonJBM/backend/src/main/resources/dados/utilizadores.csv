@@ -1,0 +1,9 @@
+dtype,username,email,nome,password,morada
+Cliente,Bernardo,bernas@gmail.com,Bernardo1,a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3,Leiria
+Cliente,Tendeiro,tendeiro@gmail.com,ten,a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3,Leiria
+Cliente,Sousa,sousa@gmail.com,SousaX,a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3,Porto
+Cliente,Ferreira,ferreira@gmail.com,Fer,a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3,Lisboa
+Cliente,Carvalho,carvalho@gmail.com,Carva,a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3,Coimbra
+Logista,Miguel,miguel@gmail.com,Smigueli,a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3,-
+Logista,Jose,jose@gmail.com,JoseD,a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3,-
+Gestor,Delgado,delgado@gmail.com,José,a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3,-

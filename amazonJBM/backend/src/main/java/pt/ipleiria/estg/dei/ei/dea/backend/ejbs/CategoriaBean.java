@@ -23,8 +23,8 @@ public class CategoriaBean {
     @EJB
     private TipoEmbalagemBean tipoEmbalagemBean;
 
-    public void create(int id, String nome){
-        Categoria categoria = new Categoria(id,nome);
+    public void create(String nome){
+        Categoria categoria = new Categoria(nome);
         em.persist(categoria);
     }
 
