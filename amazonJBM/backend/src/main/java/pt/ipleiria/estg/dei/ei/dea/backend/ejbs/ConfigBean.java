@@ -114,7 +114,9 @@ public class ConfigBean {
                             statement.setInt(i + 1, Integer.parseInt(valuesArray[i]));
                         } else if (isBoolean(valuesArray[i])) {
                             statement.setBoolean(i + 1, Boolean.parseBoolean(valuesArray[i]));
-                        } else if (isTimestamp(valuesArray[i])) {
+                        } else if (valuesArray[i].isEmpty() || "-".equals(valuesArray[i])) {
+                            statement.setNull(i + 1, Types.TIMESTAMP);
+                        }else if(isTimestamp(valuesArray[i])) {
                             statement.setTimestamp(i + 1, Timestamp.valueOf(valuesArray[i]));
                         } else {
                             statement.setString(i + 1, valuesArray[i]);
