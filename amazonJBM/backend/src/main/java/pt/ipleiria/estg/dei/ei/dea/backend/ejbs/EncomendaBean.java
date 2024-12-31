@@ -12,6 +12,7 @@ import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -31,7 +32,7 @@ public class EncomendaBean {
     @EJB
     private TipoEmbalagemBean tipoEmbalagemBean;
 
-    public Response create(String client_username, List<VolumeCreateEncomendaDTO> volumes, LocalDateTime data_expedicao) {
+    public Response create(String client_username, List<VolumeCreateEncomendaDTO> volumes) {
         Cliente cliente = clienteBean.find(client_username);
 
         if(cliente == null) {
@@ -50,7 +51,7 @@ public class EncomendaBean {
             }
         }
 
-        Encomenda encomenda = new Encomenda(cliente,data_expedicao);
+        Encomenda encomenda = new Encomenda(cliente);
         em.persist(encomenda);
 
         for(VolumeCreateEncomendaDTO volume: volumes) {
@@ -139,7 +140,14 @@ public class EncomendaBean {
     }
 
     public Response mudarEstadoEncomenda(int id, String estado, Utilizador user) {
-        var encomenda = this.find(id);
+
+        Set<String> estadosPermitidos = Set.of("EmProcessamento", "PorEntregar", "Entregue", "Cancelada");
+
+        if (!estadosPermitidos.contains(estado)) {
+            return Response.status(Response.Status.BAD_REQUEST).entity("Estado inválido! Estados permitidos são: EmProcessamento, PorEntregar, Entregue, Cancelada.").build();
+        }
+
+        Encomenda encomenda = this.find(id);
 
         if (encomenda == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("Encomenda não encontrada!").build();
@@ -216,6 +224,8 @@ public class EncomendaBean {
                         }
                     }
                 }
+
+                encomenda.setData_expedicao(LocalDateTime.now());
             }
         }
 

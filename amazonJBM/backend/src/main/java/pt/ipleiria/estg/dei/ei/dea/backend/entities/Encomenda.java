@@ -41,10 +41,9 @@ public class Encomenda extends Versionable{
     @OneToMany(mappedBy = "encomenda", fetch = FetchType.EAGER)
     private List<Volume> volumes = new ArrayList<>();
 
-    public Encomenda(Cliente cliente, LocalDateTime data_expedicao) {
+    public Encomenda(Cliente cliente) {
         this.cliente = cliente;
         this.estado = "EmProcessamento";
-        this.data_expedicao = data_expedicao;
 
         if(volumes == null) {
             volumes = new ArrayList<>();
