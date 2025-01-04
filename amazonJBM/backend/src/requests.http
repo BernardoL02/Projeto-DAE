@@ -227,6 +227,8 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU2N
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
                       #TODO Retirar plural dos EndPoints#
                       #Endpoint remover sensor de embalagem#
+                      #Guardar e carregar dados criados na dashboard do logista#
+                      #Colocar sensores que a embalagem necessita no front end da logistica#
                       #Faz sentido um tipo de embalagem ter dois sensores do mesmo toipo???#
                       #Colocar no pdf a atualização do JSON criar encomenda#
                       #Falar no word,o que foi melhorado em relacao aos endpoints, falar dos novos endpoints e falar nos extras#
@@ -248,14 +250,14 @@ Accept: application/json
 ### GET User Info
 GET http://localhost:3001/backend/api/auth/user
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTIyNTg3NiwiZXhwIjoxNzM1MjI5NDc2fQ.D5vp08BndFDGMP2gLTYWbJjKy-CDJDROpK4Tg75FwjHbgmR2HocGg5qSUTK4cbSv
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzYwMjI5MDMsImV4cCI6MTczNjAyNjUwM30.YK1muUdrfSce8siUn9y_HQJDhHArNoUKakRrW7xZgZsX3Jd__Wc4tbEsTPOIqr_L
 
 
 ################################ Endpoints Extra  ################################
 ### Criar um novo produto
 POST http://localhost:3001/backend/api/produtos
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1ODU5NzUsImV4cCI6MTczNTU4OTU3NX0.JBrmXuNVpC94dpzBDh-rGTiENh_uBF7cGsOfClA3gh4V-3LzdRZUuInmcp2czqQL
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzYwMzEyNTksImV4cCI6MTczNjAzNDg1OX0.SRyqpSNq86_gfdWnzlhAa9R0_bye--P9z-Kf8wOy3jPP8Cqhv4Tqgo-DCMBexJWn
 Content-Type: application/json
 Accept: application/json
 

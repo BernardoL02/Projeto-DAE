@@ -320,10 +320,13 @@ onMounted(() => {
     </div>
   </div>
 
+  <div class="flex justify-center mt-20">
+    <h1 class="text-center text-2xl font-semibold mb-4">Criar Nova Encomenda</h1>
+  </div>
+
   <div
-    class="flex flex-col justify-center mx-auto mt-10 p-6 mb-10 bg-white shadow-md rounded-lg border border-gray-300 w-full max-w-5xl">
+    class="flex flex-col justify-center mx-auto mt-4 p-6 mb-10 bg-white shadow-md rounded-lg border border-gray-300 w-full max-w-5xl">
     <div class="mb-8">
-      <h1 class="text-center text-2xl font-semibold mb-4">Criar Nova Encomenda</h1>
 
       <div class="mb-4">
         <label class="block text-gray-700 font-semibold mb-1">Cliente:</label>
