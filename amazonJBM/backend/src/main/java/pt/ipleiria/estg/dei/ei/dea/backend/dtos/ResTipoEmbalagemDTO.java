@@ -17,6 +17,10 @@ public class ResTipoEmbalagemDTO implements Serializable {
         this.tipo = tipo;
     }
 
+    public ResTipoEmbalagemDTO() {
+
+    }
+
     public int getId() {
         return id;
     }

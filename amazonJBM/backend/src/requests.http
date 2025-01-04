@@ -226,7 +226,10 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU2N
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
                       #TODO Retirar plural dos EndPoints#
+                      #Endpoint remover sensor de embalagem#
+                      #Faz sentido um tipo de embalagem ter dois sensores do mesmo toipo???#
                       #Colocar no pdf a atualização do JSON criar encomenda#
+                      #Falar no word,o que foi melhorado em relacao aos endpoints, falar dos novos endpoints e falar nos extras#
                       #Remover data expedição json frontEnd#                          -- FEITO
                       #Nas coordenadas do fron end mudar o separador de "," para ":"  -- FEITO
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
@@ -280,7 +283,7 @@ Accept: application/json
 ### Criar novo tipo de embalagem
 POST http://localhost:3001/backend/api/embalagem/tipo
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU2NjgxODUsImV4cCI6MTczNTY3MTc4NX0.hsGpjiBtUWVZQdJ6-rmzmeHhn_vdMYzhj9O4EM4YysX1eUvl4j_ayJsALuhjTww7
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzYwMTYxNDcsImV4cCI6MTczNjAxOTc0N30.5j7Mb1YjlEKj0QTy7S-QJWyMbucM6eA4mySYWgCwxmwc39lSHuhJSrCTCqdP3kb_
 Content-Type: application/json
 Accept: application/json
 
@@ -291,3 +294,9 @@ Accept: application/json
     { "id": 3 }
   ]
 }
+
+### Get Tipos de Sensores Por Embalagem
+GET http://localhost:3001/backend/api/embalagem/tipo/12
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzYwMTYxNDcsImV4cCI6MTczNjAxOTc0N30.5j7Mb1YjlEKj0QTy7S-QJWyMbucM6eA4mySYWgCwxmwc39lSHuhJSrCTCqdP3kb_
+

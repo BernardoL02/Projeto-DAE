@@ -400,7 +400,6 @@ const VolumeEntregue = async (volume) => {
 
     successMessage.value = `Volume ${volume.id} entregue com sucesso!`;
 
-
     await fetchEncomendaDetalhes();
   } catch (error) {
     showError(error.message);
@@ -493,17 +492,19 @@ onMounted(() => {
                 <p><strong>Produto:</strong> {{ embalagem.produtoName }}</p>
                 <p><strong>Quantidade:</strong> {{ embalagem.quantidade }}</p>
               </div>
-              <button @click="toggleEmbalagem(embalagem)" class="text-white px-3 py-1 rounded transition"
-                :class="embalagem.mostrarSensores ? 'bg-[#202c38] hover:bg-[#1b2530]' : 'bg-[#202c38] hover:bg-[#1b2530]'">
-                {{ embalagem.mostrarSensores ? 'Esconder Sensores' : 'Mostrar Sensores' }}
-              </button>
-
+              <div class="flex flex-col space-y-4">
+                <button v-if="encomendaData.estado === 'Em Processamento'" @click="handleAssociarSensor(embalagem)"
+                  class="text-white px-3 py-1 rounded transition"
+                  :class="embalagem.mostrarSensores ? 'bg-[#202c38] hover:bg-[#1b2530]' : 'bg-[#202c38] hover:bg-[#1b2530]'">
+                  Associar Sensor
+                </button>
+                <button @click="toggleEmbalagem(embalagem)" class="text-white px-3 py-1 rounded transition"
+                  :class="embalagem.mostrarSensores ? 'bg-[#202c38] hover:bg-[#1b2530]' : 'bg-[#202c38] hover:bg-[#1b2530]'">
+                  {{ embalagem.mostrarSensores ? 'Esconder Sensores' : 'Mostrar Sensores' }}
+                </button>
+              </div>
             </div>
-            <button v-if="encomendaData.estado === 'Em Processamento'" @click="handleAssociarSensor(embalagem)"
-              class="text-white px-3 py-1 rounded transition"
-              :class="embalagem.mostrarSensores ? 'bg-[#202c38] hover:bg-[#1b2530]' : 'bg-[#202c38] hover:bg-[#1b2530]'">
-              Associar Sensor
-            </button>
+
 
             <div v-if="embalagem.mostrarSensores" class="mt-4">
               <h4 class="font-semibold text-md text-gray-700">Sensores Associados:</h4>

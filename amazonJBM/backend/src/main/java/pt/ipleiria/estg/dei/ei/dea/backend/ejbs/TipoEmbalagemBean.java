@@ -5,7 +5,10 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.ws.rs.core.Response;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResTipoEmbalagemDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResTipoSensorDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.TipoSensorDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.entities.Embalagem;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Tipo_Embalagem;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Tipo_Sensores;
 
@@ -46,13 +49,21 @@ public class TipoEmbalagemBean {
     }
 
     public Tipo_Embalagem find(int id) {
-        Tipo_Embalagem tipo = em.find(Tipo_Embalagem.class, id);
-
-        return tipo;
+        return  em.find(Tipo_Embalagem.class, id);
     }
 
     public List<Tipo_Embalagem> findAll() {
         return em.createNamedQuery("getTipoEmbalagem", Tipo_Embalagem.class).getResultList();
     }
 
+    public Response detalheEmbalagem(int id) {
+
+        Tipo_Embalagem tipoEmbalagem = this.find(id);
+
+        if(tipoEmbalagem == null){
+            return Response.status(Response.Status.BAD_REQUEST).entity("Tipo de embalagem não encotrado!").build();
+        }
+
+        return Response.ok(ResTipoSensorDTO.from(tipoEmbalagem.getSensores())).build();
+    }
 }

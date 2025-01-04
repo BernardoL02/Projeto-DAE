@@ -57,9 +57,15 @@ public class EmbalagemService {
 
     @GET
     @Path("tipos")
-    public Response getTipoEmbalagem() {
+    public Response getTiposEmbalagem() {
         List<Tipo_Embalagem> tipoEmbalagens = tipoEmbalagemBean.findAll();
         return Response.ok(ResTipoEmbalagemDTO.from(tipoEmbalagens)).build();
+    }
+
+    @GET
+    @Path("tipo/{id}")
+    public Response getDetalheEmbalagem(@PathParam("id") int id) {
+        return tipoEmbalagemBean.detalheEmbalagem(id);
     }
 
     @POST
