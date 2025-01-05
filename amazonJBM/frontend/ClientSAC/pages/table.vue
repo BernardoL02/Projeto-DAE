@@ -138,7 +138,25 @@ async function cancelar(id) {
           <tr v-for="(row, rowIndex) in tableData" :key="rowIndex"
             class="odd:bg-gray-100 even:bg-white hover:bg-indigo-50 transition duration-300">
             <td v-for="(cell, cellIndex) in row" :key="cellIndex" class="py-4 px-6 text-center border border-gray-300">
-              {{ cell }}
+              <div v-if="String(cell).includes('Cancelada')" class="flex flex-row justify-center">
+                <div class="bg-red-500 rounded-full w-3 h-3 mt-[6px] mr-2"></div>
+                {{ cell }}
+              </div>
+              <div v-else-if="String(cell).includes('Entregue')" class="flex flex-row justify-center">
+                <div class="bg-green-500 rounded-full w-3 h-3 mt-[6px] mr-2"></div>
+                {{ cell }}
+              </div>
+              <div v-else-if="String(cell).includes('Em Processamento')" class="flex flex-row justify-center">
+                <div class="bg-sky-500 rounded-full w-3 h-3 mt-[6px] mr-2"></div>
+                {{ cell }}
+              </div>
+              <div v-else-if="String(cell).includes('Por Entregar')" class="flex flex-row justify-center">
+                <div class="bg-amber-400 rounded-full w-3 h-3 mt-[6px] mr-2"></div>
+                {{ cell }}
+              </div>
+              <div v-else>
+                {{ cell }}
+              </div>
             </td>
             <td v-if="mostrarOperacoes == true" class="py-4 px-6 text-center border border-gray-300">
               <div v-if="row.includes('Em Processamento')">
