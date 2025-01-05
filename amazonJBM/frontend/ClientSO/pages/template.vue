@@ -144,7 +144,7 @@ onMounted(() => {
       <div class="flex flex-col items-end space-y-2">
         <!-- Nome do sistema -->
         <div>
-          <div class="text-white font-bold">Amazon JBM</div>
+          <div class="text-white font-bold flex items-end justify-end">Amazon JBM</div>
           <div class="text-white">Sistema Operacional</div>
         </div>
 

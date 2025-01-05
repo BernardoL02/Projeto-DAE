@@ -72,7 +72,9 @@ const fetchEncomendaDetalhes = async () => {
     encomendaData.value = {
       id: data.id,
       username: data.username,
-      data_expedicao: new Date(data.data_expedicao).toLocaleString(),
+      data_expedicao: data.data_expedicao
+        ? new Date(data.data_expedicao).toLocaleString('pt-PT')
+        : 'Não definido',
       data_entrega: data.data_entrega
         ? new Date(data.data_entrega).toLocaleString('pt-PT')
         : 'Não definido',

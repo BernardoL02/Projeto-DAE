@@ -65,9 +65,10 @@ const logout = () => {
       <!-- Nome do sistema e botão de logout -->
       <div class="flex flex-col items-end space-y-2">
         <!-- Nome do sistema -->
+
         <div>
-          <div class="text-white font-bold text-xl">Amazon JBM</div>
-          <div class="text-white text-sm">Sistema de Logística</div>
+          <div class="text-white font-bold flex items-end justify-end">Amazon JBM</div>
+          <div class="text-white">Sistema de Logística</div>
         </div>
 
         <!-- Botão de logout menor -->
