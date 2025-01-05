@@ -62,12 +62,6 @@ public class EmbalagemService {
         return Response.ok(ResTipoEmbalagemDTO.from(tipoEmbalagens)).build();
     }
 
-    @GET
-    @Path("tipo/{id}")
-    public Response getDetalheEmbalagem(@PathParam("id") int id) {
-        return tipoEmbalagemBean.detalheEmbalagem(id);
-    }
-
     @POST
     @Path("/tipo")
     public Response criarTipoEmbalagem(CreateTipoEmbalagemDTO createTipoEmbalagemDTO) {

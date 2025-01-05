@@ -220,16 +220,16 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1N
 ### Get All Tipos de Embalagens #
 GET http://localhost:3001/backend/api/embalagem/tipos
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU2NTg5MzgsImV4cCI6MTczNTY2MjUzOH0.6P794k851WLA6nldpOCU_-f2rPteqeXfVjIdjgPHypDD2jVb2i_uOTOnG8QOU0yM
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzYwODkxODUsImV4cCI6MTczNjA5Mjc4NX0.xIRayfiD5-yjlr4YKjA8bHdnrUOmv1OyOQEynRGqIfS6JGxOE50gfcQD0SfyfM86
 
 ################################ End Points Login ################################
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
                       #TODO Retirar plural dos EndPoints#
                       #Endpoint remover sensor de embalagem#
-                      #Guardar e carregar dados criados na dashboard do logista#
-                      #Colocar sensores que a embalagem necessita no front end da logistica#
+                      #Colocar sensores que a embalagem necessita no front end da logistica# -- FEITO
                       #Faz sentido um tipo de embalagem ter dois sensores do mesmo toipo???#
+                      #Ainda é para fazer o track de enmenda na pagina de login???#
                       #Colocar no pdf a atualização do JSON criar encomenda#
                       #Falar no word,o que foi melhorado em relacao aos endpoints, falar dos novos endpoints e falar nos extras#
                       #Remover data expedição json frontEnd#                          -- FEITO
@@ -285,7 +285,7 @@ Accept: application/json
 ### Criar novo tipo de embalagem
 POST http://localhost:3001/backend/api/embalagem/tipo
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzYwMTYxNDcsImV4cCI6MTczNjAxOTc0N30.5j7Mb1YjlEKj0QTy7S-QJWyMbucM6eA4mySYWgCwxmwc39lSHuhJSrCTCqdP3kb_
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzYwODkxODUsImV4cCI6MTczNjA5Mjc4NX0.xIRayfiD5-yjlr4YKjA8bHdnrUOmv1OyOQEynRGqIfS6JGxOE50gfcQD0SfyfM86
 Content-Type: application/json
 Accept: application/json
 
@@ -296,9 +296,3 @@ Accept: application/json
     { "id": 3 }
   ]
 }
-
-### Get Tipos de Sensores Por Embalagem
-GET http://localhost:3001/backend/api/embalagem/tipo/12
-Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzYwMTYxNDcsImV4cCI6MTczNjAxOTc0N30.5j7Mb1YjlEKj0QTy7S-QJWyMbucM6eA4mySYWgCwxmwc39lSHuhJSrCTCqdP3kb_
-

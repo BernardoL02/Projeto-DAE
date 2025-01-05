@@ -53,17 +53,6 @@ public class TipoEmbalagemBean {
     }
 
     public List<Tipo_Embalagem> findAll() {
-        return em.createNamedQuery("getTipoEmbalagem", Tipo_Embalagem.class).getResultList();
-    }
-
-    public Response detalheEmbalagem(int id) {
-
-        Tipo_Embalagem tipoEmbalagem = this.find(id);
-
-        if(tipoEmbalagem == null){
-            return Response.status(Response.Status.BAD_REQUEST).entity("Tipo de embalagem não encotrado!").build();
-        }
-
-        return Response.ok(ResTipoSensorDTO.from(tipoEmbalagem.getSensores())).build();
+        return  em.createNamedQuery("getTipoEmbalagem", Tipo_Embalagem.class).getResultList();
     }
 }

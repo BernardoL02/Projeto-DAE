@@ -283,6 +283,7 @@ const fetchEmbalagens = async () => {
     const data = await response.json();
     embalagens.value = data.map((embalagem) => ({
       tipo: embalagem.tipo,
+      sensores: embalagem.tipoSensorDTO.map((sensor) => sensor.tipo)
     }));
   } catch (error) {
     console.error("Erro ao buscar tipos de embalagem:", error);
@@ -322,8 +323,7 @@ const criarEmbalagem = async () => {
     });
 
     if (!response.ok) {
-      const errorResponse = await response.text();
-      throw new Error(`Erro ao criar tipo de embalagem: ${errorResponse}`);
+      throw new Error(await response.text());
     }
 
     successMessage.value = "Tipo de embalagem criado com sucesso!";
@@ -335,8 +335,7 @@ const criarEmbalagem = async () => {
     selectedSensores.value = [];
     mostrarModalCriarEmbalagem.value = false;
   } catch (error) {
-    console.error("Erro ao criar tipo de embalagem:", error);
-    showError("Erro ao criar tipo de embalagem");
+    showError(error.message);
   }
 };
 
@@ -553,18 +552,34 @@ onMounted(() => {
           </button>
         </div>
 
-        <!-- Modal para mostrar embalagens -->
         <div v-if="mostrarModalEmbalagens"
           class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-          <div class="bg-white w-3/4 p-6 rounded shadow-lg relative max-h-[90vh] overflow-y-auto">
+          <div
+            class="bg-white w-11/12 sm:w-3/4 md:w-2/3 lg:w-1/2 p-6 rounded-lg shadow-lg relative max-h-[90vh] overflow-y-auto max-w-2xl">
+
             <button @click="mostrarModalEmbalagens = false"
-              class="absolute top-2 right-2 bg-gray-200 text-gray-600 hover:text-gray-900 hover:bg-white rounded-full w-8 h-8 flex items-center justify-center">
-              <i class="fas fa-times"></i>
+              class="absolute top-7 right-6 bg-gray-200 text-gray-600 hover:text-gray-900 hover:bg-white rounded-full w-8 h-8 flex items-center justify-center focus:outline-none">
+              <i class="fas fa-times text-sm"></i>
             </button>
-            <h2 class="text-xl font-semibold mb-4">Tipos de Embalagens</h2>
-            <Table :tableTitles="['Tipo']" :tableData="embalagens" :mostrarAcoes="false" />
+            <div class="mb-4">
+              <h2 class="text-lg font-semibold">Tipos de Embalagens</h2>
+              <p class="text-base text-gray-700">Estes são os sensores mínimos necessários para cada embalagem.</p>
+            </div>
+
+            <!-- Grid de cartões -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-w-2xl">
+              <div v-for="embalagem in embalagens" :key="embalagem.id"
+                class="p-4 bg-gray-100 rounded-lg shadow hover:shadow-lg transition-transform transform hover:scale-105 ]">
+                <h3 class="text-base font-semibold text-gray-800 mb-2">{{ embalagem.tipo }}</h3>
+                <ul class="list-disc list-inside text-gray-600 text-sm">
+                  <li v-for="sensor in embalagem.sensores" :key="sensor">{{ sensor }}</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
+
+
 
         <!-- Modal para criar embalagem -->
         <div v-if="mostrarModalCriarEmbalagem"

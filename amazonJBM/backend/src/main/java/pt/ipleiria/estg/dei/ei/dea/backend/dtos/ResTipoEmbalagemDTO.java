@@ -11,10 +11,12 @@ public class ResTipoEmbalagemDTO implements Serializable {
 
     private int id;
     private String tipo;
+    private List<ResTipoSensorDTO> tipoSensorDTO;
 
-    public ResTipoEmbalagemDTO(int id, String tipo) {
+    public ResTipoEmbalagemDTO(int id, String tipo, List<ResTipoSensorDTO> tipoSensorDTO) {
         this.id = id;
         this.tipo = tipo;
+        this.tipoSensorDTO = tipoSensorDTO;
     }
 
     public ResTipoEmbalagemDTO() {
@@ -37,10 +39,19 @@ public class ResTipoEmbalagemDTO implements Serializable {
         this.tipo = tipo;
     }
 
+    public List<ResTipoSensorDTO> getTipoSensorDTO() {
+        return tipoSensorDTO;
+    }
+
+    public void setTipoSensorDTO(List<ResTipoSensorDTO> tipoSensorDTO) {
+        this.tipoSensorDTO = tipoSensorDTO;
+    }
+
     public static ResTipoEmbalagemDTO from(Tipo_Embalagem tipoEmbalagem) {
         return new ResTipoEmbalagemDTO(
                 tipoEmbalagem.getId(),
-                tipoEmbalagem.getTipo()
+                tipoEmbalagem.getTipo(),
+                ResTipoSensorDTO.from(tipoEmbalagem.getSensores())
         );
     }
 

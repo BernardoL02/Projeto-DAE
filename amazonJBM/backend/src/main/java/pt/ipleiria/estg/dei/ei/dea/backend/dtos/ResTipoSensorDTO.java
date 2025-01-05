@@ -29,6 +29,7 @@ public class ResTipoSensorDTO implements Serializable {
                 tipoSensores.getTipo()
         );
     }
+
     public static List<ResTipoSensorDTO> from(List<Tipo_Sensores> tipoSensores) {
         return tipoSensores.stream().map(ResTipoSensorDTO::from).collect(Collectors.toList());
     }
