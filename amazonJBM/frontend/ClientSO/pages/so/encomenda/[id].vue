@@ -14,6 +14,8 @@ const encomendaData = ref(null);
 const volumesData = ref([]);
 const alertasData = ref({});
 const errorMessages = ref([]);
+const historicoData = ref([]);
+const showHistoricoModal = ref(false);
 
 // Função para obter o token do sessionStorage
 const getToken = () => sessionStorage.getItem('token');
@@ -134,6 +136,29 @@ const fetchAlertas = async (sensor) => {
   }
 };
 
+// Função para buscar histórico de um sensor
+const fetchHistoricoSensor = async (sensorId) => {
+  try {
+    const token = getToken();
+    const response = await fetch(`${api}/sensor/${sensorId}/leitura`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
+
+    historicoData.value = await response.json();
+    showHistoricoModal.value = true; // Exibir o modal com o histórico
+  } catch (error) {
+    showError(error.message);
+  }
+};
 
 onMounted(fetchEncomendaDetalhes);
 
@@ -150,6 +175,31 @@ onMounted(fetchEncomendaDetalhes);
       <p>{{ error }}</p>
     </div>
   </div>
+
+  <!-- Modal para Histórico -->
+  <div v-if="showHistoricoModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-3/4 max-w-4xl relative">
+      <!-- Título e botão de fechar -->
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-lg font-bold">Histórico de Leituras do Sensor</h2>
+        <button @click="showHistoricoModal = false" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+          X
+        </button>
+      </div>
+
+      <!-- Conteúdo com rolagem -->
+      <div class="overflow-y-auto max-h-96">
+        <ul>
+          <li v-for="leitura in historicoData" :key="leitura.timeStamp" class="p-4 border-b">
+            <p><strong>Valor:</strong> {{ leitura.valor }}</p>
+            <p><strong>Bateria:</strong> {{ leitura.bateria }}%</p>
+            <p><strong>Timestamp:</strong> {{ leitura.timeStamp }}</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
 
   <div v-if="encomendaData"
     class="flex flex-col justify-center mx-auto mt-10 p-6 mb-10 bg-white shadow-md rounded-lg border border-gray-300 w-full max-w-5xl">
@@ -209,8 +259,12 @@ onMounted(fetchEncomendaDetalhes);
                   <p><strong>Estado:</strong> {{ sensor.estado }}</p>
                   <p><strong>Última Leitura:</strong> {{ sensor.ultimaLeitura }}</p>
                   <button v-if="encomendaData.estado !== 'Em Processamento'" @click="fetchAlertas(sensor)"
-                    class="bg-yellow-500 text-white px-3 py-1 rounded mt-2 hover:bg-yellow-700 transition">
+                    class="bg-yellow-500 text-white px-3 py-1 rounded mt-2 hover:bg-yellow-700 transition mr-2">
                     {{ sensor.mostrarAlertas ? 'Esconder Alertas' : 'Ver Alertas' }}
+                  </button>
+                  <button @click="fetchHistoricoSensor(sensor.id)"
+                    class="bg-yellow-500 text-white px-3 py-1 rounded mt-2 hover:bg-yellow-700 transition">
+                    Ver Histórico
                   </button>
 
                   <div v-if="sensor.mostrarAlertas" class="mt-2 p-2 bg-yellow-100 rounded shadow">

@@ -71,4 +71,13 @@ public class SensorService {
         return sensorBean.getAlertasSensor(id, user);
     }
 
+    @GET
+    @Path("/{id}/leitura")
+    @RolesAllowed({"Gestor", "Cliente"})
+    public Response getLeiturasSensor(@PathParam("id") int id) {
+        Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
+
+        return sensorBean.getLeiturasSensor(id, user);
+    }
+
 }

@@ -1,34 +1,34 @@
-nome, categoria_id
-Maçã,1
-Pão Integral,1
-Gelados,1
-Televisão LED 40,2
-Sistema de Som,2
-Fones,2
-Martelo,3
-Chave de Fenda,3
-Alicate,3
-Coca Cola,4
-Água Mineral,4
-Sumo de Laranja,4
-Frigorifico,5
-Micro-ondas,5
-Aspirador de Pó,5
-Polo,6
-Calça Jeans,6
-Casaco de Lã,6
-Livro de Matemática,7
-Dicionário,7
-Atlas Geográfico,7
-Bola de Futebol,9
-Raquete de Tênis,9
-Luvas de Boxe,9
-Sofá de Couro,10
-Mesa de Jantar,10
-Cadeira de Madeira,10
-Perfume,11
-Creme Hidratante,11
-Shampoo,11
-Berbequins,12
-Aparafusadora,12
-Caixote Do Lixo,12
+id,nome,categoria_id
+1,Maçã,1
+2,Pão Integral,1
+3,Gelados,1
+4,Televisão LED 40,2
+5,Sistema de Som,2
+6,Fones,2
+7,Martelo,3
+8,Chave de Fenda,3
+9,Alicate,3
+10,Coca Cola,4
+11,Água Mineral,4
+12,Sumo de Laranja,4
+13,Frigorifico,5
+14,Micro-ondas,5
+15,Aspirador de Pó,5
+16,Polo,6
+17,Calça Jeans,6
+18,Casaco de Lã,6
+19,Livro de Matemática,7
+20,Dicionário,7
+21,Atlas Geográfico,7
+22,Bola de Futebol,9
+23,Raquete de Tênis,9
+24,Luvas de Boxe,9
+25,Sofá de Couro,10
+26,Mesa de Jantar,10
+27,Cadeira de Madeira,10
+28,Perfume,11
+29,Creme Hidratante,11
+30,Shampoo,11
+31,Berbequins,12
+32,Aparafusadora,12
+33,Caixote Do Lixo,12

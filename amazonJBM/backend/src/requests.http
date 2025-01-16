@@ -47,10 +47,11 @@ Content-Type: application/json
 ###Criar uma nova encomenda #
 POST http://localhost:3001/backend/api/encomendas
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1OTk2MzcsImV4cCI6MTczNTYwMzIzN30.9jJfjZDpazRYfIfJRNWup2nk0fzDsja1VDAW6dMbHX5c1V4oTFk_4KCKqJYToVWZ
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcwNjYyNTMsImV4cCI6MTczNzA2OTg1M30.TX-RfahFwdIpWYz3Bd3oBitkS719ONSvSP6J4Ql5aQgIoXP9zHzXOs9TJxUPz5kV
 Content-Type: application/json
 
 {
+  "id": 100,
   "username": "Bernardo",
   "volumes": [
     {
@@ -99,6 +100,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1N
 Content-Type: application/json
 
 {
+  "id": 10,
       "embalagens": [
         {
           "produto": {
@@ -202,7 +204,10 @@ GET http://localhost:3001/backend/api/sensor/1/alertas
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MDU3NjYzLCJleHAiOjE3MzcwNjEyNjN9.4hyLfuMYa8RSDGyhPgSOALKj0CVlBLfO95-KSjbemqs-FsFbWhrGvxk0rtyhPjw2
 
-
+### GET Ver Leituras de um sensor #
+GET http://localhost:3001/backend/api/sensor/1/leitura
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MDY0MzE2LCJleHAiOjE3MzcwNjc5MTZ9.MSPfwXCuULtLhOq9iqQre4BltwIIaw4CwwdTnW2ix9PVzyXWgOqYwtyX_SbDiZix
 ################################ EMBALAGENS ###################################
 
 ### Get All Tipos de Embalagens #
@@ -229,7 +234,7 @@ POST http://localhost:3001/backend/api/auth/login
 Content-Type: application/json
 Accept: application/json
 
-{ "username": "Delgado", "password": "123" }
+{ "username": "Miguel", "password": "123" }
 
 ### Bernardo -> Cliente
 ### Miguel -> Logista
@@ -245,12 +250,13 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzYwM
 ### Criar um novo produto
 POST http://localhost:3001/backend/api/produtos
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzYwMzEyNTksImV4cCI6MTczNjAzNDg1OX0.SRyqpSNq86_gfdWnzlhAa9R0_bye--P9z-Kf8wOy3jPP8Cqhv4Tqgo-DCMBexJWn
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcwNjQxMzcsImV4cCI6MTczNzA2NzczN30.8z2oCekahB_ApWUpHr7l7upNo10ROtd5OqX5o3MzwRrPTSREHSqa8l7u7HhhC2SP
 Content-Type: application/json
 Accept: application/json
 
 {
-   "nome": "Sapatos",
+   "id": 535,
+   "nome": "Sapatos2",
    "id_categoria": "6"
 }
 

@@ -60,6 +60,7 @@ public class EncomendaService {
     public Response criarEncomenda(CreateEncomendaDTO encomendasDTO) {
 
         Response encomendaResponse = encomendaBean.create(
+                encomendasDTO.getId(),
                 encomendasDTO.getUsername(),
                 encomendasDTO.getVolumes()
         );

@@ -14,6 +14,7 @@ const mostrarModalCriar = ref(false);
 const produtos = ref([]);
 const categorias = ref([]);
 const novoProduto = ref({
+  id: null,
   nome: "",
   id_categoria: null,
 });
@@ -198,7 +199,7 @@ const criarProduto = async () => {
 
     fetchProdutos();
 
-    novoProduto.value = { nome: "", id_categoria: "" }; // Reseta o formulário
+    novoProduto.value = { id: "", nome: "", id_categoria: "" }; // Reseta o formulário
     mostrarModalCriar.value = false; // Fecha o modal
   } catch (error) {
     console.error(error.message);
@@ -427,9 +428,15 @@ onMounted(() => {
             <h2 class="text-xl font-semibold mb-4">Criar Novo Produto</h2>
             <form @submit.prevent="criarProduto" class="space-y-4">
               <div>
+                <label for="id" class="block font-medium">Id do Produto</label>
+                <input id="id" v-model="novoProduto.id" type="text" class="w-full border border-gray-300 p-2 rounded"
+                  placeholder="Escreva o id do produto" />
+              </div>
+
+              <div>
                 <label for="nome" class="block font-medium">Nome do Produto</label>
                 <input id="nome" v-model="novoProduto.nome" type="text"
-                  class="w-full border border-gray-300 p-2 rounded" placeholder="Digite o nome do produto" />
+                  class="w-full border border-gray-300 p-2 rounded" placeholder="Escreva o nome do produto" />
               </div>
 
               <div class="mb-4">

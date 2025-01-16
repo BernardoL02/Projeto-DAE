@@ -16,7 +16,6 @@ import jakarta.persistence.*;
 public class Produto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String nome;
@@ -24,7 +23,8 @@ public class Produto {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
-    public Produto(String nome, Categoria categoria) {
+    public Produto(int id, String nome, Categoria categoria) {
+        this.id = id;
         this.nome = nome;
         this.categoria = categoria;
     }

@@ -6,10 +6,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.ws.rs.core.Response;
 import org.hibernate.Hibernate;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResAlertasSensorDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResSensorUltimaLeituraByTipoDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResSensorValorDTO;
-import pt.ipleiria.estg.dei.ei.dea.backend.dtos.SensorDTO;
+import pt.ipleiria.estg.dei.ei.dea.backend.dtos.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
 
 import java.time.LocalDateTime;
@@ -164,6 +161,23 @@ public class SensorBean {
         return Response.ok(alertas.stream().map(ResAlertasSensorDTO::from).collect(Collectors.toList())).build();
     }
 
+
+    public Response getLeiturasSensor(int sensorId, Utilizador user) {
+
+        Sensor sensor = this.find(sensorId);
+
+        if(sensor == null){
+            return Response.status(Response.Status.NOT_FOUND).entity("Sensor não encontrado!").build();
+        }
+
+        if(user.isCliente() && !sensor.getEmbalagem().getVolume().getEncomenda().getCliente().getUsername().equals(user.getUsername())){
+            return Response.status(Response.Status.NOT_FOUND).entity("Apenas pode ver alertas de sensores que lhe pertencem.").build();
+        }
+
+        List<Leitura> leituras = em.createNamedQuery("Leitura.findAllBySensor", Leitura.class).setParameter("sensor_id", sensorId).getResultList();
+
+        return Response.ok(leituras.stream().map(LeituraDTO::from).collect(Collectors.toList())).build();
+    }
 
 
 }

@@ -25,7 +25,6 @@ import java.util.List;
 public class Encomenda extends Versionable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -41,7 +40,7 @@ public class Encomenda extends Versionable{
     @OneToMany(mappedBy = "encomenda", fetch = FetchType.EAGER)
     private List<Volume> volumes = new ArrayList<>();
 
-    public Encomenda(Cliente cliente) {
+    public Encomenda(int id, Cliente cliente) {
         this.cliente = cliente;
         this.estado = "EmProcessamento";
 

@@ -12,17 +12,28 @@ import java.util.stream.Collectors;
 
 public class CreateProdutoDTO implements Serializable {
 
+    private int id;
+
     private String nome;
 
     private int id_categoria;
 
-    public CreateProdutoDTO(String nome, int id_categoria) {
+    public CreateProdutoDTO(int id, String nome, int id_categoria) {
+        this.id = id;
         this.nome = nome;
         this.id_categoria = id_categoria;
     }
 
     public CreateProdutoDTO(){
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -43,6 +54,7 @@ public class CreateProdutoDTO implements Serializable {
 
     public static CreateProdutoDTO from(Produto produto) {
         return new CreateProdutoDTO(
+                produto.getId(),
                 produto.getNome(),
                 produto.getCategoria().getId()
         );

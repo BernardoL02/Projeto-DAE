@@ -4,6 +4,12 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+@NamedQuery(
+        name = "Leitura.findAllBySensor",
+        query = "SELECT l FROM Leitura l " +
+                "WHERE l.sensor.id = :sensor_id " +
+                "ORDER BY l.timeStamp DESC"
+)
 @Entity
 public class Leitura {
 

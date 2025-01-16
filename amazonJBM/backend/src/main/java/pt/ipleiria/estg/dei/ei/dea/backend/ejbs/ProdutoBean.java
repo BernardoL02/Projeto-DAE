@@ -18,7 +18,7 @@ public class ProdutoBean {
     @PersistenceContext
     private EntityManager em;
 
-    public Response create(String nome, int categoria_id){
+    public Response create(int id, String nome, int categoria_id){
 
         Categoria categoria = em.find(Categoria.class, categoria_id);
 
@@ -30,7 +30,7 @@ public class ProdutoBean {
             return Response.status(Response.Status.BAD_REQUEST).entity("Já existe um produto com o mesmo nome nesta categoria!").build();
         }
 
-        Produto produto = new Produto(nome, categoria);
+        Produto produto = new Produto(id, nome, categoria);
 
         em.persist(produto);
 
