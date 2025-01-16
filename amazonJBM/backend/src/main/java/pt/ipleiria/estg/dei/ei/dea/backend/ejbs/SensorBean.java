@@ -163,4 +163,7 @@ public class SensorBean {
 
         return Response.ok(alertas.stream().map(ResAlertasSensorDTO::from).collect(Collectors.toList())).build();
     }
+
+
+
 }

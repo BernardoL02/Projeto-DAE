@@ -165,19 +165,6 @@ Content-Type: application/json
 GET http://localhost:3001/backend/api/sensor/
 Accept: application/json
 
-### Criar um alerta #
-POST http://localhost:3001/backend/api/sensor/
-Accept: application/json
-Content-Type: application/json
-
-{
-  "mensagem": "Temperatura elevadaaa, aaaacomida a estragar-se",
-  "id_sensor": 5,
-  "valor": 40,
-  "bateria": 72,
-  "id_volume": 4
-}
-
 ### Patch Sensor Estado #
 PATCH http://localhost:3001/backend/api/sensor/4/desativar
 Accept: application/json
@@ -187,14 +174,15 @@ Content-Type: application/json
   "estado": "inativo"
 }
 
-### Patch Sensor Valor #
-PATCH http://localhost:3001/backend/api/sensor/2
+### Post Leitura Sensor #
+POST http://localhost:3001/backend/api/sensor/
 Accept: application/json
 Content-Type: application/json
 
 {
-  "valor": "26.5",
-  "bateria": 72
+  "id_sensor": 1,
+  "bateria": 72,
+  "valor": "40"
 }
 
 ### Get All Tipos de Sensor #
@@ -212,7 +200,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczN
 ### GET Ver Alertas de um sensor #
 GET http://localhost:3001/backend/api/sensor/1/alertas
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1NTgxODkyLCJleHAiOjE3MzU1ODU0OTJ9.7_WdrKQej8l5kzVwkPwutBefC4ELWt20MThEHbtrcDJTm5qnvvRXy7SK31FWPfos
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MDU3NjYzLCJleHAiOjE3MzcwNjEyNjN9.4hyLfuMYa8RSDGyhPgSOALKj0CVlBLfO95-KSjbemqs-FsFbWhrGvxk0rtyhPjw2
 
 
 ################################ EMBALAGENS ###################################
@@ -241,7 +229,7 @@ POST http://localhost:3001/backend/api/auth/login
 Content-Type: application/json
 Accept: application/json
 
-{ "username": "Miguel", "password": "123" }
+{ "username": "Delgado", "password": "123" }
 
 ### Bernardo -> Cliente
 ### Miguel -> Logista

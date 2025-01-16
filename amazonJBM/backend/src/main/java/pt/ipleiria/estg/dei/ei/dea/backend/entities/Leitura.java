@@ -2,6 +2,8 @@ package pt.ipleiria.estg.dei.ei.dea.backend.entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 public class Leitura {
 
@@ -13,28 +15,55 @@ public class Leitura {
     @JoinColumn(name = "id_sensor", nullable = false)
     private Sensor sensor;
 
-    public Leitura(int id, Sensor id_sensor) {
-        this.id = id;
-        this.sensor = id_sensor;
+    @Column(name = "time_stamp")
+    private LocalDateTime timeStamp;
+
+    @Column(name = "bateria")
+    private int bateria;
+
+    @Column(name = "valor")
+    private String valor;
+
+    public Leitura(Sensor sensor, int bateria, String valor) {
+        this.sensor = sensor;
+        this.timeStamp = LocalDateTime.now();
+        this.bateria = bateria;
+        this.valor = valor;
     }
 
-    public Leitura() {
+    public Leitura(){
 
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Sensor getId_sensor() {
+    public Sensor getSensor() {
         return sensor;
     }
 
-    public void setId_sensor(Sensor id_sensor) {
-        this.sensor = id_sensor;
+    public void setSensor(Sensor sensor) {
+        this.sensor = sensor;
+    }
+
+    public LocalDateTime getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(LocalDateTime timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public int getBateria() {
+        return bateria;
+    }
+
+    public void setBateria(int bateria) {
+        this.bateria = bateria;
+    }
+
+    public String getValor() {
+        return valor;
+    }
+
+    public void setValor(String valor) {
+        this.valor = valor;
     }
 }
