@@ -22,7 +22,6 @@ import java.util.List;
 public class Tipo_Sensores {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String tipo;
@@ -30,7 +29,8 @@ public class Tipo_Sensores {
     @ManyToMany(mappedBy = "tipoSensores")
     private List<Tipo_Embalagem> embalagens = new ArrayList<>();
 
-    public Tipo_Sensores(String tipo) {
+    public Tipo_Sensores(int id , String tipo) {
+        this.id = id;
         this.tipo = tipo;
     }
 

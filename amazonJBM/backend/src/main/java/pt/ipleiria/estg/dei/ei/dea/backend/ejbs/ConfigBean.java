@@ -80,8 +80,8 @@ public class ConfigBean {
     public void populateDB() {
 
         ImportCSVDynamic("utilizadores", "utilizadores.csv", "dtype,username,email,nome,password,morada", "?,?,?,?,?,?");
-        ImportCSVDynamic("tipo_sensores", "tiposSensor.csv", "tipo", "?");
-        ImportCSVDynamic("tipo_embalagem", "tipoEmbalagem.csv", "tipo", "?");
+        ImportCSVDynamic("tipo_sensores", "tiposSensor.csv", "id,tipo", "?,?");
+        ImportCSVDynamic("tipo_embalagem", "tipoEmbalagem.csv", "id,tipo", "?,?");
         ImportCSVDynamic("tipo_embalagem_tipo_sensores", "tiposEmbalagemTiposSensor.csv", "id_tipoembalagem,id_tiposensor", "?,?");
         ImportCSVDynamic("categoria", "categorias.csv", "nome", "?");
         ImportCSVDynamic("produto", "produtos.csv", "id, nome, categoria_id", "?,?,?");

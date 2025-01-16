@@ -8,17 +8,28 @@ import java.util.List;
 
 public class CreateTipoEmbalagemDTO implements Serializable {
 
+    private int id;
+
     private String tipo;
 
     private List<TipoSensorDTO> tipos_sensores;
 
-    public CreateTipoEmbalagemDTO(String tipo, List<TipoSensorDTO> tipos_sensores) {
+    public CreateTipoEmbalagemDTO(int id, String tipo, List<TipoSensorDTO> tipos_sensores) {
+        this.id = id;
         this.tipo = tipo;
         this.tipos_sensores = tipos_sensores;
     }
 
     public CreateTipoEmbalagemDTO() {
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTipo() {
@@ -39,6 +50,7 @@ public class CreateTipoEmbalagemDTO implements Serializable {
 
     public static CreateTipoEmbalagemDTO from(Tipo_Embalagem tipoEmbalagem) {
         return new CreateTipoEmbalagemDTO(
+                tipoEmbalagem.getId(),
                 tipoEmbalagem.getTipo(),
                 TipoSensorDTO.from(tipoEmbalagem.getSensores())
         );

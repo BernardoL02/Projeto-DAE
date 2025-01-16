@@ -22,7 +22,6 @@ import java.util.List;
 public class Tipo_Embalagem {
 
         @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
         private int id;
 
         private String tipo;
@@ -35,7 +34,8 @@ public class Tipo_Embalagem {
         )
         private List<Tipo_Sensores> tipoSensores = new ArrayList<>();
 
-        public Tipo_Embalagem(String tipo, List<Tipo_Sensores> tipoSensores) {
+        public Tipo_Embalagem(int id, String tipo, List<Tipo_Sensores> tipoSensores) {
+                this.id = id;
                 this.tipo = tipo;
                 this.tipoSensores = tipoSensores;
         }

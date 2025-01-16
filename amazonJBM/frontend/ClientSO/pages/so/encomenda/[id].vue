@@ -182,8 +182,9 @@ onMounted(fetchEncomendaDetalhes);
       <!-- Título e botão de fechar -->
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-lg font-bold">Histórico de Leituras do Sensor</h2>
-        <button @click="showHistoricoModal = false" class="text-gray-500 hover:text-gray-700 focus:outline-none">
-          X
+        <button @click="showHistoricoModal = false" class="absolute top-2 right-2 bg-gray-200 text-gray-600 hover:text-gray-900 hover:bg-white rounded-full w-8
+          h-8 flex items-center justify-center">
+          <i class="fas fa-times"></i>
         </button>
       </div>
 

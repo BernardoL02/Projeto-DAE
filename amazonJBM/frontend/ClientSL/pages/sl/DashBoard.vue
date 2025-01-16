@@ -63,6 +63,7 @@ const mostrarModalCriarTipo = ref(false);
 
 const tiposSensores = ref([]);
 const novoTipo = ref({
+  id: "",
   tipo: "",
 });
 
@@ -85,6 +86,7 @@ const mostrarModalCriarEmbalagem = ref(false);
 
 const embalagens = ref([]);
 const novoTipoEmbalagem = ref({
+  id: "",
   tipo: "",
   tipos_sensores: [],
 });
@@ -256,7 +258,7 @@ const criarTipo = async () => {
 
     fetchTiposSensores();
 
-    novoTipo.value = { tipo: "" }; // Reseta o formulário
+    novoTipo.value = { id: "", tipo: "" }; // Reseta o formulário
     mostrarModalCriarTipo.value = false; // Fecha o modal
   } catch (error) {
     console.error("Erro ao criar tipo de sensor:", error);
@@ -300,6 +302,7 @@ const criarEmbalagem = async () => {
 
     // Formatar o corpo da requisição
     const requestBody = {
+      id: novoTipoEmbalagem.value.id,
       tipo: novoTipoEmbalagem.value.tipo.trim(), // Certifique-se de remover espaços extras
       tipos_sensores: selectedSensores.value.map((sensor) => ({
         id: parseInt(sensor.id, 10), // Garante que o ID seja um número inteiro
@@ -332,7 +335,7 @@ const criarEmbalagem = async () => {
 
     // Atualiza a lista de embalagens e reseta os valores
     fetchEmbalagens();
-    novoTipoEmbalagem.value = { tipo: "", tipos_sensores: [] };
+    novoTipoEmbalagem.value = { id: "", tipo: "", tipos_sensores: [] };
     selectedSensores.value = [];
     mostrarModalCriarEmbalagem.value = false;
   } catch (error) {
@@ -498,7 +501,6 @@ onMounted(() => {
               <i class="fas fa-times"></i>
             </button>
             <h2 class="text-xl font-semibold mb-4">Tipos de Sensores</h2>
-
             <!-- Barra de Pesquisa -->
             <div class="mb-4">
               <input type="text" v-model="searchTipo" placeholder="Pesquisar tipos..."
@@ -521,9 +523,14 @@ onMounted(() => {
             <h2 class="text-xl font-semibold mb-4">Criar Novo Tipo</h2>
             <form @submit.prevent="criarTipo" class="space-y-4">
               <div>
+                <label for="id" class="block font-medium">Id do Tipo Sensor</label>
+                <input id="id" v-model="novoTipo.id" type="text" class="w-full border border-gray-300 p-2 rounded"
+                  placeholder="Escreva o id do tipo de Sensor" />
+              </div>
+              <div>
                 <label for="tipo" class="block font-medium">Tipo do Sensor</label>
                 <input id="tipo" v-model="novoTipo.tipo" type="text" class="w-full border border-gray-300 p-2 rounded"
-                  placeholder="Digite o tipo do sensor" />
+                  placeholder="Escreva o tipo do sensor" />
               </div>
               <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700 transition">
                 Criar Tipo
@@ -598,11 +605,17 @@ onMounted(() => {
             </button>
             <h2 class="text-xl font-semibold mb-4">Criar Nova Embalagem</h2>
             <form @submit.prevent="criarEmbalagem" class="space-y-4">
+              <!-- Campo para id Tipo da Embalagem -->
+              <div>
+                <label for="tipo" class="block font-medium">Id do Tipo da Embalagem</label>
+                <input id="tipo" v-model="novoTipoEmbalagem.id" type="text"
+                  class="w-full border border-gray-300 p-2 rounded" placeholder="Escreva id do tipo da embalagem" />
+              </div>
               <!-- Campo para o Tipo da Embalagem -->
               <div>
                 <label for="tipo" class="block font-medium">Tipo da Embalagem</label>
                 <input id="tipo" v-model="novoTipoEmbalagem.tipo" type="text"
-                  class="w-full border border-gray-300 p-2 rounded" placeholder="Digite o tipo da embalagem" />
+                  class="w-full border border-gray-300 p-2 rounded" placeholder="Escreva o tipo da embalagem" />
               </div>
 
               <!-- Campo para Adicionar Tipos de Sensores -->
