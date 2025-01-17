@@ -248,8 +248,6 @@ const associarSensor = async () => {
       ...(tipoSensorSelecionado.value.id !== 4 && { valMax: valMax.value, valMin: valMin.value }),
     };
 
-    console.log(sensorData)
-
     const token = getToken();
     const response = await fetch(`${api}/embalagem/${embalagemSelecionada.value.id}/sensor`, {
       method: "POST",
@@ -262,8 +260,9 @@ const associarSensor = async () => {
     });
 
     if (!response.ok) {
-      const errorData = await response.text();
-      throw new Error(errorData);
+      // Tenta extrair a mensagem do corpo da resposta
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Erro ao associar o sensor");
     }
 
     successMessage.value = "Sensor associado com sucesso!";
@@ -274,7 +273,7 @@ const associarSensor = async () => {
     // Atualiza os sensores da embalagem após a associação
     await fetchEncomendaDetalhes();
   } catch (error) {
-    showError("Erro ao associar sensor.");
+    showError(error.message || "Erro ao criar a encomenda");
   }
 };
 

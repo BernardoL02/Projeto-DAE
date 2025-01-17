@@ -187,7 +187,10 @@ const verAlertasEncomenda = async (id) => {
         id: alerta.id,
         mensagem: alerta.mensagem,
         timeStamp: alerta.timeStamp,
-        valor: alerta.valor
+        valor: alerta.valor,
+        id_volume: alerta.id_volume,
+        id_encomenda: alerta.id_encomenda,
+        id_embalagem: alerta.id_embalagem
       }))
     }));
 
@@ -324,6 +327,11 @@ onMounted(async () => {
             <ul class="mt-2 space-y-2">
               <li v-for="alerta in sensor.alertas" :key="alerta.id" class="p-3 bg-yellow-100 rounded-lg border">
                 <p><strong>ID do Alerta:</strong> {{ alerta.id }}</p>
+                <p>
+                  <strong>Volume ID:</strong> {{ alerta.id_volume }},
+                  <strong>Encomenda ID:</strong> {{ alerta.id_encomenda }},
+                  <strong>Embalagem ID:</strong> {{ alerta.id_embalagem }}
+                </p>
                 <p><strong>Data:</strong> {{ new Date(alerta.timeStamp).toLocaleString() }}</p>
                 <p><strong>Mensagem:</strong> {{ alerta.mensagem }}</p>
                 <p><strong>Valor:</strong> {{ alerta.valor }}</p>

@@ -12,6 +12,7 @@ import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -52,9 +53,20 @@ public class EncomendaBean {
                     .build();
         }
 
-        // Pré-validação dos IDs de volumes e embalagens
+        // Pré-validação: IDs duplicados em volumes e embalagens e existência no banco de dados
+        Set<Integer> volumeIds = new HashSet<>();
+        Set<Integer> embalagemIds = new HashSet<>();
+
         for (VolumeCreateEncomendaDTO volume : volumes) {
-            // Verifica se o ID do volume já existe
+            // Verifica duplicação de ID no JSON para volumes
+            if (!volumeIds.add(volume.getId())) {
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity("{\"message\": \"IDs de volumes duplicados encontrados: " + volume.getId() + "!\"}")
+                        .type(MediaType.APPLICATION_JSON)
+                        .build();
+            }
+
+            // Verifica se o ID do volume já existe no banco de dados
             if (em.find(Volume.class, volume.getId()) != null) {
                 return Response.status(Response.Status.BAD_REQUEST)
                         .entity("{\"message\": \"Já existe um volume com o ID fornecido: " + volume.getId() + "!\"}")
@@ -63,6 +75,22 @@ public class EncomendaBean {
             }
 
             for (EmbalagemCreateEncomendaDTO embalagem : volume.getEmbalagens()) {
+                // Verifica duplicação de ID no JSON para embalagens
+                if (!embalagemIds.add(embalagem.getId())) {
+                    return Response.status(Response.Status.BAD_REQUEST)
+                            .entity("{\"message\": \"IDs de embalagens duplicados encontrados no volume " + volume.getId() + ": " + embalagem.getId() + "!\"}")
+                            .type(MediaType.APPLICATION_JSON)
+                            .build();
+                }
+
+                // Verifica se o ID da embalagem já existe no banco de dados
+                if (em.find(Embalagem.class, embalagem.getId()) != null) {
+                    return Response.status(Response.Status.BAD_REQUEST)
+                            .entity("{\"message\": \"Já existe uma embalagem com o ID fornecido: " + embalagem.getId() + "!\"}")
+                            .type(MediaType.APPLICATION_JSON)
+                            .build();
+                }
+
                 // Verifica se o tipo de embalagem existe
                 if (tipoEmbalagemBean.find(embalagem.getTipo()) == null) {
                     return Response.status(Response.Status.BAD_REQUEST)
@@ -75,14 +103,6 @@ public class EncomendaBean {
                 if (em.find(Produto.class, embalagem.getProduto().getId()) == null) {
                     return Response.status(Response.Status.BAD_REQUEST)
                             .entity("{\"message\": \"Produto não encontrado: " + embalagem.getProduto().getId() + "!\"}")
-                            .type(MediaType.APPLICATION_JSON)
-                            .build();
-                }
-
-                // Verifica se o ID da embalagem já existe
-                if (em.find(Embalagem.class, embalagem.getId()) != null) {
-                    return Response.status(Response.Status.BAD_REQUEST)
-                            .entity("{\"message\": \"Já existe uma embalagem com o ID fornecido: " + embalagem.getId() + "!\"}")
                             .type(MediaType.APPLICATION_JSON)
                             .build();
                 }

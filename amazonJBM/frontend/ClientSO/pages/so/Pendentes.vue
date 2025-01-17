@@ -232,7 +232,7 @@ onMounted(async () => {
     <Template :currentPage="currentPage" />
 
     <div class="flex justify-center mr-24 mt-20">
-      <h1>Sistema de Gestão - Encomendas Pendentes</h1>
+      <h1>Sistema de Gestão - Encomendas Em Processamento</h1>
     </div>
 
     <!-- Mensagem de Sucesso -->

@@ -144,9 +144,9 @@ Content-Type: application/json
 }
 
 ### Get All Alertas de Encomenda por Id #
-GET http://localhost:3001/backend/api/encomendas/1/alertas
+GET http://localhost:3001/backend/api/encomendas/100/alertas
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1NTgyNjE3LCJleHAiOjE3MzU1ODYyMTd9.MNqzFQfOGPUIoA4dXc3XHbz7uTka-YZQ5pBBbbGyGIA7JaRxlKr8Hjhb9Q870rLk
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MTE5MjUzLCJleHAiOjE3MzcxMjI4NTN9.sKDZ3LIJS_ck_ktlZaeyPzrgGE2gvrewI4UiPE1kZpHDOpoVO0hIEWE7sa8HEe6H
 
 ### GET Ver Alertas de encomendas (PorEntregar) #
 GET http://localhost:3001/backend/api/encomendas/alertas
@@ -225,9 +225,9 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczN
 
 
 ### GET Ver Alertas de um sensor #
-GET http://localhost:3001/backend/api/sensor/1/alertas
+GET http://localhost:3001/backend/api/sensor/59/alertas
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNzExNDEyMiwiZXhwIjoxNzM3MTE3NzIyfQ.WLW2DNzMNq5i8PJBX2nKNHTKBvM3Hmt9uAK1meKpI8lwBktdsTs03hkJkQCqLlc4
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MTE5MjUzLCJleHAiOjE3MzcxMjI4NTN9.sKDZ3LIJS_ck_ktlZaeyPzrgGE2gvrewI4UiPE1kZpHDOpoVO0hIEWE7sa8HEe6H
 
 ### GET Ver Leituras de um sensor #
 GET http://localhost:3001/backend/api/sensor/1/leitura
@@ -250,13 +250,13 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzYwO
                       #CORS + ids no FE + validar DTOS#
                       #Mensagem que o id já existe#
                       #Usar no FE os ids
-                     #[x] - Encomenda
-                     #[x] - Volume
+                     #[x] - Encomenda      X
+                     #[x] - Volume         X
                      #[x] - Produto        X
                      #[x] - Tipo Embalagem X
                      #[x] - Tipos Sensore  X
-                     #[x] - Sensor
-                     #[x] - Embalagem
+                     #[x] - Sensor         X
+                     #[x] - Embalagem      X
                      #Colocar no pdf a atualização do JSON criar encomenda#
                      #Colocar no pdf todos os endpoints modificados#
                      #Falar no word,o que foi melhorado em relacao aos endpoints, falar dos novos endpoints e falar nos extras#
@@ -267,11 +267,11 @@ POST http://localhost:3001/backend/api/auth/login
 Content-Type: application/json
 Accept: application/json
 
-{ "username": "Bernardo", "password": "123" }
+{ "username": "Delgado", "password": "123" }
 
 ### Bernardo -> Cliente
 ### Miguel -> Logista
-### Delgado -> Gestor
+### Delgado -> Operacional
 
 ### GET User Info
 GET http://localhost:3001/backend/api/auth/user
