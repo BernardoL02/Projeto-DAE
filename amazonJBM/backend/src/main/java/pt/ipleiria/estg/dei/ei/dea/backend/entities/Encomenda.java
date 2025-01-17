@@ -41,6 +41,7 @@ public class Encomenda extends Versionable{
     private List<Volume> volumes = new ArrayList<>();
 
     public Encomenda(int id, Cliente cliente) {
+        this.id = id;
         this.cliente = cliente;
         this.estado = "EmProcessamento";
 

@@ -32,7 +32,7 @@ public class EncomendaBean {
     @EJB
     private TipoEmbalagemBean tipoEmbalagemBean;
 
-    public Response create(int id, String client_username, List<VolumeCreateEncomendaDTO> volumes) {
+    public Response create(int id,String client_username, List<VolumeCreateEncomendaDTO> volumes) {
         Cliente cliente = clienteBean.find(client_username);
 
         if(cliente == null) {
@@ -55,7 +55,7 @@ public class EncomendaBean {
         em.persist(encomenda);
 
         for(VolumeCreateEncomendaDTO volume: volumes) {
-            Volume volume1 = new Volume(encomenda);
+            Volume volume1 = new Volume(volume.getId(), encomenda);
             em.persist(volume1);
 
             for (EmbalagemCreateEncomendaDTO embalagem : volume.getEmbalagens()) {
@@ -63,7 +63,7 @@ public class EncomendaBean {
                 Produto produto1 = em.find(Produto.class, embalagem.getProduto().getId());
                 Tipo_Embalagem tipoEmbalagem = em.find(Tipo_Embalagem.class, embalagem.getTipo());
 
-                Embalagem embalagem1 = new Embalagem(produto1, volume1, embalagem.getQuantidade(), tipoEmbalagem);
+                Embalagem embalagem1 = new Embalagem(embalagem.getId(), produto1, volume1, embalagem.getQuantidade(), tipoEmbalagem);
                 em.persist(embalagem1);
 
                 volume1.addEmbalagem(embalagem1);

@@ -9,17 +9,27 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class EmbalagemCreateEncomendaDTO implements Serializable {
+    private int id;
     private int id_tipoEmbalagem;
     private ProdutoCreateEncomendaDTO produto;
     private int quantidade;
 
-    public EmbalagemCreateEncomendaDTO(int id_tipoEmbalagem, ProdutoCreateEncomendaDTO produto, int quantidade) {
+    public EmbalagemCreateEncomendaDTO(int id,int id_tipoEmbalagem, ProdutoCreateEncomendaDTO produto, int quantidade) {
+        this.id = id;
         this.id_tipoEmbalagem = id_tipoEmbalagem;
         this.produto = produto;
         this.quantidade = quantidade;
     }
 
     public EmbalagemCreateEncomendaDTO() {}
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getTipo() {
         return id_tipoEmbalagem;
@@ -48,6 +58,7 @@ public class EmbalagemCreateEncomendaDTO implements Serializable {
     public static EmbalagemCreateEncomendaDTO from(Embalagem embalagem) {
 
         return new EmbalagemCreateEncomendaDTO(
+                embalagem.getId(),
                 embalagem.getTipo().getId(),
                 ProdutoCreateEncomendaDTO.from(embalagem.getProduto()),
                 embalagem.getQuantidade()

@@ -15,13 +15,13 @@ public class EmbalagemBean {
     @PersistenceContext
     private EntityManager em;
 
-    public void create(int id_produto, int id_tipoEmbalagem,int quantidade_produtos, int id_volume, List<Integer> id_sensores) {
+    public void create(int id,int id_produto, int id_tipoEmbalagem,int quantidade_produtos, int id_volume, List<Integer> id_sensores) {
 
         Produto produto = em.find(Produto.class, id_produto);
         Tipo_Embalagem tipoEmbalagem = em.find(Tipo_Embalagem.class, id_tipoEmbalagem);
         Volume volume = em.find(Volume.class, id_volume);
 
-        Embalagem embalagem = new Embalagem(produto,volume,quantidade_produtos, tipoEmbalagem);
+        Embalagem embalagem = new Embalagem(id,produto,volume,quantidade_produtos, tipoEmbalagem);
         for(Integer id_sensor : id_sensores){
             Sensor sensor = em.find(Sensor.class,id_sensor);
 

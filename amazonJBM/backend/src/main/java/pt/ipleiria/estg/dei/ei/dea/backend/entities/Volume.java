@@ -14,7 +14,6 @@ import java.util.List;
 public class Volume {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private boolean entregue = false;
@@ -27,7 +26,8 @@ public class Volume {
     @OneToMany(mappedBy = "volume", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Embalagem> embalagens = new ArrayList<>();
 
-    public Volume(Encomenda encomenda) {
+    public Volume(int id,Encomenda encomenda) {
+        this.id = id;
         this.encomenda = encomenda;
 
         if(embalagens == null){

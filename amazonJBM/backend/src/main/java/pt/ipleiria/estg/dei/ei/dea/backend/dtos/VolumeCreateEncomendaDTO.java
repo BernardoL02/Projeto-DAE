@@ -11,14 +11,24 @@ import java.util.stream.Collectors;
 
 public class VolumeCreateEncomendaDTO implements Serializable {
 
+    private int id;
     private List<EmbalagemCreateEncomendaDTO> embalagens = new ArrayList<>();
 
-    public VolumeCreateEncomendaDTO(List<EmbalagemCreateEncomendaDTO> embalagens) {
+    public VolumeCreateEncomendaDTO(int id,List<EmbalagemCreateEncomendaDTO> embalagens) {
+        this.id=id;
         this.embalagens = embalagens;
     }
 
     public VolumeCreateEncomendaDTO() {
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public List<EmbalagemCreateEncomendaDTO> getEmbalagens() {
@@ -31,7 +41,7 @@ public class VolumeCreateEncomendaDTO implements Serializable {
 
     public static VolumeCreateEncomendaDTO from(Volume volume) {
 
-        return new VolumeCreateEncomendaDTO(EmbalagemCreateEncomendaDTO.from(volume.getEmbalagens()));
+        return new VolumeCreateEncomendaDTO(volume.getId(),EmbalagemCreateEncomendaDTO.from(volume.getEmbalagens()));
 
     }
 
