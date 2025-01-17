@@ -111,9 +111,10 @@ const addSensor = (sensor) => {
     console.error("Erro: O objeto sensor não contém um campo id.");
     return;
   }
-  if (!selectedSensores.value.some((selected) => selected.id === sensor.id)) {
-    selectedSensores.value.push(sensor);
-  }
+
+  // Adiciona o sensor diretamente, permitindo duplicatas
+  selectedSensores.value.push(sensor);
+
   searchSensor.value = ""; // Limpa o campo de pesquisa
   showSensorSuggestions.value = false; // Oculta as sugestões
 };
@@ -303,9 +304,9 @@ const criarEmbalagem = async () => {
     // Formatar o corpo da requisição
     const requestBody = {
       id: novoTipoEmbalagem.value.id,
-      tipo: novoTipoEmbalagem.value.tipo.trim(), // Certifique-se de remover espaços extras
+      tipo: novoTipoEmbalagem.value.tipo.trim(),
       tipos_sensores: selectedSensores.value.map((sensor) => ({
-        id: parseInt(sensor.id, 10), // Garante que o ID seja um número inteiro
+        id: parseInt(sensor.id, 10),
       })),
     };
 
@@ -641,7 +642,7 @@ onMounted(() => {
                   Sensores Selecionados:
                 </h3>
                 <ul class="space-y-2">
-                  <li v-for="(sensor, index) in selectedSensores" :key="sensor.id"
+                  <li v-for="(sensor, index) in selectedSensores" :key="index"
                     class="flex items-center justify-between bg-gray-100 p-2 rounded border">
                     <span>{{ sensor.tipo }}</span>
                     <button @click="removeSensor(index)" class="text-red-500 hover:text-red-700">
