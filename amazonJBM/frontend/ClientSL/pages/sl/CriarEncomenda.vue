@@ -228,20 +228,22 @@ const hideTipoSuggestions = (embalagem) => {
   }, 200);
 };
 
-// Função para remover um novo volume
+// Função para remover um volume pelo ID
 const removerVolume = (id) => {
   const index = volumes.findIndex((v) => v.id === id);
   if (index !== -1) {
-    volumes.splice(index, 1);
-    volumes.forEach((volume, idx) => {
-      volume.id = idx + 1;
-    });
-
-    volumeCounter = volumes.length + 1;
-
-    volumeAtual.value = volumes.length > 0 ? volumes[0].id : null;
+    volumes.splice(index, 1); // Remove o volume do array sem reatribuir IDs
+    if (volumes.length > 0) {
+      // Atualiza o volume atual para o primeiro da lista, caso existam volumes restantes
+      volumeAtual.value = volumes[0].id;
+    } else {
+      volumeAtual.value = null; // Reseta o volume atual caso nenhum volume exista
+    }
+  } else {
+    showError("Volume não encontrado.");
   }
 };
+
 
 // Remover uma embalagem de um volume
 const removerEmbalagemDoVolume = (embalagemId, volumeId) => {
