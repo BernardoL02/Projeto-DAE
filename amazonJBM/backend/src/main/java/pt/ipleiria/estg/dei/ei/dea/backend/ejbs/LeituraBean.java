@@ -29,7 +29,7 @@ public class LeituraBean {
         if(!sensor.getEmbalagem().getVolume().getEncomenda().getEstado().equals("PorEntregar")){
             return Response.status(Response.Status.BAD_REQUEST).entity("Apenas é possivel criar leituras de sensores para encomendas no estado 'Por Entregar'").build();
         }
-        
+
         Leitura leitura = new Leitura(sensor, bateria, valor);
 
         sensor.setValor(valor);
