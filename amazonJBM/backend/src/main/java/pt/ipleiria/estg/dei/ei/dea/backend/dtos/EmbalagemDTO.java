@@ -12,13 +12,15 @@ public class EmbalagemDTO implements Serializable {
     private ResProdutoDTO produto;
     private List<SensorDTO> sensores = new ArrayList<>();
     private int quantidade;
+    private int idTipoEmbalagem;
     private String tipoEmbalagem;
 
-    public EmbalagemDTO(int id, ResProdutoDTO produto, List<SensorDTO> sensores, int quantidade, String tipoEmbalagem) {
+    public EmbalagemDTO(int id, ResProdutoDTO produto, List<SensorDTO> sensores, int quantidade, int idTipoEmbalagem , String tipoEmbalagem) {
         this.id = id;
         this.produto = produto;
         this.sensores = sensores;
         this.quantidade = quantidade;
+        this.idTipoEmbalagem = idTipoEmbalagem;
         this.tipoEmbalagem = tipoEmbalagem;
     }
 
@@ -64,6 +66,14 @@ public class EmbalagemDTO implements Serializable {
         this.tipoEmbalagem = tipoEmbalagem;
     }
 
+    public int getIdTipoEmbalagem() {
+        return idTipoEmbalagem;
+    }
+
+    public void setIdTipoEmbalagem(int idTipoEmbalagem) {
+        this.idTipoEmbalagem = idTipoEmbalagem;
+    }
+
     public static EmbalagemDTO from(Embalagem embalagem) {
 
         List<SensorDTO> sensorDTO = embalagem.getSensores().stream().map(SensorDTO::from).collect(Collectors.toList());
@@ -75,6 +85,7 @@ public class EmbalagemDTO implements Serializable {
                 produto,
                 sensorDTO,
                 embalagem.getQuantidade(),
+                embalagem.getTipo().getId(),
                 embalagem.getTipo().getTipo()
         );
     }

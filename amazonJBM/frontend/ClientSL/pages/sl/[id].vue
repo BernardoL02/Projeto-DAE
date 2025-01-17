@@ -57,7 +57,7 @@ const filteredProdutos = (searchTerm) => {
 
 const selectProduto = (produto) => {
   produtoSelecionado.produto = produto;
-  produtoSelecionado.searchTerm = produto.nome;
+  produtoSelecionado.searchTerm = `(ID: ${produto.id}) - ${produto.nome}`;
   produtoSelecionado.showSuggestions = false;
 };
 
@@ -85,7 +85,7 @@ const filteredTiposEmbalagem = (searchTerm) => {
 
 const selectTipo = (tipo) => {
   tipoSelecionado.tipo = tipo;
-  tipoSelecionado.searchTerm = tipo.tipo;
+  tipoSelecionado.searchTerm = `(id: ${tipo.id}) - ${tipo.tipo}`;
   tipoSelecionado.showSuggestions = false;
 };
 
@@ -149,10 +149,12 @@ const fetchEncomendaDetalhes = async () => {
         produtoId: embalagem.produto.id,
         produtoName: embalagem.produto.nome,
         quantidade: embalagem.quantidade,
+        idTipoEmbalagem: embalagem.idTipoEmbalagem,
         tipoEmbalagem: embalagem.tipoEmbalagem,
         mostrarSensores: false, // Não exibir detalhes dos sensores inicialmente
         sensores: embalagem.sensores.map((sensor) => ({
           id: sensor.id,
+          tipoId: sensor.tipoId,
           tipo: sensor.tipoNome,
           valor: sensor.valor,
           bateria: sensor.bateria,
@@ -344,14 +346,31 @@ const fetchProdutos = async () => {
   }
 };
 
+const volumeId = ref(null);
+const embalagemId = ref("");
+
 // Adicionar Embalagem à Lista
 const adicionarEmbalagem = () => {
+  // Verificar se o ID da embalagem foi fornecido
+  if (!embalagemId.value) {
+    showError("Insira um ID para a embalagem.");
+    return;
+  }
+
+  // Verificar se o ID da embalagem é único
+  if (embalagens.value.some((emb) => emb.id === embalagemId.value)) {
+    showError("O ID da embalagem já está em uso. Insira um ID único.");
+    return;
+  }
+
   if (!produtoSelecionado.produto || !tipoSelecionado.tipo || quantidade.value <= 0) {
     showError("Selecione um produto, um tipo de embalagem e insira uma quantidade válida.");
     return;
   }
 
+  // Adicionar a embalagem à lista
   embalagens.value.push({
+    id: embalagemId.value, // ID definido pelo usuário
     produto: { id: produtoSelecionado.produto.id },
     tipo: tipoSelecionado.tipo.id,
     quantidade: quantidade.value,
@@ -359,8 +378,8 @@ const adicionarEmbalagem = () => {
     tipoNome: tipoSelecionado.tipo.tipo,
   });
 
-
   // Resetar campos
+  embalagemId.value = ""; // Resetar o ID da embalagem
   produtoSelecionado.produto = null;
   produtoSelecionado.searchTerm = "";
   tipoSelecionado.tipo = null;
@@ -377,28 +396,37 @@ const removerEmbalagem = (index) => {
 
 // Enviar Volume com Embalagens
 const adicionarVolume = async () => {
+  if (!volumeId.value) {
+    showError("Insira um ID para o volume.");
+    return;
+  }
+
   if (embalagens.value.length === 0) {
     showError("Adicione ao menos uma embalagem ao volume.");
     return;
   }
 
-  // Cria um array filtrado apenas com os campos necessários
-  const embalagensParaEnviar = embalagens.value.map(({ produto, tipo, quantidade }) => ({
-    produto,
-    tipo,
-    quantidade,
-  }));
+  // Estrutura do JSON para envio
+  const volumeData = {
+    id: volumeId.value,
+    embalagens: embalagens.value.map(({ id, produto, tipo, quantidade }) => ({
+      id,
+      produto,
+      tipo,
+      quantidade,
+    })),
+  };
 
   try {
     const token = getToken();
     const response = await fetch(`${api}/encomendas/${encomendaId}/volume`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ embalagens: embalagensParaEnviar }),
+      body: JSON.stringify(volumeData),
     });
 
     if (!response.ok) {
@@ -413,6 +441,7 @@ const adicionarVolume = async () => {
 
     mostrarAdicionarProdutoModal.value = false;
     embalagens.value = [];
+    volumeId.value = null; // Reseta o ID do volume
   } catch (error) {
     showError(error.message);
   }
@@ -484,7 +513,7 @@ onMounted(() => {
       <h2 class="text-xl font-semibold mb-4">Volumes</h2>
       <button v-if="encomendaData.estado === 'Em Processamento'" @click="mostrarAdicionarProdutoModal = true"
         class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700 transition mb-4">
-        Adicionar Produto
+        Adicionar Volume
       </button>
       <div v-for="volume in volumesData" :key="volume.id"
         class="mb-6 p-4 bg-gray-100 rounded-lg border border-gray-300">
@@ -524,8 +553,10 @@ onMounted(() => {
             <div class="flex justify-between items-center">
               <div>
                 <p><strong>Embalagem ID:</strong> {{ embalagem.id }}</p>
-                <p><strong>Tipo Embalagem:</strong> {{ embalagem.tipoEmbalagem }}</p>
-                <p><strong>Produto:</strong> {{ embalagem.produtoName }}</p>
+                <p><strong>Tipo Embalagem:</strong> <strong>(id:</strong> {{ embalagem.idTipoEmbalagem
+                  }}<strong>)</strong> - {{ embalagem.tipoEmbalagem }} </p>
+                <p><strong>Produto:</strong> <strong>(id:</strong> {{ embalagem.produtoId }}<strong>)</strong> - {{
+                  embalagem.produtoName }} </p>
                 <p><strong>Quantidade:</strong> {{ embalagem.quantidade }}</p>
               </div>
               <div class="flex flex-col space-y-4">
@@ -549,7 +580,8 @@ onMounted(() => {
                   <div class="flex flex-row justify-between items-center w-full">
                     <div>
                       <p><strong>ID do Sensor:</strong> {{ sensor.id }}</p>
-                      <p><strong>Tipo:</strong> {{ sensor.tipo }}</p>
+                      <p><strong>Tipo:</strong> <strong>(id:</strong> {{ sensor.tipoId
+                        }}<strong>)</strong> - {{ sensor.tipo }}</p>
                       <p><strong>Valor:</strong> {{ sensor.valor }}</p>
                       <p><strong>Bateria:</strong> {{ sensor.bateria }}%</p>
                       <p><strong>Estado:</strong> {{ sensor.estado }}</p>
@@ -637,35 +669,48 @@ onMounted(() => {
     </div>
   </div>
 
-
   <!-- Modal de Adicionar Volume -->
   <div v-if="mostrarAdicionarProdutoModal"
     class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-[60]">
     <div class="bg-white w-1/3 p-6 rounded shadow-lg z-[70]">
       <h2 class="text-xl font-bold mb-4">Adicionar Volume</h2>
 
+      <!-- Campo para ID do Volume -->
+      <div class="mb-4">
+        <label class="block mb-2">ID do Volume:</label>
+        <input v-model="volumeId" type="number" min="1"
+          class="w-full p-2 border rounded focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Insira o ID do volume" />
+      </div>
+
       <!-- Lista de Embalagens -->
       <div class="mb-4">
         <h3 class="font-semibold mb-2">Embalagens no Volume</h3>
-        <!-- Adicionando altura máxima e scroll -->
         <ul class="max-h-48 overflow-y-auto border border-gray-300 rounded">
           <li v-for="(embalagem, index) in embalagens" :key="index"
             class="p-2 bg-gray-100 rounded mb-2 flex justify-between items-center">
             <div>
-              <p><strong>Produto:</strong> {{ embalagem.produtoNome }}</p>
-              <p><strong>Tipo:</strong> {{ embalagem.tipoNome }}</p>
+              <p><strong>Embalagem Id:</strong> {{ embalagem.id }}</p>
+              <p><strong>Produto:</strong> (id: {{ embalagem.produto.id }}) - {{ embalagem.produtoNome }}</p>
+              <p><strong>Tipo:</strong> (id: {{ embalagem.tipo }}) - {{ embalagem.tipoNome }}</p>
               <p><strong>Quantidade:</strong> {{ embalagem.quantidade }}</p>
             </div>
-            <button @click="removerEmbalagem(index)" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">
-              Remover
-            </button>
+            <button @click="removerEmbalagem(index)"
+              class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">Remover</button>
           </li>
         </ul>
       </div>
 
       <!-- Formulário para Adicionar Embalagem -->
       <div class="mb-4">
-        <label class="block mb-2">Produto:</label>
+        <!-- Campo para ID da Embalagem -->
+        <label class="block mb-2">ID da Embalagem:</label>
+        <input v-model="embalagemId" type="text"
+          class="w-full p-2 border rounded focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Insira o ID da embalagem" />
+
+        <!-- Campo para Produto -->
+        <label class="block mb-2 mt-4">Produto:</label>
         <input type="text" v-model="produtoSelecionado.searchTerm" @focus="produtoSelecionado.showSuggestions = true"
           @blur="hideProdutoSuggestions" placeholder="Pesquisar produto"
           class="w-full p-2 border rounded focus:ring-green-500 focus:border-green-500" />
@@ -674,11 +719,12 @@ onMounted(() => {
           <ul class="absolute z-10 w-full bg-white border border-gray-300 rounded max-h-48 overflow-y-auto shadow-lg">
             <li v-for="produto in filteredProdutos(produtoSelecionado.searchTerm)" :key="produto.id"
               @mousedown="selectProduto(produto)" class="p-2 hover:bg-gray-100 cursor-pointer">
-              {{ produto.nome }}
+              (id: {{ produto.id }}) - {{ produto.nome }}
             </li>
           </ul>
         </div>
 
+        <!-- Campo para Tipo de Embalagem -->
         <label class="block mb-2 mt-4">Tipo de Embalagem:</label>
         <input type="text" v-model="tipoSelecionado.searchTerm" @focus="tipoSelecionado.showSuggestions = true"
           @blur="hideTipoSuggestions" placeholder="Pesquisar tipo de embalagem"
@@ -688,27 +734,26 @@ onMounted(() => {
           <ul class="absolute z-10 w-full bg-white border border-gray-300 rounded max-h-48 overflow-y-auto shadow-lg">
             <li v-for="tipo in filteredTiposEmbalagem(tipoSelecionado.searchTerm)" :key="tipo.id"
               @mousedown="selectTipo(tipo)" class="p-2 hover:bg-gray-100 cursor-pointer">
-              {{ tipo.tipo }}
+              (id: {{ tipo.id }}) - {{ tipo.tipo }}
             </li>
           </ul>
         </div>
 
+        <!-- Campo para Quantidade -->
         <label class="block mb-2">Quantidade:</label>
         <input v-model="quantidade" type="number" min="1" class="w-full p-2 border rounded mb-4" />
 
+        <!-- Botão Adicionar Embalagem -->
         <button @click="adicionarEmbalagem" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">
           Adicionar Embalagem
         </button>
       </div>
 
       <div class="flex justify-end">
-        <button @click="adicionarVolume" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
-          Finalizar Volume
-        </button>
+        <button @click="adicionarVolume" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Finalizar
+          Volume</button>
         <button @click="mostrarAdicionarProdutoModal = false"
-          class="bg-gray-500 text-white px-4 py-2 ml-2 rounded hover:bg-gray-700">
-          Cancelar
-        </button>
+          class="bg-gray-500 text-white px-4 py-2 ml-2 rounded hover:bg-gray-700">Cancelar</button>
       </div>
     </div>
   </div>

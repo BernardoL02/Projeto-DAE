@@ -92,10 +92,12 @@ const fetchEncomendaDetalhes = async () => {
         produtoId: embalagem.produto.id,
         produtoName: embalagem.produto.nome,
         quantidade: embalagem.quantidade,
+        idTipoEmbalagem: embalagem.idTipoEmbalagem,
         tipoEmbalagem: embalagem.tipoEmbalagem,
         mostrarSensores: false, // Não exibir detalhes dos sensores inicialmente
         sensores: embalagem.sensores.map((sensor) => ({
           id: sensor.id,
+          tipoId: sensor.tipoId,
           tipo: sensor.tipoNome,
           valor: sensor.valor,
           bateria: sensor.bateria,
@@ -246,8 +248,10 @@ onMounted(fetchEncomendaDetalhes);
             <div class="flex justify-between items-center">
               <div>
                 <p><strong>Embalagem ID:</strong> {{ embalagem.id }}</p>
-                <p><strong>Tipo Embalagem:</strong> {{ embalagem.tipoEmbalagem }}</p>
-                <p><strong>Produto:</strong> {{ embalagem.produtoName }}</p>
+                <p><strong>Tipo Embalagem:</strong> <strong>(id:</strong> {{ embalagem.idTipoEmbalagem
+                  }}<strong>)</strong> - {{ embalagem.tipoEmbalagem }} </p>
+                <p><strong>Produto:</strong> <strong>(id:</strong> {{ embalagem.produtoId }}<strong>)</strong> - {{
+                  embalagem.produtoName }} </p>
                 <p><strong>Quantidade:</strong> {{ embalagem.quantidade }}</p>
               </div>
               <button @click="toggleEmbalagem(embalagem)"
@@ -261,7 +265,8 @@ onMounted(fetchEncomendaDetalhes);
               <ul v-if="embalagem.sensores && embalagem.sensores.length > 0">
                 <li v-for="sensor in embalagem.sensores" :key="sensor.id" class="p-2 bg-gray-50 my-2 rounded shadow">
                   <p><strong>ID do Sensor:</strong> {{ sensor.id }}</p>
-                  <p><strong>Tipo:</strong> {{ sensor.tipo }}</p>
+                  <p><strong>Tipo:</strong> <strong>(id:</strong> {{ sensor.tipoId
+                    }}<strong>)</strong> - {{ sensor.tipo }}</p>
                   <p><strong>Valor:</strong> {{ sensor.valor }}</p>
                   <p><strong>Bateria:</strong> {{ sensor.bateria }}%</p>
                   <p><strong>Estado:</strong> {{ sensor.estado }}</p>
