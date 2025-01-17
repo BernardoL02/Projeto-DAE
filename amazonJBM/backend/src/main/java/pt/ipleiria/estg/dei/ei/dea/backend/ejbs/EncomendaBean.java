@@ -2,6 +2,7 @@ package pt.ipleiria.estg.dei.ei.dea.backend.ejbs;
 
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.hibernate.Hibernate;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.EmbalagemCreateEncomendaDTO;
@@ -32,38 +33,81 @@ public class EncomendaBean {
     @EJB
     private TipoEmbalagemBean tipoEmbalagemBean;
 
-    public Response create(int id,String client_username, List<VolumeCreateEncomendaDTO> volumes) {
-        Cliente cliente = clienteBean.find(client_username);
+    public Response create(int id, String client_username, List<VolumeCreateEncomendaDTO> volumes) {
 
-        if(cliente == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity("Cliente não encontrado!").build();
+        // Verifica se já existe uma encomenda com o ID fornecido
+        if (em.find(Encomenda.class, id) != null) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("{\"message\": \"Já existe uma encomenda com o ID fornecido!\"}")
+                    .type(MediaType.APPLICATION_JSON)
+                    .build();
         }
 
-        for(VolumeCreateEncomendaDTO volume: volumes) {
+        // Verifica se o cliente existe
+        Cliente cliente = clienteBean.find(client_username);
+        if (cliente == null) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("{\"message\": \"Cliente não encontrado!\"}")
+                    .type(MediaType.APPLICATION_JSON)
+                    .build();
+        }
+
+        // Pré-validação dos IDs de volumes e embalagens
+        for (VolumeCreateEncomendaDTO volume : volumes) {
+            // Verifica se o ID do volume já existe
+            if (em.find(Volume.class, volume.getId()) != null) {
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity("{\"message\": \"Já existe um volume com o ID fornecido: " + volume.getId() + "!\"}")
+                        .type(MediaType.APPLICATION_JSON)
+                        .build();
+            }
+
             for (EmbalagemCreateEncomendaDTO embalagem : volume.getEmbalagens()) {
-                if(tipoEmbalagemBean.find(embalagem.getTipo()) == null){
-                    return Response.status(Response.Status.NOT_FOUND).entity("Tipo de embalagem não encontrada!").build();
+                // Verifica se o tipo de embalagem existe
+                if (tipoEmbalagemBean.find(embalagem.getTipo()) == null) {
+                    return Response.status(Response.Status.BAD_REQUEST)
+                            .entity("{\"message\": \"Tipo de embalagem não encontrado: " + embalagem.getTipo() + "!\"}")
+                            .type(MediaType.APPLICATION_JSON)
+                            .build();
                 }
 
-                if(em.find(Produto.class, embalagem.getProduto().getId()) == null){
-                    return Response.status(Response.Status.NOT_FOUND).entity("Produto não encontrado!").build();
+                // Verifica se o produto existe
+                if (em.find(Produto.class, embalagem.getProduto().getId()) == null) {
+                    return Response.status(Response.Status.BAD_REQUEST)
+                            .entity("{\"message\": \"Produto não encontrado: " + embalagem.getProduto().getId() + "!\"}")
+                            .type(MediaType.APPLICATION_JSON)
+                            .build();
+                }
+
+                // Verifica se o ID da embalagem já existe
+                if (em.find(Embalagem.class, embalagem.getId()) != null) {
+                    return Response.status(Response.Status.BAD_REQUEST)
+                            .entity("{\"message\": \"Já existe uma embalagem com o ID fornecido: " + embalagem.getId() + "!\"}")
+                            .type(MediaType.APPLICATION_JSON)
+                            .build();
                 }
             }
         }
 
-        Encomenda encomenda = new Encomenda(id,cliente);
+        // Criação da encomenda após validações
+        Encomenda encomenda = new Encomenda(id, cliente);
         em.persist(encomenda);
 
-        for(VolumeCreateEncomendaDTO volume: volumes) {
+        for (VolumeCreateEncomendaDTO volume : volumes) {
             Volume volume1 = new Volume(volume.getId(), encomenda);
             em.persist(volume1);
 
             for (EmbalagemCreateEncomendaDTO embalagem : volume.getEmbalagens()) {
-
                 Produto produto1 = em.find(Produto.class, embalagem.getProduto().getId());
                 Tipo_Embalagem tipoEmbalagem = em.find(Tipo_Embalagem.class, embalagem.getTipo());
 
-                Embalagem embalagem1 = new Embalagem(embalagem.getId(), produto1, volume1, embalagem.getQuantidade(), tipoEmbalagem);
+                Embalagem embalagem1 = new Embalagem(
+                        embalagem.getId(),
+                        produto1,
+                        volume1,
+                        embalagem.getQuantidade(),
+                        tipoEmbalagem
+                );
                 em.persist(embalagem1);
 
                 volume1.addEmbalagem(embalagem1);
@@ -72,8 +116,11 @@ public class EncomendaBean {
             encomenda.addVolume(volume1);
         }
 
-        return Response.ok("Encomenda criada com sucesso.").build();
+        return Response.ok("{\"message\": \"Encomenda criada com sucesso.\"}")
+                .type(MediaType.APPLICATION_JSON)
+                .build();
     }
+
 
     public List<Encomenda> findAll(Utilizador user) {
 

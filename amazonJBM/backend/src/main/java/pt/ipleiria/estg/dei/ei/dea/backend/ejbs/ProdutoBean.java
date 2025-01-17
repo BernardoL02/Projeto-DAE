@@ -3,6 +3,7 @@ package pt.ipleiria.estg.dei.ei.dea.backend.ejbs;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Categoria;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.Cliente;
@@ -20,14 +21,28 @@ public class ProdutoBean {
 
     public Response create(int id, String nome, int categoria_id){
 
+        Produto existingProduto = em.find(Produto.class, id);
+        if (existingProduto != null) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("{\"message\": \"Já existe um Produto com o ID fornecido!\"}")
+                    .type(MediaType.APPLICATION_JSON)
+                    .build();
+        }
+
         Categoria categoria = em.find(Categoria.class, categoria_id);
 
         if(categoria == null){
-            return Response.status(Response.Status.NOT_FOUND).entity("Categoria não encontrada!").build();
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("{\"message\": \"Categoria não encontrada!\"}")
+                    .type(MediaType.APPLICATION_JSON)
+                    .build();
         }
 
         if (em.createNamedQuery("existsProdutoByNomeAndCategoria", Long.class).setParameter("nome", nome).setParameter("categoriaId", categoria_id).getSingleResult() > 0) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Já existe um produto com o mesmo nome nesta categoria!").build();
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("{\"message\": \"Já existe um produto com o mesmo nome nesta categoria!\"}")
+                    .type(MediaType.APPLICATION_JSON)
+                    .build();
         }
 
         Produto produto = new Produto(id, nome, categoria);

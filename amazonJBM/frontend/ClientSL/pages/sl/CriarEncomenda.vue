@@ -307,8 +307,9 @@ const criarEncomenda = async () => {
     });
 
     if (!response.ok) {
-      const errorData = await response.text();
-      throw new Error(errorData);
+      // Tenta extrair a mensagem do corpo da resposta
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Erro ao criar a encomenda");
     }
 
     successMessage.value = 'Encomenda criada com sucesso!';
@@ -320,7 +321,7 @@ const criarEncomenda = async () => {
     selectedCliente.value = null;
     volumes.splice(0);
   } catch (error) {
-    showError(error.message);
+    showError(error.message || "Erro ao criar a encomenda");
   }
 };
 

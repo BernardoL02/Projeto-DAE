@@ -254,9 +254,9 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzYwO
                       #Usar no FE os ids
                      #[x] - Encomenda
                      #[x] - Volume
-                     #[x] - Produto
-                     #[x] - Tipo Embalagem
-                     #[x] - Tipos Sensore
+                     #[x] - Produto        X
+                     #[x] - Tipo Embalagem X
+                     #[x] - Tipos Sensore  X
                      #[x] - Sensor
                      #[x] - Embalagem
 
@@ -301,12 +301,12 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU2N
 ### Criar novo tipo de sensor
 POST http://localhost:3001/backend/api/sensor/tipo
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcwNzAwMTcsImV4cCI6MTczNzA3MzYxN30.UQZJkP34XiR5bY0LhwcBu8nbM-Ygic9xodVUZNFewtdla4YmG8-84MuXBcStNCSO
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcxMTMwNTgsImV4cCI6MTczNzExNjY1OH0.m2QazZAwjmK1vkGmBKTAtSqvL7e_Db5Xg13GYI9CcBqmeIfvE8EKv9EYFaklNglH
 Content-Type: application/json
 Accept: application/json
 
 {
-  "id": "66",
+  "id": "1",
   "tipo": "humidade"
 }
 
@@ -318,7 +318,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "id": "55",
+  "id": "1",
   "tipo": "E_TPP",
   "tipos_sensores": [
     { "id": 1 },

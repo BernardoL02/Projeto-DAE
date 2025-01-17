@@ -4,6 +4,7 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResTipoEmbalagemDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResTipoSensorDTO;
@@ -24,8 +25,19 @@ public class TipoEmbalagemBean {
 
     public Response create(int id, String tipo, List<TipoSensorDTO> tipoSensoresDTO) {
 
+        Tipo_Embalagem existingTipoEmbalagem = em.find(Tipo_Embalagem.class, id);
+        if (existingTipoEmbalagem != null) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("{\"message\": \"Já existe um tipo de embalagem com o ID fornecido!\"}")
+                    .type(MediaType.APPLICATION_JSON)
+                    .build();
+        }
+
         if (em.createNamedQuery("existsTipoEmbalagem", Long.class).setParameter("tipo", tipo).getSingleResult() > 0) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Já existe uma embalagem deste tipo!").build();
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("{\"message\": \"Já existe uma embalagem deste tipo!\"}")
+                    .type(MediaType.APPLICATION_JSON)
+                    .build();
         }
 
         List<Tipo_Sensores> tipoSensores = new ArrayList<>();
@@ -35,7 +47,10 @@ public class TipoEmbalagemBean {
             Tipo_Sensores tipoSensores1 = em.find(Tipo_Sensores.class, tipoSensor.getId());
 
             if(tipoSensores1 == null){
-                return Response.status(Response.Status.NOT_FOUND).entity("Tipo de Sensor não encontrado!").build();
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity("{\"message\": \"Tipo de Sensor não encontrado!\"}")
+                        .type(MediaType.APPLICATION_JSON)
+                        .build();
             }
 
             tipoSensores.add(tipoSensores1);

@@ -195,7 +195,11 @@ const criarProduto = async () => {
       body: JSON.stringify(novoProduto.value),
     });
 
-    if (!response.ok) throw new Error("Erro ao criar produto");
+    if (!response.ok) {
+      // Tenta extrair a mensagem do corpo da resposta
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Erro ao criar produto");
+    }
 
     successMessage.value = "Produto criado com sucesso!";
     setTimeout(() => (successMessage.value = ""), 3000);
@@ -205,9 +209,11 @@ const criarProduto = async () => {
     novoProduto.value = { id: "", nome: "", id_categoria: "" }; // Reseta o formulário
     mostrarModalCriar.value = false; // Fecha o modal
   } catch (error) {
-    console.error(error.message);
+    // Exibe a mensagem de erro retornada ou uma padrão
+    showError(error.message || "Erro ao criar produto");
   }
 };
+
 
 // Função para buscar todos os tipos de sensores
 const fetchTiposSensores = async () => {
@@ -251,7 +257,9 @@ const criarTipo = async () => {
     });
 
     if (!response.ok) {
-      throw new Error("Erro ao criar tipo de sensor");
+      // Tenta extrair a mensagem do corpo da resposta
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Erro ao criar tipo de sensor");
     }
 
     successMessage.value = "Tipo de sensor criado com sucesso!";
@@ -262,10 +270,11 @@ const criarTipo = async () => {
     novoTipo.value = { id: "", tipo: "" }; // Reseta o formulário
     mostrarModalCriarTipo.value = false; // Fecha o modal
   } catch (error) {
-    console.error("Erro ao criar tipo de sensor:", error);
-    showError("Erro ao criar tipo de sensor");
+    // Exibe a mensagem de erro retornada ou uma padrão
+    showError(error.message || "Erro ao criar tipo de sensor");
   }
 };
+
 
 // Função para buscar embalagens
 const fetchEmbalagens = async () => {
@@ -290,7 +299,6 @@ const fetchEmbalagens = async () => {
       sensores: embalagem.tipoSensorDTO.map((sensor) => sensor.tipo)
     }));
   } catch (error) {
-    console.error("Erro ao buscar tipos de embalagem:", error);
     showError("Erro ao buscar tipos de embalagem");
   }
 };
@@ -328,7 +336,9 @@ const criarEmbalagem = async () => {
     });
 
     if (!response.ok) {
-      throw new Error(await response.text());
+      // Tenta extrair a mensagem do corpo da resposta
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Erro ao criar tipo de embalagem");
     }
 
     successMessage.value = "Tipo de embalagem criado com sucesso!";
@@ -340,7 +350,7 @@ const criarEmbalagem = async () => {
     selectedSensores.value = [];
     mostrarModalCriarEmbalagem.value = false;
   } catch (error) {
-    showError(error.message);
+    showError(error.message || "Erro ao criar tipo de embalagem");
   }
 };
 
