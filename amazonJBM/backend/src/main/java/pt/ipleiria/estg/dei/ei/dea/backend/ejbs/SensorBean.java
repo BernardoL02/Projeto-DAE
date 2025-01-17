@@ -35,10 +35,7 @@ public class SensorBean {
 
         Sensor existingSensor = em.find(Sensor.class, id);
         if (existingSensor != null) {
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("{\"message\": \"Já existe um sensor com o ID fornecido!\"}")
-                    .type(MediaType.APPLICATION_JSON)
-                    .build();
+            return Response.status(Response.Status.BAD_REQUEST).entity("Já existe um sensor com o ID fornecido.").build();
         }
 
         if(valMax < valMin){
