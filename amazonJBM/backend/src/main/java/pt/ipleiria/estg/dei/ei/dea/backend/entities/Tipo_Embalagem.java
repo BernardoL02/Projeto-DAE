@@ -12,7 +12,7 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(
                 name = "getTipoEmbalagem",
-                query = "SELECT t FROM Tipo_Embalagem t JOIN FETCH t.tipoSensores"
+                query = "SELECT t FROM Tipo_Embalagem t LEFT JOIN FETCH t.tipoSensores"
         ),
         @NamedQuery(
                 name = "existsTipoEmbalagem",

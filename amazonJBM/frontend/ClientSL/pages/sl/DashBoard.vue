@@ -231,7 +231,6 @@ const criarProduto = async () => {
   }
 };
 
-
 // Função para buscar todos os tipos de sensores
 const fetchTiposSensores = async () => {
   try {
@@ -292,7 +291,6 @@ const criarTipo = async () => {
   }
 };
 
-
 // Função para buscar embalagens
 const fetchEmbalagens = async () => {
   try {
@@ -314,7 +312,7 @@ const fetchEmbalagens = async () => {
     embalagens.value = data.map((embalagem) => ({
       id: embalagem.id,
       tipo: embalagem.tipo,
-      sensores: embalagem.tipoSensorDTO.map((sensor) => sensor.tipo)
+      sensores: embalagem.tipoSensorDTO.map((sensor) => sensor.tipo),
     }));
   } catch (error) {
     showError("Erro ao buscar tipos de embalagem");
@@ -407,16 +405,15 @@ onMounted(() => {
       <!-- Listagem de Produtos -->
       <div
         class="mb-10 flex flex-col justify-center mx-auto mt-10 p-6 bg-white shadow-md rounded-lg border border-gray-300 w-full max-w-5xl items-center">
-
         <div class="flex flex-row space-x-4 relative">
           <div
-            class="left-[-225px] top-[-40px] absolute inset-0 flex justify-center items-center w-12 h-12 border border-gray-300  bg-white rounded-full">
-            <img src="../../public/Images/produtos.png" alt="Ícone de Embalagens" class="w-7 h-7">
+            class="left-[-225px] top-[-40px] absolute inset-0 flex justify-center items-center w-12 h-12 border border-gray-300 bg-white rounded-full">
+            <img src="../../public/Images/produtos.png" alt="Ícone de Embalagens" class="w-7 h-7" />
           </div>
         </div>
 
         <h2 class="text-xl font-semibold mb-4">Produtos</h2>
-        <div class="flex flex-row space-x-6 ">
+        <div class="flex flex-row space-x-6">
           <button @click="mostrarModalProdutos = true"
             class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
             Mostrar Produtos
@@ -477,7 +474,9 @@ onMounted(() => {
                 <input type="text" v-model="searchCategoria" @focus="showCategoriaSuggestions = true"
                   @blur="hideCategoriaSuggestions" placeholder="Pesquisar categoria"
                   class="w-full p-2 border border-gray-300 rounded mb-2 focus:ring-green-500 focus:border-green-500" />
-                <div v-if="showCategoriaSuggestions && filteredCategorias.length > 0" class="relative">
+                <div v-if="
+                  showCategoriaSuggestions && filteredCategorias.length > 0
+                " class="relative">
                   <ul
                     class="absolute z-10 w-full bg-white border border-gray-300 rounded max-h-48 overflow-y-auto shadow-lg">
                     <li v-for="categoria in filteredCategorias" :key="categoria.id"
@@ -497,16 +496,14 @@ onMounted(() => {
       </div>
     </div>
 
-
     <div class="flex flex-col pr-28 w-[520px]">
       <!-- Listagem de Tipos -->
       <div
         class="mb-10 flex flex-col justify-center mx-auto p-6 bg-white shadow-md rounded-lg border border-gray-300 w-full max-w-5xl items-center">
-
         <div class="flex flex-row space-x-4 relative">
           <div
-            class="left-[-225px] top-[-40px] absolute inset-0 flex justify-center items-center w-12 h-12 border border-gray-300  bg-white rounded-full">
-            <img src="../../public/Images/sensor.png" alt="Ícone de Embalagens" class="w-8 h-8">
+            class="left-[-225px] top-[-40px] absolute inset-0 flex justify-center items-center w-12 h-12 border border-gray-300 bg-white rounded-full">
+            <img src="../../public/Images/sensor.png" alt="Ícone de Embalagens" class="w-8 h-8" />
           </div>
         </div>
 
@@ -538,7 +535,7 @@ onMounted(() => {
             </div>
 
             <!-- Tabela de Tipos -->
-            <Table :tableTitles="['Id', 'Tipo']" :tableData="filteredTiposTableData" :mostrarAcoes="false" />
+            <Table :tableTitles="['Tipo']" :tableData="filteredTiposTableData" :mostrarAcoes="false" />
           </div>
         </div>
 
@@ -575,17 +572,16 @@ onMounted(() => {
       <!-- Listagem de Embalagens -->
       <div
         class="mb-10 flex flex-col justify-center mx-auto p-6 bg-white shadow-md rounded-lg border border-gray-300 w-full max-w-5xl items-center">
-
         <div class="flex flex-row space-x-4 relative">
           <div
-            class="left-[-225px] top-[-40px] absolute inset-0 flex justify-center items-center w-12 h-12 border border-gray-300  bg-white rounded-full">
-            <img src="../../public/Images/embalagem.png" alt="Ícone de Embalagens" class="w-8 h-8">
+            class="left-[-225px] top-[-40px] absolute inset-0 flex justify-center items-center w-12 h-12 border border-gray-300 bg-white rounded-full">
+            <img src="../../public/Images/embalagem.png" alt="Ícone de Embalagens" class="w-8 h-8" />
           </div>
         </div>
 
         <h2 class="text-xl font-semibold mb-4">Tipos de Embalagens</h2>
 
-        <div class="flex flex-row space-x-6 ">
+        <div class="flex flex-row space-x-6">
           <button @click="mostrarModalEmbalagens = true"
             class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
             Mostrar Embalagens
@@ -600,31 +596,34 @@ onMounted(() => {
           class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
           <div
             class="bg-white w-11/12 sm:w-3/4 md:w-2/3 lg:w-1/2 p-6 rounded-lg shadow-lg relative max-h-[90vh] overflow-y-auto max-w-2xl">
-
             <button @click="mostrarModalEmbalagens = false"
               class="absolute top-7 right-6 bg-gray-200 text-gray-600 hover:text-gray-900 hover:bg-white rounded-full w-8 h-8 flex items-center justify-center focus:outline-none">
               <i class="fas fa-times text-sm"></i>
             </button>
             <div class="mb-4">
               <h2 class="text-lg font-semibold">Tipos de Embalagens</h2>
-              <p class="text-base text-gray-700">Estes são os sensores mínimos necessários para cada embalagem.</p>
+              <p class="text-base text-gray-700">
+                Estes são os sensores mínimos necessários para cada embalagem.
+              </p>
             </div>
 
             <!-- Grid de cartões -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-w-2xl">
               <div v-for="embalagem in embalagens" :key="embalagem.id"
                 class="p-4 bg-gray-100 rounded-lg shadow hover:shadow-lg transition-transform transform hover:scale-105 ]">
-                <h3 class="text-base font-semibold text-gray-800 mb-2">{{ embalagem.tipo }} (id: {{ embalagem.id }})
-                </h3>
+                <h3 class="text-base font-semibold text-gray-800 mb-2">{{ embalagem.tipo }}</h3>
                 <ul class="list-disc list-inside text-gray-600 text-sm">
-                  <li v-for="sensor in embalagem.sensores" :key="sensor">{{ sensor }}</li>
+                  <li v-if="embalagem.sensores.length == 0">
+                    Não existem sensores obrigatórios
+                  </li>
+                  <li v-else v-for="sensor in embalagem.sensores" :key="sensor">
+                    {{ sensor }}
+                  </li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
-
-
 
         <!-- Modal para criar embalagem -->
         <div v-if="mostrarModalCriarEmbalagem"
@@ -692,7 +691,6 @@ onMounted(() => {
       </div>
     </div>
   </div>
-
 </template>
 
 <style scoped>

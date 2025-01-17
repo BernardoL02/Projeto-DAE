@@ -1,5 +1,10 @@
 id,version,data_entrega,data_expedicao,estado,cliente_id
-1,0,2024-12-02 13:00:00,2023-12-20 15:30:00,Entregue,Bernardo
-2,0,-,2024-12-13 15:30:00,PorEntregar,Tendeiro
-3,0,-,-,EmProcessamento,Sousa
-4,0,-,2023-12-07 15:30:00,Cancelada,Sousa
+2,0,-,-,EmProcessamento,Bernardo
+1,1,-,2025-01-17 14:33:27.253195,PorEntregar,Bernardo
+3,2,2025-01-17 14:36:38.245640,2025-01-17 14:36:27.237005,Entregue,Bernardo
+4,1,-,-,Cancelada,Bernardo
+5,1,-,2025-01-17 14:42:08.372759,PorEntregar,Tendeiro
+15,1,-,-,EmProcessamento,Tendeiro
+6,1,-,-,Cancelada,Tendeiro
+8,0,-,-,EmProcessamento,Carvalho
+11,1,-,2025-01-17 14:50:24.474666,PorEntregar,Carvalho

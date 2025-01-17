@@ -17,7 +17,7 @@ Accept: application/json
 ### Get All Encomenda #
 GET http://localhost:3001/backend/api/encomendas/
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDI0MzQ2LCJleHAiOjE3MzU0Mjc5NDZ9.Oci5ykM3yFWiVYs99419cNOlKbedkW5trzitlHsdPxkwpHokPO9aC3JuLYf0o9hM
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MTE4MDM3LCJleHAiOjE3MzcxMjE2Mzd9.P8G0-TONoXJNatOpsNu_rdXjZ75PMerVPT85CWcn-AlZDJipLoOsbkobKrWVGdEy
 
 ### Get Encomenda Por Id #
 GET http://localhost:3001/backend/api/encomendas/1
@@ -25,9 +25,9 @@ Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MTM2MjIwLCJleHAiOjE3MzcxMzk4MjB9.6h82DcbB4_u0FVrurcnwpM1Yvyo-ZkB0elm-My3-HZAXIAokBu7E718J-l3RWTVd
 
 ### Get All Encomendas por um determinado estado "PorEntregar" "Cancelada" "EmProcessamento" "Entregue" #
-GET http://localhost:3001/backend/api/encomendas/estado/EmProcessamento
+GET http://localhost:3001/backend/api/encomendas/estado/Cancelada
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDI0MzQ2LCJleHAiOjE3MzU0Mjc5NDZ9.Oci5ykM3yFWiVYs99419cNOlKbedkW5trzitlHsdPxkwpHokPO9aC3JuLYf0o9hM
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MTE4MDM3LCJleHAiOjE3MzcxMjE2Mzd9.P8G0-TONoXJNatOpsNu_rdXjZ75PMerVPT85CWcn-AlZDJipLoOsbkobKrWVGdEy
 
 ### Get Encomendas Pendentes #
 GET http://localhost:3001/backend/api/encomendas/pendentes
@@ -151,7 +151,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3M
 ### GET Ver Alertas de encomendas (PorEntregar) #
 GET http://localhost:3001/backend/api/encomendas/alertas
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1NTgxODkyLCJleHAiOjE3MzU1ODU0OTJ9.7_WdrKQej8l5kzVwkPwutBefC4ELWt20MThEHbtrcDJTm5qnvvRXy7SK31FWPfos
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MTE4MDM3LCJleHAiOjE3MzcxMjE2Mzd9.P8G0-TONoXJNatOpsNu_rdXjZ75PMerVPT85CWcn-AlZDJipLoOsbkobKrWVGdEy
 
 ### Get Coordenadas Volumes #
 GET http://localhost:3001/backend/api/encomendas/1/coordenadas
@@ -245,18 +245,8 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzYwO
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
                       #TODO Retirar plural dos EndPoints#
                       #Endpoint remover sensor de embalagem#
-                      #No front permitir criar embalagens com mais de um sensor do mesmo tipo#
-                      #Ainda é para fazer o track de enmenda na pagina de login???#
-                      #CORS + ids no FE + validar DTOS#
-                      #Mensagem que o id já existe#
                       #Usar no FE os ids
-                     #[x] - Encomenda      X
-                     #[x] - Volume         X
-                     #[x] - Produto        X
-                     #[x] - Tipo Embalagem X
-                     #[x] - Tipos Sensore  X
-                     #[x] - Sensor         X
-                     #[x] - Embalagem      X
+                      #Ver encomemdas entregues Logista
                      #Colocar no pdf a atualização do JSON criar encomenda#
                      #Colocar no pdf todos os endpoints modificados#
                      #Falar no word,o que foi melhorado em relacao aos endpoints, falar dos novos endpoints e falar nos extras#

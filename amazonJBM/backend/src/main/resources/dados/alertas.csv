@@ -1,8 +1,14 @@
-bateria,mensagem,time_stamp,valor,id_sensor,id_volume
-99,Valor acima do limite máximo (35) para o sensor Temperatura,2024-12-30 23:40:40.667547,35,1,1
-70,Valor abaixo do limite mínimo (15) para o sensor Temperatura,2024-12-30 23:40:40.668691,10,1,2
-90,Valor acima do limite máximo (30) para o sensor Aceleração,2024-12-30 23:40:40.669593,32,6,1
-11,Valor abaixo do limite mínimo (5) para o sensor Aceleração,2024-12-30 23:40:40.670038,3,6,2
-60,Valor abaixo do limite mínimo (5) para o sensor Aceleração,2024-12-30 23:40:40.670365,3,5,1
-30,Valor acima do limite máximo (1015) para o sensor Pressão Atmosférica,2024-12-30 23:40:40.670892,1016,4,2
-50,Valor abaixo do limite mínimo (980) para o sensor Pressão Atmosférica,2024-12-30 23:40:40.671561,975,4,1
+id,bateria,mensagem,time_stamp,valor,id_sensor,id_volume
+1,98,Berbequins - Aceleração excedeu o limite mínimo de 1!,2025-01-17 14:51:31.723813,0,11,11
+2,96,Gelados - Temperatura excedeu o limite máximo de 10!,2025-01-17 14:51:37.153694,14,2,2
+3,90,Gelados - Temperatura excedeu o limite máximo de 10!,2025-01-17 14:52:24.369244,11,2,2
+4,92,Pão Integral - Temperatura excedeu o limite máximo de 30!,2025-01-17 14:52:47.589839,31,1,1
+5,90,Chave de Fenda - Aceleração excedeu o limite máximo de 9!,2025-01-17 14:52:58.917075,22,3,2
+6,94,Sistema de Som - Temperatura excedeu o limite mínimo de 11!,2025-01-17 14:53:52.603287,2,35,32
+7,96,Gelados - Temperatura excedeu o limite mínimo de 1!,2025-01-17 14:54:03.507681,-2,33,32
+8,92,Chave de Fenda - Pressão Atmosférica excedeu o limite mínimo de 5!,2025-01-17 14:54:41.952071,4,4,2
+9,88,Chave de Fenda - Pressão Atmosférica excedeu o limite máximo de 9!,2025-01-17 14:55:02.941840,10,4,2
+10,86,Chave de Fenda - Pressão Atmosférica excedeu o limite máximo de 9!,2025-01-17 14:55:04.345368,10,4,2
+11,90,Pão Integral - Temperatura excedeu o limite máximo de 30!,2025-01-17 14:56:49.594068,33,1,1
+12,88,Pão Integral - Temperatura excedeu o limite mínimo de 10!,2025-01-17 14:56:53.417413,9,1,1
+13,84,Pão Integral - Temperatura excedeu o limite mínimo de 10!,2025-01-17 14:58:10.471960,2,1,1
