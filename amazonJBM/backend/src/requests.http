@@ -227,7 +227,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczN
 ### GET Ver Alertas de um sensor #
 GET http://localhost:3001/backend/api/sensor/1/alertas
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MDU3NjYzLCJleHAiOjE3MzcwNjEyNjN9.4hyLfuMYa8RSDGyhPgSOALKj0CVlBLfO95-KSjbemqs-FsFbWhrGvxk0rtyhPjw2
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNzExNDEyMiwiZXhwIjoxNzM3MTE3NzIyfQ.WLW2DNzMNq5i8PJBX2nKNHTKBvM3Hmt9uAK1meKpI8lwBktdsTs03hkJkQCqLlc4
 
 ### GET Ver Leituras de um sensor #
 GET http://localhost:3001/backend/api/sensor/1/leitura
@@ -245,10 +245,8 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzYwO
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
                       #TODO Retirar plural dos EndPoints#
                       #Endpoint remover sensor de embalagem#
-                      #Faz sentido um tipo de embalagem ter dois sensores do mesmo toipo???#
+                      #No front permitir criar embalagens com mais de um sensor do mesmo tipo#
                       #Ainda é para fazer o track de enmenda na pagina de login???#
-                      #Colocar no pdf a atualização do JSON criar encomenda#
-                      #Falar no word,o que foi melhorado em relacao aos endpoints, falar dos novos endpoints e falar nos extras#
                       #CORS + ids no FE + validar DTOS#
                       #Mensagem que o id já existe#
                       #Usar no FE os ids
@@ -259,7 +257,9 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzYwO
                      #[x] - Tipos Sensore  X
                      #[x] - Sensor
                      #[x] - Embalagem
-
+                     #Colocar no pdf a atualização do JSON criar encomenda#
+                     #Colocar no pdf todos os endpoints modificados#
+                     #Falar no word,o que foi melhorado em relacao aos endpoints, falar dos novos endpoints e falar nos extras#
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
 
 ### REQUEST JWT TOKEN
@@ -267,7 +267,7 @@ POST http://localhost:3001/backend/api/auth/login
 Content-Type: application/json
 Accept: application/json
 
-{ "username": "Miguel", "password": "123" }
+{ "username": "Bernardo", "password": "123" }
 
 ### Bernardo -> Cliente
 ### Miguel -> Logista

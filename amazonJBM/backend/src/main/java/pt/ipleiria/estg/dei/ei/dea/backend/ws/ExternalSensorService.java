@@ -36,11 +36,10 @@ public class ExternalSensorService {
     @POST
     @Path("/")
     public Response create(LeituraDTO leituraDTO) {
-
-        leituraBean.create(leituraDTO.getId_sensor(),leituraDTO.getBateria(),leituraDTO.getValor());
-
-        return Response.ok("Leitura criada com sucesso").build();
+        return leituraBean.create(leituraDTO.getId_sensor(),leituraDTO.getBateria(),leituraDTO.getValor());
     }
+
+
 
 
     @PATCH
