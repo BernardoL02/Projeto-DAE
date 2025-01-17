@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
                 name = "Sensor.findByTipoAndEstado",
                 query = "SELECT s FROM Sensor s WHERE s.tipo.id = :tipoId AND s.estado = 'ativo'"
         ),
-
         @NamedQuery(
                 name = "Sensor.findByTipoAndEstadoByCliente",
                 query = "SELECT s FROM Sensor s JOIN Embalagem em ON s.embalagem.id =  em.id " +
@@ -22,6 +21,18 @@ import java.time.LocalDateTime;
                         " JOIN Encomenda e ON v.encomenda.id = e.id"+
                         " JOIN Cliente c ON e.cliente.id = c.id"+
                         " WHERE s.tipo.id = :tipoId AND s.estado = 'ativo' AND c.username = :username "
+        ),
+        @NamedQuery(
+                name = "eliminarAlertas",
+                query = "DELETE FROM Alerta a WHERE a.sensor.id = :sensorId"
+        ),
+        @NamedQuery(
+                name = "eliminarLeituras",
+                query = "DELETE FROM Leitura l WHERE l.sensor.id = :sensorId"
+        ),
+        @NamedQuery(
+                name = "eliminarSensor",
+                query = "DELETE FROM Sensor s WHERE s.id = :sensorId"
         )
 })
 public class Sensor {

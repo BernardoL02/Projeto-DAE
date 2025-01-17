@@ -1,8 +1,10 @@
 package pt.ipleiria.estg.dei.ei.dea.backend.ejbs;
 
+import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.ws.rs.core.Response;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
 
 import java.time.LocalDateTime;
@@ -14,6 +16,9 @@ public class EmbalagemBean {
 
     @PersistenceContext
     private EntityManager em;
+
+    @EJB
+    SensorBean sensorBean;
 
     public void create(int id,int id_produto, int id_tipoEmbalagem,int quantidade_produtos, int id_volume, List<Integer> id_sensores) {
 
@@ -37,4 +42,42 @@ public class EmbalagemBean {
         return em.find(Embalagem.class, id);
     }
 
+    public Response removerSensor(int id_embalagem, int id_sensor) {
+
+        Embalagem embalagem = this.find(id_embalagem);
+
+        if(embalagem == null){
+            return Response.status(Response.Status.NOT_FOUND).entity("Embalagem não encontrada!").build();
+        }
+
+        if(!embalagem.getVolume().getEncomenda().getEstado().equals("EmProcessamento")){
+            return Response.status(Response.Status.BAD_REQUEST).entity("Apenas pode desassociar um sensor de encomendas 'Em Processamento'!").build();
+        }
+
+        Sensor sensor = sensorBean.find(id_sensor);
+
+        if(sensor == null){
+            return Response.status(Response.Status.NOT_FOUND).entity("Sensor não encontrada!").build();
+        }
+
+        if(!embalagem.sensorExiste(sensor)){
+            return Response.status(Response.Status.NOT_FOUND).entity("Sensor não pertence à embalagem especificada!").build();
+        }
+
+        embalagem.removerSensor(sensor);
+
+        em.createNamedQuery("eliminarAlertas")
+                .setParameter("sensorId", sensor.getId())
+                .executeUpdate();
+
+        em.createNamedQuery("eliminarLeituras")
+                .setParameter("sensorId", sensor.getId())
+                .executeUpdate();
+
+        em.createNamedQuery("eliminarSensor")
+                .setParameter("sensorId", sensor.getId())
+                .executeUpdate();
+
+        return Response.status(Response.Status.OK).entity("Sensor removido com sucesso!").build();
+    }
 }

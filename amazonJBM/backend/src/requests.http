@@ -186,6 +186,11 @@ Content-Type: application/json
   "bateria": 72
 }
 
+###Desassociar um Sensor de uma Embalagem #
+DELETE http://localhost:3001/backend/api/embalagem/15/sensor/20
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcxNDEzMTQsImV4cCI6MTczNzE0NDkxNH0.jCAsj3jIbIZ0vWkjAW7-5dP93rdMqjQQ_HycGI4kRxM2vshJKNxg1othXpjrDDf8
+
 ################################ Sensor Service ################################
 
 ### Get All sensores #
@@ -257,7 +262,7 @@ POST http://localhost:3001/backend/api/auth/login
 Content-Type: application/json
 Accept: application/json
 
-{ "username": "Delgado", "password": "123" }
+{ "username": "Miguel", "password": "123" }
 
 ### Bernardo -> Cliente
 ### Miguel -> Logista

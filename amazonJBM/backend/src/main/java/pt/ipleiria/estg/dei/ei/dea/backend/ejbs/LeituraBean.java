@@ -26,8 +26,17 @@ public class LeituraBean {
     public Response create(int id_sensor, int bateria, String valor){
         Sensor sensor = sensorBean.find(id_sensor);
 
-        if(!sensor.getEmbalagem().getVolume().getEncomenda().getEstado().equals("PorEntregar")){
-            return Response.status(Response.Status.BAD_REQUEST).entity("Apenas é possivel criar leituras de sensores para encomendas no estado 'Por Entregar'").build();
+        if(sensor == null){
+            return Response.status(Response.Status.NOT_FOUND).entity("Sensor não encontrado!").build();
+        }
+
+        if(sensor.getEstado().equals("inativo")){
+            return Response.status(Response.Status.NOT_FOUND).entity("Sensor está inativo!").build();
+        }
+
+        String estado = sensor.getEmbalagem().getVolume().getEncomenda().getEstado();
+        if(!estado.equals("PorEntregar") && !estado.equals("EmProcessamento")){
+            return Response.status(Response.Status.BAD_REQUEST).entity("Apenas é possivel criar leituras de sensores para encomendas no estado 'Por Entregar' ou 'Em Processamento'").build();
         }
 
         Leitura leitura = new Leitura(sensor, bateria, valor);
@@ -50,6 +59,6 @@ public class LeituraBean {
 
         em.persist(leitura);
 
-        return Response.ok("Leitura criada com sucesso").build();
+        return Response.ok("Leitura criada com sucesso.").build();
     }
 }

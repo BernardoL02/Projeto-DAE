@@ -199,6 +199,29 @@ const handleAssociarSensor = (embalagem) => {
   mostrarAssociarSensorModal.value = true;
 };
 
+const handleRemoverSensor = async (idEmbalagem, idSensor) => {
+  try {
+    const token = getToken();
+    const response = await fetch(`${api}/embalagem/${idEmbalagem}/sensor/${idSensor}`, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(errorData);
+    }
+
+    await fetchEncomendaDetalhes();
+
+  } catch (error) {
+    showError(error.message);
+  }
+};
+
 
 // Função para gerar um valor aleatório dentro de um intervalo
 const getRandomValueInRange = (min, max) => {
@@ -261,8 +284,8 @@ const associarSensor = async () => {
 
     if (!response.ok) {
       // Tenta extrair a mensagem do corpo da resposta
-      const errorData = await response.json();
-      throw new Error(errorData.message || "Erro ao associar o sensor");
+      const errorData = await response.text();
+      throw new Error(errorData);
     }
 
     successMessage.value = "Sensor associado com sucesso!";
@@ -523,12 +546,23 @@ onMounted(() => {
               <h4 class="font-semibold text-md text-gray-700">Sensores Associados:</h4>
               <ul>
                 <li v-for="sensor in embalagem.sensores" :key="sensor.id" class="p-2 bg-gray-50 my-2 rounded shadow">
-                  <p><strong>ID do Sensor:</strong> {{ sensor.id }}</p>
-                  <p><strong>Tipo:</strong> {{ sensor.tipo }}</p>
-                  <p><strong>Valor:</strong> {{ sensor.valor }}</p>
-                  <p><strong>Bateria:</strong> {{ sensor.bateria }}%</p>
-                  <p><strong>Estado:</strong> {{ sensor.estado }}</p>
-                  <p><strong>Última Leitura:</strong> {{ sensor.ultimaLeitura }}</p>
+                  <div class="flex flex-row justify-between items-center w-full">
+                    <div>
+                      <p><strong>ID do Sensor:</strong> {{ sensor.id }}</p>
+                      <p><strong>Tipo:</strong> {{ sensor.tipo }}</p>
+                      <p><strong>Valor:</strong> {{ sensor.valor }}</p>
+                      <p><strong>Bateria:</strong> {{ sensor.bateria }}%</p>
+                      <p><strong>Estado:</strong> {{ sensor.estado }}</p>
+                      <p><strong>Última Leitura:</strong> {{ sensor.ultimaLeitura }}</p>
+                    </div>
+
+                    <button v-if="encomendaData.estado === 'Em Processamento'"
+                      @click="handleRemoverSensor(embalagem.id, sensor.id)"
+                      class="text-white px-3 py-1 rounded transition -mt-24"
+                      :class="embalagem.mostrarSensores ? 'bg-red-700 hover:bg-[#1b2530]' : 'bg-[#202c38] hover:bg-[#1b2530]'">
+                      Remover Sensor
+                    </button>
+                  </div>
                 </li>
               </ul>
             </div>

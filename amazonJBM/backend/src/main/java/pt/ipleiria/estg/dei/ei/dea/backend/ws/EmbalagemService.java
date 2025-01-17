@@ -31,6 +31,9 @@ public class EmbalagemService {
     SensorBean sensorBean;
 
     @EJB
+    EmbalagemBean embalagemBean;
+
+    @EJB
     TipoEmbalagemBean tipoEmbalagemBean;
 
     @POST
@@ -55,6 +58,12 @@ public class EmbalagemService {
                     sensorDTO.getValMin(),
                     id
             );
+    }
+
+    @DELETE
+    @Path("/{id}/sensor/{id_sensor}")
+    public Response getTiposEmbalagem(@PathParam("id") int id_embalagem, @PathParam("id_sensor") int id_sensor) {
+        return embalagemBean.removerSensor(id_embalagem,id_sensor);
     }
 
     @GET

@@ -41,6 +41,10 @@ public class SensorBean {
                     .build();
         }
 
+        if(valMax < valMin){
+            return Response.status(Response.Status.NOT_FOUND).entity("Valor máximo nao pode ser inferior ao valor mínimo e vice-versa!").build();
+        }
+
         Tipo_Sensores tipoSensores = em.find(Tipo_Sensores.class, tipoId);
 
         if (tipoSensores == null) {

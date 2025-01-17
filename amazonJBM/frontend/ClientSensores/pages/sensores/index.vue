@@ -40,7 +40,7 @@
       <div class="mt-4 flex justify-end space-x-2">
         <button @click="showCancelSensorConfirmModal = false"
           class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-700">
-          Cancelar
+          Desativar
         </button>
         <button @click="confirmCancelSensor" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700">
           Confirmar
@@ -94,6 +94,7 @@ import { useRuntimeConfig } from "#app";
 
 const config = useRuntimeConfig();
 const api = config.public.API_URL;
+
 
 const tableTitles = [
   "ID",
@@ -198,10 +199,15 @@ const toggleValueUpdate = () => {
   }
 };
 
-// Inicia a verificação de alertas, mas mantém a atualização de valores desligada inicialmente
+let intervalId;  // Variável para armazenar o intervalo
+
 onMounted(async () => {
-  tableData.value = await fetchSensors();
-  console.log(tableData)
+  tableData.value = await fetchSensors();  // Busca imediata ao carregar
+
+  // Atualiza a cada 2 segundos
+  intervalId = setInterval(async () => {
+    tableData.value = await fetchSensors();
+  }, 2000);
 });
 
 onUnmounted(() => {
@@ -238,6 +244,7 @@ const handleCancelSensorClick = (sensor) => {
 
 // Função para confirmar o cancelamento do sensor
 const confirmCancelSensor = async () => {
+
   if (selectedSensor.value) {
     await cancelSensor(selectedSensor.value);
     showCancelSensorConfirmModal.value = false;

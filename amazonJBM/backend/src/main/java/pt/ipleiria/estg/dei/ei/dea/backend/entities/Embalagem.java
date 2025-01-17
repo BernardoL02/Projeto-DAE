@@ -88,4 +88,12 @@ public class Embalagem {
     public void setTipo(Tipo_Embalagem tipo) {
         this.tipo = tipo;
     }
+
+    public boolean sensorExiste(Sensor sensor) {
+        return sensores.contains(sensor);
+    }
+
+    public void removerSensor(Sensor sensor) {
+        sensores.remove(sensor);
+    }
 }
