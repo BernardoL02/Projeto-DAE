@@ -10,7 +10,6 @@ import java.util.List;
 public class Embalagem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
@@ -30,7 +29,8 @@ public class Embalagem {
     @JoinColumn(name = "id_tipo", nullable = false)
     private Tipo_Embalagem tipo;
 
-    public Embalagem(Produto produto, Volume volume, int quantidade, Tipo_Embalagem tipo) {
+    public Embalagem(int id,Produto produto, Volume volume, int quantidade, Tipo_Embalagem tipo) {
+        this.id = id;
         this.produto = produto;
         this.volume = volume;
         this.quantidade = quantidade;

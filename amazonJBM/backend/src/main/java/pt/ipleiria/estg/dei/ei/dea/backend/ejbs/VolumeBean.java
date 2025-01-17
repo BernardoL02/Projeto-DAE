@@ -23,10 +23,10 @@ public class VolumeBean {
     @EJB
     private TipoEmbalagemBean tipoEmbalagemBean;
 
-    public Volume create(int id_encomenda){
+    public Volume create(int id,int id_encomenda){
 
         Encomenda encomenda = em.find(Encomenda.class, id_encomenda);
-        Volume volume = new Volume(encomenda);
+        Volume volume = new Volume(id,encomenda);
 
         encomenda.addVolume(volume);
         volume.setEncomenda(encomenda);
@@ -69,11 +69,11 @@ public class VolumeBean {
             produtos.add(produto1);
         }
 
-        Volume volume = new Volume(encomenda);
+        Volume volume = new Volume(volumeCreateEncomendaDTO.getId(),encomenda);
         em.persist(volume);
 
         for(int i = 0 ; i < tiposEmbalagem.size(); i++){
-            Embalagem embalagem = new Embalagem(produtos.get(i), volume, embalagensDTO.get(i).getQuantidade(), tiposEmbalagem.get(i));
+            Embalagem embalagem = new Embalagem(volumeCreateEncomendaDTO.getEmbalagens().get(i).getId(), produtos.get(i), volume, embalagensDTO.get(i).getQuantidade(), tiposEmbalagem.get(i));
             em.persist(embalagem);
 
             volume.addEmbalagem(embalagem);
