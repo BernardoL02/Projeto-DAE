@@ -207,7 +207,7 @@ onMounted(async () => {
   // Atualiza a cada 2 segundos
   intervalId = setInterval(async () => {
     tableData.value = await fetchSensors();
-  }, 2000);
+  }, 4000);
 });
 
 onUnmounted(() => {

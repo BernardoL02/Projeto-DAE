@@ -4,38 +4,38 @@
 
 ######################### Produtos Service ################################
 ### GET All Produtos #
-GET http://localhost:3001/backend/api/produtos
+GET http://localhost:3001/backend/api/produto
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU2NTQ4MDgsImV4cCI6MTczNTY1ODQwOH0.jhxJRikLHX286IRn4EEjrDvSoD1_8SfSYRFWjsD2QoXtHyRT9AtbneWqHRdQ8hmQ
 
 ######################### Clientes Service ################################
 ### GET All clientes #
-GET http://localhost:3001/backend/api/clientes
+GET http://localhost:3001/backend/api/cliente
 Accept: application/json
 
 ######################### Encomenda Service ################################
 ### Get All Encomenda #
-GET http://localhost:3001/backend/api/encomendas/
+GET http://localhost:3001/backend/api/encomenda/
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MTE4MDM3LCJleHAiOjE3MzcxMjE2Mzd9.P8G0-TONoXJNatOpsNu_rdXjZ75PMerVPT85CWcn-AlZDJipLoOsbkobKrWVGdEy
 
 ### Get Encomenda Por Id #
-GET http://localhost:3001/backend/api/encomendas/1
+GET http://localhost:3001/backend/api/encomenda/1
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MTM2MjIwLCJleHAiOjE3MzcxMzk4MjB9.6h82DcbB4_u0FVrurcnwpM1Yvyo-ZkB0elm-My3-HZAXIAokBu7E718J-l3RWTVd
 
 ### Get All Encomendas por um determinado estado "PorEntregar" "Cancelada" "EmProcessamento" "Entregue" #
-GET http://localhost:3001/backend/api/encomendas/estado/Cancelada
+GET http://localhost:3001/backend/api/encomenda/estado/Cancelada
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MTE4MDM3LCJleHAiOjE3MzcxMjE2Mzd9.P8G0-TONoXJNatOpsNu_rdXjZ75PMerVPT85CWcn-AlZDJipLoOsbkobKrWVGdEy
 
 ### Get Encomendas Pendentes #
-GET http://localhost:3001/backend/api/encomendas/pendentes
+GET http://localhost:3001/backend/api/encomenda/pendentes
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1NDIyODg0LCJleHAiOjE3MzU0MjY0ODR9.4U7Qp_PlswKVnqJZCqIPEIf4m9RFO_ZpmcwOApmYWnvgccLO-BeJpWTWLp3PYQeY
 
 ### Alterar estado de uma encomenda #
-PATCH http://localhost:3001/backend/api/encomendas/1
+PATCH http://localhost:3001/backend/api/encomenda/1
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1NTc1MTg2LCJleHAiOjE3MzU1Nzg3ODZ9.zIIIFVEKQzfVI4OzewVeUNtoRPpRhB4LgCnbUFoW0HcQCHQEYSK1l3IihWYN9YN0
 Content-Type: application/json
@@ -45,7 +45,7 @@ Content-Type: application/json
 }
 
 ###Criar uma nova encomenda #
-POST http://localhost:3001/backend/api/encomendas
+POST http://localhost:3001/backend/api/encomenda
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcwNzA1OTAsImV4cCI6MTczNzA3NDE5MH0.wvhj0bO_a3LZD3opgFDLdp4gsVwo4uI4ErrvV-NSyMrryp6PA2K9L-6pWHMbSD6i
 Content-Type: application/json
@@ -100,7 +100,7 @@ Content-Type: application/json
 }
 
 ### Associar um Volume a uma Encomenda #
-POST http://localhost:3001/backend/api/encomendas/100/volume
+POST http://localhost:3001/backend/api/encomenda/100/volume
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcwNzA1OTAsImV4cCI6MTczNzA3NDE5MH0.wvhj0bO_a3LZD3opgFDLdp4gsVwo4uI4ErrvV-NSyMrryp6PA2K9L-6pWHMbSD6i
 Content-Type: application/json
@@ -144,17 +144,17 @@ Content-Type: application/json
 }
 
 ### Get All Alertas de Encomenda por Id #
-GET http://localhost:3001/backend/api/encomendas/100/alertas
+GET http://localhost:3001/backend/api/encomenda/100/alertas
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MTE5MjUzLCJleHAiOjE3MzcxMjI4NTN9.sKDZ3LIJS_ck_ktlZaeyPzrgGE2gvrewI4UiPE1kZpHDOpoVO0hIEWE7sa8HEe6H
 
 ### GET Ver Alertas de encomendas (PorEntregar) #
-GET http://localhost:3001/backend/api/encomendas/alertas
+GET http://localhost:3001/backend/api/encomenda/alertas
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MTE4MDM3LCJleHAiOjE3MzcxMjE2Mzd9.P8G0-TONoXJNatOpsNu_rdXjZ75PMerVPT85CWcn-AlZDJipLoOsbkobKrWVGdEy
 
 ### Get Coordenadas Volumes #
-GET http://localhost:3001/backend/api/encomendas/1/coordenadas
+GET http://localhost:3001/backend/api/encomenda/1/coordenadas
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQ4NTc2NywiZXhwIjoxNzM1NDg5MzY3fQ.8SP-wg_cV2boWrFVa0dxN55sYRSxB1a5hn9qm0XVuhk-WfQ1Qa3DaaFZhgqXlZBe
 
@@ -248,10 +248,6 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzYwO
 ################################ End Points Login ################################
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
-                      #TODO Retirar plural dos EndPoints#
-                      #Endpoint remover sensor de embalagem#
-                      #Usar no FE os ids X
-                      #Ver encomemdas entregues Logista X
                      #Colocar no pdf a atualização do JSON criar encomenda#
                      #Colocar no pdf todos os endpoints modificados#
                      #Falar no word,o que foi melhorado em relacao aos endpoints, falar dos novos endpoints e falar nos extras#
@@ -276,7 +272,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzYwM
 
 ################################ Endpoints Extra  ################################
 ### Criar um novo produto
-POST http://localhost:3001/backend/api/produtos
+POST http://localhost:3001/backend/api/produto
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcwNjQxMzcsImV4cCI6MTczNzA2NzczN30.8z2oCekahB_ApWUpHr7l7upNo10ROtd5OqX5o3MzwRrPTSREHSqa8l7u7HhhC2SP
 Content-Type: application/json

@@ -155,7 +155,7 @@ const showError = (message) => {
 const fetchProdutos = async () => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/produtos`, {
+    const response = await fetch(`${api}/produto`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -202,7 +202,7 @@ const fetchCategorias = async () => {
 const criarProduto = async () => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/produtos`, {
+    const response = await fetch(`${api}/produto`, {
       method: "POST",
       headers: {
         Accept: "application/json",

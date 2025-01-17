@@ -103,7 +103,7 @@ const showError = (message) => {
 const fetchClientes = async () => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/clientes`, {
+    const response = await fetch(`${api}/cliente`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -148,7 +148,7 @@ const hideSuggestions = () => {
 const fetchProdutos = async () => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/produtos`, {
+    const response = await fetch(`${api}/produto`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -298,7 +298,7 @@ const criarEncomenda = async () => {
 
   try {
     const token = getToken();
-    const response = await fetch(`${api}/encomendas`, {
+    const response = await fetch(`${api}/encomenda`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

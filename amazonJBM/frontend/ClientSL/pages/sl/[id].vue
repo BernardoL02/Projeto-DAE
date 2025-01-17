@@ -114,7 +114,7 @@ const toggleEmbalagem = (embalagem) => {
 const fetchEncomendaDetalhes = async () => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/encomendas/${encomendaId}`, {
+    const response = await fetch(`${api}/encomenda/${encomendaId}`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -328,7 +328,7 @@ const fetchTiposEmbalagem = async () => {
 const fetchProdutos = async () => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/produtos`, {
+    const response = await fetch(`${api}/produto`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -419,7 +419,7 @@ const adicionarVolume = async () => {
 
   try {
     const token = getToken();
-    const response = await fetch(`${api}/encomendas/${encomendaId}/volume`, {
+    const response = await fetch(`${api}/encomenda/${encomendaId}/volume`, {
       method: "POST",
       headers: {
         Accept: "application/json",

@@ -38,7 +38,7 @@
               <button v-if="row.estado !== 'inativo'" @click="emit('update', row)"
                 class="bg-green-500 text-white py-1 px-3 rounded hover:bg-green-700 transition mr-2">Confirmar</button>
               <button v-if="row.estado !== 'inativo'" @click="emit('cancel', row)"
-                class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-700 transition">Cancelar</button>
+                class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-700 transition">Desativar</button>
             </td>
           </tr>
         </tbody>

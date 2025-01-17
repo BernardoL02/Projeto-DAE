@@ -64,7 +64,7 @@ const formatEstado = (estado) => {
 const fetchEncomendasPendentes = async () => {
   try {
     const token = getToken(); // Função para obter o token
-    const response = await fetch(`${api}/encomendas/estado/PorEntregar`, {
+    const response = await fetch(`${api}/encomenda/estado/PorEntregar`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -112,7 +112,7 @@ const fetchEncomendasPendentes = async () => {
 const verAlertasEncomenda = async (id) => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/encomendas/${id}/alertas`, {
+    const response = await fetch(`${api}/encomenda/${id}/alertas`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -156,7 +156,7 @@ const verAlertasEncomenda = async (id) => {
 const verTracking = async (id) => {
   try {
     const token = getToken(); // Função para obter o token
-    const response = await fetch(`${api}/encomendas/${id}/coordenadas`, {
+    const response = await fetch(`${api}/encomenda/${id}/coordenadas`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

@@ -68,7 +68,7 @@ const formateEstado = (estado) => {
 const fetchEncomendas = async () => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/encomendas`, {
+    const response = await fetch(`${api}/encomenda`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -116,8 +116,8 @@ const fetchEncomendasByEstado = async () => {
   const token = getToken();
   try {
     const url = estado.value === "Todas"
-      ? `${api}/encomendas`
-      : `${api}/encomendas/estado/${estado.value}`;
+      ? `${api}/encomenda`
+      : `${api}/encomenda/estado/${estado.value}`;
 
     const response = await fetch(url, {
       method: 'GET',
@@ -166,7 +166,7 @@ const fetchEncomendasByEstado = async () => {
 const verAlertasEncomenda = async (id) => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/encomendas/${id}/alertas`, {
+    const response = await fetch(`${api}/encomenda/${id}/alertas`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -204,7 +204,7 @@ const verAlertasEncomenda = async (id) => {
 const verTracking = async (id) => {
   try {
     const token = sessionStorage.getItem('token');
-    const response = await fetch(`${api}/encomendas/${id}/coordenadas`, {
+    const response = await fetch(`${api}/encomenda/${id}/coordenadas`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

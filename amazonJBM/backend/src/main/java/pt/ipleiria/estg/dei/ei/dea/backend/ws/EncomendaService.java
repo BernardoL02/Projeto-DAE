@@ -16,7 +16,7 @@ import pt.ipleiria.estg.dei.ei.dea.backend.security.Authenticated;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Path("encomendas")
+@Path("encomenda")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
 @Authenticated

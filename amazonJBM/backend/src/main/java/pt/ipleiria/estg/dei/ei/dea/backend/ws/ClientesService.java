@@ -13,7 +13,7 @@ import pt.ipleiria.estg.dei.ei.dea.backend.dtos.ResClienteDTO;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.CategoriaBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.ejbs.ClienteBean;
 import pt.ipleiria.estg.dei.ei.dea.backend.security.Authenticated;
-@Path("clientes")
+@Path("cliente")
 @Produces({MediaType.APPLICATION_JSON})
 @Consumes({MediaType.APPLICATION_JSON})
 @Authenticated

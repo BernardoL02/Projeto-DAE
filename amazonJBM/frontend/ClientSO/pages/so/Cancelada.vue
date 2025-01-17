@@ -45,7 +45,7 @@ const formatEstado = (estado) => {
 const fetchEncomendasEntregues = async () => {
   try {
     const token = getToken(); // Função para obter o token
-    const response = await fetch(`${api}/encomendas/estado/Cancelada`, {
+    const response = await fetch(`${api}/encomenda/estado/Cancelada`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -74,7 +74,7 @@ const fetchEncomendasEntregues = async () => {
 // Função para buscar alertas de uma encomenda específica
 const verAlertasEncomenda = async (id) => {
   try {
-    const response = await fetch(`${api}/encomendas/${id}/alertas`);
+    const response = await fetch(`${api}/encomenda/${id}/alertas`);
     if (!response.ok) {
       const errorData = await response.text();
       throw new Error(errorData);

@@ -57,7 +57,7 @@ const getToken = () => sessionStorage.getItem('token');
 const fetchEncomendaDetalhes = async () => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/encomendas/${encomendaId}`, {
+    const response = await fetch(`${api}/encomenda/${encomendaId}`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -204,7 +204,7 @@ onMounted(fetchEncomendaDetalhes);
           <li v-for="leitura in historicoData" :key="leitura.timeStamp" class="p-4 border-b">
             <p><strong>Valor:</strong> {{ leitura.valor }}</p>
             <p><strong>Bateria:</strong> {{ leitura.bateria }}%</p>
-            <p><strong>Timestamp:</strong> {{ leitura.timeStamp }}</p>
+            <p><strong>Timestamp:</strong> {{ new Date(leitura.timeStamp).toLocaleString('pt-PT') }}</p>
           </li>
         </ul>
       </div>

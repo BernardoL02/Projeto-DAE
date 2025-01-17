@@ -68,7 +68,7 @@ const formatEstado = (estado) => {
 const fetchEncomendasPendentes = async () => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/encomendas/estado/EmProcessamento`, {
+    const response = await fetch(`${api}/encomenda/estado/EmProcessamento`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -87,23 +87,23 @@ const fetchEncomendasPendentes = async () => {
       username: encomenda.username,
       dataExpedicao: encomenda.data_expedicao
         ? new Date(encomenda.data_expedicao).toLocaleString("pt-PT", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-          })
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
         : "Não definido",
       dataEntrega: encomenda.data_entrega
         ? new Date(encomenda.data_entrega).toLocaleString("pt-PT", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-          })
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
         : "Não definido",
       estado: formatEstado(encomenda.estado),
     }));
@@ -115,7 +115,7 @@ const fetchEncomendasPendentes = async () => {
 const cancelarEncomenda = async (id) => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/encomendas/${id}`, {
+    const response = await fetch(`${api}/encomenda/${id}`, {
       method: "PATCH",
       headers: {
         Accept: "application/json",
@@ -143,7 +143,7 @@ const cancelarEncomenda = async (id) => {
 
 const verAlertasEncomenda = async (id) => {
   try {
-    const response = await fetch(`${api}/encomendas/${id}/alertas`);
+    const response = await fetch(`${api}/encomenda/${id}/alertas`);
     if (!response.ok) {
       const errorData = await response.text();
       throw new Error(errorData);
@@ -169,7 +169,7 @@ const verAlertasEncomenda = async (id) => {
 
 const verTracking = async (id) => {
   try {
-    const response = await fetch(`${api}/encomendas/${id}/coordenadas`);
+    const response = await fetch(`${api}/encomenda/${id}/coordenadas`);
     if (!response.ok) {
       const errorData = await response.text();
       throw new Error(errorData);
@@ -248,48 +248,32 @@ onMounted(async () => {
     </div>
 
     <!-- Mensagem de Sucesso -->
-    <div
-      v-if="successMessage"
-      class="fixed top-0 left-0 w-full flex justify-center mt-4 z-50 transition-transform transform-gpu"
-      :class="{
+    <div v-if="successMessage"
+      class="fixed top-0 left-0 w-full flex justify-center mt-4 z-50 transition-transform transform-gpu" :class="{
         'animate-slide-down': successMessage,
         'animate-slide-up': !successMessage,
-      }"
-    >
+      }">
       <div class="bg-green-500 text-white py-2 px-4 mr-28 rounded shadow-md">
         {{ successMessage }}
       </div>
     </div>
 
     <!-- Mensagens de erro estilizadas -->
-    <div
-      v-if="errorMessages.length"
-      class="fixed bottom-4 right-4 space-y-2 z-[100]"
-    >
-      <div
-        v-for="(error, index) in errorMessages"
-        :key="index"
-        class="bg-red-500 text-white py-4 px-6 rounded shadow-lg w-96"
-      >
+    <div v-if="errorMessages.length" class="fixed bottom-4 right-4 space-y-2 z-[100]">
+      <div v-for="(error, index) in errorMessages" :key="index"
+        class="bg-red-500 text-white py-4 px-6 rounded shadow-lg w-96">
         <h3 class="font-semibold text-lg mb-2">Erro</h3>
         <p>{{ error }}</p>
       </div>
     </div>
 
     <!-- Tabela para Encomendas Pendentes com botão de ver alertas e tracking -->
-    <Table
-      :tableTitles="encomendasTableTitles"
-      :tableData="encomendasTableData"
-      @cancelar="handleCancelClick"
-      @verAlertas="verAlertasEncomenda"
-      @tracking="verTracking"
-    />
+    <Table :tableTitles="encomendasTableTitles" :tableData="encomendasTableData" @cancelar="handleCancelClick"
+      @verAlertas="verAlertasEncomenda" @tracking="verTracking" />
 
     <!-- Modal de Confirmação de Cancelamento -->
-    <div
-      v-if="showCancelConfirmModal"
-      class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50"
-    >
+    <div v-if="showCancelConfirmModal"
+      class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white w-1/3 p-6 rounded shadow-lg">
         <h2 class="text-xl font-semibold mb-4">Confirmar Cancelamento</h2>
         <p>
@@ -297,16 +281,11 @@ onMounted(async () => {
           {{ selectedEncomendaId }}?
         </p>
         <div class="mt-4 flex justify-end space-x-2">
-          <button
-            @click="showCancelConfirmModal = false"
-            class="bg-gray-500 text-white py-1 px-4 rounded hover:bg-gray-700"
-          >
+          <button @click="showCancelConfirmModal = false"
+            class="bg-gray-500 text-white py-1 px-4 rounded hover:bg-gray-700">
             Cancelar
           </button>
-          <button
-            @click="confirmCancel"
-            class="bg-red-500 text-white py-1 px-4 rounded hover:bg-red-700"
-          >
+          <button @click="confirmCancel" class="bg-red-500 text-white py-1 px-4 rounded hover:bg-red-700">
             Confirmar
           </button>
         </div>
@@ -314,52 +293,34 @@ onMounted(async () => {
     </div>
 
     <!-- Modal de Alertas -->
-    <div
-      v-if="mostrarAlertasModal"
-      class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50"
-    >
+    <div v-if="mostrarAlertasModal"
+      class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
       <!-- Conteúdo do Modal -->
-      <div
-        class="bg-white w-1/2 p-0 rounded shadow-lg relative max-h-[90vh] overflow-y-auto"
-      >
+      <div class="bg-white w-1/2 p-0 rounded shadow-lg relative max-h-[90vh] overflow-y-auto">
         <!-- Cabeçalho fixo preenchido -->
-        <div
-          class="sticky top-0 bg-white z-10 p-4 border-b border-gray-300 flex justify-between items-center"
-        >
+        <div class="sticky top-0 bg-white z-10 p-4 border-b border-gray-300 flex justify-between items-center">
           <h2 class="text-xl font-semibold">Alertas da Encomenda</h2>
           <!-- Botão de fechar dentro do cabeçalho -->
-          <button
-            @click="mostrarAlertasModal = false"
-            class="w-8 h-8 bg-gray-200 text-gray-600 hover:text-gray-900 hover:bg-white rounded-full flex items-center justify-center shadow"
-          >
+          <button @click="mostrarAlertasModal = false"
+            class="w-8 h-8 bg-gray-200 text-gray-600 hover:text-gray-900 hover:bg-white rounded-full flex items-center justify-center shadow">
             <i class="fas fa-times"></i>
           </button>
         </div>
 
         <!-- Conteúdo rolável -->
         <div class="p-6">
-          <div
-            v-if="alertasData.length === 0"
-            class="flex flex-col items-center text-gray-600 p-6 border border-gray-300 bg-gray-50 rounded-lg"
-          >
+          <div v-if="alertasData.length === 0"
+            class="flex flex-col items-center text-gray-600 p-6 border border-gray-300 bg-gray-50 rounded-lg">
             <i class="fas fa-info-circle text-3xl text-blue-500 mb-2"></i>
             <p class="text-lg font-medium">Encomenda sem alertas</p>
           </div>
           <div v-else>
-            <div
-              v-for="sensor in alertasData"
-              :key="sensor.id"
-              class="mb-4 p-4 bg-gray-100 rounded-lg border"
-            >
+            <div v-for="sensor in alertasData" :key="sensor.id" class="mb-4 p-4 bg-gray-100 rounded-lg border">
               <p class="font-semibold">
                 Sensor ID: {{ sensor.id }} - Tipo: {{ sensor.tipo }}
               </p>
               <ul class="mt-2 space-y-2">
-                <li
-                  v-for="alerta in sensor.alertas"
-                  :key="alerta.id"
-                  class="p-3 bg-yellow-100 rounded-lg border"
-                >
+                <li v-for="alerta in sensor.alertas" :key="alerta.id" class="p-3 bg-yellow-100 rounded-lg border">
                   <p><strong>ID do Alerta:</strong> {{ alerta.id }}</p>
                   <p>
                     <strong>Data:</strong>
@@ -376,27 +337,19 @@ onMounted(async () => {
     </div>
 
     <!-- Modal de Tracking -->
-    <div
-      v-if="mostrarTrackingModal"
-      class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50"
-    >
+    <div v-if="mostrarTrackingModal"
+      class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white w-3/4 p-6 rounded shadow-lg relative">
-        <button
-          @click="mostrarTrackingModal = false"
-          class="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
-        >
+        <button @click="mostrarTrackingModal = false" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900">
           <i class="fas fa-times"></i>
         </button>
         <h2 class="text-xl font-semibold mb-4">Tracking da Encomenda</h2>
         <div class="mb-4 flex items-center space-x-2">
           <h3 class="text-lg font-semibold">Volumes e Produtos:</h3>
           <div class="flex space-x-2">
-            <button
-              v-for="(coord, index) in trackingData"
-              :key="index"
+            <button v-for="(coord, index) in trackingData" :key="index"
               @click="goToLocation(...coord.coordenadas.split(',').map(Number))"
-              class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-700 transition"
-            >
+              class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-700 transition">
               {{ coord.produtoNome }}
             </button>
           </div>

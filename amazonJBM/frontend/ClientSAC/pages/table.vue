@@ -52,7 +52,7 @@ async function refresh() {
       return;
     }
 
-    const response = await $fetch(`${api}/encomendas`, {
+    const response = await $fetch(`${api}/encomenda`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -92,7 +92,7 @@ async function cancelar(id) {
   };
 
   try {
-    const response = await $fetch(`${api}/encomendas/${id}`, requestOptions);
+    const response = await $fetch(`${api}/encomenda/${id}`, requestOptions);
 
     refresh()
 

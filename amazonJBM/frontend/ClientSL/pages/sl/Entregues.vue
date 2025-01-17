@@ -40,7 +40,7 @@ const formatEstado = (estado) => {
 const fetchEncomendasPendentes = async () => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/encomendas/estado/Entregue`, {
+    const response = await fetch(`${api}/encomenda/estado/Entregue`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -79,7 +79,7 @@ const confirmarEntrega = async (id) => {
     const token = getToken();
     const payload = { estado: "Entregue" };
 
-    const response = await fetch(`${api}/encomendas/${id}`, {
+    const response = await fetch(`${api}/encomenda/${id}`, {
       method: 'PATCH',
       headers: {
         'Accept': 'application/json',

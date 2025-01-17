@@ -57,15 +57,9 @@ const login = async () => {
 
 <template>
   <!-- Mensagens de erro estilizadas -->
-  <div
-    v-if="errorMessages.length"
-    class="fixed bottom-4 right-4 space-y-2 z-[100]"
-  >
-    <div
-      v-for="(error, index) in errorMessages"
-      :key="index"
-      class="bg-red-500 text-white py-4 px-6 rounded shadow-lg w-96"
-    >
+  <div v-if="errorMessages.length" class="fixed bottom-4 right-4 space-y-2 z-[100]">
+    <div v-for="(error, index) in errorMessages" :key="index"
+      class="bg-red-500 text-white py-4 px-6 rounded shadow-lg w-96">
       <h3 class="font-semibold text-lg mb-2">Erro</h3>
       <p>{{ error }}</p>
     </div>
@@ -81,30 +75,18 @@ const login = async () => {
 
       <form @submit.prevent="login">
         <div class="mb-4">
-          <input
-            v-model="username"
-            type="text"
-            placeholder="Username"
-            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor"
-          />
+          <input v-model="username" type="text" placeholder="Username"
+            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor" />
         </div>
 
         <div class="mb-6">
-          <input
-            v-model="password"
-            type="password"
-            placeholder="Password"
-            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor"
-          />
+          <input v-model="password" type="password" placeholder="Password"
+            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor" />
         </div>
 
-        <div
-          class="flex justify-center items-center text-sm mb-4 space-x-28 mt-6"
-        >
-          <button
-            type="submit"
-            class="bg-PrimaryColor hover:bg-SecundaryColor text-white font-semibold py-2 px-8 rounded-full transition duration-300 ease-in-out shadow-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor"
-          >
+        <div class="flex justify-center items-center text-sm mb-4 space-x-28 mt-6">
+          <button type="submit"
+            class="bg-PrimaryColor hover:bg-SecundaryColor text-white font-semibold py-2 px-8 rounded-full transition duration-300 ease-in-out shadow-md focus:outline-none focus:ring-2 focus:ring-SecundaryColor">
             Login
           </button>
         </div>

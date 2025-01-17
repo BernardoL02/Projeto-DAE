@@ -49,7 +49,7 @@ const formatEstado = (estado) => {
 const fetchEncomendasEmProcessamento = async () => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/encomendas/estado/EmProcessamento`, {
+    const response = await fetch(`${api}/encomenda/estado/EmProcessamento`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -67,23 +67,23 @@ const fetchEncomendasEmProcessamento = async () => {
       username: encomenda.username,
       dataExpedicao: encomenda.data_expedicao
         ? new Date(encomenda.data_entrega).toLocaleString("pt-PT", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-          })
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
         : "Não definido",
       dataEntrega: encomenda.data_entrega
         ? new Date(encomenda.data_entrega).toLocaleString("pt-PT", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-          })
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
         : "Não definido",
       estado: formatEstado(encomenda.estado),
     }));
@@ -97,7 +97,7 @@ const expedirEncomenda = async (id) => {
     const token = getToken();
     const payload = { estado: "PorEntregar" };
 
-    const response = await fetch(`${api}/encomendas/${id}`, {
+    const response = await fetch(`${api}/encomenda/${id}`, {
       method: "PATCH",
       headers: {
         Accept: "application/json",
@@ -137,30 +137,18 @@ onMounted(async () => {
   </div>
 
   <!-- Mensagens de erro estilizadas -->
-  <div
-    v-if="errorMessages.length"
-    class="fixed bottom-4 right-4 space-y-2 z-50"
-  >
-    <div
-      v-for="(error, index) in errorMessages"
-      :key="index"
-      class="bg-red-500 text-white py-4 px-6 rounded shadow-lg w-96"
-    >
+  <div v-if="errorMessages.length" class="fixed bottom-4 right-4 space-y-2 z-50">
+    <div v-for="(error, index) in errorMessages" :key="index"
+      class="bg-red-500 text-white py-4 px-6 rounded shadow-lg w-96">
       <h3 class="font-semibold text-lg mb-2">Erro</h3>
       <p>{{ error }}</p>
     </div>
   </div>
 
-  <Table
-    :tableTitles="encomendasTableTitles"
-    :tableData="encomendasTableData"
-    @expedirEncomenda="handleExpedirEncomenda"
-  />
+  <Table :tableTitles="encomendasTableTitles" :tableData="encomendasTableData"
+    @expedirEncomenda="handleExpedirEncomenda" />
 
-  <div
-    v-if="showConfirmModal"
-    class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50"
-  >
+  <div v-if="showConfirmModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white w-1/3 p-6 rounded shadow-lg">
       <h2 class="text-xl font-semibold mb-4">Confirmar Entrega</h2>
       <p>
@@ -168,19 +156,13 @@ onMounted(async () => {
         {{ selectedEncomendaId }} como "Por Entregar"?
       </p>
       <div class="mt-4 flex justify-end space-x-2">
-        <button
-          @click="showConfirmModal = false"
-          class="bg-gray-500 text-white py-1 px-4 rounded hover:bg-gray-700"
-        >
+        <button @click="showConfirmModal = false" class="bg-gray-500 text-white py-1 px-4 rounded hover:bg-gray-700">
           Cancelar
         </button>
-        <button
-          @click="
-            expedirEncomenda(selectedEncomendaId);
-            showConfirmModal = false;
-          "
-          class="bg-green-500 text-white py-1 px-4 rounded hover:bg-green-700"
-        >
+        <button @click="
+          expedirEncomenda(selectedEncomendaId);
+        showConfirmModal = false;
+        " class="bg-green-500 text-white py-1 px-4 rounded hover:bg-green-700">
           Confirmar
         </button>
       </div>

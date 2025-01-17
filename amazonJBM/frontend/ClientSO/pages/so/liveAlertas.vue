@@ -27,7 +27,7 @@ const showError = (message) => {
 const fetchAlertasEncomendas = async () => {
   try {
     const token = getToken(); // Função para obter o token do sessionStorage
-    const response = await fetch(`${api}/encomendas/alertas`, {
+    const response = await fetch(`${api}/encomenda/alertas`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
