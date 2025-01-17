@@ -26,7 +26,6 @@ import java.time.LocalDateTime;
 })
 public class Sensor {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "valor")
@@ -55,7 +54,8 @@ public class Sensor {
     @JoinColumn(name = "id_embalagem", nullable = false)
     private Embalagem embalagem;
 
-    public Sensor(String valor, Tipo_Sensores tipo, String estado, int bateria, int valMax, int valMin, Embalagem embalagem) {
+    public Sensor(int id, String valor, Tipo_Sensores tipo, String estado, int bateria, int valMax, int valMin, Embalagem embalagem) {
+        this.id = id;
         this.valor = valor;
         this.tipo = tipo;
         this.estado = estado;
@@ -66,7 +66,8 @@ public class Sensor {
         this.embalagem = embalagem;
     }
 
-    public Sensor(String valor, Tipo_Sensores tipo, String estado, int bateria, Embalagem embalagem) {
+    public Sensor(int id, String valor, Tipo_Sensores tipo, String estado, int bateria, Embalagem embalagem) {
+        this.id = id;
         this.valor = valor;
         this.tipo = tipo;
         this.estado = estado;

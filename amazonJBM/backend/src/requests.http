@@ -148,12 +148,13 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1N
 
 
 ###Associar um Sensor a um Embalagem #
-POST http://localhost:3001/backend/api/embalagem/5/sensor
+POST http://localhost:3001/backend/api/embalagem/10/sensor
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1NzU1ODIsImV4cCI6MTczNTU3OTE4Mn0.T7lU2ZqJO56cEKWd3iuCWk8j9OD7qzjOpXWFbP0YAmmswAaGateWMWoah7J6gYDs
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcwNzIwMTQsImV4cCI6MTczNzA3NTYxNH0.JuXRipCWbbcMwhTQZsPf6Uoev3BB_8z0ZClAs1cqRskv45zNyRLbM5mYQrQTeufr
 Content-Type: application/json
 
 {
+  "id": 55,
   "valor": 90,
   "tipoId": 4,
   "valMin": 10,
@@ -288,6 +289,7 @@ Accept: application/json
   "id": "55",
   "tipo": "E_TPP",
   "tipos_sensores": [
+    { "id": 1 },
     { "id": 1 },
     { "id": 3 }
   ]

@@ -88,7 +88,7 @@ public class ConfigBean {
         ImportCSVDynamic("encomendas", "encomendas.csv", "id,version,data_entrega,data_expedicao,estado,cliente_id", "?,?,?,?,?,?");
         ImportCSVDynamic("volume", "volumes.csv", "entregue, encomenda_id", "?,?");
         ImportCSVDynamic("embalagem", "embalagens.csv", "quantidade,produto_id,id_tipo,id_volume", "?,?,?,?");
-        ImportCSVDynamic("sensor", "sensores.csv", "bateria,estado,time_stamp,val_max,val_min,valor,id_embalagem,id_tipo", "?,?,?,?,?,?,?,?");
+        ImportCSVDynamic("sensor", "sensores.csv", "id,bateria,estado,time_stamp,val_max,val_min,valor,id_embalagem,id_tipo", "?,?,?,?,?,?,?,?,?");
         ImportCSVDynamic("alerta", "alertas.csv", "bateria,mensagem,time_stamp,valor,id_sensor,id_volume", "?,?,?,?,?,?");
     }
 

@@ -20,6 +20,7 @@ const volumeSelecionado = ref(null);
 const quantidade = ref(1);
 const valMax = ref(null);
 const valMin = ref(null);
+const sensorId = ref(null);
 const successMessage = ref('');
 const errorMessages = ref([]);
 const embalagemSelecionada = ref(null);
@@ -194,6 +195,7 @@ const handleAssociarSensor = (embalagem) => {
   tipoSensorSelecionado.value = null;
   valMax.value = null;
   valMin.value = null;
+  sensorId.value = null;
   mostrarAssociarSensorModal.value = true;
 };
 
@@ -205,6 +207,11 @@ const getRandomValueInRange = (min, max) => {
 
 // Função para associar um sensor a um volume
 const associarSensor = async () => {
+  if (sensorId.value === null) {
+    showError("Escreva o id do Sensor.");
+    return;
+  }
+
   if (!tipoSensorSelecionado.value) {
     showError("Selecione um tipo de sensor.");
     return;
@@ -223,13 +230,16 @@ const associarSensor = async () => {
       valor = coordenadas[Math.floor(Math.random() * coordenadas.length)];
     } else {
       if (valMax.value === null || valMin.value === null) {
-        showError("Digite os valores máximo e mínimo.");
+        showError("Escreva os valores máximo e mínimo.");
         return;
       }
       valor = getRandomValueInRange(valMin.value, valMax.value);
     }
 
+    let id = sensorId.value;
+
     const sensorData = {
+      id,
       valor,
       tipoId: tipoSensorSelecionado.value.id,
       tipoNome: tipoSensorSelecionado.value.tipo,
@@ -237,6 +247,8 @@ const associarSensor = async () => {
       bateria: 100,
       ...(tipoSensorSelecionado.value.id !== 4 && { valMax: valMax.value, valMin: valMin.value }),
     };
+
+    console.log(sensorData)
 
     const token = getToken();
     const response = await fetch(`${api}/embalagem/${embalagemSelecionada.value.id}/sensor`, {
@@ -535,25 +547,63 @@ onMounted(() => {
   <div v-if="mostrarAssociarSensorModal"
     class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white w-1/3 p-6 rounded shadow-lg">
-      <h2 class="text-xl font-semibold mb-4">Associar Sensor</h2>
-      <p>Escolha o tipo de sensor para associar à Embalagem ID {{ embalagemSelecionada?.id }}:</p>
-      <select v-model="tipoSensorSelecionado" class="w-full p-2 border border-gray-300 rounded mb-4">
-        <option v-for="tipo in tiposSensores" :key="tipo.id" :value="tipo">{{ tipo.tipo }}</option>
-      </select>
-      <div v-if="tipoSensorSelecionado && tipoSensorSelecionado.id !== 4" class="mb-4">
-        <label class="block text-gray-700 font-semibold mb-1">Valor Máximo:</label>
-        <input v-model="valMax" type="number" class="w-full p-2 border border-gray-300 rounded mb-2"
-          placeholder="Digite o valor máximo" />
-        <label class="block text-gray-700 font-semibold mb-1">Valor Mínimo:</label>
-        <input v-model="valMin" type="number" class="w-full p-2 border border-gray-300 rounded"
-          placeholder="Digite o valor mínimo" />
+      <!-- Título -->
+      <h2 class="text-2xl font-semibold mb-6 text-center">Associar Sensor</h2>
+
+      <!-- Descrição -->
+      <p class="text-gray-700 mb-6 text-center">
+        Escolha o tipo de sensor para associar à Embalagem ID <strong>{{ embalagemSelecionada?.id }}</strong>:
+      </p>
+
+      <!-- Campo de ID do Sensor -->
+      <div class="mb-4">
+        <label class="block text-gray-700 font-semibold mb-2">ID do Sensor:</label>
+        <input v-model="sensorId" type="number"
+          class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+          placeholder="Escreva o ID do Sensor" />
       </div>
-      <button @click="associarSensor"
-        class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">Associar</button>
-      <button @click="mostrarAssociarSensorModal = false"
-        class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700">Cancelar</button>
+
+      <!-- Select de Tipo de Sensor -->
+      <div class="mb-4">
+        <label class="block text-gray-700 font-semibold mb-2">Tipo de Sensor:</label>
+        <select v-model="tipoSensorSelecionado"
+          class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+          <option v-for="tipo in tiposSensores" :key="tipo.id" :value="tipo">
+            {{ tipo.tipo }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Valores Máximo e Mínimo -->
+      <div v-if="tipoSensorSelecionado && tipoSensorSelecionado.id !== 4" class="mb-6">
+        <div class="mb-4">
+          <label class="block text-gray-700 font-semibold mb-2">Valor Máximo:</label>
+          <input v-model="valMax" type="number"
+            class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            placeholder="Escreva o valor máximo" />
+        </div>
+        <div>
+          <label class="block text-gray-700 font-semibold mb-2">Valor Mínimo:</label>
+          <input v-model="valMin" type="number"
+            class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            placeholder="Escreva o valor mínimo" />
+        </div>
+      </div>
+
+      <!-- Botões -->
+      <div class="flex justify-end space-x-4 mt-6">
+        <button @click="associarSensor"
+          class="bg-green-500 text-white px-5 py-2 rounded-lg hover:bg-green-600 transition focus:outline-none focus:ring-2 focus:ring-green-400">
+          Associar
+        </button>
+        <button @click="mostrarAssociarSensorModal = false"
+          class="bg-gray-500 text-white px-5 py-2 rounded-lg hover:bg-gray-600 transition focus:outline-none focus:ring-2 focus:ring-gray-400">
+          Cancelar
+        </button>
+      </div>
     </div>
   </div>
+
 
   <!-- Modal de Adicionar Volume -->
   <div v-if="mostrarAdicionarProdutoModal"

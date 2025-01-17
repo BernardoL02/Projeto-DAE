@@ -30,7 +30,7 @@ public class SensorBean {
     @EJB
     private AlertaBean alertaBean;
 
-    public Response create(String valor, int tipoId, int bateria, int valMax, int valMin, int id_embalagem) {
+    public Response create(int id, String valor, int tipoId, int bateria, int valMax, int valMin, int id_embalagem) {
         Tipo_Sensores tipoSensores = em.find(Tipo_Sensores.class, tipoId);
 
         if (tipoSensores == null) {
@@ -49,7 +49,7 @@ public class SensorBean {
             return Response.status(Response.Status.NOT_FOUND).entity("Só é possível associar sensores a encomendas que estejam 'Em Processamento'.").build();
         }
 
-        Sensor sensor = new Sensor(valor, tipoSensores, "ativo", bateria, valMax, valMin, embalagem);
+        Sensor sensor = new Sensor(id, valor, tipoSensores, "ativo", bateria, valMax, valMin, embalagem);
         em.persist(sensor);
 
         embalagem.addSensor(sensor);
@@ -57,7 +57,7 @@ public class SensorBean {
         return Response.ok("Sensor associado com sucesso").build();
     }
 
-    public Response create(String valor, int tipoId, int bateria, int id_embalagem) {
+    public Response create(int id, String valor, int tipoId, int bateria, int id_embalagem) {
         Tipo_Sensores tipoSensores = em.find(Tipo_Sensores.class, tipoId);
 
         if (tipoSensores == null) {
@@ -76,7 +76,7 @@ public class SensorBean {
             return Response.status(Response.Status.NOT_FOUND).entity("Só é possível associar sensores a encomendas que estejam 'Em Processamento'.").build();
         }
 
-        Sensor sensor = new Sensor(valor, tipoSensores, "ativo", bateria, embalagem);
+        Sensor sensor = new Sensor(id, valor, tipoSensores, "ativo", bateria, embalagem);
         em.persist(sensor);
 
         embalagem.addSensor(sensor);
