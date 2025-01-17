@@ -112,7 +112,8 @@ watch(
   <div class="flex justify-between items-center ml-28 mr-28 mt-20">
     <div>
       <h1 class="text-xl font-semibold text-gray-800">Sensores</h1>
-      <p class="mt-1 text-lg text-gray-700">Consulte os últimos valores registados pelos sensores</p>
+      <p class="mt-1 text-lg text-gray-700">Consulte os últimos valores registados pelos sensores ativos, das suas
+        encomendas</p>
     </div>
 
     <!-- Filtro de Encomendas -->
