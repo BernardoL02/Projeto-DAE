@@ -472,6 +472,31 @@ const VolumeEntregue = async (volume) => {
 };
 
 
+const showModalRemoverSensor = ref(false);
+const sensorToRemove = ref(null);
+const embalagemToRemove = ref(null);
+
+const confirmRemoveSensor = (idEmbalagem, idSensor) => {
+  embalagemToRemove.value = idEmbalagem;
+  sensorToRemove.value = idSensor;
+  showModalRemoverSensor.value = true;
+};
+
+const closeModal = () => {
+  showModalRemoverSensor.value = false;
+  embalagemToRemove.value = null;
+  sensorToRemove.value = null;
+};
+
+const confirmAndRemoveSensor = async () => {
+  if (embalagemToRemove.value && sensorToRemove.value) {
+    await handleRemoverSensor(embalagemToRemove.value, sensorToRemove.value);
+  }
+  closeModal();
+};
+
+
+
 onMounted(() => {
   fetchEncomendaDetalhes();
   fetchTiposSensores();
@@ -576,7 +601,8 @@ onMounted(() => {
             <div v-if="embalagem.mostrarSensores" class="mt-4">
               <h4 class="font-semibold text-md text-gray-700">Sensores Associados:</h4>
               <ul>
-                <li v-for="sensor in embalagem.sensores" :key="sensor.id" class="p-2 bg-gray-50 my-2 rounded shadow">
+                <li v-for="sensor in embalagem.sensores" :key="sensor.id"
+                  class="p-2 bg-gray-50 my-2 rounded shadow relative">
                   <div class="flex flex-row justify-between items-center w-full">
                     <div>
                       <p><strong>ID do Sensor:</strong> {{ sensor.id }}</p>
@@ -589,8 +615,8 @@ onMounted(() => {
                     </div>
 
                     <button v-if="encomendaData.estado === 'Em Processamento'"
-                      @click="handleRemoverSensor(embalagem.id, sensor.id)"
-                      class="text-white px-3 py-1 rounded transition -mt-24"
+                      @click="confirmRemoveSensor(embalagem.id, sensor.id)"
+                      class="text-white px-3 py-1 rounded transition absolute top-2 right-2"
                       :class="embalagem.mostrarSensores ? 'bg-red-700 hover:bg-[#1b2530]' : 'bg-[#202c38] hover:bg-[#1b2530]'">
                       Remover Sensor
                     </button>
@@ -668,6 +694,25 @@ onMounted(() => {
       </div>
     </div>
   </div>
+
+  <!-- Modal de Confirmação -->
+  <div v-if="showModalRemoverSensor" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 shadow-lg w-1/3">
+      <h3 class="text-lg font-semibold text-gray-800 mb-4">Confirmar Remoção</h3>
+      <p class="text-gray-600 mb-6">
+        Tem certeza de que deseja remover este sensor? Esta ação não pode ser desfeita.
+      </p>
+      <div class="flex justify-end space-x-4">
+        <button @click="closeModal" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+          Cancelar
+        </button>
+        <button @click="confirmAndRemoveSensor" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+          Confirmar
+        </button>
+      </div>
+    </div>
+  </div>
+
 
   <!-- Modal de Adicionar Volume -->
   <div v-if="mostrarAdicionarProdutoModal"
