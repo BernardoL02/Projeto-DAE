@@ -1,5 +1,5 @@
 <template>
-  <Template />
+  <Template :currentPage="currentPage" />
 
   <div class="flex justify-center items-center mr-24 mt-20 space-x-4">
     <h1>Sensores</h1>
@@ -110,6 +110,8 @@ const successMessage = ref("");
 const isValueUpdateRunning = ref(false);
 const showCancelSensorConfirmModal = ref(false);
 const selectedSensor = ref(null);
+
+const currentPage = 'Sensores';
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);

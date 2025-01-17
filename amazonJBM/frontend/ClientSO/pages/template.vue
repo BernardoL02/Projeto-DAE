@@ -113,6 +113,13 @@ onMounted(() => {
               class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"
               :class="currentPage === 'Entregues' ? 'w-full' : ''"></span>
           </a>
+          <a href="/so/Cancelada" :class="currentPage === 'Cancelada' ? 'highlighted' : ''"
+            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
+            Canceladas
+            <span
+              class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"
+              :class="currentPage === 'Cancelada' ? 'w-full' : ''"></span>
+          </a>
           <a href="/so/liveAlertas" :class="currentPage === 'liveAlertas' ? 'highlighted' : ''"
             class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
             Live Alertas

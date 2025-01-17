@@ -4,6 +4,7 @@ import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.hibernate.Hibernate;
 import pt.ipleiria.estg.dei.ei.dea.backend.dtos.*;
@@ -31,6 +32,15 @@ public class SensorBean {
     private AlertaBean alertaBean;
 
     public Response create(int id, String valor, int tipoId, int bateria, int valMax, int valMin, int id_embalagem) {
+
+        Sensor existingSensor = em.find(Sensor.class, id);
+        if (existingSensor != null) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("{\"message\": \"Já existe um sensor com o ID fornecido!\"}")
+                    .type(MediaType.APPLICATION_JSON)
+                    .build();
+        }
+
         Tipo_Sensores tipoSensores = em.find(Tipo_Sensores.class, tipoId);
 
         if (tipoSensores == null) {
@@ -58,6 +68,15 @@ public class SensorBean {
     }
 
     public Response create(int id, String valor, int tipoId, int bateria, int id_embalagem) {
+
+        Sensor existingSensor = em.find(Sensor.class, id);
+        if (existingSensor != null) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("{\"message\": \"Já existe um sensor com o ID fornecido!\"}")
+                    .type(MediaType.APPLICATION_JSON)
+                    .build();
+        }
+
         Tipo_Sensores tipoSensores = em.find(Tipo_Sensores.class, tipoId);
 
         if (tipoSensores == null) {

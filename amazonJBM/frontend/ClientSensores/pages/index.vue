@@ -5,6 +5,6 @@ import { onMounted } from 'vue'
 const router = useRouter()
 
 onMounted(() => {
-  router.push('/sensores/')
+  router.push('/sensores')
 })
 </script>
