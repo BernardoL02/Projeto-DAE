@@ -181,6 +181,10 @@ const updateSensorValues = async () => {
         `Erro ao atualizar o sensor ${sensor.id}: ${error.message}`
       );
     }
+
+    if (sensor.bateria < 2) {
+      cancelSensor(sensor)
+    }
   }
   tableData.value = await fetchSensors();
 };
@@ -226,6 +230,10 @@ const confirmUpdateSensor = async (sensor) => {
 
     if (!response.ok)
       throw new Error(`Erro ao atualizar sensor com ID ${sensor.id}`);
+
+    if (sensor.bateria < 2) {
+      cancelSensor(sensor)
+    }
 
     successMessage.value = `Sensor ${sensor.id} confirmado com sucesso!`;
     setTimeout(() => (successMessage.value = ""), 3000);
