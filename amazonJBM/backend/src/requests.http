@@ -245,8 +245,8 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzYwO
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
                       #TODO Retirar plural dos EndPoints#
                       #Endpoint remover sensor de embalagem#
-                      #Usar no FE os ids
-                      #Ver encomemdas entregues Logista
+                      #Usar no FE os ids X
+                      #Ver encomemdas entregues Logista 
                      #Colocar no pdf a atualização do JSON criar encomenda#
                      #Colocar no pdf todos os endpoints modificados#
                      #Falar no word,o que foi melhorado em relacao aos endpoints, falar dos novos endpoints e falar nos extras#

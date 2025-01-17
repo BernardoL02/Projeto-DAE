@@ -535,7 +535,7 @@ onMounted(() => {
             </div>
 
             <!-- Tabela de Tipos -->
-            <Table :tableTitles="['Tipo']" :tableData="filteredTiposTableData" :mostrarAcoes="false" />
+            <Table :tableTitles="['Id', 'Tipo']" :tableData="filteredTiposTableData" :mostrarAcoes="false" />
           </div>
         </div>
 
@@ -611,7 +611,8 @@ onMounted(() => {
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-w-2xl">
               <div v-for="embalagem in embalagens" :key="embalagem.id"
                 class="p-4 bg-gray-100 rounded-lg shadow hover:shadow-lg transition-transform transform hover:scale-105 ]">
-                <h3 class="text-base font-semibold text-gray-800 mb-2">{{ embalagem.tipo }}</h3>
+                <h3 class="text-base font-semibold text-gray-800 mb-2">{{ embalagem.tipo }} (id: {{ embalagem.id }})
+                </h3>
                 <ul class="list-disc list-inside text-gray-600 text-sm">
                   <li v-if="embalagem.sensores.length == 0">
                     Não existem sensores obrigatórios
