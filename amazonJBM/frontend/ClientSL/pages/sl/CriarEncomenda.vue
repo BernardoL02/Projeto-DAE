@@ -22,6 +22,70 @@ const errorMessages = ref([]);
 
 const currentPage = 'CriarEncomenda';
 
+const encomendaId = ref(null);
+const showVolumeModal = ref(false); // Controla a exibição do modal para adicionar ID do volume
+const manualVolumeId = ref(""); // Armazena o ID inserido pelo usuário no modal
+
+const showEmbalagemModal = ref(false); // Controla a exibição do modal para adicionar ID da embalagem
+const manualEmbalagemId = ref(""); // Armazena o ID inserido pelo usuário no modal
+const currentVolumeId = ref(null); // Volume ao qual a embalagem será adicionada
+
+const abrirModalAdicionarEmbalagem = (volumeId) => {
+  currentVolumeId.value = volumeId; // Define o volume ao qual a embalagem será adicionada
+  manualEmbalagemId.value = ""; // Limpa o campo de ID
+  showEmbalagemModal.value = true; // Exibe o modal
+};
+
+const adicionarEmbalagemComId = () => {
+  if (!manualEmbalagemId.value) {
+    showError("Insira um ID válido para a embalagem.");
+    return;
+  }
+
+  const volume = volumes.find((v) => v.id === currentVolumeId.value);
+  if (!volume) {
+    showError("Volume não encontrado.");
+    return;
+  }
+
+  const novaEmbalagem = {
+    id: manualEmbalagemId.value, // ID inserido manualmente
+    produto: null,
+    searchProduto: "",
+    showSuggestions: false,
+    quantidade: 1,
+    tipo: null,
+    searchTipo: "",
+    showTipoSuggestions: false,
+  };
+
+  volume.embalagens.push(novaEmbalagem);
+  showEmbalagemModal.value = false; // Fecha o modal
+};
+
+
+const abrirModalAdicionarVolume = () => {
+  manualVolumeId.value = ""; // Limpa o campo de ID
+  showVolumeModal.value = true; // Exibe o modal
+};
+
+const adicionarVolumeComId = () => {
+  if (!manualVolumeId.value) {
+    showError("Insira um ID válido para o volume.");
+    return;
+  }
+
+  const novoVolume = {
+    id: manualVolumeId.value, // ID inserido manualmente
+    embalagens: [], // Contém embalagens
+  };
+
+  volumes.push(novoVolume);
+  showVolumeModal.value = false; // Fecha o modal
+  volumeAtual.value = novoVolume.id; // Define o volume atual
+};
+
+
 // Função para obter o token do sessionStorage
 const getToken = () => sessionStorage.getItem('token');
 
@@ -164,18 +228,6 @@ const hideTipoSuggestions = (embalagem) => {
   }, 200);
 };
 
-// Função para adicionar um novo volume
-let volumeCounter = 1;
-const adicionarVolume = () => {
-  const novoVolume = {
-    id: volumeCounter,
-    embalagens: [], // Contém embalagens
-  };
-  volumes.push(novoVolume);
-  volumeCounter++;
-  volumeAtual.value = novoVolume.id;
-};
-
 // Função para remover um novo volume
 const removerVolume = (id) => {
   const index = volumes.findIndex((v) => v.id === id);
@@ -190,31 +242,6 @@ const removerVolume = (id) => {
     volumeAtual.value = volumes.length > 0 ? volumes[0].id : null;
   }
 };
-
-
-// Adicionar uma embalagem ao volume selecionado
-const adicionarEmbalagemAoVolume = (volumeId) => {
-  const volume = volumes.find((v) => v.id === volumeId);
-  if (!volume) {
-    showError("Volume não encontrado.");
-    return;
-  }
-
-  const novaEmbalagem = {
-    id: Date.now(),
-    produto: null,
-    searchProduto: "",
-    showSuggestions: false,
-    quantidade: 1,
-    tipo: null,
-    searchTipo: "",
-    showTipoSuggestions: false,
-  };
-
-  volume.embalagens.push(novaEmbalagem);
-};
-
-
 
 // Remover uma embalagem de um volume
 const removerEmbalagemDoVolume = (embalagemId, volumeId) => {
@@ -254,9 +281,12 @@ const criarEncomenda = async () => {
   }
 
   const encomendaData = {
+    id: encomendaId.value,
     username: selectedCliente.value,
     volumes: volumes.map((v) => ({
+      id: v.id,
       embalagens: v.embalagens.map((e) => ({
+        id: e.id,
         tipo: e.tipo,
         produto: { id: e.produto.id },
         quantidade: e.quantidade,
@@ -328,6 +358,10 @@ onMounted(() => {
     class="flex flex-col justify-center mx-auto mt-4 p-6 mb-10 bg-white shadow-md rounded-lg border border-gray-300 w-full max-w-5xl">
     <div class="mb-8">
 
+      <label class="block text-gray-700 font-semibold mb-1">Id da Encomenda:</label>
+      <input id="id" v-model="encomendaId" type="text" class="w-full border border-gray-300 p-2 rounded mb-4"
+        placeholder="Escreva o id da encomenda" />
+
       <div class="mb-4">
         <label class="block text-gray-700 font-semibold mb-1">Cliente:</label>
         <input type="text" v-model="searchCliente" @focus="showSuggestions = true" @blur="hideSuggestions"
@@ -345,16 +379,16 @@ onMounted(() => {
 
       <div class="mb-4">
         <h3 class="text-lg font-semibold mb-4 text-gray-700">Volumes</h3>
-        <button @click="adicionarVolume"
+        <button @click="abrirModalAdicionarVolume"
           class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">
           Adicionar Volume
         </button>
 
         <div v-for="volume in volumes" :key="volume.id" class="p-4 bg-gray-50 rounded-lg shadow border mt-4">
           <div class="flex justify-between items-center mb-4">
-            <h4 class="text-md font-semibold text-gray-700">Volume {{ volume.id }}</h4>
+            <h4 class="text-md font-semibold text-gray-700">Volume id: {{ volume.id }}</h4>
             <div class="space-x-2">
-              <button @click="adicionarEmbalagemAoVolume(volume.id)"
+              <button @click="abrirModalAdicionarEmbalagem(volume.id)"
                 class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition">
                 Adicionar Embalagem
               </button>
@@ -368,6 +402,7 @@ onMounted(() => {
           <ul v-if="volume.embalagens.length > 0" class="space-y-4">
             <li v-for="embalagem in volume.embalagens" :key="embalagem.id"
               class="p-4 bg-white rounded-lg shadow border">
+              <h4 class="text-md font-semibold text-gray-700">Tipo Embalagem id: {{ embalagem.id }}</h4>
               <div class="grid grid-cols-2 gap-4 mb-4">
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-1">Produto:</label>
@@ -425,6 +460,48 @@ onMounted(() => {
         Criar Encomenda
       </button>
     </div>
+
+    <div v-if="showVolumeModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white p-6 rounded shadow-lg w-1/3">
+        <h2 class="text-xl font-semibold mb-4">Adicionar Volume</h2>
+        <label for="volume-id" class="block text-gray-700 font-medium mb-2">Insira o ID do Volume:</label>
+        <input id="volume-id" v-model="manualVolumeId" type="text"
+          class="w-full p-2 border border-gray-300 rounded mb-4 focus:ring-green-500 focus:border-green-500"
+          placeholder="Ex.: 100" />
+        <div class="flex justify-end space-x-4">
+          <button @click="adicionarVolumeComId"
+            class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">
+            Confirmar
+          </button>
+          <button @click="showVolumeModal = false"
+            class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="showEmbalagemModal"
+      class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white p-6 rounded shadow-lg w-1/3">
+        <h2 class="text-xl font-semibold mb-4">Adicionar Embalagem</h2>
+        <label for="embalagem-id" class="block text-gray-700 font-medium mb-2">Insira o ID da Embalagem:</label>
+        <input id="embalagem-id" v-model="manualEmbalagemId" type="text"
+          class="w-full p-2 border border-gray-300 rounded mb-4 focus:ring-green-500 focus:border-green-500"
+          placeholder="Ex.: 200" />
+        <div class="flex justify-end space-x-4">
+          <button @click="adicionarEmbalagemComId"
+            class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">
+            Confirmar
+          </button>
+          <button @click="showEmbalagemModal = false"
+            class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
