@@ -22,7 +22,7 @@ public class TipoEmbalagemBean {
     @PersistenceContext
     private EntityManager em;
 
-    public Response create(String tipo, List<TipoSensorDTO> tipoSensoresDTO) {
+    public Response create(int id, String tipo, List<TipoSensorDTO> tipoSensoresDTO) {
 
         if (em.createNamedQuery("existsTipoEmbalagem", Long.class).setParameter("tipo", tipo).getSingleResult() > 0) {
             return Response.status(Response.Status.BAD_REQUEST).entity("Já existe uma embalagem deste tipo!").build();
@@ -42,7 +42,7 @@ public class TipoEmbalagemBean {
         }
 
 
-        Tipo_Embalagem tipoEmbalagem = new Tipo_Embalagem(tipo,tipoSensores);
+        Tipo_Embalagem tipoEmbalagem = new Tipo_Embalagem(id,tipo,tipoSensores);
         em.persist(tipoEmbalagem);
 
         return Response.ok("Tipo de embalagem criado com sucesso.").build();

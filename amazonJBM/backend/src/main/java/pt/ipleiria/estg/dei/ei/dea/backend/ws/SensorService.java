@@ -42,7 +42,7 @@ public class SensorService {
     @Path("/tipo")
     @RolesAllowed({"Logista"})
     public Response criarProduto(CreateTipoSensorDTO createTipoSensorDTO) {
-        return tipoSensoresBean.create(createTipoSensorDTO.getTipo());
+        return tipoSensoresBean.create(createTipoSensorDTO.getId(),createTipoSensorDTO.getTipo());
     }
 
     @GET

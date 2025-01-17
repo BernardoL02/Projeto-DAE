@@ -18,13 +18,13 @@ public class TipoSensoresBean {
     @PersistenceContext
     private EntityManager em;
 
-    public Response create(String tipo) {
+    public Response create(int id, String tipo) {
 
         if (em.createNamedQuery("existsTipoSensor", Long.class).setParameter("tipo", tipo).getSingleResult() > 0) {
             return Response.status(Response.Status.BAD_REQUEST).entity("Já existe um sensor deste tipo!").build();
         }
 
-        Tipo_Sensores tipoSensores = new Tipo_Sensores(tipo);
+        Tipo_Sensores tipoSensores = new Tipo_Sensores(id, tipo);
 
         em.persist(tipoSensores);
 

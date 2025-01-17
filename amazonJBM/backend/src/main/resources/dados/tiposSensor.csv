@@ -1,5 +1,5 @@
-tipo
-Temperatura
-Aceleração
-Pressão Atmosférica
-GPS
+id,tipo
+1,Temperatura
+2,Aceleração
+3,Pressão Atmosférica
+4,GPS

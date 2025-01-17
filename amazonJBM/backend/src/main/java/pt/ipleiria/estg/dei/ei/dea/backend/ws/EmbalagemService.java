@@ -65,6 +65,6 @@ public class EmbalagemService {
     @POST
     @Path("/tipo")
     public Response criarTipoEmbalagem(CreateTipoEmbalagemDTO createTipoEmbalagemDTO) {
-        return tipoEmbalagemBean.create(createTipoEmbalagemDTO.getTipo(), createTipoEmbalagemDTO.getTipos_sensores());
+        return tipoEmbalagemBean.create(createTipoEmbalagemDTO.getId(),createTipoEmbalagemDTO.getTipo(), createTipoEmbalagemDTO.getTipos_sensores());
     }
 }
