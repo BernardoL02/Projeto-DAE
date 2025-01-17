@@ -47,16 +47,29 @@ const hideCategoriaSuggestions = () => {
 const searchProduto = ref("");
 const filteredProdutos = computed(() => {
   if (!searchProduto.value) {
-    return produtos.value; // Retorna todos os produtos se não houver termo de pesquisa
+    return produtos.value.map((produto) => ({
+      Id: produto.id,
+      Nome: produto.nome,
+      Categoria: produto.categoria,
+    })); // Retorna todos os produtos com ID, Nome e Categoria
   }
-  return produtos.value.filter(
-    (produto) =>
-      produto.nome.toLowerCase().includes(searchProduto.value.toLowerCase()) ||
-      produto.categoria
-        .toLowerCase()
-        .includes(searchProduto.value.toLowerCase())
-  );
+  return produtos.value
+    .filter(
+      (produto) =>
+        produto.nome.toLowerCase().includes(searchProduto.value.toLowerCase()) ||
+        produto.categoria
+          .toLowerCase()
+          .includes(searchProduto.value.toLowerCase())
+    )
+    .map((produto) => ({
+      Id: produto.id,
+      Nome: produto.nome,
+      Categoria: produto.categoria,
+    })); // Retorna apenas os produtos filtrados com ID, Nome e Categoria
 });
+
+
+
 
 const mostrarModalTipos = ref(false);
 const mostrarModalCriarTipo = ref(false);
@@ -78,7 +91,10 @@ const filteredTipos = computed(() => {
 });
 
 const filteredTiposTableData = computed(() =>
-  filteredTipos.value.map(({ tipo }) => ({ tipo }))
+  filteredTipos.value.map((sensor) => ({
+    Id: sensor.id, // Inclui o ID do tipo
+    Tipo: sensor.tipo, // Nome do tipo
+  }))
 );
 
 const mostrarModalEmbalagens = ref(false);
@@ -153,6 +169,7 @@ const fetchProdutos = async () => {
 
     const data = await response.json();
     produtos.value = data.map((produto) => ({
+      id: produto.id,
       nome: produto.nome,
       categoria: produto.categoria,
     }));
@@ -295,6 +312,7 @@ const fetchEmbalagens = async () => {
     // Mapeia apenas os campos relevantes para a lista de tipos de embalagem
     const data = await response.json();
     embalagens.value = data.map((embalagem) => ({
+      id: embalagem.id,
       tipo: embalagem.tipo,
       sensores: embalagem.tipoSensorDTO.map((sensor) => sensor.tipo)
     }));
@@ -427,7 +445,8 @@ onMounted(() => {
             </div>
 
             <!-- Tabela de Produtos -->
-            <Table :tableTitles="['Nome', 'Categoria']" :tableData="filteredProdutos" :mostrarAcoes="false" />
+            <Table :tableTitles="['Id', 'Nome', 'Categoria']" :tableData="filteredProdutos" :mostrarAcoes="false" />
+
           </div>
         </div>
 
@@ -519,7 +538,7 @@ onMounted(() => {
             </div>
 
             <!-- Tabela de Tipos -->
-            <Table :tableTitles="['Tipo']" :tableData="filteredTiposTableData" :mostrarAcoes="false" />
+            <Table :tableTitles="['Id', 'Tipo']" :tableData="filteredTiposTableData" :mostrarAcoes="false" />
           </div>
         </div>
 
@@ -595,7 +614,8 @@ onMounted(() => {
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-w-2xl">
               <div v-for="embalagem in embalagens" :key="embalagem.id"
                 class="p-4 bg-gray-100 rounded-lg shadow hover:shadow-lg transition-transform transform hover:scale-105 ]">
-                <h3 class="text-base font-semibold text-gray-800 mb-2">{{ embalagem.tipo }}</h3>
+                <h3 class="text-base font-semibold text-gray-800 mb-2">{{ embalagem.tipo }} (id: {{ embalagem.id }})
+                </h3>
                 <ul class="list-disc list-inside text-gray-600 text-sm">
                   <li v-for="sensor in embalagem.sensores" :key="sensor">{{ sensor }}</li>
                 </ul>

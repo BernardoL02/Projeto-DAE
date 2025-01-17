@@ -20,9 +20,9 @@ Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJKb3NlIiwiaWF0IjoxNzM1NDI0MzQ2LCJleHAiOjE3MzU0Mjc5NDZ9.Oci5ykM3yFWiVYs99419cNOlKbedkW5trzitlHsdPxkwpHokPO9aC3JuLYf0o9hM
 
 ### Get Encomenda Por Id #
-GET http://localhost:3001/backend/api/encomendas/3
+GET http://localhost:3001/backend/api/encomendas/1
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU2NTQ4MDgsImV4cCI6MTczNTY1ODQwOH0.jhxJRikLHX286IRn4EEjrDvSoD1_8SfSYRFWjsD2QoXtHyRT9AtbneWqHRdQ8hmQ
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MTM2MjIwLCJleHAiOjE3MzcxMzk4MjB9.6h82DcbB4_u0FVrurcnwpM1Yvyo-ZkB0elm-My3-HZAXIAokBu7E718J-l3RWTVd
 
 ### Get All Encomendas por um determinado estado "PorEntregar" "Cancelada" "EmProcessamento" "Entregue" #
 GET http://localhost:3001/backend/api/encomendas/estado/EmProcessamento
@@ -158,7 +158,7 @@ GET http://localhost:3001/backend/api/encomendas/1/coordenadas
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQ4NTc2NywiZXhwIjoxNzM1NDg5MzY3fQ.8SP-wg_cV2boWrFVa0dxN55sYRSxB1a5hn9qm0XVuhk-WfQ1Qa3DaaFZhgqXlZBe
 
-######################### Volume Service ################################
+####################´´##### Volume Service ################################
 
 ### Get Detalhes Volume #
 GET http://localhost:3001/backend/api/volume/1

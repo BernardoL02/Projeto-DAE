@@ -176,7 +176,7 @@ const filteredProdutos = (searchTerm) => {
 
 const selectProduto = (produto, embalagem) => {
   embalagem.produto = produto;
-  embalagem.searchProduto = produto.nome;
+  embalagem.searchProduto = `(ID: ${produto.id}) - ${produto.nome}`;
   embalagem.showSuggestions = false;
 };
 
@@ -218,7 +218,7 @@ const filteredTiposEmbalagem = (searchTerm) => {
 
 const selectTipo = (tipo, embalagem) => {
   embalagem.tipo = tipo.id;
-  embalagem.searchTipo = tipo.tipo;
+  embalagem.searchTipo = `(ID: ${tipo.id}) - ${tipo.tipo}`;
   embalagem.showTipoSuggestions = false;
 };
 
@@ -418,7 +418,7 @@ onMounted(() => {
                       class="absolute z-10 w-full bg-white border border-gray-300 rounded max-h-48 overflow-y-auto shadow-lg">
                       <li v-for="produto in filteredProdutos(embalagem.searchProduto)" :key="produto.id"
                         @mousedown="selectProduto(produto, embalagem)" class="p-2 hover:bg-gray-100 cursor-pointer">
-                        {{ produto.nome }}
+                        (ID: {{ produto.id }}) - {{ produto.nome }}
                       </li>
                     </ul>
                   </div>
@@ -434,7 +434,7 @@ onMounted(() => {
                       class="absolute z-10 w-full bg-white border border-gray-300 rounded max-h-48 overflow-y-auto shadow-lg">
                       <li v-for="tipo in filteredTiposEmbalagem(embalagem.searchTipo)" :key="tipo.tipo"
                         @mousedown="selectTipo(tipo, embalagem)" class="p-2 hover:bg-gray-100 cursor-pointer">
-                        {{ tipo.tipo }}
+                        (ID: {{ tipo.id }}) - {{ tipo.tipo }}
                       </li>
                     </ul>
                   </div>
