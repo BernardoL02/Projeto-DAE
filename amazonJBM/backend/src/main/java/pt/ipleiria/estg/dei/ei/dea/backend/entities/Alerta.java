@@ -28,7 +28,8 @@ import java.time.LocalDateTime;
 public class Alerta {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "alerta_seq")
+    @SequenceGenerator(name = "alerta_seq", sequenceName = "alerta_id_seq", allocationSize = 1, initialValue = 14)
     private int id;
 
     private String mensagem;

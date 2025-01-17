@@ -38,10 +38,6 @@ public class ExternalSensorService {
     public Response create(LeituraDTO leituraDTO) {
         return leituraBean.create(leituraDTO.getId_sensor(),leituraDTO.getBateria(),leituraDTO.getValor());
     }
-
-
-
-
     @PATCH
     @Path("/{id}/desativar")
     public Response updateEstado(@PathParam("id") int id, SensorDTO sensorDTO) {

@@ -90,6 +90,7 @@ public class ConfigBean {
         ImportCSVDynamic("embalagem", "embalagens.csv", "id,quantidade,produto_id,id_tipo,id_volume", "?,?,?,?,?");
         ImportCSVDynamic("sensor", "sensores.csv", "id,bateria,estado,time_stamp,val_max,val_min,valor,id_embalagem,id_tipo", "?,?,?,?,?,?,?,?,?");
         ImportCSVDynamic("alerta", "alertas.csv", "id,bateria,mensagem,time_stamp,valor,id_sensor,id_volume", "?,?,?,?,?,?,?");
+        ImportCSVDynamic("leitura", "leituras.csv", "id,bateria,time_stamp,valor,id_sensor", "?,?,?,?,?");
     }
 
     private void ImportCSVDynamic(String tableName, String fileName, String colunas, String placeholders) {
