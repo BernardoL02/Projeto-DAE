@@ -40,8 +40,8 @@ public class LeituraBean {
                 (Double.parseDouble(sensor.getValor()) > sensor.getValMax() ||
                         Double.parseDouble(sensor.getValor()) < sensor.getValMin())) {
 
-            String maxMin = Integer.parseInt(sensor.getValor())  > sensor.getValMax()  ? "máximo" : "mínimo";
-            int valorMaxMin = Integer.parseInt(sensor.getValor())  > sensor.getValMax()  ? sensor.getValMax() : sensor.getValMin();
+            String maxMin = Double.parseDouble(sensor.getValor()) > sensor.getValMax() ? "máximo" : "mínimo";
+            double valorMaxMin = Double.parseDouble(sensor.getValor()) > sensor.getValMax() ? sensor.getValMax() : sensor.getValMin();
             String mensagem = sensor.getEmbalagem().getProduto().getNome() + " - " +
                     sensor.getTipo().getTipo() + " excedeu o limite " + maxMin + " de " + valorMaxMin + "!";
 

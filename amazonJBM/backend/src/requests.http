@@ -245,10 +245,9 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzYwO
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
                       #TODO Retirar plural dos EndPoints#
                       #Endpoint remover sensor de embalagem#
-                      #No front permitir criar embalagens com mais de um sensor do mesmo tipo#
-                      #Ainda é para fazer o track de enmenda na pagina de login???#
-                      #CORS + ids no FE + validar DTOS#
-                      #Mensagem que o id já existe#
+                      #No front permitir criar embalagens com mais de um sensor do mesmo tipo# --Feito
+                      #CORS + ids no FE + validar DTOS# -- Feito
+                      #Mensagem que o id já existe# -- Feito
                       #Usar no FE os ids
                      #[x] - Encomenda      X
                      #[x] - Volume         X
