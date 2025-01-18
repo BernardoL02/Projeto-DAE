@@ -28,7 +28,19 @@
               </div>
             </td>
 
-            <td class="py-4 px-6 text-center border border-gray-300">{{ row.estado }}</td>
+            <td v-if="row.estado == 'ativo'" class="py-4 px-6 text-center border border-gray-300">
+              <div class="flex items-center justify-center">
+                <div class="bg-green-500 rounded-full w-[10px] h-[10px] mr-2"></div>
+                {{ row.estado }}
+              </div>
+            </td>
+            <td v-else class="py-4 px-6 text-center border border-gray-300">
+              <div class="flex items-center justify-center">
+                <div class="bg-red-500 rounded-full w-[10px] h-[10px] mr-2"></div>
+                {{ row.estado }}
+              </div>
+            </td>
+
             <td class="py-4 px-6 text-center border border-gray-300">{{ row.timeStamp }}</td>
             <td class="py-4 px-6 text-center border border-gray-300">{{ row.bateria }}</td>
             <td class="py-4 px-6 text-center border border-gray-300">{{ row.idEncomenda }}</td>
