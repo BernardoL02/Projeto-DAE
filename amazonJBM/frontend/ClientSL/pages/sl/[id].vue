@@ -636,10 +636,10 @@ onMounted(() => {
 
   <!-- Modal de Associar Sensor -->
   <div v-if="mostrarAssociarSensorModal"
-    class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white w-1/3 p-6 rounded shadow-lg">
+    class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 px-4 sm:px-6 lg:px-8">
+    <div class="bg-white w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl p-6 rounded shadow-lg">
       <!-- Título -->
-      <h2 class="text-2xl font-semibold mb-6 text-center">Associar Sensor</h2>
+      <h2 class="text-xl sm:text-2xl font-semibold mb-6 text-center">Associar Sensor</h2>
 
       <!-- Descrição -->
       <p class="text-gray-700 mb-6 text-center">
@@ -696,17 +696,20 @@ onMounted(() => {
   </div>
 
   <!-- Modal de Confirmação -->
-  <div v-if="showModalRemoverSensor" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white rounded-lg p-6 shadow-lg w-1/3">
-      <h3 class="text-lg font-semibold text-gray-800 mb-4">Confirmar Remoção</h3>
-      <p class="text-gray-600 mb-6">
+  <div v-if="showModalRemoverSensor"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4 sm:px-6 lg:px-8">
+    <div class="bg-white rounded-lg p-6 shadow-lg w-full max-w-md sm:max-w-lg">
+      <h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-4 text-center">Confirmar Remoção</h3>
+      <p class="text-gray-600 mb-6 text-center">
         Tem certeza de que deseja remover este sensor? Esta ação não pode ser desfeita.
       </p>
-      <div class="flex justify-end space-x-4">
-        <button @click="closeModal" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+      <div class="flex justify-center space-x-4">
+        <button @click="closeModal"
+          class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400">
           Cancelar
         </button>
-        <button @click="confirmAndRemoveSensor" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+        <button @click="confirmAndRemoveSensor"
+          class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400">
           Confirmar
         </button>
       </div>
@@ -716,9 +719,9 @@ onMounted(() => {
 
   <!-- Modal de Adicionar Volume -->
   <div v-if="mostrarAdicionarProdutoModal"
-    class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-[60]">
-    <div class="bg-white w-1/3 p-6 rounded shadow-lg z-[70]">
-      <h2 class="text-xl font-bold mb-4">Adicionar Volume</h2>
+    class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-[60] px-4">
+    <div class="bg-white rounded-lg p-6 shadow-lg w-full max-w-md sm:max-w-lg lg:max-w-3xl z-[70]">
+      <h2 class="text-lg sm:text-xl font-bold mb-4 text-center">Adicionar Volume</h2>
 
       <!-- Campo para ID do Volume -->
       <div class="mb-4">
@@ -733,8 +736,8 @@ onMounted(() => {
         <h3 class="font-semibold mb-2">Embalagens no Volume</h3>
         <ul class="max-h-48 overflow-y-auto border border-gray-300 rounded">
           <li v-for="(embalagem, index) in embalagens" :key="index"
-            class="p-2 bg-gray-100 rounded mb-2 flex justify-between items-center">
-            <div>
+            class="p-2 bg-gray-100 rounded mb-2 flex flex-col sm:flex-row justify-between items-start sm:items-center">
+            <div class="mb-2 sm:mb-0">
               <p><strong>Embalagem Id:</strong> {{ embalagem.id }}</p>
               <p><strong>Produto:</strong> (id: {{ embalagem.produto.id }}) - {{ embalagem.produtoNome }}</p>
               <p><strong>Tipo:</strong> (id: {{ embalagem.tipo }}) - {{ embalagem.tipoNome }}</p>
@@ -789,16 +792,20 @@ onMounted(() => {
         <input v-model="quantidade" type="number" min="1" class="w-full p-2 border rounded mb-4" />
 
         <!-- Botão Adicionar Embalagem -->
-        <button @click="adicionarEmbalagem" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">
+        <button @click="adicionarEmbalagem" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700 w-full">
           Adicionar Embalagem
         </button>
       </div>
 
-      <div class="flex justify-end">
-        <button @click="adicionarVolume" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Finalizar
-          Volume</button>
+      <div class="flex justify-end space-x-2">
+        <button @click="adicionarVolume"
+          class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition-all">
+          Finalizar Volume
+        </button>
         <button @click="mostrarAdicionarProdutoModal = false"
-          class="bg-gray-500 text-white px-4 py-2 ml-2 rounded hover:bg-gray-700">Cancelar</button>
+          class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700 transition-all">
+          Cancelar
+        </button>
       </div>
     </div>
   </div>
