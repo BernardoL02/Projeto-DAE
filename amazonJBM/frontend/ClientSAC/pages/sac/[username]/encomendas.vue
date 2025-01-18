@@ -278,14 +278,15 @@ onMounted(async () => {
     </div>
   </div>
 
-  <div class="flex justify-between items-center ml-28 mr-28 mt-20">
+  <div
+    class="flex flex-col md:flex-row justify-between items-start md:items-center px-4 md:px-28 mt-8 md:mt-20 space-y-4 md:space-y-0">
     <div>
-      <h1 class="text-xl font-semibold text-gray-800">Bem-vindo, {{ username }}</h1>
-      <p class="mt-1 text-lg text-gray-700">Encomendas</p>
+      <h1 class="text-lg md:text-xl font-semibold text-gray-800">Bem-vindo, {{ username }}</h1>
+      <p class="mt-1 text-sm md:text-lg text-gray-700">Encomendas</p>
     </div>
 
     <!-- Filtro de Encomendas -->
-    <div class="w-64">
+    <div class="w-full md:w-64">
       <select v-model="estado" name="Encomendas" id="encomendas"
         class="block w-full p-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-SecundaryColor focus:border-SecundaryColor text-gray-700">
         <option value="Todas" class="text-gray-700">Todas</option>
@@ -303,10 +304,10 @@ onMounted(async () => {
   <!-- Modal de Alertas -->
   <div v-if="mostrarAlertasModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
     <!-- Conteúdo do Modal -->
-    <div class="bg-white w-1/2 p-0 rounded shadow-lg relative max-h-[90vh] overflow-y-auto">
+    <div class="bg-white w-full md:w-1/2 p-0 rounded shadow-lg relative max-h-[90vh] overflow-y-auto mx-4">
       <!-- Cabeçalho fixo preenchido -->
       <div class="sticky top-0 bg-white z-10 p-4 border-b border-gray-300 flex justify-between items-center">
-        <h2 class="text-xl font-semibold">Alertas da Encomenda</h2>
+        <h2 class="text-lg md:text-xl font-semibold">Alertas da Encomenda</h2>
         <!-- Botão de fechar dentro do cabeçalho -->
         <button @click="mostrarAlertasModal = false"
           class="w-8 h-8 bg-gray-200 text-gray-600 hover:text-gray-900 hover:bg-white rounded-full flex items-center justify-center shadow">
@@ -315,17 +316,18 @@ onMounted(async () => {
       </div>
 
       <!-- Conteúdo rolável -->
-      <div class="p-6">
+      <div class="p-4 md:p-6">
         <div v-if="alertasData.length === 0"
           class="flex flex-col items-center text-gray-600 p-6 border border-gray-300 bg-gray-50 rounded-lg">
           <i class="fas fa-info-circle text-3xl text-blue-500 mb-2"></i>
-          <p class="text-lg font-medium">Encomenda sem alertas</p>
+          <p class="text-base md:text-lg font-medium">Encomenda sem alertas</p>
         </div>
         <div v-else>
           <div v-for="sensor in alertasData" :key="sensor.id" class="mb-4 p-4 bg-gray-100 rounded-lg border">
-            <p class="font-semibold">Sensor ID: {{ sensor.id }} - Tipo: {{ sensor.tipo }}</p>
+            <p class="font-semibold text-sm md:text-base">Sensor ID: {{ sensor.id }} - Tipo: {{ sensor.tipo }}</p>
             <ul class="mt-2 space-y-2">
-              <li v-for="alerta in sensor.alertas" :key="alerta.id" class="p-3 bg-yellow-100 rounded-lg border">
+              <li v-for="alerta in sensor.alertas" :key="alerta.id"
+                class="p-3 bg-yellow-100 rounded-lg border text-sm md:text-base">
                 <p><strong>ID do Alerta:</strong> {{ alerta.id }}</p>
                 <p>
                   <strong>Volume ID:</strong> {{ alerta.id_volume }},
@@ -371,6 +373,8 @@ onMounted(async () => {
 
 </template>
 
+<style scoped></style>
+
 <style scoped>
 body {
   background-color: white;
@@ -381,5 +385,28 @@ body {
 h1 {
   font-size: 1.5rem;
   font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.25rem;
+  }
+
+  p {
+    font-size: 0.875rem;
+  }
+
+  .px-28 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .mt-20 {
+    margin-top: 1rem;
+  }
+
+  .w-64 {
+    width: 100%;
+  }
 }
 </style>
