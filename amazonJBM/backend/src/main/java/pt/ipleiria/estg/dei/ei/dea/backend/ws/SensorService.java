@@ -39,14 +39,14 @@ public class SensorService {
     private UtilizadorBean utilizadorBean;
 
     @POST
-    @Path("/tipo") //Done
+    @Path("/tipo")
     @RolesAllowed({"Logista"})
     public Response createTipoSensor(CreateTipoSensorDTO createTipoSensorDTO) {
         return tipoSensoresBean.create(createTipoSensorDTO.getId(),createTipoSensorDTO.getTipo());
     }
 
     @GET
-    @Path("/tipo")//Done
+    @Path("/tipo")
     @RolesAllowed({"Cliente", "Gestor", "Logista"})
     public Response getTipoSensores() {
         List<Tipo_Sensores> tipoSensores = tipoSensoresBean.findAll();
@@ -54,7 +54,7 @@ public class SensorService {
     }
 
     @GET
-    @Path("/{tipo_sensor}")//Done
+    @Path("/{tipo_sensor}")
     @RolesAllowed({"Gestor", "Cliente"})
     public Response getUltimaLeituraSensoresByTipo(@PathParam("tipo_sensor") String tipo_sensor) {
         Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
@@ -63,7 +63,7 @@ public class SensorService {
     }
 
     @GET
-    @Path("/{id}/alerta")//Done
+    @Path("/{id}/alerta")
     @RolesAllowed({"Gestor", "Cliente"})
     public Response getAlertasSensor(@PathParam("id") int id) {
         Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
@@ -72,7 +72,7 @@ public class SensorService {
     }
 
     @GET
-    @Path("/{id}/leitura") //Done
+    @Path("/{id}/leitura")
     @RolesAllowed({"Gestor", "Cliente"})
     public Response getLeiturasSensor(@PathParam("id") int id) {
         Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());

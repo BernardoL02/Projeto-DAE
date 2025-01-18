@@ -28,19 +28,19 @@ public class ExternalSensorService {
     private LeituraBean leituraBean;
 
     @GET
-    @Path("/")//Done
+    @Path("/")
     public List<ResSensorAllDTO> getAllSensores() {
         return ResSensorAllDTO.from(sensorBean.findAll());
     }
 
     @POST
-    @Path("/")//Done
+    @Path("/")
     public Response create(LeituraDTO leituraDTO) {
         return leituraBean.create(leituraDTO.getId_sensor(),leituraDTO.getBateria(),leituraDTO.getValor());
     }
     
     @PATCH
-    @Path("/{id}")//Done
+    @Path("/{id}")
     public Response updateEstado(@PathParam("id") int id) {
         return sensorBean.updateEstado(id);
     }

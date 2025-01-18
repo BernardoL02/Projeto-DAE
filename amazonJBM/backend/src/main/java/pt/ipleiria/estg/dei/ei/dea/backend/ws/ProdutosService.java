@@ -24,13 +24,13 @@ public class ProdutosService {
     private ProdutoBean produtoBean;
 
     @GET
-    @Path("/")//Done
+    @Path("/")
     public Response getProdutos() {
         return Response.ok(ProdutoDTO.from(produtoBean.findAll())).build();
     }
 
     @POST
-    @Path("/") //Done
+    @Path("/")
     public Response criarProduto(CreateProdutoDTO createPrdoutoDTO) {
         return produtoBean.create(createPrdoutoDTO.getId(),createPrdoutoDTO.getNome(),createPrdoutoDTO.getId_categoria());
     }
