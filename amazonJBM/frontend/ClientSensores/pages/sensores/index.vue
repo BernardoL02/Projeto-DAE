@@ -211,7 +211,7 @@ onMounted(async () => {
   // Atualiza a cada 2 segundos
   intervalId = setInterval(async () => {
     tableData.value = await fetchSensors();
-  }, 4000);
+  }, 3000);
 });
 
 onUnmounted(() => {
@@ -236,7 +236,7 @@ const confirmUpdateSensor = async (sensor) => {
     }
 
     successMessage.value = `Sensor ${sensor.id} confirmado com sucesso!`;
-    setTimeout(() => (successMessage.value = ""), 3000);
+    fetchSensors()
   } catch (error) {
     errorMessages.value.push(
       `Erro ao confirmar atualização do sensor ${sensor.id}: ${error.message}`
@@ -263,10 +263,9 @@ const confirmCancelSensor = async () => {
 // Função para cancelar o sensor
 const cancelSensor = async (sensor) => {
   try {
-    const response = await fetch(`${api}/sensor/${sensor.id}/desativar`, {
+    const response = await fetch(`${api}/sensor/${sensor.id}`, {
       method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ estado: "inativo" }),
+      headers: { "Content-Type": "application/json" }
     });
 
     if (!response.ok)
@@ -275,10 +274,7 @@ const cancelSensor = async (sensor) => {
     sensor.estado = "inativo";
     successMessage.value = `Sensor com ID: ${sensor.id} foi desativado com sucesso!`;
 
-    setTimeout(async () => {
-      successMessage.value = "";
-      tableData.value = await fetchSensors();
-    }, 3000);
+    await fetchSensors()
   } catch (err) {
     errorMessages.value.push(
       `Erro ao cancelar o sensor ${sensor.id}: ${err.message}`

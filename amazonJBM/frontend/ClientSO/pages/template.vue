@@ -33,7 +33,7 @@ const getToken = () => sessionStorage.getItem("token");
 const fetchTiposSensores = async () => {
   try {
     const token = getToken(); // Função para obter o token do sessionStorage
-    const response = await fetch(`${api}/sensor/tipos`, {
+    const response = await fetch(`${api}/sensor/tipo`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -80,9 +80,7 @@ onMounted(() => {
     <div class="container mx-auto flex justify-between items-center md:px-16">
       <!-- Logotipo -->
       <div class="flex items-center justify-center">
-        <div
-          class="relative w-[110px] h-[110px] rounded-full bg-white p-[-2] pl-[1px]"
-        >
+        <div class="relative w-[110px] h-[110px] rounded-full bg-white p-[-2] pl-[1px]">
           <img :src="icon" class="rounded-full w-full h-full object-cover" />
         </div>
       </div>
@@ -91,86 +89,55 @@ onMounted(() => {
       <div class="flex items-center space-x-8">
         <!-- Links de Navegação -->
         <div class="space-x-10 hidden md:flex">
-          <a
-            href="/so/EmProcessamento"
-            :class="currentPage === 'EmProcessamento' ? 'highlighted' : ''"
-            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group"
-          >
+          <a href="/so/EmProcessamento" :class="currentPage === 'EmProcessamento' ? 'highlighted' : ''"
+            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
             Em Processamento
             <span
               class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"
-              :class="currentPage === 'EmProcessamento' ? 'w-full' : ''"
-            ></span>
+              :class="currentPage === 'EmProcessamento' ? 'w-full' : ''"></span>
           </a>
-          <a
-            href="/so/PorEntregar"
-            :class="currentPage === 'Por Entregar' ? 'highlighted' : ''"
-            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group"
-          >
+          <a href="/so/PorEntregar" :class="currentPage === 'Por Entregar' ? 'highlighted' : ''"
+            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
             Por Entregar
             <span
               class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"
-              :class="currentPage === 'Por Entregar' ? 'w-full' : ''"
-            ></span>
+              :class="currentPage === 'Por Entregar' ? 'w-full' : ''"></span>
           </a>
-          <a
-            href="/so/Entregues"
-            :class="currentPage === 'Entregues' ? 'highlighted' : ''"
-            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group"
-          >
+          <a href="/so/Entregues" :class="currentPage === 'Entregues' ? 'highlighted' : ''"
+            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
             Entregues
             <span
               class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"
-              :class="currentPage === 'Entregues' ? 'w-full' : ''"
-            ></span>
+              :class="currentPage === 'Entregues' ? 'w-full' : ''"></span>
           </a>
-          <a
-            href="/so/Cancelada"
-            :class="currentPage === 'Cancelada' ? 'highlighted' : ''"
-            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group"
-          >
+          <a href="/so/Cancelada" :class="currentPage === 'Cancelada' ? 'highlighted' : ''"
+            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
             Canceladas
             <span
               class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"
-              :class="currentPage === 'Cancelada' ? 'w-full' : ''"
-            ></span>
+              :class="currentPage === 'Cancelada' ? 'w-full' : ''"></span>
           </a>
-          <a
-            href="/so/liveAlertas"
-            :class="currentPage === 'liveAlertas' ? 'highlighted' : ''"
-            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group"
-          >
+          <a href="/so/liveAlertas" :class="currentPage === 'liveAlertas' ? 'highlighted' : ''"
+            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
             Live Alertas
             <span
               class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"
-              :class="currentPage === 'liveAlertas' ? 'w-full' : ''"
-            ></span>
+              :class="currentPage === 'liveAlertas' ? 'w-full' : ''"></span>
           </a>
         </div>
 
         <!-- Dropdown customizado para seleção de sensores -->
-        <div
-          class="relative dropdown-container"
-          @mouseenter="isDropdownOpen = true"
-          @mouseleave="isDropdownOpen = false"
-        >
-          <button
-            class="bg-transparent text-white font-semibold p-2 focus:outline-none"
-          >
+        <div class="relative dropdown-container" @mouseenter="isDropdownOpen = true"
+          @mouseleave="isDropdownOpen = false">
+          <button class="bg-transparent text-white font-semibold p-2 focus:outline-none">
             {{ selectedTipo || "Últimos Valores" }}
           </button>
           <!-- Lista de tipos de sensores, sempre no DOM mas controlado por v-show -->
-          <div
-            v-show="isDropdownOpen"
-            class="absolute left-0 -mt-1 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50"
-          >
+          <div v-show="isDropdownOpen"
+            class="absolute left-0 -mt-1 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
             <div class="py-1">
-              <a
-                v-for="tipo in tiposSensores"
-                :key="tipo"
-                @click.prevent="selectTipo(tipo)"
-                class="block px-4 py-2 text-gray-700 hover:bg-green-100 hover:text-green-700 cursor-pointer"
-              >
+              <a v-for="tipo in tiposSensores" :key="tipo" @click.prevent="selectTipo(tipo)"
+                class="block px-4 py-2 text-gray-700 hover:bg-green-100 hover:text-green-700 cursor-pointer">
                 {{ tipo }}
               </a>
             </div>
@@ -188,10 +155,8 @@ onMounted(() => {
         </div>
 
         <!-- Botão de logout menor -->
-        <button
-          @click="logout"
-          class="flex items-center bg-red-500 text-white font-semibold px-3 py-1 text-sm rounded-full hover:bg-red-700 transition shadow-md"
-        >
+        <button @click="logout"
+          class="flex items-center bg-red-500 text-white font-semibold px-3 py-1 text-sm rounded-full hover:bg-red-700 transition shadow-md">
           <i class="fas fa-sign-out-alt mr-2"></i> Logout
         </button>
       </div>

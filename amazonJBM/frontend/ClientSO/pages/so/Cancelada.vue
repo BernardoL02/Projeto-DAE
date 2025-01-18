@@ -74,7 +74,7 @@ const fetchEncomendasEntregues = async () => {
 // Função para buscar alertas de uma encomenda específica
 const verAlertasEncomenda = async (id) => {
   try {
-    const response = await fetch(`${api}/encomenda/${id}/alertas`);
+    const response = await fetch(`${api}/encomenda/${id}/alerta`);
     if (!response.ok) {
       const errorData = await response.text();
       throw new Error(errorData);

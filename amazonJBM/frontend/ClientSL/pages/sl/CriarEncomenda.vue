@@ -190,7 +190,7 @@ const hideProdutoSuggestions = (embalagem) => {
 const fetchTiposEmbalagem = async () => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/embalagem/tipos`, {
+    const response = await fetch(`${api}/embalagem/tipo`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
