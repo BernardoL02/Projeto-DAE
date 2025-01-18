@@ -96,24 +96,24 @@ Content-Type: application/json
 }
 
 ### Associar um Volume a uma Encomenda #
-POST http://localhost:3001/backend/api/encomenda/100/volume
+POST http://localhost:3001/backend/api/encomenda/2/volume
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcwNzA1OTAsImV4cCI6MTczNzA3NDE5MH0.wvhj0bO_a3LZD3opgFDLdp4gsVwo4uI4ErrvV-NSyMrryp6PA2K9L-6pWHMbSD6i
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcyMTAxMzUsImV4cCI6MTczNzIxMzczNX0.HZOsKRrjaXf1dPEGR3VelmekqK-Y1ModZGT81eKFtDVeCY2HYLSqDsYT5HD2qEHL
 Content-Type: application/json
 
 {
   "id": 110,
       "embalagens": [
         {
-          "id": 110,
+          "id": 111,
           "produto": {
             "id": 1
           },
-          "tipo" : 1,
+          "tipo" : 10,
           "quantidade": 8
         },
         {
-          "id": 111,
+          "id": 110,
           "produto": {
             "id": 5
           },

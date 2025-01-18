@@ -10,7 +10,9 @@ import pt.ipleiria.estg.dei.ei.dea.backend.dtos.*;
 import pt.ipleiria.estg.dei.ei.dea.backend.entities.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Stateless
 public class VolumeBean {
@@ -20,6 +22,9 @@ public class VolumeBean {
 
     @EJB
     private EmbalagemBean embalagemBean;
+
+    @EJB
+    private VolumeBean volumeBean;
 
     @EJB
     private TipoEmbalagemBean tipoEmbalagemBean;
@@ -49,6 +54,31 @@ public class VolumeBean {
             return Response.status(Response.Status.NOT_FOUND).entity("Encomenda não encontrada!").build();
         }
 
+        if(!encomenda.getEstado().equals("EmProcessamento")){
+            return Response.status(Response.Status.BAD_REQUEST).entity("Impossivel associar volume, encomenda não está no estado 'Em Processamento'. ").build();
+        }
+
+        Volume volume = volumeBean.find(volumeCreateEncomendaDTO.getId());
+
+        if(volume != null){
+            return Response.status(Response.Status.BAD_REQUEST).entity("Já existe um volume com o ID fornecido!").build();
+        }
+
+        // Pré-validação: IDs duplicados em volumes e embalagens e existência no banco de dados
+        Set<Integer> embalagemIds = new HashSet<>();
+
+        for (EmbalagemCreateEncomendaDTO embalagem : volumeCreateEncomendaDTO.getEmbalagens()) {
+            // Verifica duplicação de ID no JSON para embalagens
+            if (!embalagemIds.add(embalagem.getId())) {
+                return Response.status(Response.Status.BAD_REQUEST).entity("IDs de embalagens duplicados " + embalagem.getId() + "!").build();
+            }
+
+            // Verifica se o ID da embalagem já existe na bd
+            if (em.find(Embalagem.class, embalagem.getId()) != null) {
+                return Response.status(Response.Status.BAD_REQUEST).entity("Já existe uma embalagem com o ID fornecido: " + embalagem.getId() + "!").build();
+            }
+        }
+
         List<EmbalagemCreateEncomendaDTO> embalagensDTO = volumeCreateEncomendaDTO.getEmbalagens();
         List<Produto> produtos = new ArrayList<>();
         List<Tipo_Embalagem> tiposEmbalagem = new ArrayList<>();
@@ -70,7 +100,7 @@ public class VolumeBean {
             produtos.add(produto1);
         }
 
-        Volume volume = new Volume(volumeCreateEncomendaDTO.getId(),encomenda);
+        volume = new Volume(volumeCreateEncomendaDTO.getId(),encomenda);
         em.persist(volume);
 
         for(int i = 0 ; i < tiposEmbalagem.size(); i++){
@@ -79,6 +109,7 @@ public class VolumeBean {
 
             volume.addEmbalagem(embalagem);
         }
+
         return Response.status(Response.Status.OK).entity("Volume associado à encomenda com sucesso!").build();
     }
 

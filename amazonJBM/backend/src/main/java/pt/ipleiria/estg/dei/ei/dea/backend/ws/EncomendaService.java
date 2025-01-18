@@ -108,8 +108,7 @@ public class EncomendaService {
     @Path("/{id}/volume")//Done
     @RolesAllowed({"Logista"})
     public Response associarVolumeEncomenda(@PathParam("id") int id_encomenda, VolumeCreateEncomendaDTO volumeCreateEncomendaDTO){
-        volumeBean.associarVolumeEncomenda(id_encomenda, volumeCreateEncomendaDTO);
-        return Response.ok("Volume associado com sucesso").build();
+        return volumeBean.associarVolumeEncomenda(id_encomenda, volumeCreateEncomendaDTO);
     }
 
     @GET
