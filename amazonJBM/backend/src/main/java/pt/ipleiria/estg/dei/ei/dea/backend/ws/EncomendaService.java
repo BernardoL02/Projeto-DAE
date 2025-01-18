@@ -104,14 +104,6 @@ public class EncomendaService {
         return Response.ok(ResEncomendaEstadoDTO.from(encomendas)).build();
     }
 
-    @GET
-    @Path("/pendentes")
-    @RolesAllowed({"Gestor"})
-    public Response getEncomendasPendendes() {
-        List<Encomenda> encomendas = encomendaBean.findPendentes();
-        return Response.ok(ResEncomendaEstadoDTO.from(encomendas)).build();
-    }
-
     @POST
     @Path("/{id}/volume")
     @RolesAllowed({"Logista"})
@@ -121,7 +113,7 @@ public class EncomendaService {
     }
 
     @GET
-    @Path("/alertas")
+    @Path("/alerta")
     @RolesAllowed({"Gestor"})
     public Response getEncomendasAlertas() {
         Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
@@ -131,7 +123,7 @@ public class EncomendaService {
     }
 
     @GET
-    @Path("/{id}/alertas")
+    @Path("/{id}/alerta")
     @RolesAllowed({"Gestor","Cliente"})
     public Response getAlertasEncomenda(@PathParam("id") int id) {
         Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
@@ -140,7 +132,7 @@ public class EncomendaService {
     }
 
     @GET
-    @Path("/{id}/coordenadas")
+    @Path("/{id}/coordenada")
     @RolesAllowed({"Gestor","Cliente"})
     public Response getCoordenadasEncomenda(@PathParam("id") int id) {
         List<Object[]> resultados = encomendaBean.getCoordenadasEncomenda(id);

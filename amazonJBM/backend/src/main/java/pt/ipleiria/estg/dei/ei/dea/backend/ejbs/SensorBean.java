@@ -112,7 +112,7 @@ public class SensorBean {
         return em.find(Sensor.class, id);
     }
 
-    public Response updateEstado(int id, SensorDTO sensorDTO) {
+    public Response updateEstado(int id) {
         Sensor sensor = em.find(Sensor.class, id);
 
         if(sensor == null){
@@ -123,7 +123,7 @@ public class SensorBean {
             return Response.status(Response.Status.NOT_FOUND).entity("Só se podem desativar sensores que estejam ativos!").build();
         }
 
-        sensor.setEstado(sensorDTO.getEstado());
+        sensor.setEstado("inativo");
         em.merge(sensor);
 
         return Response.ok(ResSensorValorDTO.from(sensor)).build();

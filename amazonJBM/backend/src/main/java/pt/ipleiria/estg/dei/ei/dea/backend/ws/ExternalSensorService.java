@@ -40,9 +40,9 @@ public class ExternalSensorService {
     }
     
     @PATCH
-    @Path("/{id}/desativar")
-    public Response updateEstado(@PathParam("id") int id, SensorDTO sensorDTO) {
-        return sensorBean.updateEstado(id, sensorDTO);
+    @Path("/{id}")
+    public Response updateEstado(@PathParam("id") int id) {
+        return sensorBean.updateEstado(id);
     }
 
 }

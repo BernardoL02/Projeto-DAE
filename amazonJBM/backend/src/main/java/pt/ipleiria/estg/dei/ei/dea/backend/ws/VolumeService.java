@@ -43,7 +43,7 @@ public class VolumeService {
         return volumeBean.verDetalhesVolume(id, user);
     }
     @PATCH
-    @Path("/{id}/entregar")
+    @Path("/{id}")
     public Response updateEstado(@PathParam("id") int id) {
         return volumeBean.entregarVolume(id);
     }

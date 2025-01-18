@@ -46,7 +46,7 @@ public class SensorService {
     }
 
     @GET
-    @Path("tipos")
+    @Path("/tipo")
     @RolesAllowed({"Cliente", "Gestor", "Logista"})
     public Response getTipoSensores() {
         List<Tipo_Sensores> tipoSensores = tipoSensoresBean.findAll();
@@ -63,7 +63,7 @@ public class SensorService {
     }
 
     @GET
-    @Path("/{id}/alertas")
+    @Path("/{id}/alerta")
     @RolesAllowed({"Gestor", "Cliente"})
     public Response getAlertasSensor(@PathParam("id") int id) {
         Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
