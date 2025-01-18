@@ -37,7 +37,7 @@ public class EmbalagemService {
     TipoEmbalagemBean tipoEmbalagemBean;
 
     @POST
-    @Path("/{id}/sensor")
+    @Path("/{id}/sensor")//Done
     public Response associarSensorAEmbalagem(@PathParam("id") int id, SensorDTO sensorDTO) {
         if(sensorDTO.getTipoId() == 4){
             return sensorBean.create(

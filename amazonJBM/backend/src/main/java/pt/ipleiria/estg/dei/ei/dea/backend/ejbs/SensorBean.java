@@ -101,7 +101,7 @@ public class SensorBean {
 
         embalagem.addSensor(sensor);
 
-        return Response.ok("Sensor associado com sucesso").build();
+        return Response.status(Response.Status.CREATED).entity("Sensor associado com sucesso").build();
     }
 
     public List<Sensor> findAll() {

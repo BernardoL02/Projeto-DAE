@@ -36,7 +36,7 @@ public class VolumeService {
     private SensorBean sensorBean;
 
     @GET
-    @Path("/{id}")
+    @Path("/{id}")//Done
     public Response getDetalhesVolume(@PathParam("id") int id){
         Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
 

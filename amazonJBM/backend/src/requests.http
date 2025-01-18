@@ -6,28 +6,29 @@
 ### GET All Produtos #
 GET http://localhost:3001/backend/api/produto
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcxOTUwODIsImV4cCI6MTczNzE5ODY4Mn0.iUor7M7_902a1o2l5LK2X6ReAfLVYhcua3w_iLYHhuL-WtZPyFk9riXVwERQHZp8
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcyMDIyMjksImV4cCI6MTczNzIwNTgyOX0.VAXofaAz7AJ3JhvruAc0zhDOUaLT0C9oneQSdWyWcYZ60J7QmknPDZo15CA0fAg5
 
 ######################### Clientes Service ################################
 ### GET All clientes #
 GET http://localhost:3001/backend/api/cliente
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcyMDIyMjksImV4cCI6MTczNzIwNTgyOX0.VAXofaAz7AJ3JhvruAc0zhDOUaLT0C9oneQSdWyWcYZ60J7QmknPDZo15CA0fAg5
 
 ######################### Encomenda Service ################################
 ### Get All Encomenda #
-GET http://localhost:3001/backend/api/encomenda/
+GET http://localhost:3001/backend/api/encomenda
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MTE4MDM3LCJleHAiOjE3MzcxMjE2Mzd9.P8G0-TONoXJNatOpsNu_rdXjZ75PMerVPT85CWcn-AlZDJipLoOsbkobKrWVGdEy
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNzE5OTY2NSwiZXhwIjoxNzM3MjAzMjY1fQ.yG7LDrAYxkviSp5X_ghg_9qBtM28nP_9ltUybwKepJ8HVMcjP3mNuugrs-xicFVw
 
 ### Get Encomenda Por Id #
 GET http://localhost:3001/backend/api/encomenda/1
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MTM2MjIwLCJleHAiOjE3MzcxMzk4MjB9.6h82DcbB4_u0FVrurcnwpM1Yvyo-ZkB0elm-My3-HZAXIAokBu7E718J-l3RWTVd
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNzE5OTY2NSwiZXhwIjoxNzM3MjAzMjY1fQ.yG7LDrAYxkviSp5X_ghg_9qBtM28nP_9ltUybwKepJ8HVMcjP3mNuugrs-xicFVw
 
 ### Get All Encomendas por um determinado estado "PorEntregar" "Cancelada" "EmProcessamento" "Entregue" #
 GET http://localhost:3001/backend/api/encomenda/estado/Cancelada
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MTE4MDM3LCJleHAiOjE3MzcxMjE2Mzd9.P8G0-TONoXJNatOpsNu_rdXjZ75PMerVPT85CWcn-AlZDJipLoOsbkobKrWVGdEy
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcyMDAxNTksImV4cCI6MTczNzIwMzc1OX0.L25ZEwyK6bVpug9xLrKdVeRB9wfPoJ2AqotfbPYnViehVRuJIg6uljQf0xZCMjvJ
 
 ### Alterar estado de uma encomenda #
 PATCH http://localhost:3001/backend/api/encomenda/1
@@ -36,7 +37,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM1N
 Content-Type: application/json
 
 {
-  "estado": "Cancelada"
+  "estado": "Entregue"
 }
 
 ###Criar uma nova encomenda #
@@ -141,25 +142,25 @@ Content-Type: application/json
 ### Get All Alertas de Encomenda por Id #
 GET http://localhost:3001/backend/api/encomenda/1/alerta
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MTk3MTMyLCJleHAiOjE3MzcyMDA3MzJ9.IaG0n0yQ-TQavMQTC3VbmrBP354m2LUVl__upgc6fsTOGWTfzKvJYG9aQffMgnHn
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcyMDAxNTksImV4cCI6MTczNzIwMzc1OX0.L25ZEwyK6bVpug9xLrKdVeRB9wfPoJ2AqotfbPYnViehVRuJIg6uljQf0xZCMjvJ
 
 
 ### GET Ver Alertas de encomendas (PorEntregar) #
 GET http://localhost:3001/backend/api/encomenda/alerta
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MTk3MTMyLCJleHAiOjE3MzcyMDA3MzJ9.IaG0n0yQ-TQavMQTC3VbmrBP354m2LUVl__upgc6fsTOGWTfzKvJYG9aQffMgnHn
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MjAzMDg4LCJleHAiOjE3MzcyMDY2ODh9.RU_Ew3_XIo9JLz1yfCEctWRYvaPSYHt6oSRltuo3Ddfsx8NuY1JkMxDcuYcSxCqi
 
 ### Get Coordenadas Volumes #
 GET http://localhost:3001/backend/api/encomenda/1/coordenada
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNzE5NzUwNSwiZXhwIjoxNzM3MjAxMTA1fQ.SJLkzxrXenwg3Graz7Sh6VKlHBc1wbqBl2ruKIobD_NY0yTS0LhqmC_lRNVd0GT_
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MjAzMDg4LCJleHAiOjE3MzcyMDY2ODh9.RU_Ew3_XIo9JLz1yfCEctWRYvaPSYHt6oSRltuo3Ddfsx8NuY1JkMxDcuYcSxCqi
 
 ####################´´##### Volume Service ################################
 
 ### Get Detalhes Volume #
 GET http://localhost:3001/backend/api/volume/1
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU1NjAxNjMsImV4cCI6MTczNTU2Mzc2M30.Y-4pIC7vVgU83jHJ8YiK4V5tQT0wJ4UWqwoCaHMS6J0bgyDSwdG5owpiYebifA5R
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNzIwMTc4MSwiZXhwIjoxNzM3MjA1MzgxfQ.oQT2BTmypwxiDzmRr7hyqxWHGqH-l_0AtN6OsBYGJWeEYPFHLkxRjqFVzEPlGfr4
 
 ### Entregar Volume
 PATCH http://localhost:3001/backend/api/volume/2
@@ -168,13 +169,13 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcxO
 
 
 ###Associar um Sensor a um Embalagem #
-POST http://localhost:3001/backend/api/embalagem/10/sensor
+POST http://localhost:3001/backend/api/embalagem/5/sensor
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcwNzIwMTQsImV4cCI6MTczNzA3NTYxNH0.JuXRipCWbbcMwhTQZsPf6Uoev3BB_8z0ZClAs1cqRskv45zNyRLbM5mYQrQTeufr
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcyMDE1MzAsImV4cCI6MTczNzIwNTEzMH0.sMXG5zVGcz6clNSmqlRdZpuZQVxF3Feuv9U8p2Yrs0m4JE0fdvg-SKmsYXTNIPTI
 Content-Type: application/json
 
 {
-  "id": 55,
+  "id": 57,
   "valor": 90,
   "tipoId": 4,
   "valMin": 10,
@@ -213,19 +214,19 @@ Content-Type: application/json
 ### Get All Tipos de Sensor #
 GET http://localhost:3001/backend/api/sensor/tipo
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcxOTc2ODQsImV4cCI6MTczNzIwMTI4NH0.-ej63tSv9F9v4baz_CE_sIeKKdW2-nV-JCg1PxjFu8s2kOKVr_1_pt5XXuVSLCdi
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcyMDI0OTQsImV4cCI6MTczNzIwNjA5NH0.5Fz-8IE0jFGOJkoGvNZMCUexf1dx09rV_WjI659xhEFM7cUSt-3KXFth4tvVDIwA
 
 
 ### GET All Ultimo Valor dos Sensores por Tipo #
 GET http://localhost:3001/backend/api/sensor/GPS
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczNTQ3Mjk5NSwiZXhwIjoxNzM1NDc2NTk1fQ.JzwH4Jvo0nSIx49rf5A5geIyLeJGPvs8tdZe3v1iLdOV0rx1Po4076c8jSC0Ie8l
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MjAxMDM4LCJleHAiOjE3MzcyMDQ2Mzh9.yjFsYX4Se2RmoG7RMDWjo_kgentkro9bd0aKnqQpmp9phUtQNTQ_vCNrHCl3HjWL
 
 
 ### GET Ver Alertas de um sensor #
 GET http://localhost:3001/backend/api/sensor/1/alerta
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MTk3ODgwLCJleHAiOjE3MzcyMDE0ODB9.FYIJL60aU3JBSNDtYNszsdhwBtmReOQSMq6KM5Jwnyw8vrxGoV5HD2rhkMR-pL4K
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MjAwMzUzLCJleHAiOjE3MzcyMDM5NTN9.SFiRWTqx1-JPJw8pCZg83ygiNj7HfvTYfaY5i6_N31Uv5VyRvTVRXPEUdElF4dJk
 
 ### GET Ver Leituras de um sensor #
 GET http://localhost:3001/backend/api/sensor/1/leitura
@@ -252,7 +253,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "username": "Miguel",
+  "username": "Delgado",
   "password": "123"
 }
 

@@ -24,7 +24,7 @@ public class ClientesService {
     private ClienteBean clienteBean;
 
     @GET
-    @Path("/")
+    @Path("/")//Done
     public Response getClientes() {
         var clientes = clienteBean.findAll();
         return Response.ok(ResClienteDTO.from(clientes)).build();

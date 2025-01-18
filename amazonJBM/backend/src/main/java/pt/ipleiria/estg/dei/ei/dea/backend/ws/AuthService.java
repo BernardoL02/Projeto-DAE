@@ -28,7 +28,7 @@ public class AuthService {
     private SecurityContext securityContext;
 
     @POST
-    @Path("/login")
+    @Path("/login")//Done
     public Response authenticate(@Valid AuthDTO auth) {
         if (userBean.canLogin(auth.getUsername(), auth.getPassword())) {
             String token = issuer.issue(auth.getUsername());
@@ -39,7 +39,7 @@ public class AuthService {
 
     @GET
     @Authenticated
-    @Path("/user")
+    @Path("/user")//Done
     public Response getAuthenticatedUser() {
         var username = securityContext.getUserPrincipal().getName();
         var user = userBean.findOrFail(username);
