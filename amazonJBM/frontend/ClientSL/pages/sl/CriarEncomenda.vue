@@ -465,7 +465,7 @@ onMounted(() => {
     </div>
 
     <div v-if="showVolumeModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-      <div class="bg-white p-6 rounded shadow-lg w-1/3">
+      <div class="bg-white p-6 rounded shadow-lg w-full max-w-lg mx-4 sm:w-3/4 md:w-1/2 lg:w-1/3">
         <h2 class="text-xl font-semibold mb-4">Adicionar Volume</h2>
         <label for="volume-id" class="block text-gray-700 font-medium mb-2">Insira o ID do Volume:</label>
         <input id="volume-id" v-model="manualVolumeId" type="text"
@@ -486,7 +486,7 @@ onMounted(() => {
 
     <div v-if="showEmbalagemModal"
       class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-      <div class="bg-white p-6 rounded shadow-lg w-1/3">
+      <div class="bg-white p-6 rounded shadow-lg w-full max-w-lg mx-4 sm:w-3/4 md:w-1/2 lg:w-1/3">
         <h2 class="text-xl font-semibold mb-4">Adicionar Embalagem</h2>
         <label for="embalagem-id" class="block text-gray-700 font-medium mb-2">Insira o ID da Embalagem:</label>
         <input id="embalagem-id" v-model="manualEmbalagemId" type="text"

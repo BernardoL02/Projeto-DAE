@@ -97,27 +97,28 @@ watch(
 </script>
 
 <template>
-
   <Template :username="username" :currentPage="currentPage"></Template> <!-- Importar o Template -->
 
   <!-- Mensagens de erro estilizadas -->
   <div v-if="errorMessages.length" class="fixed bottom-4 right-4 space-y-2 z-[100]">
     <div v-for="(error, index) in errorMessages" :key="index"
-      class="bg-red-500 text-white py-4 px-6 rounded shadow-lg w-96">
+      class="bg-red-500 text-white py-4 px-6 rounded shadow-lg w-96 max-w-full">
       <h3 class="font-semibold text-lg mb-2">Erro</h3>
-      <p>{{ error }}</p>
+      <p class="text-sm md:text-base">{{ error }}</p>
     </div>
   </div>
 
-  <div class="flex justify-between items-center ml-28 mr-28 mt-20">
+  <div
+    class="flex flex-col md:flex-row justify-between items-start md:items-center px-4 md:px-28 mt-8 md:mt-20 space-y-4 md:space-y-0">
     <div>
-      <h1 class="text-xl font-semibold text-gray-800">Sensores</h1>
-      <p class="mt-1 text-lg text-gray-700">Consulte os últimos valores registados pelos sensores ativos, das suas
-        encomendas</p>
+      <h1 class="text-lg md:text-xl font-semibold text-gray-800">Sensores</h1>
+      <p class="mt-1 text-sm md:text-lg text-gray-700">
+        Consulte os últimos valores registados pelos sensores ativos, das suas encomendas
+      </p>
     </div>
 
     <!-- Filtro de Encomendas -->
-    <div class="w-64">
+    <div class="w-full md:w-64">
       <select v-model="selectedTipo" name="Sensores" id="sensores"
         class="block w-full p-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-SecundaryColor focus:border-SecundaryColor text-gray-700">
         <option v-for="tipo in tiposSensores" :key="tipo" :value="tipo">
@@ -128,7 +129,6 @@ watch(
   </div>
 
   <Table :tableTitles="tableTitles" :tableData="tableData" :mostrarOperacoes="false" />
-
 </template>
 
 <style scoped>
@@ -141,5 +141,32 @@ body {
 h1 {
   font-size: 1.5rem;
   font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.25rem;
+  }
+
+  p {
+    font-size: 0.875rem;
+  }
+
+  .flex {
+    flex-direction: column;
+  }
+
+  .w-64 {
+    width: 100%;
+  }
+
+  .px-28 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .mt-20 {
+    margin-top: 1rem;
+  }
 }
 </style>

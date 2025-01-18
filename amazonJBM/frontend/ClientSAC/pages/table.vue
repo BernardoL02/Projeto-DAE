@@ -119,97 +119,100 @@ async function cancelar(id) {
 
   <div class="table-container p-8">
     <div :class="{ 'overflow-y-auto max-h-96': tableData.length > 7 }" class="shadow-lg rounded-lg relative">
-      <table class="min-w-full bg-white rounded-lg border border-gray-300">
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-white rounded-lg border border-gray-300">
 
-        <!-- Table Headings -->
-        <thead class="bg-gradient-to-r from-purple-600 to-indigo-600 sticky top-0 z-10">
-          <tr>
-            <th v-for="(title, index) in tableTitles" :key="index"
-              class="py-4 px-6 text-white font-bold text-center uppercase border border-gray-300">
-              {{ title }}
-            </th>
-            <th v-if="mostrarOperacoes == true"
-              class="py-4 px-6 text-white font-bold text-center uppercase border border-gray-300">Operações</th>
-          </tr>
-        </thead>
+          <!-- Table Headings -->
+          <thead class="bg-gradient-to-r from-purple-600 to-indigo-600 sticky top-0 z-10">
+            <tr>
+              <th v-for="(title, index) in tableTitles" :key="index"
+                class="py-4 px-6 text-white font-bold text-center uppercase border border-gray-300">
+                {{ title }}
+              </th>
+              <th v-if="mostrarOperacoes == true"
+                class="py-4 px-6 text-white font-bold text-center uppercase border border-gray-300">Operações</th>
+            </tr>
+          </thead>
 
-        <!-- Table Data -->
-        <tbody>
-          <tr v-for="(row, rowIndex) in tableData" :key="rowIndex"
-            class="odd:bg-gray-100 even:bg-white hover:bg-indigo-50 transition duration-300">
-            <td v-for="(cell, cellIndex) in row" :key="cellIndex" class="py-4 px-6 text-center border border-gray-300">
-              <div v-if="String(cell).includes('Cancelada')" class="flex flex-row justify-center">
-                <div class="bg-red-500 rounded-full w-3 h-3 mt-[6px] mr-2"></div>
-                {{ cell }}
-              </div>
-              <div v-else-if="String(cell).includes('Entregue')" class="flex flex-row justify-center">
-                <div class="bg-green-500 rounded-full w-3 h-3 mt-[6px] mr-2"></div>
-                {{ cell }}
-              </div>
-              <div v-else-if="String(cell).includes('Em Processamento')" class="flex flex-row justify-center">
-                <div class="bg-sky-500 rounded-full w-3 h-3 mt-[6px] mr-2"></div>
-                {{ cell }}
-              </div>
-              <div v-else-if="String(cell).includes('Por Entregar')" class="flex flex-row justify-center">
-                <div class="bg-amber-400 rounded-full w-3 h-3 mt-[6px] mr-2"></div>
-                {{ cell }}
-              </div>
-              <div v-else>
-                {{ cell }}
-              </div>
-            </td>
-            <td v-if="mostrarOperacoes == true" class="py-4 px-6 text-center border border-gray-300">
-              <div v-if="row.includes('Em Processamento')">
+          <!-- Table Data -->
+          <tbody>
+            <tr v-for="(row, rowIndex) in tableData" :key="rowIndex"
+              class="odd:bg-gray-100 even:bg-white hover:bg-indigo-50 transition duration-300">
+              <td v-for="(cell, cellIndex) in row" :key="cellIndex"
+                class="py-4 px-6 text-center border border-gray-300">
+                <div v-if="String(cell).includes('Cancelada')" class="flex flex-row justify-center">
+                  <div class="bg-red-500 rounded-full w-3 h-3 mt-[6px] mr-2"></div>
+                  {{ cell }}
+                </div>
+                <div v-else-if="String(cell).includes('Entregue')" class="flex flex-row justify-center">
+                  <div class="bg-green-500 rounded-full w-3 h-3 mt-[6px] mr-2"></div>
+                  {{ cell }}
+                </div>
+                <div v-else-if="String(cell).includes('Em Processamento')" class="flex flex-row justify-center">
+                  <div class="bg-sky-500 rounded-full w-3 h-3 mt-[6px] mr-2"></div>
+                  {{ cell }}
+                </div>
+                <div v-else-if="String(cell).includes('Por Entregar')" class="flex flex-row justify-center">
+                  <div class="bg-amber-400 rounded-full w-3 h-3 mt-[6px] mr-2"></div>
+                  {{ cell }}
+                </div>
+                <div v-else>
+                  {{ cell }}
+                </div>
+              </td>
+              <td v-if="mostrarOperacoes == true" class="py-4 px-6 text-center border border-gray-300">
+                <div v-if="row.includes('Em Processamento')">
 
-                <nuxt-link :to="`/sac/${username}/encomenda/${row[0]}`">
-                  <button class="bg-blue-500 text-white py-1 px-[10px] rounded hover:bg-blue-700 transition">
-                    <i class="fas fa-eye"></i> <!-- Ícone de olho para "Ver Detalhes" -->
+                  <nuxt-link :to="`/sac/${username}/encomenda/${row[0]}`">
+                    <button class="bg-blue-500 text-white py-1 px-[10px] rounded hover:bg-blue-700 transition">
+                      <i class="fas fa-eye"></i> <!-- Ícone de olho para "Ver Detalhes" -->
+                    </button>
+                  </nuxt-link>
+
+                  <button @click="cancelar(row[0])"
+                    class="ml-2 bg-red-500 text-white py-1 px-3 rounded hover:bg-red-700 transition">
+                    <i class="fas fa-times"></i>
                   </button>
-                </nuxt-link>
+                </div>
 
-                <button @click="cancelar(row[0])"
-                  class="ml-2 bg-red-500 text-white py-1 px-3 rounded hover:bg-red-700 transition">
-                  <i class="fas fa-times"></i>
-                </button>
-              </div>
+                <div v-else-if="row.includes('Por Entregar')">
 
-              <div v-else-if="row.includes('Por Entregar')">
+                  <nuxt-link :to="`/sac/${username}/encomenda/${row[0]}`">
+                    <button class="bg-blue-500 text-white py-1 px-[10px] rounded hover:bg-blue-700 transition">
+                      <i class="fas fa-eye"></i> <!-- Ícone de olho para "Ver Detalhes" -->
+                    </button>
+                  </nuxt-link>
 
-                <nuxt-link :to="`/sac/${username}/encomenda/${row[0]}`">
-                  <button class="bg-blue-500 text-white py-1 px-[10px] rounded hover:bg-blue-700 transition">
-                    <i class="fas fa-eye"></i> <!-- Ícone de olho para "Ver Detalhes" -->
+                  <button @click="emit('tracking', row[0])"
+                    class="ml-2 bg-green-500 text-white py-1 px-3 rounded hover:bg-green-700 transition">
+                    <i class="fas fa-map-marker-alt"></i> <!-- Ícone de localização para "Tracking" -->
                   </button>
-                </nuxt-link>
 
-                <button @click="emit('tracking', row[0])"
-                  class="ml-2 bg-green-500 text-white py-1 px-3 rounded hover:bg-green-700 transition">
-                  <i class="fas fa-map-marker-alt"></i> <!-- Ícone de localização para "Tracking" -->
-                </button>
-
-                <button @click="emit('verAlertas', row[0])"
-                  class="ml-2 bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 transition">
-                  <i class="fas fa-bell"></i> <!-- Ícone de campainha para "Alertas" -->
-                </button>
-
-              </div>
-
-              <div v-else>
-                <nuxt-link :to="`/sac/${username}/encomenda/${row[0]}`">
-                  <button class="bg-blue-500 text-white py-1 px-[10px] rounded hover:bg-blue-700 transition">
-                    <i class="fas fa-eye"></i> <!-- Ícone de olho para "Ver Detalhes" -->
+                  <button @click="emit('verAlertas', row[0])"
+                    class="ml-2 bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 transition">
+                    <i class="fas fa-bell"></i> <!-- Ícone de campainha para "Alertas" -->
                   </button>
-                </nuxt-link>
 
-                <button @click="emit('verAlertas', row[0])"
-                  class="ml-2 bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 transition">
-                  <i class="fas fa-bell"></i> <!-- Ícone de campainha para "Alertas" -->
-                </button>
+                </div>
 
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+                <div v-else>
+                  <nuxt-link :to="`/sac/${username}/encomenda/${row[0]}`">
+                    <button class="bg-blue-500 text-white py-1 px-[10px] rounded hover:bg-blue-700 transition">
+                      <i class="fas fa-eye"></i> <!-- Ícone de olho para "Ver Detalhes" -->
+                    </button>
+                  </nuxt-link>
+
+                  <button @click="emit('verAlertas', row[0])"
+                    class="ml-2 bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600 transition">
+                    <i class="fas fa-bell"></i> <!-- Ícone de campainha para "Alertas" -->
+                  </button>
+
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
@@ -224,6 +227,7 @@ async function cancelar(id) {
 th,
 td {
   padding: 16px;
+  white-space: nowrap;
 }
 
 .bg-gradient-to-r {
@@ -306,5 +310,18 @@ button {
 
 .animate-slide-up {
   animation: slideUp 0.5s forwards;
+}
+
+@media (max-width: 768px) {
+  .table-container {
+    padding: 1rem;
+  }
+
+  th,
+  td {
+    font-size: 0.875rem;
+    /* Reduz tamanho do texto */
+    padding: 8px;
+  }
 }
 </style>
