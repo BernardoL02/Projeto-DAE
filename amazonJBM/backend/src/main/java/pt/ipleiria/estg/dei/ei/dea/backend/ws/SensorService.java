@@ -39,7 +39,7 @@ public class SensorService {
     private UtilizadorBean utilizadorBean;
 
     @POST
-    @Path("/tipo")
+    @Path("/tipo") //Done
     @RolesAllowed({"Logista"})
     public Response createTipoSensor(CreateTipoSensorDTO createTipoSensorDTO) {
         return tipoSensoresBean.create(createTipoSensorDTO.getId(),createTipoSensorDTO.getTipo());
@@ -72,7 +72,7 @@ public class SensorService {
     }
 
     @GET
-    @Path("/{id}/leitura")
+    @Path("/{id}/leitura") //Done
     @RolesAllowed({"Gestor", "Cliente"})
     public Response getLeiturasSensor(@PathParam("id") int id) {
         Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());

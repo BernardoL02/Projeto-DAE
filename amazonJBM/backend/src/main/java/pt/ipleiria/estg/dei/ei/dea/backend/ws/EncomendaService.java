@@ -55,7 +55,7 @@ public class EncomendaService {
     }
 
     @POST
-    @Path("/")
+    @Path("/")//Done
     @RolesAllowed({"Logista"})
     public Response criarEncomenda(CreateEncomendaDTO encomendasDTO) {
 

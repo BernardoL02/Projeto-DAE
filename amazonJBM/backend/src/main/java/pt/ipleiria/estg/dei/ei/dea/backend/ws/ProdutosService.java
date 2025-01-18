@@ -30,7 +30,7 @@ public class ProdutosService {
     }
 
     @POST
-    @Path("/")
+    @Path("/") //Done
     public Response criarProduto(CreateProdutoDTO createPrdoutoDTO) {
         return produtoBean.create(createPrdoutoDTO.getId(),createPrdoutoDTO.getNome(),createPrdoutoDTO.getId_categoria());
     }

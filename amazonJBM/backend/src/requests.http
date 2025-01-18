@@ -165,7 +165,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJCZXJuYXJkbyIsImlhdCI6MTczN
 ### Entregar Volume
 PATCH http://localhost:3001/backend/api/volume/2
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcxOTg0MTAsImV4cCI6MTczNzIwMjAxMH0.Bq0a2pVaZV23aXr-78xbHoN2unHT6MWI8DzEoKTuDffoMM3veAsJ86GFjWRzEZKZ
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcyMDcwNjIsImV4cCI6MTczNzIxMDY2Mn0.powHcH0hr3e-CURlFABjmaTKtBFWWjD5Vd6_oA8v3f83swMKhfLo2f48tJL_s-hP
 
 
 ###Associar um Sensor a um Embalagem #
@@ -231,7 +231,8 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3M
 ### GET Ver Leituras de um sensor #
 GET http://localhost:3001/backend/api/sensor/1/leitura
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MDY0MzE2LCJleHAiOjE3MzcwNjc5MTZ9.MSPfwXCuULtLhOq9iqQre4BltwIIaw4CwwdTnW2ix9PVzyXWgOqYwtyX_SbDiZix
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3MjA2NTY0LCJleHAiOjE3MzcyMTAxNjR9.-30Zou8ODm2eKVxpJKgrq1h5pmE0RKur8rybYNc7cIq5gSDy7mvld_xHpnOKq1wQ
+
 ################################ EMBALAGENS ###################################
 
 ### Get All Tipos de Embalagens #
@@ -242,6 +243,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcyM
 ################################ End Points Login ################################
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
+                     #Retirar comentarios Done#
                      #Colocar no pdf a atualização do JSON criar encomenda#
                      #Colocar no pdf todos os endpoints modificados#
                      #Falar no word,o que foi melhorado em relacao aos endpoints, falar dos novos endpoints e falar nos extras#
@@ -277,7 +279,7 @@ Accept: application/json
 
 {
    "id": 535,
-   "nome": "Sapatos2",
+   "nome": "Sapatos",
    "id_categoria": "6"
 }
 
@@ -289,13 +291,13 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcyM
 ### Criar novo tipo de sensor
 POST http://localhost:3001/backend/api/sensor/tipo
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcxMTMwNTgsImV4cCI6MTczNzExNjY1OH0.m2QazZAwjmK1vkGmBKTAtSqvL7e_Db5Xg13GYI9CcBqmeIfvE8EKv9EYFaklNglH
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcyMDY0NzcsImV4cCI6MTczNzIxMDA3N30.zK25pFnBlik7t4c6UGuSG0dZy2rmDSzN-Wx2NmeWoTiGQSLCygpM4vB4gjAJnwsR
 Content-Type: application/json
 Accept: application/json
 
 {
-  "id": "1",
-  "tipo": "humidade"
+  "id": "10",
+  "tipo": "Humidade"
 }
 
 ### Criar novo tipo de embalagem

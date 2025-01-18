@@ -112,6 +112,6 @@ public class VolumeBean {
         }
 
         volume.setEntregue(true);
-        return Response.ok(ResVolumeDetalhesDTO.from(volume)).build();
+        return Response.ok("Volume entregue com sucesso.").build();
     }
 }

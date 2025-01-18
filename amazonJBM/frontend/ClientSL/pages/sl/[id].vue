@@ -450,7 +450,7 @@ const adicionarVolume = async () => {
 const VolumeEntregue = async (volume) => {
   try {
     const token = sessionStorage.getItem('token');
-    const response = await fetch(`${api}/volume/${volume.id}/entregar`, {
+    const response = await fetch(`${api}/volume/${volume.id}`, {
       method: 'PATCH',
       headers: {
         'Accept': 'application/json',
