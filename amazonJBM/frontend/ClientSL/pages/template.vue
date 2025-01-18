@@ -23,29 +23,28 @@ const logout = () => {
 </script>
 
 <template>
-  <nav class="fundoNavBar flex items-center justify-between bg-PrimaryColor p-4 shadow-xl">
+  <nav class="fundoNavBar flex items-center justify-between bg-PrimaryColor p-4 shadow-xl lg:px-16">
     <!-- Logo e Botão Hambúrguer -->
     <div class="flex items-center">
       <!-- Ícone -->
-      <div class="relative w-[80px] h-[80px] rounded-full bg-white mr-4">
+      <div class="relative w-[100px] h-[100px] rounded-full bg-white mr-4">
         <img :src="icon" class="rounded-full w-full h-full object-cover">
       </div>
     </div>
 
     <!-- Texto (visível apenas em dispositivos móveis) -->
-    <div class="flex-grow flex flex-col items-center text-white md:hidden">
+    <div class="flex-grow flex flex-col items-center text-white lg:hidden">
       <span class="text-base font-bold">Amazon JBM</span>
       <span class="text-sm">Sistema de Logística</span>
     </div>
 
     <!-- Botão Hambúrguer (aparece no mobile) -->
-    <button @click="showMobileMenu = !showMobileMenu"
-      class="text-white focus:outline-none focus:ring-2 focus:ring-white md:hidden ml-auto">
+    <button @click="showMobileMenu = !showMobileMenu" class="text-white focus:outline-none lg:hidden ml-auto">
       <i class="fas fa-bars text-2xl"></i>
     </button>
 
     <!-- Navegação Desktop -->
-    <div class="hidden md:flex space-x-8">
+    <div class="hidden lg:flex space-x-8">
       <a href="gestao" :class="currentPage === 'gestao' ? 'highlighted' : ''"
         class="text-white font-semibold relative hover:font-bold transition duration-150 ease-in-out group">
         Gestao
@@ -84,7 +83,7 @@ const logout = () => {
     </div>
 
     <!-- Botão Logout -->
-    <div class="hidden md:flex items-center space-x-4">
+    <div class="hidden lg:flex items-center space-x-4">
       <div class="flex flex-col text-right">
         <span class="text-white font-bold">Amazon JBM</span>
         <span class="text-white text-sm">Sistema de Logística</span>

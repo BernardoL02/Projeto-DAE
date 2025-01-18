@@ -242,13 +242,6 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcyM
 
 ################################ End Points Login ################################
 
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
-                     #Falar no word falar nos extras#
-                     #Criar produtos, criar tipo de embalagens, criar tipo de sensores#
-                     #importação de dados de configuração através de ficheiros CSV#
-                     #   #
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
-
 ### REQUEST JWT TOKEN
 POST http://localhost:3001/backend/api/auth/login
 Content-Type: application/json
