@@ -45,7 +45,7 @@ public class EncomendaService {
     private AlertaBean alertaBean;
 
     @GET
-    @Path("/") //Done
+    @Path("/")
     @RolesAllowed({"Gestor", "Cliente", "Logista"})
     public Response getAllEncomendas() {
         Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
@@ -55,7 +55,7 @@ public class EncomendaService {
     }
 
     @POST
-    @Path("/")//Done
+    @Path("/")
     @RolesAllowed({"Logista"})
     public Response criarEncomenda(CreateEncomendaDTO encomendasDTO) {
 
@@ -69,7 +69,7 @@ public class EncomendaService {
     }
 
     @GET
-    @Path("/{id}")//Done
+    @Path("/{id}")
     @RolesAllowed({"Gestor", "Cliente", "Logista"})
     public Response getEncomendasById(@PathParam("id") int id) {
         Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
@@ -88,7 +88,7 @@ public class EncomendaService {
     }
 
     @PATCH
-    @Path("/{id}")//Done
+    @Path("/{id}")
     public Response mudarEstadoEncomenda(@PathParam("id") int id, EncomendasDTO encomendasDTO) {
         Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
 
@@ -96,7 +96,7 @@ public class EncomendaService {
     }
 
     @GET
-    @Path("estado/{estado}")//Done
+    @Path("estado/{estado}")
     @RolesAllowed({"Gestor", "Cliente", "Logista"})
     public Response getEncomendaByEstado(@PathParam("estado") String estado) {
         Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
@@ -105,7 +105,7 @@ public class EncomendaService {
     }
 
     @POST
-    @Path("/{id}/volume")//Done
+    @Path("/{id}/volume")
     @RolesAllowed({"Logista"})
     public Response associarVolumeEncomenda(@PathParam("id") int id_encomenda, VolumeCreateEncomendaDTO volumeCreateEncomendaDTO){
         volumeBean.associarVolumeEncomenda(id_encomenda, volumeCreateEncomendaDTO);
@@ -113,7 +113,7 @@ public class EncomendaService {
     }
 
     @GET
-    @Path("/alerta")//Done
+    @Path("/alerta")
     @RolesAllowed({"Gestor"})
     public Response getEncomendasAlertas() {
         Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
@@ -123,7 +123,7 @@ public class EncomendaService {
     }
 
     @GET
-    @Path("/{id}/alerta")//Done
+    @Path("/{id}/alerta")
     @RolesAllowed({"Gestor","Cliente"})
     public Response getAlertasEncomenda(@PathParam("id") int id) {
         Utilizador user = utilizadorBean.findOrFail(securityContext.getUserPrincipal().getName());
@@ -132,7 +132,7 @@ public class EncomendaService {
     }
 
     @GET
-    @Path("/{id}/coordenada")//Done
+    @Path("/{id}/coordenada")
     @RolesAllowed({"Gestor","Cliente"})
     public Response getCoordenadasEncomenda(@PathParam("id") int id) {
         List<Object[]> resultados = encomendaBean.getCoordenadasEncomenda(id);

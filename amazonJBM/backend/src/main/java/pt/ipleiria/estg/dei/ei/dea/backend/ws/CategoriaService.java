@@ -24,7 +24,7 @@ public class CategoriaService {
     private CategoriaBean categoriaBean;
 
     @GET
-    @Path("/")//Done
+    @Path("/")
     public Response getCategorias() {;
         return Response.ok(ResCategoriaDTO.from(categoriaBean.findAll())).build();
     }
