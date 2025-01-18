@@ -6,7 +6,7 @@
 ### GET All Produtos #
 GET http://localhost:3001/backend/api/produto
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU2NTQ4MDgsImV4cCI6MTczNTY1ODQwOH0.jhxJRikLHX286IRn4EEjrDvSoD1_8SfSYRFWjsD2QoXtHyRT9AtbneWqHRdQ8hmQ
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcxOTUwODIsImV4cCI6MTczNzE5ODY4Mn0.iUor7M7_902a1o2l5LK2X6ReAfLVYhcua3w_iLYHhuL-WtZPyFk9riXVwERQHZp8
 
 ######################### Clientes Service ################################
 ### GET All clientes #
@@ -218,7 +218,7 @@ Content-Type: application/json
 }
 
 ### Get All Tipos de Sensor #
-GET http://localhost:3001/backend/api/sensor/tipos
+GET http://localhost:3001/backend/api/sensor/tipo
 Accept: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzU2NTg5MzgsImV4cCI6MTczNTY2MjUzOH0.6P794k851WLA6nldpOCU_-f2rPteqeXfVjIdjgPHypDD2jVb2i_uOTOnG8QOU0yM
 
@@ -241,9 +241,9 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJEZWxnYWRvIiwiaWF0IjoxNzM3M
 ################################ EMBALAGENS ###################################
 
 ### Get All Tipos de Embalagens #
-GET http://localhost:3001/backend/api/embalagem/tipos
+GET http://localhost:3001/backend/api/embalagem/tipo
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzYwODkxODUsImV4cCI6MTczNjA5Mjc4NX0.xIRayfiD5-yjlr4YKjA8bHdnrUOmv1OyOQEynRGqIfS6JGxOE50gfcQD0SfyfM86
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcxOTY2MjMsImV4cCI6MTczNzIwMDIyM30._lPg4F5BTfjkve3hvih_eTkKzE4HwqkHwQz6J799XyvNFty2bnujih8I65R4FGUJ
 
 ################################ End Points Login ################################
 
@@ -258,7 +258,10 @@ POST http://localhost:3001/backend/api/auth/login
 Content-Type: application/json
 Accept: application/json
 
-{ "username": "Miguel", "password": "123" }
+{
+  "username": "Miguel",
+  "password": "123"
+}
 
 ### Bernardo -> Cliente
 ### Miguel -> Logista
@@ -267,7 +270,7 @@ Accept: application/json
 ### GET User Info
 GET http://localhost:3001/backend/api/auth/user
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzYwMjI5MDMsImV4cCI6MTczNjAyNjUwM30.YK1muUdrfSce8siUn9y_HQJDhHArNoUKakRrW7xZgZsX3Jd__Wc4tbEsTPOIqr_L
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcxOTYyNTUsImV4cCI6MTczNzE5OTg1NX0.7Qemlf51fAzy1KzTD8B4oYq69zs4ntHDvwhyLOszt36ZD_qkGy8BElDBxLU5l98N
 
 
 ################################ Endpoints Extra  ################################
