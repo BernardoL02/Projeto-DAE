@@ -1,31 +1,19 @@
 <script setup>
 import { defineProps, defineEmits } from 'vue';
-import '@fortawesome/fontawesome-free/css/all.css'; // Importa a biblioteca de ícones Font Awesome
+import '@fortawesome/fontawesome-free/css/all.css';
 
-// Definindo props para os dados e controle da exibição da coluna de ações
 const props = defineProps({
-  tableTitles: {
-    type: Array,
-    required: true
-  },
-  tableData: {
-    type: Array,
-    required: true
-  },
-  mostrarAcoes: {
-    type: Boolean,
-    default: true
-  }
+  tableTitles: { type: Array, required: true },
+  tableData: { type: Array, required: true },
+  mostrarAcoes: { type: Boolean, default: true }
 });
 
-// Definindo os eventos que podem ser emitidos
-const emit = defineEmits(['tracking']);
+const emit = defineEmits(['tracking', 'confirmEntrega', 'expedirEncomenda']);
 </script>
 
 <template>
-  <div class="table-container p-8">
-    <!-- Ajuste aqui para aplicar um estilo condicional mais adequado -->
-    <div :class="{ 'overflow-y-auto max-h-custom': tableData.length > 9 }" class="shadow-lg rounded-lg relative">
+  <div class="table-container p-4">
+    <div class="responsive-table shadow-lg rounded-lg relative overflow-x-auto">
       <table class="min-w-full bg-white rounded-lg border border-gray-300">
         <thead class="bg-gradient-to-r from-purple-600 to-indigo-600 sticky top-0 z-10">
           <tr>
@@ -34,7 +22,8 @@ const emit = defineEmits(['tracking']);
               {{ title }}
             </th>
             <th v-if="mostrarAcoes" class="py-4 px-6 text-white font-bold text-center uppercase border border-gray-300">
-              Ações</th>
+              Ações
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -44,22 +33,21 @@ const emit = defineEmits(['tracking']);
               class="py-4 px-6 text-center border border-gray-300">
               {{ cell }}
             </td>
-            <td v-if="mostrarAcoes" class="py-4 px-6 text-center border border-gray-300 flex justify-center space-x-2">
+            <td v-if="mostrarAcoes"
+              class="py-4 px-6 text-center border border-gray-300 flex flex-wrap justify-center space-x-2">
               <nuxt-link :to="`/sl/${row.id}`">
                 <button class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-700 transition">
-                  <i class="fas fa-eye"></i> <!-- Ícone de olho para "Ver Detalhes" -->
+                  <i class="fas fa-eye"></i>
                 </button>
               </nuxt-link>
               <button v-if="row.estado === 'Por Entregar'" @click="$emit('confirmEntrega', row.id)"
                 class="bg-green-500 text-white py-1 px-2 rounded hover:bg-green-700 transition">
-                <i class="fas fa-truck"></i> <!-- Ícone de caminhão para "Tracking" -->
+                <i class="fas fa-truck"></i>
               </button>
-
               <button v-if="row.estado === 'Em Processamento'" @click="$emit('expedirEncomenda', row.id)"
                 class="bg-yellow-500 text-white py-1 px-2 rounded hover:bg-yellow-700 transition">
-                <i class="fas fa-truck"></i> <!-- Ícone de caminhão para "Tracking" -->
+                <i class="fas fa-truck"></i>
               </button>
-
             </td>
           </tr>
         </tbody>
@@ -70,21 +58,22 @@ const emit = defineEmits(['tracking']);
 
 <style scoped>
 .table-container {
-  max-width: 90%;
+  max-width: 100%;
   margin: 0 auto;
+}
+
+.responsive-table {
+  overflow-x: auto;
 }
 
 th,
 td {
   padding: 16px;
+  white-space: nowrap;
 }
 
 .bg-gradient-to-r {
   background: #202c38;
-}
-
-.text-white {
-  color: #ffffff;
 }
 
 .odd\:bg-gray-100 {
@@ -103,24 +92,21 @@ button {
   cursor: pointer;
 }
 
-.overflow-y-auto {
-  overflow-y: auto;
-}
+@media (max-width: 768px) {
 
-.max-h-custom {
-  max-height: 36rem;
-  /* Aumentou a altura máxima */
-}
+  th,
+  td {
+    padding: 8px;
+    font-size: 0.875rem;
+  }
 
-.sticky {
-  position: sticky;
-}
+  .flex-wrap {
+    flex-wrap: wrap;
+  }
 
-.top-0 {
-  top: 0;
-}
-
-.z-10 {
-  z-index: 10;
+  .space-x-2> :not([hidden])~ :not([hidden]) {
+    margin-left: 0.25rem;
+    margin-top: 0.25rem;
+  }
 }
 </style>

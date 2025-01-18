@@ -243,10 +243,10 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJNaWd1ZWwiLCJpYXQiOjE3MzcyM
 ################################ End Points Login ################################
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
-                     #Retirar comentarios Done#
-                     #Colocar no pdf a atualização do JSON criar encomenda#
-                     #Colocar no pdf todos os endpoints modificados#
-                     #Falar no word,o que foi melhorado em relacao aos endpoints, falar dos novos endpoints e falar nos extras#
+                     #Falar no word falar nos extras#
+                     #Criar produtos, criar tipo de embalagens, criar tipo de sensores#
+                     #importação de dados de configuração através de ficheiros CSV#
+                     #   #
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!#
 
 ### REQUEST JWT TOKEN
