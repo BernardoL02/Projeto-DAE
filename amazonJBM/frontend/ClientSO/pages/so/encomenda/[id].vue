@@ -109,7 +109,7 @@ const fetchAlertas = async (sensor) => {
       sensor.mostrarAlertas = !sensor.mostrarAlertas;
     } else {
       const token = getToken();
-      const response = await fetch(`${api}/sensor/${sensor.id}/alertas`, {
+      const response = await fetch(`${api}/sensor/${sensor.id}/alerta`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',

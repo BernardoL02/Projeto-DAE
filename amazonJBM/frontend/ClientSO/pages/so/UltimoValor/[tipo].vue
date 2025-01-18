@@ -31,7 +31,7 @@ const showError = (message) => {
 const fetchTiposSensores = async () => {
   try {
     const token = getToken(); // Função para obter o token do sessionStorage
-    const response = await fetch(`${api}/sensor/tipos`, {
+    const response = await fetch(`${api}/sensor/tipo`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

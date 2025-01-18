@@ -235,7 +235,7 @@ const criarProduto = async () => {
 const fetchTiposSensores = async () => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/sensor/tipos`, {
+    const response = await fetch(`${api}/sensor/tipo`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -295,7 +295,7 @@ const criarTipo = async () => {
 const fetchEmbalagens = async () => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/embalagem/tipos`, {
+    const response = await fetch(`${api}/embalagem/tipo`, {
       method: "GET",
       headers: {
         Accept: "application/json",

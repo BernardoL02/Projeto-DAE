@@ -35,7 +35,7 @@ const fetchTiposSensores = async () => {
     const token = sessionStorage.getItem('token');
     if (!token) throw new Error("Token não encontrado. Redirecionar para login.");
 
-    const response = await fetch(`${api}/sensor/tipos`, {
+    const response = await fetch(`${api}/sensor/tipo`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

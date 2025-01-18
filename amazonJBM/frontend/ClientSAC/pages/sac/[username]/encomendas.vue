@@ -166,7 +166,7 @@ const fetchEncomendasByEstado = async () => {
 const verAlertasEncomenda = async (id) => {
   try {
     const token = getToken();
-    const response = await fetch(`${api}/encomenda/${id}/alertas`, {
+    const response = await fetch(`${api}/encomenda/${id}/alerta`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -204,7 +204,7 @@ const verAlertasEncomenda = async (id) => {
 const verTracking = async (id) => {
   try {
     const token = sessionStorage.getItem('token');
-    const response = await fetch(`${api}/encomenda/${id}/coordenadas`, {
+    const response = await fetch(`${api}/encomenda/${id}/coordenada`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
