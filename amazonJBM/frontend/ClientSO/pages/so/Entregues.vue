@@ -111,8 +111,10 @@ onMounted(fetchEncomendasEntregues);
 <template>
   <Template :currentPage="currentPage" />
 
-  <div class="flex justify-center mr-24 mt-20">
-    <h1>Sistema de Gestão - Encomendas Entregues</h1>
+  <div class="flex justify-center mt-20 px-4">
+    <h1 class="text-center text-lg md:text-xl lg:text-2xl font-bold break-words">
+      Sistema de Gestão - Encomendas Entregues
+    </h1>
   </div>
 
   <!-- Mensagens de erro estilizadas -->

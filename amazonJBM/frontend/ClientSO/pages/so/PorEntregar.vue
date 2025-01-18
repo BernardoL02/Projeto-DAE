@@ -218,8 +218,10 @@ onMounted(async () => {
 <template>
   <Template :currentPage="currentPage" />
 
-  <div class="flex justify-center mr-24 mt-20">
-    <h1>Sistema de Gestão - Encomendas Por Entregar</h1>
+  <div class="flex justify-center mt-20 px-4">
+    <h1 class="text-center text-lg md:text-xl lg:text-2xl font-bold break-words">
+      Sistema de Gestão - Encomendas Por Entregar
+    </h1>
   </div>
 
   <!-- Mensagens de erro estilizadas -->
@@ -238,10 +240,11 @@ onMounted(async () => {
   <!-- Modal de Alertas -->
   <div v-if="mostrarAlertasModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
     <!-- Conteúdo do Modal -->
-    <div class="bg-white w-1/2 p-0 rounded shadow-lg relative max-h-[90vh] overflow-y-auto">
+    <div
+      class="bg-white w-full max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%] xl:max-w-[50%] p-0 rounded shadow-lg relative max-h-[90vh] overflow-y-auto">
       <!-- Cabeçalho fixo preenchido -->
       <div class="sticky top-0 bg-white z-10 p-4 border-b border-gray-300 flex justify-between items-center">
-        <h2 class="text-xl font-semibold">Alertas da Encomenda</h2>
+        <h2 class="text-lg md:text-xl font-semibold">Alertas da Encomenda</h2>
         <!-- Botão de fechar dentro do cabeçalho -->
         <button @click="mostrarAlertasModal = false"
           class="w-8 h-8 bg-gray-200 text-gray-600 hover:text-gray-900 hover:bg-white rounded-full flex items-center justify-center shadow">
@@ -250,17 +253,18 @@ onMounted(async () => {
       </div>
 
       <!-- Conteúdo rolável -->
-      <div class="p-6">
+      <div class="p-4 md:p-6">
         <div v-if="alertasData.length === 0"
           class="flex flex-col items-center text-gray-600 p-6 border border-gray-300 bg-gray-50 rounded-lg">
           <i class="fas fa-info-circle text-3xl text-blue-500 mb-2"></i>
-          <p class="text-lg font-medium">Encomenda sem alertas</p>
+          <p class="text-base md:text-lg font-medium">Encomenda sem alertas</p>
         </div>
         <div v-else>
           <div v-for="sensor in alertasData" :key="sensor.id" class="mb-4 p-4 bg-gray-100 rounded-lg border">
-            <p class="font-semibold">Sensor ID: {{ sensor.id }} - Tipo: {{ sensor.tipo }}</p>
+            <p class="font-semibold text-sm md:text-base">Sensor ID: {{ sensor.id }} - Tipo: {{ sensor.tipo }}</p>
             <ul class="mt-2 space-y-2">
-              <li v-for="alerta in sensor.alertas" :key="alerta.id" class="p-3 bg-yellow-100 rounded-lg border">
+              <li v-for="alerta in sensor.alertas" :key="alerta.id"
+                class="p-3 bg-yellow-100 rounded-lg border text-sm md:text-base">
                 <p><strong>ID do Alerta:</strong> {{ alerta.id }}</p>
                 <p>
                   <strong>Volume ID:</strong> {{ alerta.id_volume }},

@@ -14,9 +14,15 @@ const props = defineProps({
 
 const config = useRuntimeConfig();
 const api = config.public.API_URL;
+
+const showMobileMenu = ref(false); // Controle do menu mobile
+const dropdownStates = ref({
+  sensores: false, // Estado do dropdown de sensores
+  outroDropdown: false, // Estado do outro dropdown
+});
+
 const tiposSensores = ref([]);
 const selectedTipo = ref("");
-const isDropdownOpen = ref(false); // Controle do estado de abertura do dropdown
 
 const router = useRouter();
 
@@ -32,12 +38,14 @@ const getToken = () => sessionStorage.getItem("token");
 // Função para buscar os tipos de sensores
 const fetchTiposSensores = async () => {
   try {
-    const token = getToken(); // Função para obter o token do sessionStorage
+    const token = getToken();
+    if (!token) throw new Error("Token não encontrado");
+
     const response = await fetch(`${api}/sensor/tipo`, {
       method: "GET",
       headers: {
         Accept: "application/json",
-        Authorization: `Bearer ${token}`, // Adiciona o token no cabeçalho
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -50,119 +58,161 @@ const fetchTiposSensores = async () => {
   }
 };
 
-onMounted(fetchTiposSensores);
-
-// Fecha o dropdown ao clicar fora dele
-const handleClickOutside = (event) => {
-  const dropdown = document.querySelector(".dropdown-container");
-  if (dropdown && !dropdown.contains(event.target)) {
-    isDropdownOpen.value = false;
-  }
+// Função para alternar o estado de um dropdown
+const toggleDropdown = (dropdownKey) => {
+  dropdownStates.value[dropdownKey] = !dropdownStates.value[dropdownKey];
 };
 
-// Adicione o método selectTipo para redirecionar ao selecionar um tipo
+// Função para fechar todos os dropdowns e o menu mobile
+const closeAllDropdowns = () => {
+  Object.keys(dropdownStates.value).forEach((key) => {
+    dropdownStates.value[key] = false;
+  });
+  showMobileMenu.value = false;
+};
+
+// Redireciona ao selecionar um tipo
 const selectTipo = (tipo) => {
   selectedTipo.value = tipo;
-  isDropdownOpen.value = false; // Fecha o dropdown após a seleção
-  // Redireciona para a rota dinâmica
+  dropdownStates.value.sensores = false; // Fecha o dropdown de sensores
   window.location.href = `/so/UltimoValor/${tipo}`;
 };
 
-// Adiciona e remove o event listener no momento certo
-onMounted(() => {
-  document.addEventListener("click", handleClickOutside);
-});
+onMounted(fetchTiposSensores);
 </script>
 
+
+
 <template>
-  <!-- Barra de Navegação com Dropdown -->
-  <nav class="fundoNavBar flex justify-center items-center p-4 shadow-xl">
-    <div class="container mx-auto flex justify-between items-center md:px-16">
-      <!-- Logotipo -->
-      <div class="flex items-center justify-center">
-        <div class="relative w-[110px] h-[110px] rounded-full bg-white p-[-2] pl-[1px]">
-          <img :src="icon" class="rounded-full w-full h-full object-cover" />
-        </div>
-      </div>
-
-      <!-- Páginas de navegação e dropdown de sensores -->
-      <div class="flex items-center space-x-8">
-        <!-- Links de Navegação -->
-        <div class="space-x-10 hidden md:flex">
-          <a href="/so/EmProcessamento" :class="currentPage === 'EmProcessamento' ? 'highlighted' : ''"
-            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
-            Em Processamento
-            <span
-              class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"
-              :class="currentPage === 'EmProcessamento' ? 'w-full' : ''"></span>
-          </a>
-          <a href="/so/PorEntregar" :class="currentPage === 'Por Entregar' ? 'highlighted' : ''"
-            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
-            Por Entregar
-            <span
-              class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"
-              :class="currentPage === 'Por Entregar' ? 'w-full' : ''"></span>
-          </a>
-          <a href="/so/Entregues" :class="currentPage === 'Entregues' ? 'highlighted' : ''"
-            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
-            Entregues
-            <span
-              class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"
-              :class="currentPage === 'Entregues' ? 'w-full' : ''"></span>
-          </a>
-          <a href="/so/Cancelada" :class="currentPage === 'Cancelada' ? 'highlighted' : ''"
-            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
-            Canceladas
-            <span
-              class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"
-              :class="currentPage === 'Cancelada' ? 'w-full' : ''"></span>
-          </a>
-          <a href="/so/liveAlertas" :class="currentPage === 'liveAlertas' ? 'highlighted' : ''"
-            class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
-            Live Alertas
-            <span
-              class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"
-              :class="currentPage === 'liveAlertas' ? 'w-full' : ''"></span>
-          </a>
-        </div>
-
-        <!-- Dropdown customizado para seleção de sensores -->
-        <div class="relative dropdown-container" @mouseenter="isDropdownOpen = true"
-          @mouseleave="isDropdownOpen = false">
-          <button class="bg-transparent text-white font-semibold p-2 focus:outline-none">
-            {{ selectedTipo || "Últimos Valores" }}
-          </button>
-          <!-- Lista de tipos de sensores, sempre no DOM mas controlado por v-show -->
-          <div v-show="isDropdownOpen"
-            class="absolute left-0 -mt-1 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
-            <div class="py-1">
-              <a v-for="tipo in tiposSensores" :key="tipo" @click.prevent="selectTipo(tipo)"
-                class="block px-4 py-2 text-gray-700 hover:bg-green-100 hover:text-green-700 cursor-pointer">
-                {{ tipo }}
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Nome do sistema e botão de logout -->
-      <div class="flex flex-col items-end space-y-2">
-        <!-- Nome do sistema -->
-        <div>
-          <div class="text-white font-bold flex items-end justify-end">
-            Amazon JBM
-          </div>
-          <div class="text-white">Sistema Operacional</div>
-        </div>
-
-        <!-- Botão de logout menor -->
-        <button @click="logout"
-          class="flex items-center bg-red-500 text-white font-semibold px-3 py-1 text-sm rounded-full hover:bg-red-700 transition shadow-md">
-          <i class="fas fa-sign-out-alt mr-2"></i> Logout
-        </button>
+  <nav class="fundoNavBar flex justify-between items-center p-4 shadow-xl">
+    <!-- Logo -->
+    <div class="flex items-center">
+      <div class="relative w-[80px] h-[80px] rounded-full bg-white mr-4">
+        <img :src="icon" class="rounded-full w-full h-full object-cover" />
       </div>
     </div>
+
+    <!-- Texto do sistema (mobile) -->
+    <div class="flex-grow flex flex-col items-center text-white md:hidden">
+      <span class="text-base font-bold">Amazon JBM</span>
+      <span class="text-sm">Sistema Operacional</span>
+    </div>
+
+    <!-- Botão Hambúrguer -->
+    <button @click="showMobileMenu = !showMobileMenu"
+      class="text-white focus:outline-none focus:ring-2 focus:ring-white md:hidden">
+      <i class="fas fa-bars text-2xl"></i>
+    </button>
+
+    <!-- Navegação Desktop -->
+    <div class="hidden md:flex space-x-8 items-center">
+      <!-- Links de Navegação -->
+      <div class="space-x-10 flex items-center">
+        <a href="/so/EmProcessamento" :class="currentPage === 'EmProcessamento' ? 'highlighted' : ''"
+          class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
+          Em Processamento
+          <span
+            class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"
+            :class="currentPage === 'EmProcessamento' ? 'w-full' : ''"></span>
+        </a>
+        <a href="/so/PorEntregar" :class="currentPage === 'Por Entregar' ? 'highlighted' : ''"
+          class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
+          Por Entregar
+          <span
+            class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"
+            :class="currentPage === 'Por Entregar' ? 'w-full' : ''"></span>
+        </a>
+        <a href="/so/Entregues" :class="currentPage === 'Entregues' ? 'highlighted' : ''"
+          class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
+          Entregues
+          <span
+            class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"
+            :class="currentPage === 'Entregues' ? 'w-full' : ''"></span>
+        </a>
+        <a href="/so/Cancelada" :class="currentPage === 'Cancelada' ? 'highlighted' : ''"
+          class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
+          Canceladas
+          <span
+            class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"
+            :class="currentPage === 'Cancelada' ? 'w-full' : ''"></span>
+        </a>
+        <a href="/so/liveAlertas" :class="currentPage === 'liveAlertas' ? 'highlighted' : ''"
+          class="text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group">
+          Live Alertas
+          <span
+            class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"
+            :class="currentPage === 'liveAlertas' ? 'w-full' : ''"></span>
+        </a>
+      </div>
+      <!-- Dropdown para Desktop -->
+      <div class="relative dropdown-container flex items-center">
+        <button @click.stop="toggleDropdown('sensores')"
+          class="bg-transparent text-white font-semibold text-base relative hover:font-bold transition duration-150 ease-in-out group focus:outline-none">
+          {{ selectedTipo || "Últimos Valores" }}
+          <span
+            class="absolute bottom-[-8px] left-0 w-0 h-1 bg-SecundaryColor transition-all duration-300 ease-in-out group-hover:w-full"
+            :class="currentPage === 'Ultimos Valores' ? 'w-full' : ''"></span>
+        </button>
+        <div v-show="dropdownStates.sensores"
+          class="absolute top-full mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+          <div class="py-1">
+            <a v-for="tipo in tiposSensores" :key="tipo" @click.prevent="selectTipo(tipo)"
+              class="block px-4 py-2 text-gray-700 hover:bg-green-100 hover:text-green-700 cursor-pointer">
+              {{ tipo }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nome do sistema e logout -->
+    <div class="hidden md:flex items-center space-x-4">
+      <div class="text-white">
+        <div class="font-bold">Amazon JBM</div>
+        <div class="text-sm">Sistema Operacional</div>
+      </div>
+      <button @click="logout"
+        class="bg-red-500 text-white font-semibold px-3 py-1 rounded-full hover:bg-red-700 transition shadow-md">
+        Logout
+      </button>
+    </div>
   </nav>
+
+  <!-- Menu Mobile -->
+  <div v-if="showMobileMenu" class="bg-PrimaryColor text-white py-4">
+    <div class="flex flex-col space-y-4 px-4">
+      <a href="/so/EmProcessamento" @click="showMobileMenu = false"
+        :class="currentPage === 'EmProcessamento' ? 'bg-SecundaryColor p-2 rounded text-black font-semibold' : 'hover:bg-SecundaryColor p-2 rounded transition text-white'">
+        Em Processamento
+      </a>
+      <a href="/so/PorEntregar" @click="showMobileMenu = false"
+        :class="currentPage === 'Por Entregar' ? 'bg-SecundaryColor p-2 rounded text-black font-semibold' : 'hover:bg-SecundaryColor p-2 rounded transition text-white'">
+        Por Entregar
+      </a>
+      <a href="/so/Entregues" @click="showMobileMenu = false"
+        :class="currentPage === 'Entregues' ? 'bg-SecundaryColor p-2 rounded text-black font-semibold' : 'hover:bg-SecundaryColor p-2 rounded transition text-white'">
+        Entregues
+      </a>
+      <!-- Dropdown para Mobile -->
+      <div class="relative dropdown-container">
+        <button @click="toggleDropdown('sensores')"
+          class="bg-transparent text-white font-semibold p-2 focus:outline-none">
+          {{ selectedTipo || "Últimos Valores" }}
+        </button>
+        <div v-show="dropdownStates.sensores" class="absolute bg-white rounded-md shadow-lg text-black">
+          <a v-for="tipo in tiposSensores" :key="tipo" @click.prevent="selectTipo(tipo)"
+            :class="currentPage === tipo ? 'bg-green-100 text-green-700 p-2 rounded' : 'block px-4 py-2 text-gray-700 hover:bg-green-100 hover:text-green-700 cursor-pointer'">
+            {{ tipo }}
+          </a>
+        </div>
+      </div>
+      <button @click="logout" class="bg-red-500 text-white px-4 py-2 rounded">
+        Logout
+      </button>
+    </div>
+  </div>
 </template>
+
 
 <style scoped>
 body {

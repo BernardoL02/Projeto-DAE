@@ -243,8 +243,10 @@ onMounted(async () => {
   <div>
     <Template :currentPage="currentPage" />
 
-    <div class="flex justify-center mr-24 mt-20">
-      <h1>Sistema de Gestão - Encomendas Em Processamento</h1>
+    <div class="flex justify-center mt-20 px-4">
+      <h1 class="text-center text-lg md:text-xl lg:text-2xl font-bold break-words">
+        Sistema de Gestão - Encomendas Em Processamento
+      </h1>
     </div>
 
     <!-- Mensagem de Sucesso -->
@@ -274,18 +276,19 @@ onMounted(async () => {
     <!-- Modal de Confirmação de Cancelamento -->
     <div v-if="showCancelConfirmModal"
       class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-      <div class="bg-white w-1/3 p-6 rounded shadow-lg">
-        <h2 class="text-xl font-semibold mb-4">Confirmar Cancelamento</h2>
-        <p>
+      <div
+        class="bg-white w-full max-w-[90%] sm:max-w-[80%] md:max-w-[60%] lg:max-w-[40%] xl:max-w-[30%] p-4 md:p-6 rounded shadow-lg">
+        <h2 class="text-lg md:text-xl font-semibold mb-4 text-center">Confirmar Cancelamento</h2>
+        <p class="text-sm md:text-base text-center">
           Tem certeza que deseja cancelar a encomenda ID
-          {{ selectedEncomendaId }}?
+          <span class="font-bold">{{ selectedEncomendaId }}</span>?
         </p>
-        <div class="mt-4 flex justify-end space-x-2">
+        <div class="mt-6 flex flex-col md:flex-row justify-center md:justify-end space-y-2 md:space-y-0 md:space-x-4">
           <button @click="showCancelConfirmModal = false"
-            class="bg-gray-500 text-white py-1 px-4 rounded hover:bg-gray-700">
+            class="bg-gray-500 text-white py-2 px-6 rounded hover:bg-gray-700 transition">
             Cancelar
           </button>
-          <button @click="confirmCancel" class="bg-red-500 text-white py-1 px-4 rounded hover:bg-red-700">
+          <button @click="confirmCancel" class="bg-red-500 text-white py-2 px-6 rounded hover:bg-red-700 transition">
             Confirmar
           </button>
         </div>
