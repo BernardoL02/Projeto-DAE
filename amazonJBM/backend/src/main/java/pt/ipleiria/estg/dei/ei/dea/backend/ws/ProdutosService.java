@@ -24,7 +24,7 @@ public class ProdutosService {
     private ProdutoBean produtoBean;
 
     @GET
-    @Path("/")
+    @Path("/")//Done
     public Response getProdutos() {
         return Response.ok(ProdutoDTO.from(produtoBean.findAll())).build();
     }

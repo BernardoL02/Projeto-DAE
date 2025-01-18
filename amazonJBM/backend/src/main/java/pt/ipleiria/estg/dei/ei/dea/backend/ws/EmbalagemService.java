@@ -61,20 +61,20 @@ public class EmbalagemService {
     }
 
     @DELETE
-    @Path("/{id}/sensor/{id_sensor}")
-    public Response getTiposEmbalagem(@PathParam("id") int id_embalagem, @PathParam("id_sensor") int id_sensor) {
+    @Path("/{id}/sensor/{id_sensor}")//Done
+    public Response desassociarSensorEmbalagem(@PathParam("id") int id_embalagem, @PathParam("id_sensor") int id_sensor) {
         return embalagemBean.removerSensor(id_embalagem,id_sensor);
     }
 
     @GET
-    @Path("/tipo")
+    @Path("/tipo")//Done
     public Response getTiposEmbalagem() {
         List<Tipo_Embalagem> tipoEmbalagens = tipoEmbalagemBean.findAll();
         return Response.ok(ResTipoEmbalagemDTO.from(tipoEmbalagens)).build();
     }
 
     @POST
-    @Path("/tipo")
+    @Path("/tipo")//Done
     public Response criarTipoEmbalagem(CreateTipoEmbalagemDTO createTipoEmbalagemDTO) {
         return tipoEmbalagemBean.create(createTipoEmbalagemDTO.getId(),createTipoEmbalagemDTO.getTipo(), createTipoEmbalagemDTO.getTipos_sensores());
     }

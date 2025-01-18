@@ -132,7 +132,7 @@ public class EncomendaService {
     }
 
     @GET
-    @Path("/{id}/coordenada")
+    @Path("/{id}/coordenada")//Done
     @RolesAllowed({"Gestor","Cliente"})
     public Response getCoordenadasEncomenda(@PathParam("id") int id) {
         List<Object[]> resultados = encomendaBean.getCoordenadasEncomenda(id);
