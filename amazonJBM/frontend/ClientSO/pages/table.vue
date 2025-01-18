@@ -88,7 +88,7 @@ td {
 }
 
 .bg-gradient-to-r {
-  background: linear-gradient(40deg, #202c38 25%, #66c981 120%);
+  background: #202c38;
 }
 
 .text-white {

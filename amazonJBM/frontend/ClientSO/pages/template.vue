@@ -84,28 +84,29 @@ onMounted(fetchTiposSensores);
 
 
 <template>
-  <nav class="fundoNavBar flex justify-between items-center p-4 shadow-xl">
+  <nav class="fundoNavBar flex justify-between items-center p-4 shadow-xl xl:px-16">
     <!-- Logo -->
     <div class="flex items-center">
-      <div class="relative w-[80px] h-[80px] rounded-full bg-white mr-4">
+      <div class="relative w-[100px] h-[100px] rounded-full bg-white mr-4">
         <img :src="icon" class="rounded-full w-full h-full object-cover" />
       </div>
     </div>
 
-    <!-- Texto do sistema (mobile) -->
-    <div class="flex-grow flex flex-col items-center text-white md:hidden">
+
+    <!-- Texto do sistema (visível apenas em dispositivos móveis) -->
+    <div class="flex-grow flex flex-col items-center text-white xl:hidden">
       <span class="text-base font-bold">Amazon JBM</span>
       <span class="text-sm">Sistema Operacional</span>
     </div>
 
+
     <!-- Botão Hambúrguer -->
-    <button @click="showMobileMenu = !showMobileMenu"
-      class="text-white focus:outline-none focus:ring-2 focus:ring-white md:hidden">
+    <button @click="showMobileMenu = !showMobileMenu" class="text-white focus:outline-none  xl:hidden">
       <i class="fas fa-bars text-2xl"></i>
     </button>
 
     <!-- Navegação Desktop -->
-    <div class="hidden md:flex space-x-8 items-center">
+    <div class="hidden xl:flex space-x-8 items-center">
       <!-- Links de Navegação -->
       <div class="space-x-10 flex items-center">
         <a href="/so/EmProcessamento" :class="currentPage === 'EmProcessamento' ? 'highlighted' : ''"
@@ -165,15 +166,15 @@ onMounted(fetchTiposSensores);
       </div>
     </div>
 
-    <!-- Nome do sistema e logout -->
-    <div class="hidden md:flex items-center space-x-4">
-      <div class="text-white">
-        <div class="font-bold">Amazon JBM</div>
-        <div class="text-sm">Sistema Operacional</div>
+    <!-- Botão Logout -->
+    <div class="hidden lg:flex items-center space-x-4">
+      <div class="flex flex-col text-right">
+        <span class="text-white font-bold">Amazon JBM</span>
+        <span class="text-white text-sm">Sistema Operacional</span>
       </div>
       <button @click="logout"
-        class="bg-red-500 text-white font-semibold px-3 py-1 rounded-full hover:bg-red-700 transition shadow-md">
-        Logout
+        class="bg-red-500 text-white font-semibold px-3 py-1 text-sm rounded-full hover:bg-red-700 transition shadow-md">
+        <i class="fas fa-sign-out-alt mr-2"></i> Logout
       </button>
     </div>
   </nav>
@@ -192,6 +193,14 @@ onMounted(fetchTiposSensores);
       <a href="/so/Entregues" @click="showMobileMenu = false"
         :class="currentPage === 'Entregues' ? 'bg-SecundaryColor p-2 rounded text-black font-semibold' : 'hover:bg-SecundaryColor p-2 rounded transition text-white'">
         Entregues
+      </a>
+      <a href="/so/Cancelada" @click="showMobileMenu = false"
+        :class="currentPage === 'Cancelada' ? 'bg-SecundaryColor p-2 rounded text-black font-semibold' : 'hover:bg-SecundaryColor p-2 rounded transition text-white'">
+        Canceladas
+      </a>
+      <a href="/so/liveAlertas" @click="showMobileMenu = false"
+        :class="currentPage === 'liveAlertas' ? 'bg-SecundaryColor p-2 rounded text-black font-semibold' : 'hover:bg-SecundaryColor p-2 rounded transition text-white'">
+        Live Alertas
       </a>
       <!-- Dropdown para Mobile -->
       <div class="relative dropdown-container">
