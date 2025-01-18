@@ -396,8 +396,10 @@ onMounted(() => {
     </div>
   </div>
 
-  <div class="flex justify-center items-center mt-20">
-    <h1>Sistema de Logistica - Dashboard</h1>
+  <div class="flex justify-center mt-20 px-4">
+    <h1 class="text-center text-lg md:text-xl lg:text-2xl font-bold break-words">
+      Sistema de Logística - Dashboard
+    </h1>
   </div>
 
   <div class="flex flex-col space-x-28 justify-center items-center">
